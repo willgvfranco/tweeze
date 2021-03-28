@@ -69,7 +69,7 @@ localhost:8000/neuadmin # change your new url in urls.py, the /admin is fake
 
 👤 **William Franco**
 
-* Website: http://neustren.org
+<!-- * Website: http://neustren.org -->
 * Twitter: [@neustren](https://twitter.com/neustren)
 * Github: [@neustren](https://github.com/neustren)
 

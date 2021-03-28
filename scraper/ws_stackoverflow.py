@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from courrier import TweezeStoreDB
+from arauto import TweezeStoreDB
 # conn = psycopg2.connect(dsn)
 
 url = 'https://pt.stackoverflow.com/questions'
@@ -30,4 +30,4 @@ for pergunta in noticia:
     processed_data.append(formatted_pergunta)
 
 
-TweezeStoreDB.pg_store(processed_data)
+TweezeStoreDB.db_insert(processed_data)

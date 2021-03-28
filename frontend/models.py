@@ -14,7 +14,7 @@ class Always(models.Model):
 
 class Noticia(Always):
     fonte = models.CharField(max_length=255)
-    titulo = models.CharField(max_length=255)
-    url = models.CharField(max_length=255)
-    descricao = models.CharField(max_length=255)
+    titulo = models.TextField()
+    url = models.TextField()
+    descricao = models.TextField()
     pub_data = models.CharField(max_length=255)

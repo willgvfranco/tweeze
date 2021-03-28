@@ -1,11 +1,13 @@
 import psycopg2
+import hashlib
+
 import datetime
 # from get_noticias import get_noticias
 from decouple import config
 
 
 class TweezeStoreDB:
-    def pg_store(sqlquery):
+    def db_insert(sqlquery):
         try:
             # connect to PostgreSQL
             conn = psycopg2.connect(
@@ -13,8 +15,8 @@ class TweezeStoreDB:
 
             dt = datetime.datetime.now()
             # the SQL INSERT statement we will use
-            insert_sql = ('INSERT INTO public."frontend_noticia"(criados, modificado, ativo, fonte, titulo, url, descricao, pub_data) ' +
-                          'VALUES (%(criados)s, %(modificado)s, %(ativo)s, %(fonte)s, %(titulo)s, %(url)s, %(descricao)s, %(pub_data)s);')
+            insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, fonte, titulo, url, descricao, pub_data) ' +
+                          'VALUES (%(criado)s, %(modificado)s, %(ativo)s, %(fonte)s, %(titulo)s, %(url)s, %(descricao)s, %(pub_data)s);')
 
             # open a cursor to access data
             cur = conn.cursor()
@@ -23,7 +25,7 @@ class TweezeStoreDB:
             noticias = sqlquery
             for notice in noticias:
                 # write each record
-                notice['criados'] = dt
+                notice['criado'] = dt
                 notice['ativo'] = True
                 notice['modificado'] = dt
 
@@ -38,3 +40,13 @@ class TweezeStoreDB:
 
         except Exception as ex:
             print(ex)
+
+    def generate_hash(file, tp="byte"):
+        if(tp != 'byte'):
+            md5_hash = hashlib.md5(file.encode())
+        else:
+            md5_hash = hashlib.md5()
+            md5_hash.update(file)
+        digest = md5_hash.hexdigest()
+        # print(digest)
+        return digest
