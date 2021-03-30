@@ -1,9 +1,39 @@
 import psycopg2
+import psycopg2.extras
 import hashlib
 import redis
 import datetime
 # from get_noticias import get_noticias
 from decouple import config
+
+
+def tweeze_get_sources_db():
+    try:
+        conn = psycopg2.connect(
+            "dbname=%s host=%s user=%s password=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD')))
+        query = ('SELECT * FROM public.frontend_fonte;')
+
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cur.execute(query)
+        result = cur.fetchall()
+        rows = len(result)
+        # print(result)
+        cur.close()
+        conn.close()
+        list_of_dicts = []
+        print(f"Query success, {rows} rows returned.")
+
+        for row in result:
+            # print("news_source: {}".format(row['news_source']))
+            # print("source_url_global: {}".format(row['source_url_global']))
+            list_of_dicts.append(dict(row))
+
+        return list_of_dicts
+        # print(list_of_dicts)
+
+    except Exception as ex:
+        print(ex)
 
 
 def tweeze_store_db(sqlquery, slug, counting, timer):
