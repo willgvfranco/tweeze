@@ -7,7 +7,7 @@ import datetime
 from decouple import config
 
 
-def tweeze_get_sources_db():
+def tweeze_get_sources_db(*args):
     try:
         conn = psycopg2.connect(
             "dbname=%s host=%s user=%s password=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD')))
@@ -15,7 +15,15 @@ def tweeze_get_sources_db():
 
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cur.execute(query)
+        if args:
+            query = (
+                'SELECT * FROM public.frontend_fonte WHERE id = %s;')
+            tuple1 = (args[0],)
+            cur.execute(query, tuple1)
+
+        else:
+            cur.execute(query)
+
         result = cur.fetchall()
         rows = len(result)
         # print(result)

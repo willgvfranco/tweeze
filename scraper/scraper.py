@@ -46,7 +46,12 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
             processed_data = []
 
             for news in container:
-                url = news.find(news_url).text
+                if('/href' in news_url):
+                    news_url_formmated = news_url.removesuffix('/href')
+                    url = news.find(news_url_formmated)['href']
+                else:
+                    url = news.find(news_url).text
+
                 hash_news = generate_hash(url, 'str').encode('utf-8')
 
                 if(hash_news in hash_cache):
@@ -57,16 +62,19 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
                     Cachero.listpush(cachero_list_individual_hashs, hash_news)
 
                     titulo = news.find(news_title).text
+
                     has_category = news.find(news_category)
                     if(has_category):
                         category = news.find(news_category).text
                     else:
                         category = ''
+
                     has_data = news.find(news_date)
                     if(has_data):
                         pub_data = has_data.text
                     else:
                         pub_data = date.today().strftime('%d/%m/%Y')
+
                     descricao = news.find(news_description).text
 
                     formatted_pergunta = {
@@ -87,7 +95,7 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
                 tweeze_store_db(processed_data, source_slug, count, timer)
                 Cachero.listpush(cachero_list_etags, etag)
                 Cachero.listtrim(cachero_list_etags, 0, 7)
-                Cachero.listtrim(cachero_list_individual_hashs, 0, 255)
+                Cachero.listtrim(cachero_list_individual_hashs, 0, 1023)
                 sleep(timer)
 
             else:
