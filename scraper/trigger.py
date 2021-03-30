@@ -1,6 +1,6 @@
 from scraper import neus_scraper
 import threading
-
+import time
 
 # neus_scraper(
 #     url_global="https://g1.globo.com/rss/g1/",
@@ -45,10 +45,17 @@ t2 = threading.Thread(target=neus_scraper, kwargs=dict(
     news_title="title",
     news_date="pubDate",
     news_description="description",
-    slug="uol",
+    slug="UOL",
     initial_timer=15))
 
 t1.name = 'G1'
+# t1.daemon = True
 t2.name = 'UOL'
+# t2.daemon = True
+
 t1.start()
 t2.start()
+
+
+# while True:
+#     time.sleep(1)
