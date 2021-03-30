@@ -7,25 +7,25 @@ import json
 from datetime import date
 
 
-def neus_scraper(url_global, news_container, news_url, news_source, news_title, news_date, news_description, slug, regex_temp=None, initial_timer=15):
+def neus_scraper(source_url_global, news_container, news_url, news_source, news_title, news_date, news_description, source_slug, id, news_category=None, initial_timer=15, *args, **kwargs):
 
     timer = initial_timer
-    cachero_list_etags = slug.lower() + "_etag_cache"
-    cachero_list_individual_hashs = slug.lower() + "_hash_cache"
+    cachero_list_etags = source_slug.lower() + "_etag_cache"
+    cachero_list_individual_hashs = source_slug.lower() + "_hash_cache"
     while True:
         count = 0
         if (timer > 3600):
             timer = 3600
         # Data
-        # with open(url_global, "r") as f:
+        # with open(source_url_global, "r") as f:
         #     response = f.read()
-        response = requests.get(url_global)
+        response = requests.get(source_url_global)
         xml_data = response.content
         soup = BeautifulSoup(xml_data, features="xml", from_encoding='utf-8')
         # texts = str(soup.findAll(text=True)).replace('\\n', '')
 
-        if(regex_temp):
-            xml_data.replace(regex_temp, '')
+        # if(regex_temp):
+        #     xml_data.replace(regex_temp, '')
 
         # Validation
         # etag = response.headers._store['etag'][1]
@@ -36,7 +36,8 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
         etag_cache = Cachero.listrange(cachero_list_etags, 0, -1)
         hash_cache = Cachero.listrange(cachero_list_individual_hashs, 0, -1)
 
-        if(etag_encode not in etag_cache):
+        # if(etag_encode not in etag_cache):
+        if(True):
 
             # Find all text in the data
 
@@ -54,9 +55,13 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
                 else:
                     count += 1
                     Cachero.listpush(cachero_list_individual_hashs, hash_news)
-                    fonte = news_source
-                    titulo = news.find(news_title).text
 
+                    titulo = news.find(news_title).text
+                    has_category = news.find(news_category)
+                    if(has_category):
+                        category = news.find(news_category).text
+                    else:
+                        category = ''
                     has_data = news.find(news_date)
                     if(has_data):
                         pub_data = has_data.text
@@ -65,11 +70,13 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
                     descricao = news.find(news_description).text
 
                     formatted_pergunta = {
-                        'fonte': fonte,
-                        'titulo': titulo,
+                        'source': news_source,
+                        'title': titulo,
+                        'fonte_id': str(id),
                         'url': url,
-                        'descricao': descricao,
-                        'pub_data': pub_data
+                        'description': descricao,
+                        'pub_data': pub_data,
+                        'category': category,
 
                     }
 
@@ -77,7 +84,7 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
 
             if(processed_data):
                 timer = 15
-                tweeze_store_db(processed_data, slug, count, timer)
+                tweeze_store_db(processed_data, source_slug, count, timer)
                 Cachero.listpush(cachero_list_etags, etag)
                 Cachero.listtrim(cachero_list_etags, 0, 7)
                 Cachero.listtrim(cachero_list_individual_hashs, 0, 255)
@@ -85,10 +92,10 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
 
             else:
                 timer = int(timer * 1.2)
-                print(f"{slug}: No updates available, sleeping for {timer}s")
+                print(f"{source_slug}: No updates available, sleeping for {timer}s")
                 sleep(timer)
 
         else:
             timer = int(timer * 1.2)
-            print(f"{slug}: No updates available, sleeping for {timer}s")
+            print(f"{source_slug}: No updates available, sleeping for {timer}s")
             sleep(timer)

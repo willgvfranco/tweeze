@@ -33,8 +33,9 @@ class Noticia(Always):
     # fonte = models.CharField(max_length=255)
     fonte = models.ForeignKey(
         Fonte, on_delete=models.DO_NOTHING, blank=True, null=True)
-    titulo = models.TextField()
+    title = models.TextField()
     url = models.TextField()
-    categoria = models.TextField(null=True)
-    descricao = models.TextField(null=True)
+    source = models.TextField()
+    category = models.TextField(null=True)
+    description = models.TextField(null=True)
     pub_data = models.CharField(max_length=255)

@@ -44,8 +44,8 @@ def tweeze_store_db(sqlquery, slug, counting, timer):
 
         dt = datetime.datetime.now()
         # the SQL INSERT statement we will use
-        insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, fonte, titulo, url, descricao, pub_data) ' +
-                      'VALUES (%(criado)s, %(modificado)s, %(ativo)s, %(fonte)s, %(titulo)s, %(url)s, %(descricao)s, %(pub_data)s);')
+        insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, source, title, url, description, pub_data, fonte_id, category) ' +
+                      'VALUES (%(criado)s, %(modificado)s, %(ativo)s, %(source)s, %(title)s, %(url)s, %(description)s, %(pub_data)s, %(fonte_id)s, %(category)s);')
 
         # open a cursor to access data
         cur = conn.cursor()
@@ -57,6 +57,7 @@ def tweeze_store_db(sqlquery, slug, counting, timer):
             notice['criado'] = dt
             notice['ativo'] = True
             notice['modificado'] = dt
+            notice['fonte_id'] = int(notice['fonte_id'])
 
             cur.execute(insert_sql, notice)
 
