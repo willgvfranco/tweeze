@@ -1,23 +1,28 @@
 from bs4 import BeautifulSoup
-
+import re
 import requests
 from arauto import tweeze_store_db, Cachero, generate_hash
-import time
+from time import sleep
 import json
 
 
-def neus_scraper(url_global, news_container, news_url, news_source, news_title, news_date, news_description, source, initial_timer=15):
+def neus_scraper(url_global, news_container, news_url, news_source, news_title, news_date, news_description, slug, regex_temp=None, initial_timer=15):
 
     timer = initial_timer
-    cachero_list_etags = source.lower() + "_etag_cache"
-    cachero_list_individual_hashs = source.lower() + "_hash_cache"
+    cachero_list_etags = slug.lower() + "_etag_cache"
+    cachero_list_individual_hashs = slug.lower() + "_hash_cache"
     while True:
         count = 0
-
+        if (timer > 3600):
+            timer = 3600
         # Data
         response = requests.get(url_global)
         xml_data = response.content
         soup = BeautifulSoup(xml_data, features="xml")
+        # texts = str(soup.findAll(text=True)).replace('\\n', '')
+
+        if(regex_temp):
+            xml_data.replace(regex_temp, '')
 
         # Validation
         # etag = response.headers._store['etag'][1]
@@ -29,9 +34,9 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
         hash_cache = Cachero.listrange(cachero_list_individual_hashs, 0, -1)
 
         if(etag_encode not in etag_cache):
+
             # Find all text in the data
-            timer = 15
-            texts = str(soup.findAll(text=True)).replace('\\n', '')
+
             # Find the tag/child
             container = soup.findAll(news_container)
             processed_data = []
@@ -62,16 +67,21 @@ def neus_scraper(url_global, news_container, news_url, news_source, news_title, 
 
                     processed_data.append(formatted_pergunta)
 
-            tweeze_store_db(processed_data)
-            Cachero.listpush(cachero_list_etags, etag)
+            if(processed_data):
+                tweeze_store_db(processed_data, slug)
+                print(f"{slug}: {count} news added, new check in {timer}s")
+                Cachero.listpush(cachero_list_etags, etag)
+                Cachero.listtrim(cachero_list_etags, 0, 7)
+                Cachero.listtrim(cachero_list_individual_hashs, 0, 255)
+                timer = 15
+                sleep(timer)
 
-            print(f"{count} news added, etag: {etag}.")
-            print(f"New check in {timer}s")
-            Cachero.listtrim(cachero_list_individual_hashs, 0, 255)
-            Cachero.listtrim(cachero_list_etags, 0, 7)
-            time.sleep(timer)
+            else:
+                timer = int(timer * 1.2)
+                print(f"{slug}: No updates available, sleeping for {timer}s")
+                sleep(timer)
 
         else:
             timer = int(timer * 1.2)
-            print(f"No updates available, sleeping for {timer}s")
-            time.sleep(timer)
+            print(f"{slug}: No updates available, sleeping for {timer}s")
+            sleep(timer)

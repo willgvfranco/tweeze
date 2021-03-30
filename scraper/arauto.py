@@ -6,7 +6,7 @@ import datetime
 from decouple import config
 
 
-def tweeze_store_db(sqlquery):
+def tweeze_store_db(sqlquery, slug):
     try:
         # connect to PostgreSQL
         conn = psycopg2.connect(
@@ -35,7 +35,7 @@ def tweeze_store_db(sqlquery):
         cur.close()
         conn.close()
 
-        print("Successfully wrote data to the database")
+        print(f"{slug}: Successfully wrote data to the database")
 
     except Exception as ex:
         print(ex)
