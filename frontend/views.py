@@ -51,7 +51,7 @@ class ContatoView(FormView):
 class NoticiaIndex(ListView):
     model = Noticia
     template_name = 'index.html'
-    paginate_by = 10
+    paginate_by = 40
     context_object_name = 'noticias'
 
     def get_queryset(self):
