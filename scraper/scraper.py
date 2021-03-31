@@ -14,8 +14,8 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
     cachero_list_individual_hashs = source_slug.lower() + "_hash_cache"
     while True:
         count = 0
-        if (timer > 3600):
-            timer = 3600
+        if (timer > 5400):
+            timer = 5400
         # Data
         # with open(source_url_global, "r") as f:
         #     response = f.read()
