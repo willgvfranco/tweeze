@@ -82,7 +82,7 @@ def tweeze_store_db(sqlquery, slug, counting, timer):
 
 class Cachero:
     r = redis.Redis(host=config('CACHE_HOST'), port=config(
-        'CACHE_PORT'), db=config('CACHE_DB'))
+        'CACHE_PORT'), db=config('CACHE_DB'), password=config('CACHE_PASS'))
 
     def set(k, v):
         return Cachero.r.set(k, v)

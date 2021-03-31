@@ -3,14 +3,16 @@
 from arauto import tweeze_get_sources_db
 from scraper import neus_scraper
 import threading
+# from celery import Celery
 
-source_data = tweeze_get_sources_db()
+# app = Celery('bridge', broker='redis://localhost')
 
 
-def warp_gate(data):
-
+# @app.task(bind=True)
+def warp_gate():
+    source_data = tweeze_get_sources_db()
     threads = list()
-    for args in data:
+    for args in source_data:
         if args['ativo']:
             engine = threading.Thread(target=neus_scraper, kwargs=dict(args))
             engine.name = args['source_slug']
@@ -21,4 +23,4 @@ def warp_gate(data):
         thread.join()
 
 
-warp_gate(source_data)
+warp_gate()
