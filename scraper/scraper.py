@@ -47,7 +47,7 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
 
             for news in container:
                 if('/href' in news_url):
-                    news_url_formmated = news_url.removesuffix('/href')
+                    news_url_formmated = news_url[:-5]
                     url = news.find(news_url_formmated)['href']
                 else:
                     url = news.find(news_url).text
