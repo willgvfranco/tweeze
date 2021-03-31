@@ -17,7 +17,7 @@
             <a target="_blank" href={{n.url}}>{{n.title}}</a>
             <br>
 
-            <div> - {{n.source}} - {{n.pub_data|naturalday}}</div>
+            <div> - {{n.source}} - {{n.criado|date:'d/m/Y H:i'}}</div>
             <br>
         {% endfor %}
         </div>
