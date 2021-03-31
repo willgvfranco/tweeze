@@ -1,18 +1,29 @@
+{% load static %}
 {% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        {% bootstrap_css %}
-    <title>Neus Django Boilerplate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% bootstrap_css %}
+<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <title>Tweeze Pré-alpha</title>
 </head>
 <body>
+
+    <div style="margin-top:2em; margin-left:auto;margin-right:auto">
     
-    <div class="container">
-        {% block content %} {% endblock %}
+     <div class="container-md">
+
+<div style="max-width: 600px; margin-left:auto; margin-right:auto">
+{% block conteudo %}
+{% endblock %}
+
+</div>
+    </div>
     </div>
 
-    {% bootstrap_javascript jquery='full' %}
+    {% comment %} {% bootstrap_javascript jquery='full' %} {% endcomment %}
 </body>
 </html>

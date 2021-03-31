@@ -1,20 +1,28 @@
  {% extends 'base.html' %}
-
+{% load humanize %}
 {% block conteudo %}
         <form method="get" action="{% url 'busca' %}">
-         {% csrf_token %}
-        <h1>{{app_name}}</h1>
+          <h1>Tweeze 0.3.0-pre-alpha</h1>
+
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Site para pesquisar </label>
+                <label for="exampleInputEmail1" class="form-label">Termo para pesquisar</label>
                 <input class="form-control" type="search" value="" id="exampleInputEmail1" name="termo">
                 {% comment %} <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> {% endcomment %}
             </div>
             <button type="submit" class="btn btn-primary">Pinçar</button>
         </form>
 
-        <div>
-        {% for fonte in fontes %}
-            <div>{{fonte.source_slug}}</div>
+        <div class="mb-3"></div>
+                {% for n in noticias %}
+            <a target="_blank" href={{n.url}}>{{n.title}}</a>
+            <br>
+
+            <div> - {{n.source}} - {{n.pub_data|naturalday}}</div>
+            <br>
         {% endfor %}
         </div>
 {% endblock %}
+
+        
+
+
