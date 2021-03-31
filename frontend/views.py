@@ -73,7 +73,6 @@ class NoticiaBusca(NoticiaIndex):
         print(termo)
         qs = qs.filter(
             Q(title__icontains=termo) |
-            Q(url__icontains=termo) |
             Q(description__icontains=termo) |
             Q(source__icontains=termo)
         )

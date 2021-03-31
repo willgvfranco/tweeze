@@ -20,6 +20,7 @@
             <div> - {{n.source}} - {{n.criado|date:'d/m/Y H:i'}}</div>
             <br>
         {% endfor %}
+        {% include 'partials/_pagination.html' %}
         </div>
 {% endblock %}
 
