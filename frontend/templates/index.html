@@ -1,5 +1,6 @@
  {% extends 'base.html' %}
-
+{% load humanize %}
+{% load tz %}
 {% block conteudo %}
         <form method="get" action="{% url 'busca' %}">
          {% csrf_token %}
@@ -13,8 +14,14 @@
         </form>
 
         <div>
-        {% for fonte in fontes %}
-            <div>{{fonte.source_slug}}</div>
+        <div class="mb-3"></div>
+                {% for n in fontes %}
+            <a target="_blank" href={{n.url}}>{{n.title}}</a>
+            <br>
+
+            <div> - {{n.source}} - {{n.criado|localtime}}</div>
+            <br>
         {% endfor %}
+        {% comment %} {% include 'partials/_pagination.html' %} {% endcomment %}
         </div>
 {% endblock %}

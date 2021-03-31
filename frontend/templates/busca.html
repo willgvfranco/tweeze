@@ -1,5 +1,6 @@
  {% extends 'base.html' %}
 {% load humanize %}
+{% load tz %}
 {% block conteudo %}
         <form method="get" action="{% url 'busca' %}">
           <h1>Tweeze 0.3.0-pre-alpha</h1>
@@ -17,7 +18,7 @@
             <a target="_blank" href={{n.url}}>{{n.title}}</a>
             <br>
 
-            <div> - {{n.source}} - {{n.criado|date:'d/m/Y H:i'}}</div>
+            <div> - {{n.source}} - {{n.criado|localtime}}</div>
             <br>
         {% endfor %}
         {% comment %} {% include 'partials/_pagination.html' %} {% endcomment %}
