@@ -2,6 +2,37 @@ from django.db import models
 from django.utils import timezone
 # Create your models here.
 
+ESTADOS_BR = (
+    ('BR', 'Brasil'),
+    ('AC', 'Acre'),
+    ('AL', 'Alagoas'),
+    ('AP', 'Amapá'),
+    ('AM', 'Amazonas'),
+    ('BA', 'Bahia'),
+    ('CE', 'Ceará'),
+    ('DF', 'Distrito Federal'),
+    ('ES', 'Espírito Santo'),
+    ('GO', 'Goiás'),
+    ('MA', 'Maranhão'),
+    ('MT', 'Mato Grosso'),
+    ('MS', 'Mato Grosso do Sul'),
+    ('MG', 'Minas Gerais'),
+    ('PA', 'Pará'),
+    ('PB', 'Paraíba'),
+    ('PR', 'Paraná'),
+    ('PE', 'Pernambuco'),
+    ('PI', 'Piauí'),
+    ('RJ', 'Rio de Janeiro'),
+    ('RN', 'Rio Grande do Norte'),
+    ('RS', 'Rio Grande do Sul'),
+    ('RO', 'Rondônia'),
+    ('RR', 'Roraima'),
+    ('SC', 'Santa Catarina'),
+    ('SP', 'São Paulo'),
+    ('SE', 'Sergipe'),
+    ('TO', 'Tocantins')
+)
+
 
 class Always(models.Model):
     criado = models.DateTimeField(
@@ -27,12 +58,14 @@ class Fonte(Always):
     source_regex = models.CharField(max_length=255, null=True, blank=True)
     source_type = models.CharField(max_length=255, blank=True)
     source_category = models.CharField(max_length=255, null=True, blank=True)
+    source_state = models.CharField(
+        max_length=2, choices=ESTADOS_BR, null=True, blank=True)
 
 
 class Noticia(Always):
     # fonte = models.CharField(max_length=255)
     fonte = models.ForeignKey(
-        Fonte, on_delete=models.DO_NOTHING, blank=True, null=True)
+        Fonte, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.TextField()
     url = models.TextField()
     source = models.TextField()
