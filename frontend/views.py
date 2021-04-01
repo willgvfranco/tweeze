@@ -19,7 +19,7 @@ class HomeView(TemplateView):
         # O que ja tiver, retorna.
         context = super(HomeView, self).get_context_data(**kwargs)
         context['app_name'] = config('APP_NAME')  # Adicionando
-        context['fontes'] = Noticia.objects.all().order_by('-id')[:40]
+        context['fontes'] = Noticia.objects.all().order_by('-id')[:100]
 
         return context
 
