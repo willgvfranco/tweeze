@@ -1,3 +1,7 @@
-from django.test import TestCase
+pizza = {'crust': 'thick', 'toppings': ['Mushroom', 'cheese', 'pineapple'], }
 
-# Create your tests here.
+for i in pizza['toppings']:
+    print(i)
+
+a = ([x for x in pizza['toppings']])
+print(a)

@@ -2,9 +2,10 @@ import psycopg2
 import psycopg2.extras
 import hashlib
 import redis
-import datetime
+from datetime import datetime
 # from get_noticias import get_noticias
 from decouple import config
+from pytz import timezone
 
 
 def tweeze_get_sources_db(*args):
@@ -50,7 +51,7 @@ def tweeze_store_db(sqlquery, slug, counting, timer):
         conn = psycopg2.connect(
             "dbname=%s host=%s user=%s password=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD')))
 
-        dt = datetime.datetime.now()
+        dt = datetime.now().astimezone(timezone('America/Sao_Paulo'))
         # the SQL INSERT statement we will use
         insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, source, title, url, description, pub_data, fonte_id, category) ' +
                       'VALUES (%(criado)s, %(modificado)s, %(ativo)s, %(source)s, %(title)s, %(url)s, %(description)s, %(pub_data)s, %(fonte_id)s, %(category)s);')
