@@ -3,6 +3,11 @@ from django.utils import timezone
 # Create your models here.
 
 ESTADOS_BR = (
+    ('INT', 'Mundo'),
+    ('EUR', 'Europa'),
+    ('AME', 'América'),
+    ('OCE', 'Oceania'),
+    ('AFR', 'África'),
     ('BR', 'Brasil'),
     ('AC', 'Acre'),
     ('AL', 'Alagoas'),
@@ -59,7 +64,7 @@ class Fonte(Always):
     source_type = models.CharField(max_length=255, blank=True)
     source_category = models.CharField(max_length=255, null=True, blank=True)
     source_state = models.CharField(
-        max_length=2, choices=ESTADOS_BR, null=True, blank=True)
+        max_length=3, choices=ESTADOS_BR, null=True, blank=True)
 
 
 class Noticia(Always):

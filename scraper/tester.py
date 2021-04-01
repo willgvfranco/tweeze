@@ -4,7 +4,7 @@ from arauto import tweeze_get_sources_db
 # conn = psycopg2.connect(dsn)
 from datetime import date
 
-data = tweeze_get_sources_db(8)[0]
+data = "https://www.gazetadigital.com.br/ultimas-noticias"
 
 url = data['source_url_global']
 response = requests.get(url)
@@ -46,4 +46,4 @@ for news in container:
     processed_data.append(formatted_pergunta)
 
 
-TweezeStoreDB.db_insert(processed_data)
+# TweezeStoreDB.db_insert(processed_data)
