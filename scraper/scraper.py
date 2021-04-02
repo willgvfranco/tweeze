@@ -10,8 +10,8 @@ from datetime import date
 def neus_scraper(source_url_global, news_container, source_type, news_url, news_source, news_title, news_date, news_description, source_slug, id, news_category=None, source_initial_timer=15, *args, **kwargs):
 
     timer = source_initial_timer
-    cachero_list_etags = source_slug.lower() + "_etag_cache"
-    cachero_list_individual_hashs = source_slug.lower() + "_hash_cache"
+    cachero_list_etags = source_slug.lower() + "_etag_cache-" + str(id)
+    cachero_list_individual_hashs = source_slug.lower() + "_hash_cache-" + str(id)
 
     while True:
         count = 0
