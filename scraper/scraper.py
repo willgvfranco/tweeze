@@ -36,8 +36,8 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
         etag_cache = Cachero.listrange(cachero_list_etags, 0, -1)
         hash_cache = Cachero.listrange(cachero_list_individual_hashs, 0, -1)
 
-        # if(etag_encode not in etag_cache):
-        if(True):
+        if(etag_encode not in etag_cache):
+            # if(True):
 
             # Find all text in the data
 
@@ -94,6 +94,7 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
                 timer = 15
                 tweeze_store_db(processed_data, source_slug, count, timer)
                 Cachero.listpush(cachero_list_etags, etag)
+
                 Cachero.listtrim(cachero_list_etags, 0, 7)
                 Cachero.listtrim(cachero_list_individual_hashs, 0, 1023)
                 sleep(timer)

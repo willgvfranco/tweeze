@@ -6,25 +6,31 @@ from datetime import date
 import re
 
 
-source_url_global = "https://www.anoticiamt.com.br/index_secao.php?sid=999"
-news_container = "div.col-xs-12 col-sm-12 col-md-12 col-lg-12"
+source_url_global = "http://www.jreporterdoaraguaia.com/"
+news_container = "re=Publicacao"
 news_description = 'h2'
 news_pubdate = 'span.tpl-list-datedesc'
 news_url = 'a'
-news_title = 'h2.tpl-list-title'
+news_title = 'h2'
 
 
 response = requests.get(source_url_global)
 html_data = response.content
 soup = BeautifulSoup(html_data, 'html.parser', from_encoding='utf-8')
 
-formatted_container = news_container.split(".")
 
-container = soup.findAll(
-    formatted_container[0], class_=formatted_container[1])
-# container = soup.findAll(
-#     "a", attrs={"href": "Publicacao"})
-# container = soup.findAll(href=re.compile("Publicacao"))
+if(news_container.startswith('re=')):
+    container = soup.findAll(href=re.compile(
+        news_container.removeprefix('re=')))
+elif('.' in news_container):
+    formatted_container = news_container.split(".")
+    container = soup.findAll(
+        formatted_container[0], class_=formatted_container[1])
+else:
+    container = news_container
+
+    # container = soup.findAll(
+    #     "a", attrs={"href": "Publicacao"})
 processed_data = []
 
 
@@ -40,7 +46,12 @@ for news in container:
     fn_title = fn_title.text
     fn_description = news.select_one(news_description)
 
-    fn_url = news.select_one(news_url)['href']
+    md_url = news.select_one(news_url)
+    if(not md_url):
+        fn_url = news.attrs['href']
+    else:
+        fn_url = news.select_one(news_url)['href']
+
     fn_pub_date = news.select_one(news_pubdate).text
 
     formatted_pergunta = {
@@ -52,6 +63,5 @@ for news in container:
     }
 
     processed_data.append(formatted_pergunta)
-
 
 # TweezeStoreDB.db_insert(processed_data)

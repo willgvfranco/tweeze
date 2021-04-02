@@ -14,6 +14,7 @@ def warp_gate():
     threads = list()
     for args in source_data:
         if args['ativo']:
+
             engine = threading.Thread(target=neus_scraper, kwargs=dict(args))
             engine.name = args['source_slug']
             threads.append(engine)

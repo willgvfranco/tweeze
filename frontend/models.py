@@ -1,42 +1,7 @@
 from django.db import models
 from django.utils import timezone
 # Create your models here.
-
-ESTADOS_BR = (
-    ('INT', 'Mundo'),
-    ('EUR', 'Europa'),
-    ('AME', 'América'),
-    ('OCE', 'Oceania'),
-    ('AFR', 'África'),
-    ('BR', 'Brasil'),
-    ('AC', 'Acre'),
-    ('AL', 'Alagoas'),
-    ('AP', 'Amapá'),
-    ('AM', 'Amazonas'),
-    ('BA', 'Bahia'),
-    ('CE', 'Ceará'),
-    ('DF', 'Distrito Federal'),
-    ('ES', 'Espírito Santo'),
-    ('GO', 'Goiás'),
-    ('MA', 'Maranhão'),
-    ('MT', 'Mato Grosso'),
-    ('MS', 'Mato Grosso do Sul'),
-    ('MG', 'Minas Gerais'),
-    ('PA', 'Pará'),
-    ('PB', 'Paraíba'),
-    ('PR', 'Paraná'),
-    ('PE', 'Pernambuco'),
-    ('PI', 'Piauí'),
-    ('RJ', 'Rio de Janeiro'),
-    ('RN', 'Rio Grande do Norte'),
-    ('RS', 'Rio Grande do Sul'),
-    ('RO', 'Rondônia'),
-    ('RR', 'Roraima'),
-    ('SC', 'Santa Catarina'),
-    ('SP', 'São Paulo'),
-    ('SE', 'Sergipe'),
-    ('TO', 'Tocantins')
-)
+from .utils import ESTADOS_BR, ARQUIVOS
 
 
 class Always(models.Model):
@@ -61,8 +26,9 @@ class Fonte(Always):
     news_category = models.CharField(max_length=255, null=True, blank=True)
     source_initial_timer = models.IntegerField(null=True, blank=True)
     source_regex = models.CharField(max_length=255, null=True, blank=True)
-    source_type = models.CharField(max_length=255, blank=True)
-    source_category = models.CharField(max_length=255, null=True, blank=True)
+    source_type = models.CharField(max_length=255, choices=ARQUIVOS)
+    source_category = models.CharField(
+        max_length=255, null=True, blank=True)
     source_state = models.CharField(
         max_length=3, choices=ESTADOS_BR, null=True, blank=True)
 
