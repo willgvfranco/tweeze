@@ -7,29 +7,27 @@ import json
 from datetime import date
 
 
-def neus_scraper(source_url_global, news_container, news_url, news_source, news_title, news_date, news_description, source_slug, id, news_category=None, initial_timer=15, *args, **kwargs):
+def neus_scraper(source_url_global, news_container, source_type, news_url, news_source, news_title, news_date, news_description, source_slug, id, news_category=None, source_initial_timer=15, *args, **kwargs):
 
-    timer = initial_timer
+    timer = source_initial_timer
     cachero_list_etags = source_slug.lower() + "_etag_cache"
     cachero_list_individual_hashs = source_slug.lower() + "_hash_cache"
+
     while True:
         count = 0
         if (timer > 5400):
             timer = 5400
-        # Data
-        # with open(source_url_global, "r") as f:
-        #     response = f.read()
+
         response = requests.get(source_url_global)
-        xml_data = response.content
-        soup = BeautifulSoup(xml_data, features="xml", from_encoding='utf-8')
-        # texts = str(soup.findAll(text=True)).replace('\\n', '')
+        data = response.content
+        if(source_type == "XML"):
+            soup = BeautifulSoup(data, features="xml",
+                                 from_encoding='utf-8')
+        else:
+            soup = BeautifulSoup(data, 'html.parser',
+                                 from_encoding='utf-8')
 
-        # if(regex_temp):
-        #     xml_data.replace(regex_temp, '')
-
-        # Validation
-        # etag = response.headers._store['etag'][1]
-        etag = generate_hash(xml_data)
+        etag = generate_hash(data)
         etag_encode = etag.encode('utf-8')
 
         # Listas Cache
@@ -42,13 +40,25 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
             # Find all text in the data
 
             # Find the tag/child
-            container = soup.findAll(news_container)
+            if(news_container.startswith('re=')):
+                container = soup.findAll(href=re.compile(
+                    news_container.removeprefix('re=')))
+            elif('.' in news_container):
+                formatted_container = news_container.split(".")
+                container = soup.findAll(
+                    formatted_container[0], class_=formatted_container[1])
+            else:
+                container = soup.findAll(news_container)
+
             processed_data = []
 
             for news in container:
-                if('/href' in news_url):
-                    news_url_formmated = news_url[:-5]
-                    url = news.find(news_url_formmated)['href']
+
+                md_url = news.select_one(news_url)
+                if(not md_url):
+                    url = news.attrs['href']
+                elif('href' in md_url):
+                    url = news.select_one(news_url)['href']
                 else:
                     url = news.find(news_url).text
 
@@ -75,7 +85,11 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
                     else:
                         pub_data = date.today().strftime('%d/%m/%Y')
 
-                    descricao = news.find(news_description).text
+                    descricao = news.find(news_description)
+                    if(descricao):
+                        descricao = news.find(news_description).text
+                    else:
+                        descricao = ''
 
                     formatted_pergunta = {
                         'source': news_source,
@@ -91,7 +105,7 @@ def neus_scraper(source_url_global, news_container, news_url, news_source, news_
                     processed_data.append(formatted_pergunta)
 
             if(processed_data):
-                timer = 15
+                timer = source_initial_timer
                 tweeze_store_db(processed_data, source_slug, count, timer)
                 Cachero.listpush(cachero_list_etags, etag)
 
