@@ -17,10 +17,11 @@ news_url = 'link'
 for news in container:
     # print(pergunta)
     md_url = news.select_one(news_url)
+
     if(not md_url):
         url = news.attrs['href']
-    elif('href' in md_url):
-        url = news.select_one(news_url)['href']
+    elif("href" in md_url.attrs):
+        url = md_url.attrs['href']
     else:
         url = news.find(news_url).text
 

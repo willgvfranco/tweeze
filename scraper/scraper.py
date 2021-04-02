@@ -55,13 +55,13 @@ def neus_scraper(source_url_global, news_container, source_type, news_url, news_
             for news in container:
 
                 md_url = news.select_one(news_url)
+
                 if(not md_url):
                     url = news.attrs['href']
-                elif('href' in md_url):
-                    url = news.select_one(news_url)['href']
+                elif("href" in md_url.attrs):
+                    url = md_url.attrs['href']
                 else:
                     url = news.find(news_url).text
-
                 hash_news = generate_hash(url, 'str').encode('utf-8')
 
                 if(hash_news in hash_cache):
