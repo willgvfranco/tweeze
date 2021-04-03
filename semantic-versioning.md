@@ -23,7 +23,9 @@ automatizador e timelapse do scrapper
 
 # 0.4
 Sistema de login com área fechada e modos de extração (PDF?); <br>
-10+ sites 
+50+ sites  (XML/HTML)
+
+
 
 # 0.5.x-alpha [Início Beta-testers]
 Primeira camada de design; <br>

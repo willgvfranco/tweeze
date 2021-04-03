@@ -13,12 +13,15 @@ def neus_scraper(source_url_global, news_container, source_type, news_url, news_
     cachero_list_etags = source_slug.lower() + "_etag_cache-" + str(id)
     cachero_list_individual_hashs = source_slug.lower() + "_hash_cache-" + str(id)
 
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
+    }
     while True:
         count = 0
         if (timer > 5400):
             timer = 5400
 
-        response = requests.get(source_url_global)
+        response = requests.get(source_url_global, headers=headers)
         data = response.content
         if(source_type == "XML"):
             soup = BeautifulSoup(data, features="xml",
@@ -71,7 +74,12 @@ def neus_scraper(source_url_global, news_container, source_type, news_url, news_
                     count += 1
                     Cachero.listpush(cachero_list_individual_hashs, hash_news)
 
-                    titulo = news.find(news_title).text
+                    if(source_type == "XML"):
+                        titulo = news.find(news_title).text
+                    else:
+                        titulo = news.select_one(news_title).text
+                        if not titulo:
+                            continue
 
                     has_category = news.find(news_category)
                     if(has_category):

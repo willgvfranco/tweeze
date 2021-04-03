@@ -4,13 +4,13 @@
 {% block conteudo %}
         <form method="get" action="{% url 'busca' %}">
          {% csrf_token %}
-        <h1>{{app_name}}</h1>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Pesquise por alguma palavra ou frase específica: </label>
-                <input class="form-control" type="search" value="" id="exampleInputEmail1" name="termo">
-                {% comment %} <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> {% endcomment %}
-            </div>
-            <button type="submit" class="btn btn-primary">Pinçar</button>
+            <h1>{{app_name}}</h1>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Pesquise por alguma palavra ou frase específica: </label>
+                    <input class="form-control" type="search" value="" id="exampleInputEmail1" name="termo">
+                    {% comment %} <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> {% endcomment %}
+                </div>
+                <button type="submit" class="btn btn-primary">Pinçar</button>
         </form>
 
         <div>
@@ -25,3 +25,8 @@
         {% comment %} {% include 'partials/_pagination.html' %} {% endcomment %}
         </div>
 {% endblock %}
+
+
+
+<a></a>
+
