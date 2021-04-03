@@ -10,7 +10,7 @@ import threading
 
 # @app.task(bind=True)
 def warp_gate():
-    source_data = tweeze_get_sources_db(34)
+    source_data = tweeze_get_sources_db()
     threads = list()
     for args in source_data:
         if args['ativo']:
