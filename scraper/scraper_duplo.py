@@ -9,7 +9,7 @@ from goose3 import Goose
 from arauto import tweeze_store_db, Cachero, generate_hash
 from time import sleep
 import json
-from scraper.utils import html_clear
+from utils import html_clear
 
 
 def xml_scraper(source_url_global, news_source, source_slug, id,
