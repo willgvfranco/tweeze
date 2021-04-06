@@ -156,7 +156,7 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
                     continue
                 else:
                     count += 1
-                    # Cachero.listpush(cachero_list_individual_hashes, hash_news)
+                    Cachero.listpush(cachero_list_individual_hashes, hash_news)
                     urls_list.append(fn_url)
 
             if urls_list:
@@ -183,7 +183,7 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
 
                 timer = source_initial_timer
                 tweeze_store_db(article_list, source_slug, count, timer)
-                # Cachero.listpush(cachero_list_etags, etag)
+                Cachero.listpush(cachero_list_etags, etag)
 
                 Cachero.listtrim(cachero_list_etags, 0, 7)
                 Cachero.listtrim(cachero_list_individual_hashes, 0, 511)
