@@ -5,7 +5,8 @@ from arauto import tweeze_store_db, Cachero, generate_hash
 from time import sleep
 import json
 from datetime import date
-
+import feedparser
+import json
 
 def neus_scraper(source_url_global, news_container, source_type, news_url, news_source, news_title, news_date, news_description, source_slug, id, news_category=None, source_initial_timer=15, *args, **kwargs):
 
@@ -20,6 +21,7 @@ def neus_scraper(source_url_global, news_container, source_type, news_url, news_
         count = 0
         if (timer > 5400):
             timer = 5400
+        responsexml = feedparser.parse(source_url_global)
 
         response = requests.get(source_url_global, headers=headers)
         data = response.content

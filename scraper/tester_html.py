@@ -11,7 +11,7 @@ news_container = "div.tdb_module_loop.td_module_wrap.td-animation-stack"
 news_description = 'h2'
 news_pubdate = 'span.tpl-list-datedesc'
 news_url = 'a'
-news_title = 'h3.entry-title.td-module-title > a'
+news_title = 'article.jeg_post.jeg_pl_md_2.format-standard'
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',

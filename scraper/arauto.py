@@ -46,15 +46,18 @@ def tweeze_get_sources_db(*args):
 
 
 def tweeze_store_db(sqlquery, slug, counting, timer):
+
     try:
+        # print('store inside')
+
         # connect to PostgreSQL
         conn = psycopg2.connect(
             "dbname=%s host=%s user=%s password=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD')))
 
         dt = datetime.now().astimezone(timezone('America/Sao_Paulo'))
         # the SQL INSERT statement we will use
-        insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, source, title, url, description, pub_data, fonte_id, category) ' +
-                      'VALUES (%(criado)s, %(modificado)s, %(ativo)s, %(source)s, %(title)s, %(url)s, %(description)s, %(pub_data)s, %(fonte_id)s, %(category)s);')
+        insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, source, title, url, description, pub_data, fonte_id) ' +
+                      'VALUES (%(criado)s, %(modificado)s, %(ativo)s, %(source)s, %(title)s, %(url)s, %(description)s, %(pub_data)s, %(fonte_id)s);')
 
         # open a cursor to access data
         cur = conn.cursor()
@@ -102,7 +105,7 @@ class Cachero:
 
 
 def generate_hash(file, tp="byte"):
-    if(tp != 'byte'):
+    if tp != 'byte':
         md5_hash = hashlib.md5(file.encode())
     else:
         md5_hash = hashlib.md5()

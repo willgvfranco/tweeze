@@ -1,7 +1,7 @@
 
 # from frontend.models import Fonte
 from arauto import tweeze_get_sources_db
-from scraper import neus_scraper
+from scraper_duplo import html_scraper, xml_scraper
 import threading
 # from celery import Celery
 
@@ -15,7 +15,10 @@ def warp_gate():
     for args in source_data:
         if args['ativo']:
 
-            engine = threading.Thread(target=neus_scraper, kwargs=dict(args))
+            if args['source_type'] == 'XML':
+                engine = threading.Thread(target=xml_scraper, kwargs=dict(args))
+            else:
+                engine = threading.Thread(target=html_scraper, kwargs=dict(args))
             engine.name = args['source_slug']
             threads.append(engine)
             engine.start()
