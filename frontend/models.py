@@ -40,6 +40,6 @@ class Noticia(Always):
     title = models.TextField(blank=True)
     url = models.TextField()
     source = models.TextField()
-    category = models.TextField(null=True)
+    category = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    pub_data = models.CharField(max_length=255, blank=True)
+    pub_data = models.CharField(max_length=255, blank=True, null=True)

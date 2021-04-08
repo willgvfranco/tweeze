@@ -37,7 +37,8 @@ def xml_scraper(source_url_global, news_source, source_slug, id,
             for news in response['entries']:
                 individual_url = news['link']
 
-                hash_news = generate_hash(individual_url, 'str').encode('utf-8')
+                hash_news = generate_hash(
+                    individual_url, 'str').encode('utf-8')
 
                 if hash_news in hash_cache:
                     continue
@@ -163,8 +164,8 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
 
                 article_list = []
 
-                if not isinstance(urls_list, list):
-                    return scrap_one(urls_list)
+                # if not isinstance(urls_list, list):
+                #     return scrap_one(urls_list)
 
                 with Goose() as g:
 
@@ -228,7 +229,7 @@ def scrap_them_all(urls_list, news_source, id):
                 "title": art.title,
                 "link": art.final_url,
                 "description": art.cleaned_text if 'description' in art else '',
-                "pub_data": art.publish_datetime_utc  if 'publish_datetime_utc' in art else date.today().strftime('%d/%m/%Y')
+                "pub_data": art.publish_datetime_utc if 'publish_datetime_utc' in art else date.today().strftime('%d/%m/%Y')
             })
             article_list.append(noticia_final)
 
