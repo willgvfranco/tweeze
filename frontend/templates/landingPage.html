@@ -1,0 +1,198 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% bootstrap_css %}
+      <link rel="shortcut icon" type="image/png" href="{% static 'img/logo/logo_twz.png' %}"/>
+
+
+      <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+      <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+      <link rel="stylesheet" href="{% static 'css/landing_page.css' %}">
+
+      <title>Tweeze Alpha</title>
+  </head>
+  <body>
+      <div class="logo-wrapper">
+        <img
+          class="img-fluid wow fadeInDown"
+          data-wow-delay="0.5s"
+          src="{% static 'img/logo/logo_tweeze.png' %}"
+          alt="Tweeze Logo"
+        >
+      </div>
+
+      {% if messages %}
+      {% for msg in messages %}
+        <div class="alert {{ msg.tags }} fadeInDown" data-wow-delay="0.3s">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+      <div class="banner-wrapper first-banner">
+        <img class="img-fluid background" src="{% static 'img/moldura banner 1.jpg' %}" alt="Banner background">
+        <img class="img-fluid banner" src="{% static 'img/banner 1 1920x680.jpg' %}" alt="Banner 1">
+        <p class="title wow fadeIn" data-wow-delay="0.8s">
+          <span class="bold">Descubra o que falam da sua marca: </span>
+          é fácil, simples e instantâneo.          
+        </p>
+        <button class="btn action-btn wow fadeIn" data-wow-delay="0.8s">Iniciar teste grátis</button>
+      </div>
+
+      <div class="business">
+        <div class="header wow fadeInLeft" data-wow-delay="0.5s">
+          <p class="title"><span>O que podemos fazer</span> pelo seu negócio.</p>
+        </div>
+
+        <p class="subheader wow fadeInLeft" data-wow-delay="0.8s">
+          Com a Tweeze, você pode pinçar as notícias mais importantes para o seu negócio,
+          descobrir o que dizem da sua marca e ainda gerar relatórios e enviá-los de forma
+          fácil e intuitiva.
+      </p>
+
+        <div class="video-wrapper">
+          <iframe class="wow fadeIn" data-wow-delay="1s" src="https://youtube.com/embed/false" frameborder="0"></iframe>
+        </div>
+      </div>
+
+      <div class="launch">
+        <div class="header wow fadeInDown" data-wow-delay="0.3s">
+          <p class="title">Plano de Lançamento</p>
+        </div>
+
+        <div class="features-wrapper">
+          <div class="list-features">
+            <div class="feature wow fadeInLeft" data-wow-delay="0.3s">
+              <p>Clipping diário</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+            <div class="feature wow fadeInLeft" data-wow-delay="0.4s">
+              <p>Cadastro ilimitado de palavras chave</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+            <div class="feature wow fadeInLeft" data-wow-delay="0.5s">
+              <p>Rastreamento em veículos nacionais e internacionais</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+            <div class="feature wow fadeInLeft" data-wow-delay="0.6s">
+              <p>Relatórios personalizados</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+            <div class="feature wow fadeInLeft" data-wow-delay="0.7s">
+              <p>Centimetragem</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+            <div class="feature wow fadeInLeft" data-wow-delay="0.8s">
+              <p>Alerta de gerenciamento de crise</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+            <div class="feature wow fadeInLeft" data-wow-delay="0.9s">
+              <p>Notificações por e-mail e SMS</p>
+              <img src="{% static 'icons/check icone.png' %}" alt="checked_icon">
+            </div>
+          </div>
+
+          <div class="pricing wow fadeInRight" data-wow-delay="0.6s">
+            <img class="img-fluid" src="{% static 'icons/preço dos planos.png' %}" alt="pricing">
+          </div>
+        </div>
+      </div>
+
+      <div class="banner-wrapper second-banner">
+        <img class="img-fluid background" src="{% static 'img/moldura banner 2.jpg' %}" alt="Banner background">
+        <img class="img-fluid banner" src="{% static 'img/banner 2 1920x680.jpg' %}" alt="Banner 1">
+        <p class="title wow fadeIn" data-wow-delay="0.5s">
+          <span class="bold">A Tweeze é para</span>
+        </p>
+        <p class="subtitle wow fadeInLeft" data-wow-delay="0.8s">
+          Assessorias de imprensa, pesquisadores e marcas que querem saber o que o seu público 
+          pensa. Com a Tweeze você pode acompanhar os concorrentes, prever crises e ainda conta 
+          com a ajuda da Jul.IA, a assistente que fica de olho em tudo que acontece com a sua marca.
+        </p>
+      </div>
+
+      <div class="faq">
+        <div class="header wow fadeInLeft" data-wow-delay="0.3s">
+          <p class="title">F.A.Q</p>
+        </div>
+        <p class="subheader wow fadeInLeft" data-wow-delay="0.6s">Perguntas frequentes</p>
+      </div>
+
+      <div class="contact">
+        <div class="header">
+          <p class="title wow fadeInLeft" data-wow-delay="0.3s">Fale Conosco</p>
+          <p class="subtitle wow fadeInLeft" data-wow-delay="0.6s">Deixe seu número, nós entraremos em contato.</p>
+        </div>
+
+        <form class="contact-form wow fadeInRight" data-wow-delay="0.4s" action="{% url 'landingPage' %}" method="post">
+          {% csrf_token %}
+          <div class="input-group">
+            {% comment %} <div class="input-group-prepend">
+              <select class="custom-select" id="code" name="code">
+                <option selected>+55</option>
+                <option value="1">+33</option>
+                <option value="2">+44</option>
+                <option value="3">+66</option>
+              </select>
+            </div> {% endcomment %}
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-control line-1"
+              placeholder="Digite seu telefone aqui"
+              pattern="[0-9]{2}[0-9]{5}[0-9]{4}"
+              required
+            >
+          </div>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            class="form-control line-2"
+            placeholder="Digite seu e-mail aqui."
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
+            required
+          >
+          <div class="line-3">
+            {% comment %} <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                Eu aceito os <span>termos</span> e <span>condições</span> de uso.
+              </label>
+            </div> {% endcomment %}
+            <button type="submit" class="btn send-btn">Enviar</button>
+          </div>
+        </form>
+      </div>
+      
+      <footer class="footer">
+        <img class="img-fluid footer-logo" src="{% static 'img/logo/logo_twz.png' %}" alt="Tweeze Logo">
+        <p class="logo-sub">Fácil, rápido e online.</p>
+        <div class="icons-wrapper">
+          <img class="img-fluid" src="{% static 'icons/social_media/facebook.png' %}" alt="Tweeze Logo">
+          <img class="img-fluid" src="{% static 'icons/social_media/twitter.png' %}" alt="Tweeze Logo">
+          <img class="img-fluid" src="{% static 'icons/social_media/insta.png' %}" alt="Tweeze Logo">
+          <img class="img-fluid" src="{% static 'icons/social_media/email.png' %}" alt="Tweeze Logo">
+          <img class="img-fluid" src="{% static 'icons/social_media/fone.png' %}" alt="Tweeze Logo">
+        </div>
+        <p class="rights">&#x40;2021 Tweeze. Todos os direitos reservados</p>
+      </footer>
+
+    <script src="{% static 'js/jquery-min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/wow.js' %}"></script>
+    <script src="{% static 'js/jquery.nav.js' %}"></script>
+    <script src="{% static 'js/scrolling-nav.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/form-validator.min.js' %}"></script>
+    <script src="{% static 'js/contact-form-script.min.js' %}"></script>
+  </body>
+</html>

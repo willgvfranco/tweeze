@@ -1,27 +1,28 @@
 from django import forms
 from django.core.mail.message import EmailMessage
+from django.core.validators import RegexValidator
 
 
 class ContatoForm(forms.Form):
-    nome = forms.CharField(max_length=255, label="Nome")
     email = forms.EmailField(max_length=255, label="Email")
-    assunto = forms.CharField(max_length=255, label="Assunto")
-    mensagem = forms.CharField(label="mensagem", widget=forms.Textarea())
+    code = forms.CharField(max_length=3, label="DD1")
+    phone = forms.CharField(max_length=18, label="Telefone")
 
     def send_mail(self):
-        nome = self.cleaned_data['nome']
         email = self.cleaned_data['email']
-        assunto = self.cleaned_data['assunto']
-        mensagem = self.cleaned_data['mensagem']
+        code = self.cleaned_data['code']
+        phone = self.cleaned_data['phone']
 
-        conteudo = f'Nome: {nome}\nE-mail: {email}\nAssunto: {assunto}\nMensagem: {mensagem}'
+        conteudo = f'Telefone: {code}{phone}\nE-mail: {email}'
 
         mail = EmailMessage(
-            subject=assunto,
+            subject='teste',
             body=conteudo,
             from_email='williamgvfranco@gmail.com',
             to=['williamgvfranco@gmail.com'],
             headers={'Reply-To': email}
         )
 
-        mail.send()
+        # mail.send()
+        print(mail)
+

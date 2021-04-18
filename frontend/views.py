@@ -18,10 +18,36 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         # O que ja tiver, retorna.
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['app_name'] = config('APP_NAME')  # Adicionando
+        # context['app_name'] = config('APP_NAME')  # Adicionando
         context['fontes'] = Noticia.objects.all().order_by('-id')[:100]
 
         return context
+
+
+# Landing Page
+class LandingPageView(FormView):
+    template_name = 'landingPage.html'
+    form_class = ContatoForm
+    success_url = reverse_lazy('landingPage')
+
+    def get_context_data(self, **kwargs):
+        # O que ja tiver, retorna.
+        context = super(LandingPageView, self).get_context_data(**kwargs)
+        # context['app_name'] = config('APP_NAME')  # Adicionando
+        # context['fontes'] = Noticia.objects.all().order_by('-id')[:100]
+
+    def form_valid(self, form, *args, **kwargs):
+        form.send_mail()
+        messages.success(self.request, 'E-mail enviado com sucesso')
+        print(form)
+        return super(LandingPageView, self).form_valid(form, *args, **kwargs)
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request, 'Erro ao enviar e-mail')
+        return super(LandingPageView, self).form_invalid(form, *args, **kwargs)
+
+        return context
+
 
 # Formulario de contato (e-mail)
 
