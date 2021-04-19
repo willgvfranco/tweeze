@@ -15,22 +15,31 @@ class Always(models.Model):
 
 
 class Fonte(Always):
-    source_slug = models.CharField(max_length=255)
-    source_url_global = models.CharField(max_length=255)
-    news_container = models.CharField(max_length=255)
-    news_url = models.CharField(max_length=255, null=True)
-    news_source = models.CharField(max_length=255)
-    news_title = models.CharField(max_length=255, blank=True, null=True)
-    news_date = models.CharField(max_length=255, blank=True, null=True)
-    news_description = models.CharField(max_length=255, null=True, blank=True)
-    news_category = models.CharField(max_length=255, null=True, blank=True)
-    source_initial_timer = models.IntegerField(null=True, blank=True)
-    source_regex = models.CharField(max_length=255, null=True, blank=True)
-    source_type = models.CharField(max_length=255, choices=ARQUIVOS)
+    source_slug = models.CharField(
+        max_length=255, verbose_name="Slug da Fonte")
+    source_url_global = models.CharField(
+        max_length=255, verbose_name="Link geral da Fonte")
+    news_container = models.CharField(
+        max_length=255, verbose_name="Container das notícias")
+    news_url = models.CharField(
+        max_length=255, null=True, verbose_name="Elemento da Url")
+    news_source = models.CharField(
+        max_length=255, verbose_name="Nome da Fonte")
+    # news_date = models.CharField(max_length=255, blank=True, null=True)
+    # news_description = models.CharField(max_length=255, null=True, blank=True)
+    # news_category = models.CharField(max_length=255, null=True, blank=True, verbose_name="Categoria ")
+    source_initial_timer = models.IntegerField(
+        null=True, blank=True, verbose_name="Tempo Inicial")
+    source_regex = models.CharField(
+        max_length=255, null=True, blank=True, verbose_name="Base da URL (Facultativo)")
+    source_type = models.CharField(
+        max_length=255, choices=ARQUIVOS, verbose_name="Tipo de Fonte")
     source_category = models.CharField(
-        max_length=255, null=True, blank=True)
+        max_length=255, null=True, blank=True, verbose_name="Categoria da Fonte")
     source_state = models.CharField(
-        max_length=3, choices=ESTADOS_BR, null=True, blank=True)
+        max_length=3, choices=ESTADOS_BR, null=True, blank=True, verbose_name="Estado de Origem da Fonte")
+    source_municipio = models.CharField(
+        max_length=255, null=True, blank=True, verbose_name="Município de Origem da Fonte")
 
 
 class Noticia(Always):
