@@ -5,15 +5,16 @@ from django.core.validators import RegexValidator
 
 class ContatoForm(forms.Form):
     email = forms.EmailField(max_length=255, label="Email")
-    code = forms.CharField(max_length=3, label="DD1")
+    # code = forms.CharField(max_length=3, label="DD1")
     phone = forms.CharField(max_length=18, label="Telefone")
 
     def send_mail(self):
         email = self.cleaned_data['email']
-        code = self.cleaned_data['code']
+        # code = self.cleaned_data['code']
         phone = self.cleaned_data['phone']
 
-        conteudo = f'Telefone: {code}{phone}\nE-mail: {email}'
+        # conteudo = f'Telefone: {code}{phone}\nE-mail: {email}'
+        conteudo = f'Telefone: {phone}\nE-mail: {email}'
 
         mail = EmailMessage(
             subject='teste',
