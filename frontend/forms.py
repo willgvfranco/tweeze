@@ -27,3 +27,8 @@ class ContatoForm(forms.Form):
         # mail.send()
         print(mail)
 
+class LoginForm(forms.Form):
+    login = forms.CharField(max_length=255, label="Login")
+    password = forms.CharField(max_length=18, label="Password")
+
+
