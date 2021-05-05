@@ -8,7 +8,7 @@ from django.views.generic.list import ListView
 from .models import Noticia, Fonte
 from django.db.models import Q, Count, Case, When
 from decouple import config
-from .forms import ContatoForm
+from .forms import ContatoForm, LoginForm
 from django.urls import reverse_lazy
 
 
@@ -45,6 +45,23 @@ class LandingPageView(FormView):
     def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request, 'Erro ao enviar e-mail')
         return super(LandingPageView, self).form_invalid(form, *args, **kwargs)
+
+        return context
+
+class LoginView(FormView):
+    template_name = 'login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+
+    def form_valid(self, form, *args, **kwargs):
+        return super(LoginView, self).form_valid(form, *args, **kwargs)
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request, 'Login incorreto')
+        return super(LoginView, self).form_invalid(form, *args, **kwargs)
 
         return context
 

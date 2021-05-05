@@ -40,7 +40,9 @@
           <span class="bold">Descubra o que falam da sua marca: </span>
           é fácil, simples e instantâneo.          
         </p>
-        <button class="btn action-btn wow fadeIn" data-wow-delay="0.8s">Iniciar teste grátis</button>
+        <button class="btn action-btn navbar-nav wow fadeIn" data-wow-delay="0.8s">
+          <a href="#contact">Iniciar teste grátis</a>
+        </button>
       </div>
 
       <div class="business">
@@ -55,7 +57,7 @@
       </p>
 
         <div class="video-wrapper">
-          <iframe class="wow fadeIn" data-wow-delay="1s" src="https://youtube.com/embed/false" frameborder="0"></iframe>
+          <iframe class="wow fadeIn" data-wow-delay="1s" src="https://youtube.com/embed/WZRxRf0DPfY" frameborder="0"></iframe>
         </div>
       </div>
 
@@ -97,7 +99,10 @@
           </div>
 
           <div class="pricing wow fadeInRight" data-wow-delay="0.6s">
-            <img class="img-fluid" src="{% static 'icons/preço dos planos.png' %}" alt="pricing">
+            <img class="img-fluid" src="{% static 'img/valor exclusivo.jpg' %}" alt="pricing">
+            <button class="btn pricing-btn navbar-nav wow fadeInRight" data-wow-delay="0.6s" href="#contact">
+              <a href="#contact">Quero garantir o valor exclusivo</a>
+            </button>
           </div>
         </div>
       </div>
@@ -122,7 +127,7 @@
         <p class="subheader wow fadeInLeft" data-wow-delay="0.6s">Perguntas frequentes</p>
       </div>
 
-      <div class="contact">
+      <div id="contact" class="contact">
         <div class="header">
           <p class="title wow fadeInLeft" data-wow-delay="0.3s">Fale Conosco</p>
           <p class="subtitle wow fadeInLeft" data-wow-delay="0.6s">Deixe seu número, nós entraremos em contato.</p>
@@ -155,7 +160,8 @@
             name="email"
             class="form-control line-2"
             placeholder="Digite seu e-mail aqui."
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+            title="Endereço de email inválido."
             required
           >
           <div class="line-3">
@@ -183,16 +189,14 @@
         <p class="rights">&#x40;2021 Tweeze. Todos os direitos reservados</p>
       </footer>
 
+      <div id="preloader">
+        <div class="loader" id="loader-1"></div>
+      </div>
+
     <script src="{% static 'js/jquery-min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/wow.js' %}"></script>
     <script src="{% static 'js/jquery.nav.js' %}"></script>
-    <script src="{% static 'js/scrolling-nav.js' %}"></script>
-    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/form-validator.min.js' %}"></script>
-    <script src="{% static 'js/contact-form-script.min.js' %}"></script>
   </body>
 </html>

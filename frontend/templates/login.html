@@ -1,0 +1,77 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% bootstrap_css %}
+      <link rel="shortcut icon" type="image/png" href="{% static 'img/logo/logo_twz.png' %}"/>
+
+
+      <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+      <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+      <title>Login - Tweeze</title>
+  </head>
+  <body>
+    <div class="page-left"></div>
+    <div class="page-right">
+      <img
+        class="img-fluid main-logo"
+        src="{% static 'img/logo/logo_tweeze.png' %}"
+        alt="Tweeze Logo"
+      >
+      <p class="subtitle">Descubra o que falam da sua marca.</p>
+
+      <div class="login-box">
+        <img class="img-fluid" src="{% static 'img/logo/logo_twz.png' %}" alt="Tweeze Logo">
+        <form class="login-form " action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <input
+            type="text"
+            id="login"
+            name="login"
+            placeholder="Nome ou e-mail cadastrado"
+            required
+          >
+          <input
+            type="text"
+            id="password"
+            name="password"
+            placeholder="Senha"
+            required
+          >
+          <a class="forgot-pass" href="#">Esqueci a senha</a>
+          <div class="btn-wrapper">
+            <button type="submit" class="btn login-btn">Entrar</button>
+            <button class="btn register-btn">Cadastre-se</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="social-media-wrapper">
+        <button class="social-media-btn facebook-btn">
+          <img src="{% static 'icons/social_media/facebook-outline.svg' %}" alt="">
+          <span>Log in with Facebook</span>
+        </button>
+        <button class="social-media-btn google-btn">
+          <img src="{% static 'icons/social_media/google-outline.svg' %}" alt="">
+          <span>Log in with Google</span>
+        </button>
+      </div>
+
+      <footer>
+        <p>Informações e termos legais <a href="#">aqui</a>. @2021</p>
+      </footer>
+    </div>
+
+
+    <script src="{% static 'js/jquery-min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/wow.js' %}"></script>
+    <script src="{% static 'js/jquery.nav.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>
