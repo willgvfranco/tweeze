@@ -1,76 +1,135 @@
-version: "3.8"
+version: "3.2"
 
 services:
-  nginx:
-    build:
-      dockerfile: ./docker/nginx.dockerfile
-      context: .
-    image: neustren/nginx_fusion:v1
-    container_name: nginx
-    ports:
-      - "8003:80"
-    networks:
-      - nwfusion
-    depends_on:
-      - fusion1
-      - fusion2
-      - fusion3
+    redis:
+        build:
+            dockerfile: ./docker/redis.dockerfile
+            context: .
+        ports:
+            - "6379:6379"
+        networks: 
+            - bbb_network
+        container_name: redis
+        deploy:
+            restart_policy:
+                condition: on-failure
 
-  pgfusion:
-    build:
-      dockerfile: ./docker/pgfusion.dockerfile
-      context: .
-    image: neustren/pgfusion:v1
-    container_name: pgfusion
-    ports:
-      - "5432"
-    networks:
-      - nwfusion
-    volumes:
-      - pgdata:/var/lib/postgresql/data/
 
-  fusion1:
-    build:
-      dockerfile: ./docker/fusion.dockerfile
-      context: .
-    image: neustren/fusion:v1
-    container_name: fusion1
-    ports:
-      - "8002"
-    networks:
-      - nwfusion
-    depends_on:
-      - pgfusion
+    postgres:
+        build:
+            dockerfile: ./docker/postgres.dockerfile
+            context: .
+        container_name: postgres
+        #environment:
+            #POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+            - "5432:5432"
+        networks: 
+            - bbb_network
+        volumes:
+            - pgdata:/var/lib/postgresql/data/
+        
+    server1:
+        build:
+            dockerfile: ./docker/node.dockerfile
+            context: .
+        container_name: server1
+        environment:
+            CACHE_HOST: 'redis'
+        ports:
+            - "3000"
+        networks: 
+            - bbb_network
+        depends_on:
+            - redis
+            - postgres
+            - backend
 
-  fusion2:
-    build:
-      dockerfile: ./docker/fusion.dockerfile
-      context: .
-    image: neustren/fusion:v1
-    container_name: fusion2
-    ports:
-      - "8002"
-    networks:
-      - nwfusion
-    depends_on:
-      - pgfusion
+    server2:
+        build:
+            dockerfile: ./docker/node.dockerfile
+            context: .
+        container_name: server2
+        environment:
+            CACHE_HOST: 'redis'
+        ports:
+            - "3000"
+        networks: 
+            - bbb_network
+        depends_on:
+            - redis
+            - postgres
+            - backend
 
-  fusion3:
-    build:
-      dockerfile: ./docker/fusion.dockerfile
-      context: .
-    image: neustren/fusion:v1
-    container_name: fusion3
-    ports:
-      - "8002"
-    networks:
-      - nwfusion
-    depends_on:
-      - pgfusion
+    # server3:
+    #     build:
+    #         dockerfile: ./docker/node.dockerfile
+    #         context: .
+    #     container_name: server3
+    #     environment:
+    #         CACHE_HOST: 'redis'
+    #     ports:
+    #         - "3000"
+    #     networks: 
+    #         - bbb_network
+    #     depends_on:
+    #         - redis
+    #         - postgres
+    #         - backend
+
+    nginx:
+        build:
+            dockerfile: ./docker/nginx.dockerfile
+            context: .
+        container_name: nginx
+        ports:
+            - "8080:80"
+        networks:
+            - bbb_network
+        depends_on:
+            - server1
+            - server2
+            - backend
+
+    worker:
+        build:
+            dockerfile: ./docker/worker.dockerfile
+            context: .
+        container_name: worker
+        environment:
+            CACHE_HOST: 'redis'
+            DB_HOST: 'postgres'
+            #MEDIA_URL: 'http://globo.neustren.com.br:8000/media/'
+        ports:
+            - "7000:8000"
+        networks: 
+            - bbb_network
+        depends_on:
+            - redis
+            - postgres
+            - backend
+            - server1
+            - server2
+
+    backend:
+        build:
+            dockerfile: ./docker/backend.dockerfile
+            context: .
+        container_name: backend
+        environment:
+            CACHE_HOST: 'redis'
+            DB_HOST: 'postgres'
+        ports:
+            - "8000:8000"
+        networks: 
+            - bbb_network
+        depends_on:
+            - redis
+            - postgres
 
 networks:
-  nwfusion:
-    driver: bridge
+    bbb_network:
+        driver: bridge
 
 volumes:
-  pgdata:
+    pgdata:
