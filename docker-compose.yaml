@@ -7,8 +7,9 @@ services:
             context: .
         ports:
             - "6379:6379"
+        restart: always
         networks: 
-            - bbb_network
+            - tweeze_network
         container_name: redis
         deploy:
             restart_policy:
@@ -20,116 +21,51 @@ services:
             dockerfile: ./docker/postgres.dockerfile
             context: .
         container_name: postgres
+        restart: always
         #environment:
             #POSTGRES_HOST_AUTH_METHOD: trust
         ports:
             - "5432:5432"
         networks: 
-            - bbb_network
+            - tweeze_network
         volumes:
-            - pgdata:/var/lib/postgresql/data/
-        
-    server1:
-        build:
-            dockerfile: ./docker/node.dockerfile
-            context: .
-        container_name: server1
-        environment:
-            CACHE_HOST: 'redis'
-        ports:
-            - "3000"
-        networks: 
-            - bbb_network
-        depends_on:
-            - redis
-            - postgres
-            - backend
+            - ./postgresql:/var/lib/postgresql/data/
 
-    server2:
-        build:
-            dockerfile: ./docker/node.dockerfile
-            context: .
-        container_name: server2
-        environment:
-            CACHE_HOST: 'redis'
-        ports:
-            - "3000"
-        networks: 
-            - bbb_network
-        depends_on:
-            - redis
-            - postgres
-            - backend
 
-    # server3:
+    # worker:
     #     build:
-    #         dockerfile: ./docker/node.dockerfile
+    #         dockerfile: ./docker/worker.dockerfile
     #         context: .
-    #     container_name: server3
+    #     container_name: worker
     #     environment:
     #         CACHE_HOST: 'redis'
+    #         DB_HOST: 'postgres'
     #     ports:
-    #         - "3000"
+    #         - "7000:8000"
     #     networks: 
-    #         - bbb_network
+    #         - tweeze_network
     #     depends_on:
     #         - redis
     #         - postgres
-    #         - backend
 
-    nginx:
-        build:
-            dockerfile: ./docker/nginx.dockerfile
-            context: .
-        container_name: nginx
-        ports:
-            - "8080:80"
-        networks:
-            - bbb_network
-        depends_on:
-            - server1
-            - server2
-            - backend
 
-    worker:
-        build:
-            dockerfile: ./docker/worker.dockerfile
-            context: .
-        container_name: worker
-        environment:
-            CACHE_HOST: 'redis'
-            DB_HOST: 'postgres'
-            #MEDIA_URL: 'http://globo.neustren.com.br:8000/media/'
-        ports:
-            - "7000:8000"
-        networks: 
-            - bbb_network
-        depends_on:
-            - redis
-            - postgres
-            - backend
-            - server1
-            - server2
-
-    backend:
-        build:
-            dockerfile: ./docker/backend.dockerfile
-            context: .
-        container_name: backend
-        environment:
-            CACHE_HOST: 'redis'
-            DB_HOST: 'postgres'
-        ports:
-            - "8000:8000"
-        networks: 
-            - bbb_network
-        depends_on:
-            - redis
-            - postgres
+    # backend:
+    #     build:
+    #         dockerfile: ./docker/backend.dockerfile
+    #         context: .
+    #     container_name: backend
+    #     environment:
+    #         CACHE_HOST: 'redis'
+    #         DB_HOST: 'postgres'
+    #     ports:
+    #         - "8000:8000"
+    #     networks: 
+    #         - tweeze_network
+    #     depends_on:
+    #         - redis
+    #         - postgres
 
 networks:
-    bbb_network:
+    tweeze_network:
         driver: bridge
 
-volumes:
-    pgdata:

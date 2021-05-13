@@ -14,6 +14,7 @@ from utils import html_clear
 
 def xml_scraper(source_url_global, news_source, source_slug, id,
                 source_initial_timer=15, *args, **kwargs):
+
     timer = source_initial_timer
     cachero_list_etags = source_slug.lower() + "_etag_cache-" + str(id)
     cachero_list_individual_hashes = source_slug.lower() + "_hash_cache-" + str(id)

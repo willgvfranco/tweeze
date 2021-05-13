@@ -5,9 +5,6 @@ import string
 # nltk.download('punkt')
 # nltk.download('stopwords')
 import spacy
-from spacy.lang.pt.stop_words import STOP_WORDS
-stopwords = nltk.corpus.stopwords.words('portuguese')
-pln = spacy.load('pt_core_news_sm')
 
 
 def html_clear(text):
@@ -31,34 +28,23 @@ def preprocess(text):
     return formatted_text
 
 
-def preprocessamento(texto):
-    texto = texto.lower()
-    doc = pln(texto)
+def preprocess_lematize(text):
+    formatted_text = text.lower()
+    text = re.sub('\s+', ' ', text)
 
-    lista = []
-    for token in doc:
-        # lista.append(token.text)
-        lista.append(token.lemma_)
+    pln = spacy.load("pt_core_news_sm")
 
-    lista = [palavra for palavra in lista if palavra not in stopwords and palavra not in string.punctuation]
-    lista = ' '.join([str(elemento) for elemento in lista if not elemento.isdigit()])
+    document = pln(text)
+    tokens = []
+    stopwords = nltk.corpus.stopwords.words('portuguese')
+    for token in document:
+        tokens.append(token.lemma_)
+    tokens = [
+        palavra for palavra in tokens if palavra not in stopwords and palavra not in string.punctuation]
+    formatted_text = ' '.join([str(elemento)
+                               for elemento in tokens if not elemento.isdigit()])
 
-    return lista
-
-
-def padronizar_base_dados(raw):
-    base_dados = pd.read_csv(raw, encoding='utf-8')
-    base_dados['texto'] = base_dados['texto'].apply(preprocessamento)
-    base_dados_csv = []
-    for texto, emocao in zip(base_dados['texto'], base_dados['emocao']):
-        if emocao == 'alegria':
-            dic = ({'ALEGRIA': True, 'MEDO': False})
-        elif emocao == 'medo':
-            dic = ({'ALEGRIA': False, 'MEDO': True})
-
-        base_dados_csv.append([texto, dic.copy()])
-
-    return base_dados_csv
+    return formatted_text
 
 
 def strings_concatenate(article_list):
