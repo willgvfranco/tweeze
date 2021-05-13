@@ -35,6 +35,6 @@ script:
   - docker-compose up -d
   - python web/manage.py makemigrations --noinput
   - python web/manage.py migrate
-  - python web/manage.py runserver
-  - python worker/bridge.py
+  - python web/manage.py test
+  # - python worker/bridge.py
   - docker-compose stop
