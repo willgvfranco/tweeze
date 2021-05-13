@@ -41,7 +41,7 @@ services:
     #         CACHE_HOST: 'redis'
     #         DB_HOST: 'postgres'
     #     ports:
-    #         - "7000:8000"
+    #         - "7777:7777"
     #     networks: 
     #         - tweeze_network
     #     depends_on:

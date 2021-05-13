@@ -4,6 +4,10 @@ env:
   global:
     - DOCKER_COMPOSE_VERSION: 1.14.0
 
+language: python
+python:
+  - "3.9"
+
 services:
   - docker
 
@@ -17,6 +21,13 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
 
+install:
+  - pip install -r web/requirements.txt
+  - pip install -r worker/requirements.txt
+  - python manage.py collectstatic --noinput
+  - python manage.py makemigrations --noinput
+  - python manage.py migrate
+
 script:
   - ls
 
@@ -24,3 +35,5 @@ script:
 
   - docker-compose up -d
   - docker-compose stop
+  - python web/manage.py runserver
+  - python worker/bridge.py
