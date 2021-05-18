@@ -1,0 +1,37 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% bootstrap_css %}
+      <link rel="shortcut icon" type="image/png" href="{% static 'img/logo/logo_twz.png' %}"/>
+
+
+      <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+      <link rel="stylesheet" href="{% static 'css/register.css' %}">
+      <link rel="stylesheet" href="{% static 'css/clipping.css' %}">
+
+      <title>Primeiros Passos - Tweeze</title>
+  </head>
+  <body>
+    <header>
+      <img class="img-fluid" src="{% static 'img/logo/logo_twz.png' %}" alt="Tweeze Logo">
+    </header>
+
+    {% block content %}
+      
+    {% endblock %}
+
+    <script src="{% static 'js/jquery-min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/wow.js' %}"></script>
+    <script src="{% static 'js/jquery.nav.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+      const CLOSE_ICON = "{% static 'icons/close_black_24dp.svg' %}";
+    </script>
+    <script src="{% static 'js/clipping.js' %}"></script>
+  </body>
+</html>

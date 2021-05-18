@@ -29,6 +29,42 @@ class ContatoForm(forms.Form):
 
 class LoginForm(forms.Form):
     login = forms.CharField(max_length=255, label="Login")
-    password = forms.CharField(max_length=18, label="Password")
+    password = forms.CharField(max_length=18, label="Senha")
 
+
+class RegisterForm(forms.Form):
+    ACCOUNT_TYPES = [
+        ('personal', 'Pessoal'),
+        ('company', 'Empresarial'),
+    ]
+    name = forms.CharField(max_length=255, label="Nome")
+    email = forms.EmailField(max_length=255, label="Email")
+    password = forms.CharField(max_length=18, label="Senha")
+    passwordConfirm = forms.CharField(max_length=18, label="Confirmar Senha")
+    phone = forms.CharField(max_length=18, label="Telefone")
+    cep = forms.CharField(max_length=18, label="CEP")
+    cpf = forms.CharField(max_length=18, label="CPF")
+    gender = forms.CharField(max_length=255, label="Gênero")
+    account_type = forms.ChoiceField(widget=forms.RadioSelect, choices=ACCOUNT_TYPES)
+
+class RegisterCompanyForm(forms.Form):
+    company = forms.CharField(max_length=255, label="Nome")
+    cnpj = forms.CharField(max_length=18, label="CPF")
+    number_access = forms.IntegerField(label="Quantas pessoas tem acesso à conta")
+    line_of_business = forms.CharField(max_length=255, label="Ramo de atuação")
+
+
+class PositiveClippingForm(forms.Form):
+    clipping_list = forms.CharField(max_length=255, label="Termos positivos")
+
+
+class NegativeClippingForm(forms.Form):
+    clipping_list = forms.CharField(max_length=255, label="Termos negativos")
+
+
+class CompanyForm(forms.Form):
+    name = forms.CharField(max_length=255, label="Nome")
+    cnpf = forms.CharField(max_length=255, label="CNPJ")
+    num_of_users = forms.IntegerField(label="Quantas Pessoas tem acesso à conta")
+    line_of_business = forms.CharField(max_length=255, label="Ramo de atuação")
 

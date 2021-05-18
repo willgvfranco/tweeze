@@ -84,9 +84,16 @@ body {
   background-color: inherit;
   font-family: 'NunitoSansRegular';
   border: none;
+  color: white;
   border-bottom: 1px solid white;
   border-radius: 0;
   padding: 4px 0;
+  font-size: 0.7rem;
+}
+
+.login-form input:focus  {
+  box-shadow: none;
+  border-color: inherit;
 }
 
 .login-form input::placeholder {
@@ -120,6 +127,14 @@ body {
   width: 45%;
   font-size: 0.6rem;
   font-family: 'NunitoSansExtraBold';
+}
+
+.btn-wrapper .register-btn a {
+  color: inherit;
+}
+
+.btn-wrapper .register-btn a:hover {
+  text-decoration: none;
 }
 
 .btn-wrapper button:hover {

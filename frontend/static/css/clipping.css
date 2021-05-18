@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'NunitoSansRegular';
+  src: url("../fonts/NunitoSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'NunitoSansBold';
+  src: url("../fonts/NunitoSans-Bold.ttf");
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+header {
+  background-color: #09407e;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+header img {
+  width: 2.5rem;
+}
+
+.clipping-box {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #09407e;
+  color: white;
+  font-family: 'NunitoSansRegular';
+  border-radius: 20px;
+  margin-top: 2rem;
+}
+
+.clipping-box .title {
+  font-family: 'NunitoSansBold';
+  font-size: 1.5rem;
+  width: 70%;
+  line-height: 60px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.clipping-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.labels {
+  margin-top: 10px;
+}
+
+.clipping-form .icon {
+  cursor: pointer;
+  filter: invert(1);
+}
+
+.clipping-form .tooltip {
+  width: 5rem;
+  height: 3rem;
+  color: #09407e;
+  background-color: white;
+}
+
+.clipping-box input {
+  font-size: 0.5rem;
+  height: 1.3rem;
+  width: 60%;
+}
+
+.clipping-box input:focus  {
+  box-shadow: none;
+  border-color: inherit;
+}
+
+.clipping-box label {
+  font-size: 0.5rem;
+}
+
+.clipping-form .key-words-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 3rem;
+  padding: 10px 0;
+  max-height: 5rem;
+  background-color: white;
+  border-radius: 0.25rem;
+  list-style-type: none;
+  overflow-y: auto;
+}
+
+.clipping-form .key-word {
+  color: #09407e;
+  font-size: 0.7rem;
+  padding: 10px;
+  margin: 4px;
+  box-shadow: 1px 1px 6px 0px rgb(0 0 0 / 20%);
+}
+
+.clipping-form .key-word img {
+  cursor: pointer;
+  filter: invert(0.7);
+  transition: all 0.3s;
+}
+
+.clipping-form .key-word img:hover {
+  filter: invert(0.4);
+}
+
+.clipping-form .submit-btn {
+  background-color: white;
+  color: #09407e;
+  border-radius: 20px;
+  width: 5rem;
+  height: 1.2rem;
+  font-size: 0.7rem;
+  font-family: 'NunitoSansBold';
+  margin: 1rem 0 1rem auto;
+  padding: 0;
+}
+
+.clipping-form .submit-btn:hover {
+  color: #09407eda;
+  box-shadow: 2px 3px 5px 1px rgba(0, 0, 0, 0.4);
+  transition: 0.5s all;
+}

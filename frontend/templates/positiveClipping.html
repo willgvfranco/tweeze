@@ -1,0 +1,38 @@
+{% extends 'registerBase.html' %}
+{% load static %}
+{% block content %}
+  <div class="clipping-box">
+    <span class="title">Agora vamo cadastrar os termos do seu clipping</span>
+
+    <form class="clipping-form" id="clipping-form" action="{% url 'positiveClipping' %}" method="post">
+      {% csrf_token %}
+      <label for="clipping_list">
+        Insira aqui os termos positivos
+        <img  alt="">
+        <img
+          src="{% static 'icons/info_black_24dp.svg' %}"
+          class="icon material-icons"
+          customClass="tooltip"
+          data-toggle="tooltip"
+          data-placement="right"
+          title="Os termos positivos são aqueles que você quer ver no clipping.
+Cadastre apenas termos que você quer encontrar.
+Ex: Palmeiras, Futebol, Brasileirão."
+        >
+        </img>
+      </label>
+      <input
+        class="form-control"
+        type="text"
+        id="clipping_list"
+        name="clipping_list"
+        placeholder="Separe as palavras com vírgula"
+      >
+
+      <label class="labels" for="key-words">Palavras-chave</label>
+      <ul class="key-words-wrapper"></ul>
+
+      <button type="submit" class="btn submit-btn">Continuar</button>
+    </form>
+  </div>
+{% endblock %}
