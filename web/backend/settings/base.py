@@ -75,7 +75,7 @@ CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
-INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend',
+INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend', 'dashboard',
                    'axes', 'django.contrib.humanize')
 
 MIDDLEWARE += ('axes.middleware.AxesMiddleware',)
