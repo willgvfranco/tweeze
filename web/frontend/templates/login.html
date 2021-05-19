@@ -6,7 +6,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       {% bootstrap_css %}
-      <link rel="shortcut icon" type="image/png" href="{% static 'img/logo/logo_twz.png' %}"/>
+      <link rel="shortcut icon" type="image/png" href="{% static 'img/logo/logo_twz_branco.png' %}"/>
 
 
       <link rel="stylesheet" href="{% static 'css/reset.css' %}">
@@ -20,13 +20,13 @@
     <div class="page-right">
       <img
         class="img-fluid main-logo"
-        src="{% static 'img/logo/logo_tweeze.png' %}"
+        src="{% static 'img/logo/logo_tweeze_azul.png' %}"
         alt="Tweeze Logo"
       >
       <p class="subtitle">Descubra o que falam da sua marca.</p>
 
       <div class="login-box">
-        <img class="img-fluid" src="{% static 'img/logo/logo_twz.png' %}" alt="Tweeze Logo">
+        <img class="img-fluid" src="{% static 'img/logo/logo_twz_branco.png' %}" alt="Tweeze Logo">
         <form class="login-form " action="{% url 'login' %}" method="post">
           {% csrf_token %}
           <input
@@ -37,7 +37,7 @@
             required
           >
           <input
-            type="text"
+            type="password"
             id="password"
             name="password"
             placeholder="Senha"
@@ -46,7 +46,9 @@
           <a class="forgot-pass" href="#">Esqueci a senha</a>
           <div class="btn-wrapper">
             <button type="submit" class="btn login-btn">Entrar</button>
-            <button class="btn register-btn">Cadastre-se</button>
+            <button class="btn register-btn" href="register">
+              <a href="{% url 'register' %}">Cadastre-se</a>
+            </button>
           </div>
         </form>
       </div>

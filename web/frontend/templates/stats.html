@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Minhas Estatísticas {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/stats.css' %}"> {% endcomment %}
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content"></div>
+
+{% endblock content %}
+
+{% block javascripts %}
+	<script src="{% static 'js/brackgroundColor.js' %}"></script>
+{% endblock javascripts %}

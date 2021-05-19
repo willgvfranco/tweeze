@@ -1,0 +1,323 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Meu Termos e Grupos {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/my_terms.css' %}">
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+    <div class="card header-card title">
+      <div class="card-title">Meus termos e grupos</div>
+      <div class="card-body">
+        <div class="form-group">
+          <select class="form-control form-control" id="defaultSelect">
+            <option>Todos os termos</option>
+            <option>Somente positivos</option>
+            <option>Somente negativos</option>
+          </select>
+        </div>
+
+        <form class="nav-search">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button type="submit" class="btn btn-search pr-1">
+                <i class="fa fa-search search-icon"></i>
+              </button>
+            </div>
+            <input type="text" placeholder="Encontre o termo aqui" class="form-control">
+          </div>
+        </form>
+
+        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Criar grupo
+        </button>
+      </div>
+    </div>
+
+		<div class="page-inner">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Grupo #1</div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Termos</th>
+                  <th>Tipo</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Termo #1</td>
+                  <td>
+                    <button class="btn btn-success">positivo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Termo #2</td>
+                  <td>
+                    <button class="btn btn-success">positivo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Termo #3</td>
+                  <td>
+                    <button class="btn btn-danger">negativo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Grupo #2</div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Termos</th>
+                  <th>Tipo</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Termo #1</td>
+                  <td>
+                    <button class="btn btn-success">positivo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Termo #2</td>
+                  <td>
+                    <button class="btn btn-success">positivo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Termo #3</td>
+                  <td>
+                    <button class="btn btn-danger">negativo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Grupo #3</div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Termos</th>
+                  <th>Tipo</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Termo #1</td>
+                  <td>
+                    <button class="btn btn-success">positivo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Termo #2</td>
+                  <td>
+                    <button class="btn btn-success">positivo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Termo #3</td>
+                  <td>
+                    <button class="btn btn-danger">negativo</button>
+                  </td>
+                  <td>
+                    <div class="btn-group actions" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Criar novo grupo</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="positive-clipping-form" id="positive-clipping-form">
+              <label for="positive-clipping-list">Insira aqui os termos positivos</label>
+              <input
+                class="form-control"
+                type="text"
+                id="positive-clipping-list"
+                name="positive-clipping-list"
+                placeholder="Separe as palavras com vírgula"
+              >
+        
+              <label class="labels" for="key-words">Palavras-chave</label>
+              <ul class="key-words-wrapper positive-wrapper"></ul>
+            </form>
+
+            <form class="negative-clipping-form" id="negative-clipping-form">
+              <label for="negative-clipping-list">Insira aqui os termos negativos</label>
+              <input
+                class="form-control"
+                type="text"
+                id="negative-clipping-list"
+                name="negative-clipping-list"
+                placeholder="Separe as palavras com vírgula"
+              >
+        
+              <label class="labels" for="key-words">Palavras-chave</label>
+              <ul class="key-words-wrapper negative-wrapper"></ul>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+		</div>
+	</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+	<script src="{% static 'js/brackgroundColor.js' %}"></script>
+	<script src="{% static 'js/my_terms.js' %}"></script>
+{% endblock javascripts %}

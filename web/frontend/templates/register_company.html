@@ -1,0 +1,35 @@
+{% extends 'register_base.html' %}
+{% load static %}
+{% block content %}
+  <div class="register-box">
+    <span class="title">Quem você representa?</span>
+
+    <form class="register-form" action="{% url 'registerCompany' %}" method="post">
+      {% csrf_token %}
+      <label for="company">Empresa</label>
+      <input class="form-control" type="text" id="company" name="company" required>
+
+      <label class="labels" for="cnpj">CNPJ</label>
+      <input class="form-control" type="text" id="cnpj" name="cnpj" required>
+
+      <div class="line">
+        <div class="wrapper">
+          <label for="number_access">Quantas pessoas terão acesso a essa conta?</label>
+          <input class="form-control" type="number" id="number_access" name="number_access" required>
+        </div>
+        <div class="wrapper">
+          <label for="line_of_business">Ramo de atuação</label>
+          <input
+            class="form-control"
+            type="text"
+            id="line_of_business"
+            name="line_of_business"
+            required
+          >
+        </div>
+      </div>
+
+      <button type="submit" class="btn submit-btn">Continuar</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Relatórios {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/reports.css' %}">
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+    <div class="card header-card title">
+      <div class="card-title">Seu clipping</div>
+    </div>
+
+		<div class="page-inner">
+
+      <div class="main-card card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="wrapper">
+              <span>Selecione o grupo para o clipping</span>
+              <div class="form-group">
+                <select class="form-control form-control" id="defaultSelect">
+                  <option>Grupo 1</option>
+                  <option>Grupo 2</option>
+                  <option>Grupo 3</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="wrapper">
+              <span>Selecione o período</span>
+              <div class="form-group">
+                <input class="form-control" type="date" id="date-period" name="date-period">
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-subtitle">
+            <div class="wrapper checkboxes">
+              <span class="checkboxes-title">Incluir relatórios de:</span>
+              <div class="checkbox-item">
+                <input type="checkbox">
+                <span>Onde você é mais citado</span>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox">
+                <span>Últimas notícias</span>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox">
+                <span>Locais</span>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox">
+                <span>Sentimento do usuário</span>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox">
+                <span>Selecionar todos</span>
+              </div>
+            </div>   
+          </div>
+          
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><input type="checkbox"></th>
+                  <th>Título</th>
+                  <th>Fonte</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 1</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 2</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 3</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 4</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 5</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 6</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+                <tr>
+                  <th scope="row"><input type="checkbox"></th>
+                  <td>Notícia 7</td>
+                  <td>Fonte da notícia</td>
+                  <td><a href="#">url da notícia</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card automatic-report">
+        <div class="card-title">Geração automática de relatórios</div>
+        <div class="card-body">
+          <div class="wrapper">
+            <input type="checkbox">
+            <span>Deseja habilitar o envio automático desse clipping?</span>
+            <input class="form-control email" type="email" name="email" id="email" placeholder="email1@mail.com,email2@mail.com">
+          </div>
+
+          <div class="wrapper">
+            <span>Defina a frequência</span>
+            <div class="form-group">
+              <select class="form-control form-control" id="defaultSelect">
+                <option>1 hora</option>
+                <option>3 horas</option>
+                <option>6 horas</option>
+                <option>12 horas</option>
+                <option>1 dia</option>
+                <option>7 dias</option>
+                <option>30 dias</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions-wrapper">
+            <i class="fas fa-share-square"></i>
+            <i class="fas fa-download"></i>
+            <button class="btn btn-primary generate">Gerar relatório</button>
+          </div>
+        </div>
+      </div>
+    </div> 
+	</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+	<script src="{% static 'js/brackgroundColor.js' %}"></script>
+	<!-- <script src="{% static 'js/reports.js' %}"></script> -->
+{% endblock javascripts %}

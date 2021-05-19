@@ -1,0 +1,165 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Minha Conta {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+    <div class="card header-card title">
+      <div class="card-title">Minha conta</div>
+    </div>
+
+		<div class="page-inner">
+
+      <div class="card secondary-card user-data">
+        <div class="card-header">
+          <div class="card-title">Meus dados</div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <div class="first-line">
+              <input type="text" class="form-control" id="cnpj" placeholder="CNPJ/CPF">
+              <input type="text" class="form-control" id="name" placeholder="Nome Completo">
+              <input type="password" class="form-control" id="password" placeholder="Alterar senha">
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmar nova senha">
+            </div>
+            <div class="second-line">
+              <div class="checkbox-wrapper">
+                <div class="checkbox-item">
+                  <input type="checkbox">
+                  <span>Pessoal</span>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox">
+                  <span>Empresarial</span>
+                </div>
+              </div>
+              <input type="text" class="form-control" id="adress" placeholder="Endereço">
+              <input type="text" class="form-control" id="complement" placeholder="Complemento">
+            </div>
+            <div class="third-line">
+              <input type="email" class="form-control" id="email" placeholder="email@mail.com">
+              <input type="tel" class="form-control" id="phone" placeholder="(DDD) 9xxxx-xxxx">
+              <input type="text" class="form-control" id="adressNumber" placeholder="Número">
+              <input type="text" class="form-control" id="cep" placeholder="CEP">
+            </div>
+          </div>
+
+          <button class="btn btn-success save-changes">Salvar alterações</button>
+        </div>
+      </div>
+
+      <div class="card secondary-card payment">
+        <div class="card-header">
+          <div class="card-title">Meus dados financeiros</div>
+        </div>
+        <div class="card-body">
+          <div class="left">
+            <div class="card-subtitle">Formas de pagamento</div>
+            <div class="first-line">
+              <div class="wrapper">
+                <label for="card-number">Número do cartão</label>
+                <input type="email" class="form-control" id="card-number" placeholder="Número do cartão">
+              </div>
+              <div class="wrapper">
+                <label for="card-name">Nome do titular</label>
+                <input type="email" class="form-control" id="card-name" placeholder="Nome do titular">
+              </div>
+            </div>
+            <div class="second-line">
+              <div class="wrapper">
+                <label for="security-number">Código de segurança</label>
+                <input type="email" class="form-control" id="security-number" placeholder="Código de segurança">
+              </div>
+              <div class="wrapper">
+                <label for="validate-date">Data de validade</label>
+                <div class="form-group">
+                  <label for="month">Mês</label>
+                  <select class="form-control" id="month">
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  <label for="year">Ano</label>
+                  <select class="form-control" id="year">
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success add-payment">Adicionar forma de pagamento</button>
+          </div>
+          <div class="right">
+            <div class="card-subtitle">Status de pagamento</div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Mês de referência</th>
+                    <th>Vencimento em</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Março</td>
+                    <td>dd/mm/aa</td>
+                    <td>R$79,90</td>
+                    <td><button class="btn btn-warning">Pendente</button></td>
+                  </tr>
+                  <tr>
+                    <td>Fevereiro</td>
+                    <td>dd/mm/aa</td>
+                    <td>R$79,90</td>
+                    <td><button class="btn btn-success">Pago</button></td>
+                  </tr>
+                  <tr>
+                    <td>Janeiro</td>
+                    <td>dd/mm/aa</td>
+                    <td>R$79,90</td>
+                    <td><button class="btn btn-success">Pago</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+		</div>
+	</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+	<script src="{% static 'js/brackgroundColor.js' %}"></script>
+{% endblock javascripts %}

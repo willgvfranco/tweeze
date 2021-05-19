@@ -1,0 +1,73 @@
+html {
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 20px;
+}
+ 
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: #09407e50;
+  border-radius: 20px;
+}
+
+.main-header, .main-header .logo-header, .main-header .navbar-header, .sidebar {
+  background-color: #09407e !important;
+}
+
+.panel-header {
+  background: none !important;
+}
+
+.sidebar {
+  width: 150px;
+}
+
+.sidebar .nav .nav-item {
+  padding: 0 !important;
+}
+
+.sidebar .nav .nav-item.active {
+  background-color: #3a6494 !important;
+}
+
+.sidebar .nav > .nav-item a i {
+  width: fit-content;
+  margin-right: 0;
+  text-align: inherit;
+}
+
+.navbar #search-nav {
+  margin-left: auto;
+}
+
+.navbar .topbar-nav {
+  margin-left: 5rem !important;
+}
+
+.sidebar .nav > .nav-item.active > a {
+  background: inherit !important;
+}
+
+.nav .nav-item .nav-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnSwitch i {
+	display: initial;
+	cursor: pointer;
+	font-size: 20px;
+	color: white;
+}
+
+.btnSwitch i.hidden {
+	display: none;
+}
