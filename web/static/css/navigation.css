@@ -1,0 +1,18 @@
+.container-fluid .logo .tweeze-logo {
+  width: 160px;
+}
+
+.btnSwitch {
+  margin-left: auto;
+}
+
+.dropdown .avatar-sm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown .avatar-sm .icon-user {
+  font-size: 24px;
+  color: #fff;
+}

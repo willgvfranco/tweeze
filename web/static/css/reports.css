@@ -1,0 +1,132 @@
+.page-inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.card, .main-card {
+  margin: 15px;
+  padding: 5px;
+}
+
+.header-card {
+  margin-bottom: 0;
+}
+
+.main-card .table thead th:first-child {
+  width: 60px;
+}
+
+.main-card .table-responsive {
+  max-height: 40vh;
+}
+
+.card.title .card-title {
+  padding: 10px 20px;
+  text-transform: uppercase;
+}
+
+.automatic-report .card-title {
+  padding: 10px 20px;
+}
+
+.main-card, .automatic-report {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.main-card .card-header .card-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.page-inner .card-title .wrapper, .page-inner .card-subtitle .wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.page-inner .card-subtitle .checkboxes {
+  flex-wrap: wrap;
+}
+
+.page-inner .card-subtitle .checkboxes .checkboxes-title {
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.page-inner .card-subtitle .checkboxes .checkbox-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.page-inner .card-subtitle .checkboxes .checkbox-item input[type=checkbox] {
+  margin-right: 10px;
+}
+
+.page-inner .card-subtitle .checkboxes .checkbox-item span {
+  font-size: 14px;
+}
+
+.page-inner .wrapper span, .automatic-report span {
+  color: #8d9498;
+}
+
+.automatic-report .card-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.automatic-report .form-control.email {
+  width: 300px;
+}
+
+body[data-background-color="dark"] .automatic-report .form-control {
+  background-color: #1a2035;
+  border-color: #2f374b;
+  color: #fff;
+}
+
+.automatic-report .wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 3rem;
+}
+
+.automatic-report .wrapper input, .automatic-report .wrapper span {
+  margin-right: 10px;
+}
+
+.automatic-report .actions-wrapper {
+  margin-left: auto;
+  width: 12rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.automatic-report .actions-wrapper i {
+  color: #8d9498;
+  font-size: 18px;
+}
+
+.automatic-report .actions-wrapper .generate {
+  font-size: 14px;
+  padding: 5px 10px;
+}

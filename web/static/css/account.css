@@ -1,0 +1,171 @@
+.page-inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.card {
+  margin: 15px;
+  padding: 5px;
+}
+
+.header-card {
+  margin-bottom: 0;
+}
+
+.secondary-card {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.user-data .card-body {
+  padding-bottom: 0;
+}
+
+.user-data .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-data .form-group .first-line,
+.user-data .form-group .second-line,
+.user-data .form-group .third-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-data .form-group .form-control  {
+  width: 20%;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 46.7%;
+}
+
+.user-data .form-group .checkbox-item  {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+.user-data .form-group .checkbox-item input[type=checkbox] {
+  margin-right: 15px;
+}
+
+.card.title .card-body {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 0;
+}
+
+.card.title .card-title {
+  padding: 10px 20px;
+}
+
+.header-card .card-title {
+  text-transform: uppercase;
+}
+
+.secondary-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-data .save-changes {
+  width: fit-content;
+  margin: 0 20px 20px auto;
+  padding: 5px 10px;
+}
+
+.payment .card-subtitle {
+  font-size: 18px;
+  color: #8d9498;
+  margin-bottom: 15px;
+}
+
+.payment .card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.payment .card-body .left,
+.payment .card-body .right {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.payment .left .first-line,
+.payment .left .second-line {
+  margin-bottom: 20px;
+}
+
+.payment .left .first-line .wrapper label,
+.payment .left .second-line .wrapper label{
+  margin-bottom: 15px;
+}
+
+.payment .left .first-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment .left .first-line .wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.payment .left .second-line {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.payment .left .second-line .wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.payment .left .second-line .wrapper .form-group {
+  display: flex;
+  align-items: center;
+}
+
+.payment .left .second-line .wrapper .form-group label {
+  margin-bottom: 0;
+}
+
+.payment .left .second-line .wrapper .form-group select {
+  margin-left: 15px;
+}
+
+.payment .left .second-line .wrapper .form-group select:nth-child(2) {
+  margin-right: 15px;
+}
+
+.payment .left .add-payment {
+  width: fit-content;
+  margin-right: auto;
+  padding: 5px 10px;
+}
+
+.payment .right .table .btn {
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 5px 10px;
+  width: 80px;
+}
