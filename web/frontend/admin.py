@@ -18,3 +18,4 @@ class FonteAdmin(admin.ModelAdmin):
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ('id', 'pergunta',)
+    list_display_links = ('pergunta',)
