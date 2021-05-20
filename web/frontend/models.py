@@ -52,3 +52,8 @@ class Noticia(Always):
     category = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     pub_data = models.CharField(max_length=255, blank=True, null=True)
+
+
+class Faq(Always):
+    pergunta = models.CharField(max_length=255)
+    resposta = models.TextField()

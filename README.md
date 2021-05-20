@@ -1,13 +1,14 @@
 <h1 align="center">Welcome to Tweeze 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.1-blue.svg?cacheSeconds=2592000" />
-  <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.5.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://twitter.com/neustren" target="_blank">
     <img alt="Twitter: neustren" src="https://img.shields.io/twitter/follow/neustren.svg?style=social" />
   </a>
+
+[![Build Status](https://travis-ci.com/neustren/tweeze.svg?token=sRe3Ps5D7Up53AdSykAC&branch=master)](https://travis-ci.com/neustren/tweeze)
+
 </p>
+
 
 ## Intro
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Fonte
+from .models import Fonte, Faq
 
 
 @admin.register(Fonte)
@@ -13,3 +13,8 @@ class FonteAdmin(admin.ModelAdmin):
         if obj:
             return ['source_slug']
         return []
+
+
+@admin.register(Faq)
+class FaqAdmin(admin.ModelAdmin):
+    list_display = ('id', 'pergunta',)
