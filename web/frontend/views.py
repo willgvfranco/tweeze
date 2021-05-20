@@ -48,6 +48,7 @@ class LandingPageView(FormView):
 
         return context
 
+
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = LoginForm
@@ -152,7 +153,7 @@ class DashboardView(TemplateView):
 
         return context
 
-        
+
 class StatisticsView(TemplateView):
     template_name = 'stats.html'
 

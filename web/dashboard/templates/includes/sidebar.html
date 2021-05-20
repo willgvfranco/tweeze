@@ -6,35 +6,35 @@
 				{% comment %} {% if request.user.is_authenticated %}	 {% endcomment %}
 					<ul class="nav nav-primary">
 						<li class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
-							<a class="nav-item-wrapper" href="{% url 'dashboard' %}">
+							<a class="nav-item-wrapper" href="{% url 'dashboard:home' %}">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 							</a>
 						</li>
 
 						<li class="nav-item {% if 'stats' in segment %} active {% endif %}">
-							<a class="nav-item-wrapper" href="{% url 'stats' %}">
+							<a class="nav-item-wrapper" href="{% url 'dashboard:stats' %}">
 								<i class="fas fa-chart-bar"></i>
 								<p>Minhas estatísticas</p>
 							</a>
 						</li>
 						
 						<li class="nav-item {% if 'reports' in segment %} active {% endif %}">
-							<a class="nav-item-wrapper" href="{% url 'reports' %}">
+							<a class="nav-item-wrapper" href="{% url 'dashboard:reports' %}">
 								<i class="fas fa-paper-plane"></i>
 								<p>Relatórios</p>
 							</a>
 						</li>
 
 						<li class="nav-item {% if 'searchterms' in segment %} active {% endif %}">
-							<a class="nav-item-wrapper" href="{% url 'searchterms' %}">
+							<a class="nav-item-wrapper" href="{% url 'dashboard:searchterms' %}">
 								<i class="fas fa-file-alt"></i>
 								<p>Termos de busca</p>
 							</a>
 						</li>
 
 						<li class="nav-item {% if 'account' in segment %} active {% endif %}">
-							<a class="nav-item-wrapper" href="{% url 'account' %}">
+							<a class="nav-item-wrapper" href="{% url 'dashboard:account' %}">
 								<i class="fas fa-user"></i>
 								<p>Minha conta</p>
 							</a>
