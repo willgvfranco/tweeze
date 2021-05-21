@@ -83,8 +83,17 @@ class ReportsView(baseDashboard):
 
 class CriarGrupoView(baseDashboard):
     def post(self, request, *args, **kwargs):
-        print(self)
+        # print(self)
 
+        positivas = self.request.POST.get('sendPositiveForm')
+        negativas = self.request.POST.get('sendNegativeForm')
+        # positivas = dict.sendPositiveForm
+        # negativas = dict.sendNegativeForm
+        print(str(request.body))
+        arrayPositivas = positivas.split(',')
+        arrayNegativas = negativas.split(',')
+        print(f'positivas: {arrayPositivas}')
+        print(f'negativas: {arrayNegativas}')
         # if not self.userform.is_valid() or not self.perfilform.is_valid():
         #     messages.error(
         #         self.request,
