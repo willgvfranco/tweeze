@@ -118,11 +118,6 @@ class Criar(RegisterView):
             'Seu cadastro foi criado com sucesso.'
         )
 
-        # messages.success(
-        #     self.request,
-        #     'Você fez login.'
-        # )
-
         return redirect('dashboard:home')
 
 
@@ -203,10 +198,10 @@ class Login(View):
 
         login(self.request, user=usuario)
 
-        messages.success(
-            self.request,
-            'Você fez login no sistema.'
-        )
+        # messages.success(
+        #     self.request,
+        #     'Você fez login no sistema.'
+        # )
         # print('god')
 
         return redirect('dashboard:home')

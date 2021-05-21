@@ -38,16 +38,6 @@ class RegisterForm(forms.Form):
         ('personal', 'Pessoal'),
         ('company', 'Empresarial'),
     ]
-    name = forms.CharField(max_length=255, label="Nome")
-    email = forms.EmailField(max_length=255, label="Email")
-    password = forms.CharField(max_length=18, label="Senha")
-    passwordConfirm = forms.CharField(max_length=18, label="Confirmar Senha")
-    phone = forms.CharField(max_length=18, label="Telefone")
-    cep = forms.CharField(max_length=18, label="CEP")
-    cpf = forms.CharField(max_length=18, label="CPF")
-    gender = forms.CharField(max_length=255, label="Gênero")
-    account_type = forms.ChoiceField(
-        widget=forms.RadioSelect, choices=ACCOUNT_TYPES)
 
 
 class RegisterCompanyForm(forms.Form):

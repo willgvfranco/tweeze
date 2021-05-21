@@ -4,7 +4,7 @@ from . import views
 app_name = 'frontend'
 
 urlpatterns = [
-    path('', views.HomeView.as_view(), name='index'),
+    path('', views.LandingPageView.as_view(), name='index'),
     path('busca/', views.NoticiaBusca.as_view(), name='busca'),
     path('landing/', views.LandingPageView.as_view(), name='landingpage'),
     #     path('login/', views.LoginView.as_view(), name='login'),

@@ -2,95 +2,74 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-  <div class="register-box">
-    <span class="title">Quem é você?</span>
+<div class="register-box">
+  <span class="title">Quem é você?</span>
 
-    <form class="register-form" action="{% url 'perfil:register' %}" method="post">
-      {% csrf_token %}
-              {{ userform|crispy }}
-            {{ perfilform|crispy }}
-      {% comment %} <label for="name">Nome</label>
-      <input class="form-control" type="text" id="name" name="name" required>
+  <form class="register-form" action="{% url 'perfil:register' %}" method="post">
+    {% csrf_token %}
+
+    {{ userform.username|as_crispy_field }}
 
 
-      <div class="line">
-        <div class="wrapper">
-        <label for="name">Primeiro Nome</label>
-          <input class="form-control" type="text" id="first_name" name="first_name" required>
-        </div>
-        <div class="wrapper">
-          <label for="cep">Sobrenome</label>
-          <input class="form-control" type="text" id="last_name" name="last_name" required>
-
-        </div>
+    <div class="line">
+      <div class="wrapper">
+        {{ userform.first_name|as_crispy_field }}
       </div>
 
+      <div class="wrapper">
+        {{ userform.last_name|as_crispy_field }}
+      </div>
+    </div>
 
-      <label class="labels" for="email">E-mail</label>
-      <input class="form-control" type="email" id="email" name="email" required>
 
-      <div class="line">
-        <div class="wrapper">
-          <label for="password">Senha</label>
-          <input class="form-control" type="password" id="password" name="password" required>
-        </div>
-        <div class="wrapper">
-          <label for="passwordConfirm">Confirme a senha</label>
-          <input
-            class="form-control"
-            type="password"
-            id="passwordConfirm"
-            name="passwordConfirm"
-            required
-          >
-        </div>
+    {{ userform.email|as_crispy_field }}
+
+    <div class="line">
+      <div class="wrapper">
+        {{ userform.password|as_crispy_field }}
+      </div>
+      <div class="wrapper">
+        {{ userform.password2|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="wrapper">
+        {{ perfilform.cpf|as_crispy_field }}
+      </div>
+      <div class="wrapper">
+        {{ perfilform.telefone|as_crispy_field }}
+      </div>
+    </div>
+    {{ perfilform.cep|as_crispy_field }}
+
+    {{ perfilform.endereco|as_crispy_field }}
+
+
+    <div class="line">
+      <div class="wrapper">
+        {{ perfilform.numero|as_crispy_field }}
       </div>
 
-      <div class="line">
-        <div class="wrapper">
-          <label for="phone">Telefone</label>
-          <input class="form-control" type="text" id="phone" name="phone" required>
-        </div>
-        <div class="wrapper">
-          <label for="cep">CEP</label>
-          <input class="form-control" type="text" id="cep" name="cep" required>
-        </div>
+      <div class="wrapper">
+        {{ perfilform.complemento|as_crispy_field }}
+
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="wrapper">
+        {{ perfilform.estado|as_crispy_field }}
       </div>
 
-      <div class="line">
-        <div class="wrapper">
-          <label for="gender">Gênero</label>
-          <input class="form-control" type="text" id="gender" name="gender" required>
-        </div>
+      <div class="wrapper">
+        {{ perfilform.cidade|as_crispy_field }}
 
-        <div class="wrapper">
-          <span>Essa conta é</span>
-          <div class="account-wrapper">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="account_type"
-              id="personal-type"
-              value="personal"
-            >
-            <label class="form-check-label" for="personal-type">
-              Pessoal
-            </label>
-            <input
-              class="form-check-input"
-              type="radio"
-              name="account_type"
-              id="company-type"
-              value="company"
-            >
-            <label class="form-check-label" for="company-type">
-              Empresarial
-            </label>
-          </div>
-        </div>
-      </div> {% endcomment %}
+      </div>
+    </div>
 
-      <button type="submit" class="btn submit-btn">Continuar</button>
-    </form>
-  </div>
+
+    <button type="submit" class="btn submit-btn">Continuar</button>
+  </form>
+</div>
 {% endblock %}

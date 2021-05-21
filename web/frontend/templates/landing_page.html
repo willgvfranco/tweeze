@@ -25,6 +25,10 @@
         >
       </div>
 
+      <div class="links">
+        <a href="{% url 'perfil:home' %}">Entrar</a>
+      </div>
+
       {% comment %} {% if messages %}
         {% for msg in messages %}
           <div class="alert {{ msg.tags }} fadeInDown" data-wow-delay="0.3s">

@@ -9,16 +9,17 @@ from utils.validacpf import valida_cpf
 
 class Perfil(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    data_nascimento = models.DateField()
-    cpf = models.CharField(max_length=11)
-    endereco = models.CharField(max_length=80)
-    numero = models.CharField(max_length=6)
-    complemento = models.CharField(max_length=30)
-    bairro = models.CharField(max_length=30)
-    cep = models.CharField(max_length=8)
-    cidade = models.CharField(max_length=60)
+    data_nascimento = models.DateField(blank=True, null=True)
+    cpf = models.CharField(max_length=11, blank=True, null=True)
+    telefone = models.CharField(max_length=12, blank=True, null=True)
+    endereco = models.CharField(max_length=80, blank=True, null=True)
+    numero = models.CharField(max_length=6, blank=True, null=True)
+    complemento = models.CharField(max_length=30, blank=True, null=True)
+    bairro = models.CharField(max_length=30, blank=True, null=True)
+    cep = models.CharField(max_length=8, blank=True, null=True)
+    cidade = models.CharField(max_length=60, blank=True, null=True)
     estado = models.CharField(
-        default='RJ',
+        blank=True, null=True,
         max_length=2,
         choices=(
             ('AC', 'Acre'),
