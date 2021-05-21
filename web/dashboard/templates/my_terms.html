@@ -322,12 +322,11 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancelar</button>
-            <!-- <form class="login-form " action="{% url 'dashboard:criargrupo' %}" method="POST"> -->
-            <form class="login-form " method="POST">
+            <form class="terms-form" action="{% url 'dashboard:criargrupo' %}" method="POST">
               {% csrf_token %}
               <input type="text" name="sendPositiveForm" id="sendPositiveForm" class="hidden">
               <input type="text" name="sendNegativeForm" id="sendNegativeForm" class="hidden">
-              <button type="button" class="btn btn-success submit-btn">Confirmar</button>
+              <button type="submit" class="btn btn-success submit-btn">Confirmar</button>
             </form>  
           </div>
         </div>

@@ -7,7 +7,9 @@ const negativeWrapper = document.querySelector(".negative-wrapper");
 const positiveInput = document.getElementById('positive-clipping-list');
 const negativeInput = document.getElementById('negative-clipping-list');
 const positiveForm = document.getElementById("positive-clipping-form");
+const sendPositiveForm = document.getElementById("sendPositiveForm");
 const negativeForm = document.getElementById("negative-clipping-form");
+const sendNegativeForm = document.getElementById("sendNegativeForm");
 const submitBtn = document.querySelector(".submit-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
 let positiveClipping = [];
@@ -15,7 +17,7 @@ let negativeClipping = [];
 
 const getParams = (array) => {
   const params = {};
-  array.forEach(element => {
+  array?.forEach(element => {
     params[element.split("=")[0]] = element.split("=")[1];
   });
   return params;
@@ -38,6 +40,8 @@ if (urlObj.params?.type) {
 
 positiveForm.addEventListener("submit", e => e.preventDefault());
 negativeForm.addEventListener("submit", e => e.preventDefault());
+sendPositiveForm.addEventListener("submit", e => e.preventDefault());
+sendNegativeForm.addEventListener("submit", e => e.preventDefault());
 
 termSelect.addEventListener("change", (e) => {
   let selected = "all";
@@ -122,6 +126,7 @@ positiveInput.addEventListener("keypress", (e) => {
     positiveClipping.push(e.target.value);
     positiveWrapper.appendChild(createPosItem(e.target.value));
     e.target.value = "";
+    sendPositiveForm.value = positiveClipping;
   }
 });
 
@@ -130,14 +135,14 @@ negativeInput.addEventListener("keypress", (e) => {
     negativeClipping.push(e.target.value);
     negativeWrapper.appendChild(createNegItem(e.target.value));
     e.target.value = "";
+    sendNegativeForm.value = negativeClipping;
   }
 });
 
-submitBtn.addEventListener("click", () => {
+submitBtn.addEventListener("click", (e) => {
   if (!positiveClipping.length && !negativeClipping.length) {
+    e.preventDefault();
     console.log("Please add search terms.");
-  } else {
-    console.log("SUBMIT");
   }
 });
 
