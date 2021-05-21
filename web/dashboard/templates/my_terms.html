@@ -268,67 +268,63 @@
     <div class="modal fade" id="searchtems-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title" id="exampleModalLabel">Criar novo grupo</h2>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <form class="login-form " action="{% url 'perfil:login' %}" method="POST">
+          <form class="terms-form" action="{% url 'dashboard:criargrupo' %}" method="POST">
             {% csrf_token %}
+            <div class="modal-header">
+              <h2 class="modal-title" id="exampleModalLabel">Criar novo grupo</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>  
+
+            <div class="modal-body">
+              <label for="group-name">Nome do Grupo</label>
+              <input
+                class="form-control"
+                type="text"
+                id="group-name"
+                name="group-name"
+              />
   
-          </form>        
-
-          <div class="modal-body">
-            <label for="group-name">Nome do Grupo</label>
-            <input
-              class="form-control"
-              type="text"
-              id="group-name"
-              name="group-name"
-            />
-
-            <div class="forms-wrapper">
-              <form class="positive-clipping-form" id="positive-clipping-form">
-                <label for="positive-clipping-list">Insira aqui os termos positivos</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="positive-clipping-list"
-                  name="positive-clipping-list"
-                  placeholder="Separe as palavras com vírgula"
-                />
-          
-                <label class="labels" for="key-words">Palavras-chave</label>
-                <ul class="key-words-wrapper positive-wrapper"></ul>
-              </form>
-
-              <form class="negative-clipping-form" id="negative-clipping-form">
-                <label for="negative-clipping-list">Insira aqui os termos negativos</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  id="negative-clipping-list"
-                  name="negative-clipping-list"
-                  placeholder="Separe as palavras com vírgula"
-                >
-          
-                <label class="labels" for="key-words">Palavras-chave</label>
-                <ul class="key-words-wrapper negative-wrapper"></ul>
-              </form>
+              <div class="forms-wrapper">
+                <div class="positive-clipping-form" id="positive-clipping-form">
+                  <label for="positive-clipping-list">Insira aqui os termos positivos</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="positive-clipping-list"
+                    name="positive-clipping-list"
+                    placeholder="Separe as palavras com vírgula"
+                  />
+            
+                  <label class="labels" for="key-words">Palavras-chave</label>
+                  <ul class="key-words-wrapper positive-wrapper"></ul>
+                </div>
+  
+                <div class="negative-clipping-form" id="negative-clipping-form">
+                  <label for="negative-clipping-list">Insira aqui os termos negativos</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="negative-clipping-list"
+                    name="negative-clipping-list"
+                    placeholder="Separe as palavras com vírgula"
+                  >
+            
+                  <label class="labels" for="key-words">Palavras-chave</label>
+                  <ul class="key-words-wrapper negative-wrapper"></ul>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancelar</button>
-            <form class="terms-form" action="{% url 'dashboard:criargrupo' %}" method="POST">
-              {% csrf_token %}
-              <input type="text" name="sendPositiveForm" id="sendPositiveForm" class="hidden">
-              <input type="text" name="sendNegativeForm" id="sendNegativeForm" class="hidden">
-              <button type="submit" class="btn btn-success submit-btn">Confirmar</button>
-            </form>  
-          </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancelar</button>
+                <input type="text" name="sendPositiveForm" id="sendPositiveForm" class="hidden">
+                <input type="text" name="sendNegativeForm" id="sendNegativeForm" class="hidden">
+                <button type="submit" class="btn btn-success submit-btn">Confirmar</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

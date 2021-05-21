@@ -6,12 +6,11 @@ const positiveWrapper = document.querySelector(".positive-wrapper");
 const negativeWrapper = document.querySelector(".negative-wrapper");
 const positiveInput = document.getElementById('positive-clipping-list');
 const negativeInput = document.getElementById('negative-clipping-list');
-const positiveForm = document.getElementById("positive-clipping-form");
 const sendPositiveForm = document.getElementById("sendPositiveForm");
-const negativeForm = document.getElementById("negative-clipping-form");
 const sendNegativeForm = document.getElementById("sendNegativeForm");
+const termsForm = document.querySelector(".terms-form");
 const submitBtn = document.querySelector(".submit-btn");
-const cancelBtn = document.querySelector(".cancel-btn");
+
 let positiveClipping = [];
 let negativeClipping = [];
 
@@ -38,8 +37,9 @@ if (urlObj.params?.type) {
   }
 }
 
-positiveForm.addEventListener("submit", e => e.preventDefault());
-negativeForm.addEventListener("submit", e => e.preventDefault());
+termsForm.addEventListener("keypress", e => {
+  if (e.key === "Enter") e.preventDefault();
+});
 sendPositiveForm.addEventListener("submit", e => e.preventDefault());
 sendNegativeForm.addEventListener("submit", e => e.preventDefault());
 
@@ -142,8 +142,5 @@ negativeInput.addEventListener("keypress", (e) => {
 submitBtn.addEventListener("click", (e) => {
   if (!positiveClipping.length && !negativeClipping.length) {
     e.preventDefault();
-    console.log("Please add search terms.");
   }
 });
-
-cancelBtn.addEventListener("click", () => console.log("CANCEL"));
