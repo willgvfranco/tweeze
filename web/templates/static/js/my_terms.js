@@ -10,6 +10,8 @@ const positiveForm = document.getElementById("positive-clipping-form");
 const negativeForm = document.getElementById("negative-clipping-form");
 const submitBtn = document.querySelector(".submit-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
+let positiveClipping = [];
+let negativeClipping = [];
 
 const getParams = (array) => {
   const params = {};
@@ -33,9 +35,6 @@ if (urlObj.params?.type) {
     termSelect.options[2].selected = true;
   }
 }
-
-let positiveClipping = [];
-let negativeClipping = [];
 
 positiveForm.addEventListener("submit", e => e.preventDefault());
 negativeForm.addEventListener("submit", e => e.preventDefault());
@@ -73,10 +72,8 @@ const reloadWithParams = () => {
   } else if (!urlObj.params?.type && urlObj.params?.search) {
     newUrl = `${urlObj.url}?search=${urlObj.params.search}`;
   }
-  
   location.replace(newUrl);
 };
-
 
 const createNegItem = value => {
   const newItem = document.createElement("li");

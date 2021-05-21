@@ -160,3 +160,7 @@ body[data-background-color="dark"] .modal .modal-content .close {
 .modal .modal-footer {
   justify-content: center;
 }
+
+.modal .modal-footer .hidden {
+  display: none;
+}
