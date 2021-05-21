@@ -87,7 +87,7 @@ class ReportsView(baseDashboard):
 class CriarGrupoView(baseDashboard):
     def post(self, request, *args, **kwargs):
         # print(self)
-
+        print(request)
         positivas = self.request.POST.get('sendPositiveForm')
         negativas = self.request.POST.get('sendNegativeForm')
         # positivas = dict.sendPositiveForm
@@ -98,6 +98,7 @@ class CriarGrupoView(baseDashboard):
 
         print(f'positivas: {arrayPositivas}')
         print(f'negativas: {arrayNegativas}')
+
         # if not self.userform.is_valid() or not self.perfilform.is_valid():
         #     messages.error(
         #         self.request,
@@ -147,28 +148,36 @@ class SearchTermsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchTermsView, self).get_context_data(**kwargs)
-        context['segment'] = 'searchterms'
-        context['grupos'] = [{
+        grupos = [{
+            "id": 1,
             "grupo": "grupo1",
             "positivas": ["foo", "bar"],
             "negativas": ["charmander", "squirtle", "bulbassauro", "pikachu"]
         },
             {
+            "id": 2,
+
                 "grupo": "grupo2",
                 "positivas": ["foo", "bar"],
                 "negativas": ["charmander", "squirtle", "bulbassauro", "pikachu"]
         },
             {
+            "id": 3,
+
                 "grupo": "Só negativas",
                 "positivas": [""],
                 "negativas": ["charmander", "squirtle", "bulbassauro", "pikachu"]
         },
             {
+            "id": 4,
+
                 "grupo": "Só positivas",
                 "positivas": ["foo", "bar"],
                 "negativas": [""]
         },
             {
+            "id": 5,
+
                 "grupo": "Muitas palavras",
                 "positivas": ["foo", "bar", "lorem", 'raichu', 'jigglypuff', 'eevee', 'mewtwo', 'mew', 'celebi', 'ho-oh', 'moltres', 'zapdos', 'articuno'],
                 "negativas": [""]
@@ -177,6 +186,9 @@ class SearchTermsView(TemplateView):
 
         ]
 
+        context['segment'] = 'searchterms'
+
+        context['grupos'] = grupos
         return context
 
 
