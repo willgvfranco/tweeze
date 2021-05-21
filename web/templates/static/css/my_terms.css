@@ -12,6 +12,9 @@
 .card {
   margin: 15px;
   padding: 5px;
+  max-height: 35rem;
+  height: fit-content;
+  overflow-y: auto;
 }
 
 .header-card {
@@ -49,16 +52,29 @@
 
 .card .card-title {
   text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .card-title .actions button {
+  font-size: 12px;
+  padding: 5px 20px;
+}
+
+.card .card-title .actions button:nth-child(1) {
+  margin-left: 5rem;
+}
+
+
+.table-responsive {
+  display: flex;
 }
 
 .table-responsive .btn {
   text-transform: uppercase;
   font-size: 10px;
   padding: 5px 10px;
-}
-
-.table-responsive .actions button {
-  font-size: 12px;
 }
 
 body[data-background-color="dark"] .card.title .nav-search .input-group {

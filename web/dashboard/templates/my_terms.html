@@ -11,11 +11,6 @@
 {% block content %}
 
 	<div class="content">
-
-{% comment %} DELETAR {for item in grupo}... {% endcomment %}
-	{{grupos}}
-
-
     <div class="card header-card title">
       <div class="card-title">Meus termos e grupos</div>
       <div class="card-body">
@@ -45,228 +40,73 @@
     </div>
 
 		<div class="page-inner">
+      {% for grupo in grupos %}
+
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Grupo #1</div>
+          <div class="card-title">
+            {{grupo.grupo}}
+            <div class="btn-group actions" role="group" aria-label="Basic example">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-toggle="modal"
+                data-target="#searchtems-modal"
+              >
+                <i class="far fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-outline-secondary">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Termos</th>
-                  <th>Tipo</th>
-                  <th>Ação</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Termo #1</td>
-                  <td>
-                    <button class="btn btn-success">positivo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Termo #2</td>
-                  <td>
-                    <button class="btn btn-success">positivo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Termo #3</td>
-                  <td>
-                    <button class="btn btn-danger">negativo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                </tr>
-              </tbody>
-            </table>
+          
+            {% if grupo.positivas|length > 1 %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      <button class="btn btn-success">Termos Positivos</button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for termo in grupo.positivas %}
+                    <tr>
+                      <td class="text-center">{{termo}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
+            {% if grupo.negativas|length > 1 %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      <button class="btn btn-danger">Termos Negativo</button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for termo in grupo.negativas %}
+                    <tr>
+                      <td class="text-center">{{termo}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Grupo #2</div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Termos</th>
-                  <th>Tipo</th>
-                  <th>Ação</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Termo #1</td>
-                  <td>
-                    <button class="btn btn-success">positivo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Termo #2</td>
-                  <td>
-                    <button class="btn btn-success">positivo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Termo #3</td>
-                  <td>
-                    <button class="btn btn-danger">negativo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Grupo #3</div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Termos</th>
-                  <th>Tipo</th>
-                  <th>Ação</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Termo #1</td>
-                  <td>
-                    <button class="btn btn-success">positivo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Termo #2</td>
-                  <td>
-                    <button class="btn btn-success">positivo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Termo #3</td>
-                  <td>
-                    <button class="btn btn-danger">negativo</button>
-                  </td>
-                  <td>
-                    <div class="btn-group actions" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-outline-secondary">
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      
+      {% endfor %}     
 
     </div>
 
@@ -340,5 +180,8 @@
 
 {% block javascripts %}
 	<script src="{% static 'js/backgroundColor.js' %}"></script>
+  <script type="text/javascript">
+      const GRUPOS = {{grupos|safe}};
+  </script>
 	<script src="{% static 'js/my_terms.js' %}"></script>
 {% endblock javascripts %}

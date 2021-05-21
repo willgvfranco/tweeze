@@ -11,6 +11,8 @@ const sendNegativeForm = document.getElementById("sendNegativeForm");
 const termsForm = document.querySelector(".terms-form");
 const submitBtn = document.querySelector(".submit-btn");
 
+sessionStorage.setItem("GRUPOS", JSON.stringify(GRUPOS));
+
 let positiveClipping = [];
 let negativeClipping = [];
 
