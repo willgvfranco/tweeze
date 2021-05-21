@@ -1,11 +1,7 @@
 html {
-  font-size: calc(1em + 1vw);
+  font-size: calc(1em + 0.6vw);
 }
 
-button {
-  font-size: inherit;
-}
-
-input {
+button, body, input {
   font-size: inherit;
 }

@@ -8,21 +8,26 @@
   <form class="register-form" action="{% url 'perfil:register' %}" method="post">
     {% csrf_token %}
 
-    {{ userform.username|as_crispy_field }}
-
+    <div class="line">
+      <div class="wrapper double">
+        {{ userform.username|as_crispy_field }}
+      </div>
+      <div class="wrapper double">
+        {{ userform.email|as_crispy_field }}
+      </div>
+    </div>
 
     <div class="line">
       <div class="wrapper">
         {{ userform.first_name|as_crispy_field }}
       </div>
-
       <div class="wrapper">
         {{ userform.last_name|as_crispy_field }}
       </div>
+      <div class="wrapper">
+        {{ perfilform.cpf|as_crispy_field }}
+      </div>
     </div>
-
-
-    {{ userform.email|as_crispy_field }}
 
     <div class="line">
       <div class="wrapper">
@@ -31,43 +36,34 @@
       <div class="wrapper">
         {{ userform.password2|as_crispy_field }}
       </div>
-    </div>
-
-    <div class="line">
-      <div class="wrapper">
-        {{ perfilform.cpf|as_crispy_field }}
-      </div>
       <div class="wrapper">
         {{ perfilform.telefone|as_crispy_field }}
       </div>
     </div>
-    {{ perfilform.cep|as_crispy_field }}
-
-    {{ perfilform.endereco|as_crispy_field }}
-
 
     <div class="line">
+      <div class="wrapper">
+        {{ perfilform.cep|as_crispy_field }}
+      </div>
+      <div class="wrapper">
+        {{ perfilform.endereco|as_crispy_field }}
+      </div>
       <div class="wrapper">
         {{ perfilform.numero|as_crispy_field }}
       </div>
-
-      <div class="wrapper">
-        {{ perfilform.complemento|as_crispy_field }}
-
-      </div>
     </div>
 
     <div class="line">
       <div class="wrapper">
+        {{ perfilform.complemento|as_crispy_field }}
+      </div>
+      <div class="wrapper">
         {{ perfilform.estado|as_crispy_field }}
       </div>
-
       <div class="wrapper">
         {{ perfilform.cidade|as_crispy_field }}
-
       </div>
     </div>
-
 
     <button type="submit" class="btn submit-btn">Continuar</button>
   </form>
