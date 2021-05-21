@@ -1,17 +1,8 @@
 from django.db import models
 from django.utils import timezone
 # Create your models here.
-from .utils import ESTADOS_BR, ARQUIVOS
-
-
-class Always(models.Model):
-    criado = models.DateTimeField(
-        'Criação', auto_now_add=True)
-    modificado = models.DateTimeField('Atualização', auto_now=True, null=True)
-    ativo = models.BooleanField('Ativo?', default=True, null=True)
-
-    class Meta:
-        abstract = True
+from utils.listas import ESTADOS_BR, ARQUIVOS
+from utils.classes import Always
 
 
 class Fonte(Always):

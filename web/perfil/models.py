@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
 from utils.validacpf import valida_cpf
-
+from utils.classes import Always
 # Create your models here.
 
 
