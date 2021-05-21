@@ -10,8 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [
                        s.strip() for s in v.split(',')])
+
 
 DATABASES = {
     'default': {
@@ -23,6 +25,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
 
 TEMPLATES = [
     {
@@ -40,6 +43,7 @@ TEMPLATES = [
     },
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LANGUAGE_CODE = 'pt-br'
 
@@ -75,10 +79,13 @@ CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
-INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend', 'dashboard',
-                   'axes', 'django.contrib.humanize')
+INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend', 'dashboard', 'perfil',
+                   'axes',  'crispy_forms', 'django.contrib.humanize')
 
 MIDDLEWARE += ('axes.middleware.AxesMiddleware',)
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # VIEW.PY => messages.success(self.request, 'Success!') // from django.contrib import messages
@@ -95,6 +102,21 @@ AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+# Sessão em dias: 60s * 60m * 24h * 1d
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
+
+# Salvar a cada requisição
+SESSION_SAVE_EVERY_REQUEST = False
+
+# Serializer - Padrão JSON
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+# Para sessions em arquivos ao invés da base de dados
+# SESSION_ENGINE = "django.contrib.sessions.backends.file"
+# SESSION_FILE_PATH = '/home/metrolia/Desktop/temp'
+
 
 AXES_FAILURE_LIMIT = 10
 

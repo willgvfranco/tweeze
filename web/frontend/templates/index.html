@@ -2,7 +2,7 @@
 {% load humanize %}
 {% load tz %}
 {% block conteudo %}
-        <form method="get" action="{% url 'busca' %}">
+        <form method="get" action="{% url 'frontend:busca' %}">
          {% csrf_token %}
             <h1>
                 {% if app_name %}

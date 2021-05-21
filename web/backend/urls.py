@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('neuadmin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
+    path('perfil/', include('perfil.urls')),
     path('', include('frontend.urls')),
 ]
 

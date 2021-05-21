@@ -1,13 +1,30 @@
 {% extends 'register_base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
   <div class="register-box">
     <span class="title">Quem é você?</span>
 
-    <form class="register-form" action="{% url 'register' %}" method="post">
+    <form class="register-form" action="{% url 'perfil:register' %}" method="post">
       {% csrf_token %}
-      <label for="name">Nome</label>
+              {{ userform|crispy }}
+            {{ perfilform|crispy }}
+      {% comment %} <label for="name">Nome</label>
       <input class="form-control" type="text" id="name" name="name" required>
+
+
+      <div class="line">
+        <div class="wrapper">
+        <label for="name">Primeiro Nome</label>
+          <input class="form-control" type="text" id="first_name" name="first_name" required>
+        </div>
+        <div class="wrapper">
+          <label for="cep">Sobrenome</label>
+          <input class="form-control" type="text" id="last_name" name="last_name" required>
+
+        </div>
+      </div>
+
 
       <label class="labels" for="email">E-mail</label>
       <input class="form-control" type="email" id="email" name="email" required>
@@ -71,7 +88,7 @@
             </label>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
 
       <button type="submit" class="btn submit-btn">Continuar</button>
     </form>
