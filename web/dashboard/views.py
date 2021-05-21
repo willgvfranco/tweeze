@@ -7,6 +7,8 @@ from django.views.generic import View, FormView
 from .forms import ContatoForm, LoginForm, RegisterForm, RegisterCompanyForm, PositiveClippingForm, NegativeClippingForm
 from django.urls import reverse_lazy
 
+import json
+
 
 class baseDashboard(TemplateView):
 
@@ -46,6 +48,8 @@ class NegativeClippingView(FormView):
     def get_context_data(self, **kwargs):
         context = super(NegativeClippingView, self).get_context_data(**kwargs)
 
+        return context
+
     def form_valid(self, form, *args, **kwargs):
         print(form)
         return super(NegativeClippingView, self).form_valid(form, *args, **kwargs)
@@ -54,8 +58,6 @@ class NegativeClippingView(FormView):
         messages.error(self.request, 'Informações incorretas')
         return super(NegativeClippingView, self).form_invalid(form, *args, **kwargs)
 
-        return context
-
 
 class DashboardView(baseDashboard):
     template_name = 'dashboard.html'
@@ -63,6 +65,7 @@ class DashboardView(baseDashboard):
 
 class StatisticsView(baseDashboard):
     template_name = 'stats.html'
+    context_object_name = 'grupos'
 
     def get_context_data(self, **kwargs):
         context = super(StatisticsView, self).get_context_data(**kwargs)
@@ -92,6 +95,7 @@ class CriarGrupoView(baseDashboard):
         print(str(request.body))
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
+
         print(f'positivas: {arrayPositivas}')
         print(f'negativas: {arrayNegativas}')
         # if not self.userform.is_valid() or not self.perfilform.is_valid():
@@ -138,12 +142,40 @@ class CriarGrupoView(baseDashboard):
         return redirect('dashboard:searchterms')
 
 
-class SearchTermsView(baseDashboard):
+class SearchTermsView(TemplateView):
     template_name = 'my_terms.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchTermsView, self).get_context_data(**kwargs)
         context['segment'] = 'searchterms'
+        context['grupos'] = [{
+            "grupo": "grupo1",
+            "positivas": ["foo", "bar"],
+            "negativas": ["charmander", "squirtle", "bulbassauro", "pikachu"]
+        },
+            {
+                "grupo": "grupo2",
+                "positivas": ["foo", "bar"],
+                "negativas": ["charmander", "squirtle", "bulbassauro", "pikachu"]
+        },
+            {
+                "grupo": "Só negativas",
+                "positivas": [""],
+                "negativas": ["charmander", "squirtle", "bulbassauro", "pikachu"]
+        },
+            {
+                "grupo": "Só positivas",
+                "positivas": ["foo", "bar"],
+                "negativas": [""]
+        },
+            {
+                "grupo": "Muitas palavras",
+                "positivas": ["foo", "bar", "lorem", 'raichu', 'jigglypuff', 'eevee', 'mewtwo', 'mew', 'celebi', 'ho-oh', 'moltres', 'zapdos', 'articuno'],
+                "negativas": [""]
+        }
+
+
+        ]
 
         return context
 
