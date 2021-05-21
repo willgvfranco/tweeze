@@ -1,3 +1,7 @@
+const URL = document.URL;
+const termSelect = document.getElementById("term-select");
+const termSearch = document.querySelector(".nav-search");
+const inputSearch = document.getElementById("term-search");
 const positiveWrapper = document.querySelector(".positive-wrapper");
 const negativeWrapper = document.querySelector(".negative-wrapper");
 const positiveInput = document.getElementById('positive-clipping-list');
@@ -5,57 +9,111 @@ const negativeInput = document.getElementById('negative-clipping-list');
 const positiveForm = document.getElementById("positive-clipping-form");
 const negativeForm = document.getElementById("negative-clipping-form");
 const submitBtn = document.querySelector(".submit-btn");
+const cancelBtn = document.querySelector(".cancel-btn");
+
+const getParams = (array) => {
+  const params = {};
+  array.forEach(element => {
+    params[element.split("=")[0]] = element.split("=")[1];
+  });
+  return params;
+};
+
+const urlObj = {
+  url: URL.split("?")[0],
+  params: getParams(URL.split("?")[1]?.split("&")),
+};
+
+if (urlObj.params?.type) {
+  if (urlObj.params.type === "all") {
+    termSelect.options[0].selected = true;
+  } else if (urlObj.params.type === "positive") {
+    termSelect.options[1].selected = true;
+  } else if (urlObj.params.type === "negative") {
+    termSelect.options[2].selected = true;
+  }
+}
 
 let positiveClipping = [];
-let jsonPositiveArr = JSON.stringify(positiveClipping);
 let negativeClipping = [];
-let jsonNegativeArr = JSON.stringify(negativeClipping);
-
-localStorage.setItem("positiveClipping", jsonPositiveArr);
-localStorage.setItem("negativeClipping", jsonNegativeArr);
 
 positiveForm.addEventListener("submit", e => e.preventDefault());
 negativeForm.addEventListener("submit", e => e.preventDefault());
 
-const setToStorage = (type, array) => {
-  jsonArr = JSON.stringify(array);
-  switch (type) {
-    case "positive":
-      localStorage.setItem("positiveClipping", jsonArr);   
-      break;   
-    case "negative":
-      localStorage.setItem("negativeClipping", jsonArr);  
-      break;   
+termSelect.addEventListener("change", (e) => {
+  let selected = "all";
+  if (e.target.value === "Todos os termos") {
+    selected = "all";
+  } else if (e.target.value === "Somente positivos") {
+    selected = "positive";    
+  } else if (e.target.value === "Somente negativos") {
+    selected = "negative";
   }
+
+  urlObj.params.type = selected;
+  console.log('urlObj', urlObj);
+  reloadWithParams();
+});
+
+termSearch.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    urlObj.params.search = e.target.value;
+    console.log('urlObj', urlObj)
+    reloadWithParams();
+  }
+});
+
+const reloadWithParams = () => {
+  let newUrl = urlObj.url;
+  if (urlObj.params?.type && urlObj.params?.search) {
+    newUrl = `${urlObj.url}?type=${urlObj.params.type}&search=${urlObj.params.search}`;
+  } else if (urlObj.params?.type && !urlObj.params?.search) {
+    newUrl = `${urlObj.url}?type=${urlObj.params.type}`;
+  } else if (!urlObj.params?.type && urlObj.params?.search) {
+    newUrl = `${urlObj.url}?search=${urlObj.params.search}`;
+  }
+  
+  location.replace(newUrl);
 };
 
-const createItemText = (value, type) => {
+
+const createNegItem = value => {
   const newItem = document.createElement("li");
-  const closeBtn = document.createElement("button");
+  const closeBtn = document.createElement("span");
   const icon = document.createElement("span");
 
   icon.innerText = "x";
-
   closeBtn.classList.add("close");
-  closeBtn.dataset.dismiss = "modal"
   closeBtn.appendChild(icon);
   
   newItem.classList.add("key-word");
   newItem.innerHTML = "#" + value;
 
   closeBtn.addEventListener("click", e => {
-    switch (type) {
-      case "positive":
-        positiveClipping.splice(positiveClipping.indexOf(value), 1);
-        setToStorage(type, positiveClipping);
-        newItem.parentElement.removeChild(newItem);
-        break;
-      case "negative":
-        negativeClipping.splice(negativeClipping.indexOf(value), 1);
-        setToStorage(type, negativeClipping);
-        newItem.parentElement.removeChild(newItem);
-        break;
-    }
+    negativeClipping.splice(negativeClipping.indexOf(value), 1);
+    newItem.parentElement.removeChild(newItem);
+  });
+
+  newItem.appendChild(closeBtn);
+  return newItem;
+};
+
+const createPosItem = value => {
+  const newItem = document.createElement("li");
+  const closeBtn = document.createElement("span");
+  const icon = document.createElement("span");
+
+  icon.innerText = "x";
+  closeBtn.classList.add("close");
+  closeBtn.appendChild(icon);
+  
+  newItem.classList.add("key-word");
+  newItem.innerHTML = "#" + value;
+
+  closeBtn.addEventListener("click", e => {
+    positiveClipping.splice(positiveClipping.indexOf(value), 1);
+    newItem.parentElement.removeChild(newItem);
   });
 
   newItem.appendChild(closeBtn);
@@ -65,9 +123,7 @@ const createItemText = (value, type) => {
 positiveInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     positiveClipping.push(e.target.value);
-    setToStorage("positive", positiveClipping);
-
-    positiveWrapper.appendChild(createItemText(e.target.value, "positive"));
+    positiveWrapper.appendChild(createPosItem(e.target.value));
     e.target.value = "";
   }
 });
@@ -75,9 +131,17 @@ positiveInput.addEventListener("keypress", (e) => {
 negativeInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     negativeClipping.push(e.target.value);
-    setToStorage("negative", negativeClipping);
-
-    negativeWrapper.appendChild(createItemText(e.target.value, "negative"));
+    negativeWrapper.appendChild(createNegItem(e.target.value));
     e.target.value = "";
   }
 });
+
+submitBtn.addEventListener("click", () => {
+  if (!positiveClipping.length && !negativeClipping.length) {
+    console.log("Please add search terms.");
+  } else {
+    console.log("SUBMIT");
+  }
+});
+
+cancelBtn.addEventListener("click", () => console.log("CANCEL"));

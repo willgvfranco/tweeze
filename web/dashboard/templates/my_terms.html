@@ -15,7 +15,7 @@
       <div class="card-title">Meus termos e grupos</div>
       <div class="card-body">
         <div class="form-group">
-          <select class="form-control form-control" id="defaultSelect">
+          <select class="form-control form-control" id="term-select">
             <option>Todos os termos</option>
             <option>Somente positivos</option>
             <option>Somente negativos</option>
@@ -24,16 +24,16 @@
 
         <form class="nav-search">
           <div class="input-group">
-            <div class="input-group-prepend">
-              <button type="submit" class="btn btn-search pr-1">
+            <input type="text" placeholder="Encontre o termo aqui" class="form-control" id="term-search">
+            <div class="input-group-append">
+              <button class="btn btn-search pr-1">
                 <i class="fa fa-search search-icon"></i>
               </button>
             </div>
-            <input type="text" placeholder="Encontre o termo aqui" class="form-control">
           </div>
         </form>
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#searchtems-modal">
           Criar grupo
         </button>
       </div>
@@ -265,7 +265,7 @@
 
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="searchtems-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -274,50 +274,60 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <form class="positive-clipping-form" id="positive-clipping-form">
-              <label for="positive-clipping-list">Insira aqui os termos positivos</label>
-              <input
-                class="form-control"
-                type="text"
-                id="positive-clipping-list"
-                name="positive-clipping-list"
-                placeholder="Separe as palavras com vírgula"
-              >
-        
-              <label class="labels" for="key-words">Palavras-chave</label>
-              <ul class="key-words-wrapper positive-wrapper"></ul>
-            </form>
 
-            <form class="negative-clipping-form" id="negative-clipping-form">
-              <label for="negative-clipping-list">Insira aqui os termos negativos</label>
-              <input
-                class="form-control"
-                type="text"
-                id="negative-clipping-list"
-                name="negative-clipping-list"
-                placeholder="Separe as palavras com vírgula"
-              >
-        
-              <label class="labels" for="key-words">Palavras-chave</label>
-              <ul class="key-words-wrapper negative-wrapper"></ul>
-            </form>
+          <div class="modal-body">
+            <label for="group-name">Nome do Grupo</label>
+            <input
+              class="form-control"
+              type="text"
+              id="group-name"
+              name="group-name"
+            />
+
+            <div class="forms-wrapper">
+              <form class="positive-clipping-form" id="positive-clipping-form">
+                <label for="positive-clipping-list">Insira aqui os termos positivos</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="positive-clipping-list"
+                  name="positive-clipping-list"
+                  placeholder="Separe as palavras com vírgula"
+                />
+          
+                <label class="labels" for="key-words">Palavras-chave</label>
+                <ul class="key-words-wrapper positive-wrapper"></ul>
+              </form>
+
+              <form class="negative-clipping-form" id="negative-clipping-form">
+                <label for="negative-clipping-list">Insira aqui os termos negativos</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="negative-clipping-list"
+                  name="negative-clipping-list"
+                  placeholder="Separe as palavras com vírgula"
+                >
+          
+                <label class="labels" for="key-words">Palavras-chave</label>
+                <ul class="key-words-wrapper negative-wrapper"></ul>
+              </form>
+            </div>
           </div>
+
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-success">Confirmar</button>
+            <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success submit-btn">Confirmar</button>
           </div>
         </div>
       </div>
     </div>
 
-
-		</div>
 	</div>
 
 {% endblock content %}
 
 {% block javascripts %}
-	<script src="{% static 'js/brackgroundColor.js' %}"></script>
+	<script src="{% static 'js/backgroundColor.js' %}"></script>
 	<script src="{% static 'js/my_terms.js' %}"></script>
 {% endblock javascripts %}
