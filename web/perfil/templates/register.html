@@ -1,0 +1,75 @@
+{% extends 'register_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="register-box">
+  <span class="title">Quem é você?</span>
+
+  <form class="register-form" action="{% url 'perfil:register' %}" method="post">
+    {% csrf_token %}
+
+    {{ userform.username|as_crispy_field }}
+
+
+    <div class="line">
+      <div class="wrapper">
+        {{ userform.first_name|as_crispy_field }}
+      </div>
+
+      <div class="wrapper">
+        {{ userform.last_name|as_crispy_field }}
+      </div>
+    </div>
+
+
+    {{ userform.email|as_crispy_field }}
+
+    <div class="line">
+      <div class="wrapper">
+        {{ userform.password|as_crispy_field }}
+      </div>
+      <div class="wrapper">
+        {{ userform.password2|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="wrapper">
+        {{ perfilform.cpf|as_crispy_field }}
+      </div>
+      <div class="wrapper">
+        {{ perfilform.telefone|as_crispy_field }}
+      </div>
+    </div>
+    {{ perfilform.cep|as_crispy_field }}
+
+    {{ perfilform.endereco|as_crispy_field }}
+
+
+    <div class="line">
+      <div class="wrapper">
+        {{ perfilform.numero|as_crispy_field }}
+      </div>
+
+      <div class="wrapper">
+        {{ perfilform.complemento|as_crispy_field }}
+
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="wrapper">
+        {{ perfilform.estado|as_crispy_field }}
+      </div>
+
+      <div class="wrapper">
+        {{ perfilform.cidade|as_crispy_field }}
+
+      </div>
+    </div>
+
+
+    <button type="submit" class="btn submit-btn">Continuar</button>
+  </form>
+</div>
+{% endblock %}

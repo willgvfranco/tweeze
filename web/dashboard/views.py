@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 # Create your views here.
@@ -8,84 +8,15 @@ from .forms import ContatoForm, LoginForm, RegisterForm, RegisterCompanyForm, Po
 from django.urls import reverse_lazy
 
 
-# class DashboardView(TemplateView):
-# template_name = 'dashboard.html'
+class baseDashboard(TemplateView):
 
-# def get_context_data(self, **kwargs):
-#     context = super(DashboardView, self).get_context_data(**kwargs)
-#     context['segment'] = 'dashboard'
-
-#     return context
-
-# def get(self, request, *args, **kwargs):
-#     return HttpResponse('Dashboard gogoo')
-
-
-# class AccountView(TemplateView):
-#     template_name = 'account.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super(AccountView, self).get_context_data(**kwargs)
-#         context['segment'] = 'account'
-
-#         return context
-
-
-class LoginView(FormView):
-    template_name = 'login.html'
-    form_class = LoginForm
-    success_url = reverse_lazy('login')
-
-    def get_context_data(self, **kwargs):
-        context = super(LoginView, self).get_context_data(**kwargs)
-
-    def form_valid(self, form, *args, **kwargs):
-        return super(LoginView, self).form_valid(form, *args, **kwargs)
-
-    def form_invalid(self, form, *args, **kwargs):
-        messages.error(self.request, 'Login incorreto')
-        return super(LoginView, self).form_invalid(form, *args, **kwargs)
-
-        return context
-
-
-# Formularios de cadastro
-class RegisterView(FormView):
-    template_name = 'register.html'
-    form_class = RegisterForm
-    success_url = reverse_lazy('register')
-
-    def get_context_data(self, **kwargs):
-        context = super(RegisterView, self).get_context_data(**kwargs)
-
-    def form_valid(self, form, *args, **kwargs):
-        print(form)
-        return super(RegisterView, self).form_valid(form, *args, **kwargs)
-
-    def form_invalid(self, form, *args, **kwargs):
-        messages.error(self.request, 'Informações incorretas')
-        return super(RegisterView, self).form_invalid(form, *args, **kwargs)
-
-        return context
-
-
-class RegisterCompanyView(FormView):
-    template_name = 'register_company.html'
-    form_class = RegisterCompanyForm
-    success_url = reverse_lazy('registerCompany')
-
-    def get_context_data(self, **kwargs):
-        context = super(RegisterCompanyView, self).get_context_data(**kwargs)
-
-    def form_valid(self, form, *args, **kwargs):
-        print(form)
-        return super(RegisterCompanyView, self).form_valid(form, *args, **kwargs)
-
-    def form_invalid(self, form, *args, **kwargs):
-        messages.error(self.request, 'Informações incorretas')
-        return super(RegisterCompanyView, self).form_invalid(form, *args, **kwargs)
-
-        return context
+    # Autenticação
+    def get(self, request, *args, **kwargs):
+        self.renderizar = render(
+            self.request, self.template_name)
+        if not self.request.user.is_authenticated:
+            return redirect('perfil:home')
+        return self.renderizar
 
 
 class PositiveClippingView(FormView):
@@ -126,17 +57,11 @@ class NegativeClippingView(FormView):
         return context
 
 
-class DashboardView(TemplateView):
+class DashboardView(baseDashboard):
     template_name = 'dashboard.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(DashboardView, self).get_context_data(**kwargs)
-        context['segment'] = 'dashboard'
 
-        return context
-
-
-class StatisticsView(TemplateView):
+class StatisticsView(baseDashboard):
     template_name = 'stats.html'
 
     def get_context_data(self, **kwargs):
@@ -146,7 +71,7 @@ class StatisticsView(TemplateView):
         return context
 
 
-class ReportsView(TemplateView):
+class ReportsView(baseDashboard):
     template_name = 'reports.html'
 
     def get_context_data(self, **kwargs):
@@ -156,7 +81,7 @@ class ReportsView(TemplateView):
         return context
 
 
-class SearchTermsView(TemplateView):
+class SearchTermsView(baseDashboard):
     template_name = 'my_terms.html'
 
     def get_context_data(self, **kwargs):
@@ -166,14 +91,14 @@ class SearchTermsView(TemplateView):
         return context
 
 
-class AccountView(TemplateView):
-    template_name = 'account.html'
+# class AccountView(TemplateView):
+#     template_name = 'account.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(AccountView, self).get_context_data(**kwargs)
-        context['segment'] = 'account'
+#     def get_context_data(self, **kwargs):
+#         context = super(AccountView, self).get_context_data(**kwargs)
+#         context['segment'] = 'account'
 
-        return context
+#         return context
 
 
 # Formulario de contato (e-mail)

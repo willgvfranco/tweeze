@@ -4,7 +4,7 @@
   <div class="register-box">
     <span class="title">Quem você representa?</span>
 
-    <form class="register-form" action="{% url 'registerCompany' %}" method="post">
+    <form class="register-form" action="{% url 'perfil:registerCompany' %}" method="post">
       {% csrf_token %}
       <label for="company">Empresa</label>
       <input class="form-control" type="text" id="company" name="company" required>

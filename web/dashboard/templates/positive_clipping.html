@@ -4,7 +4,7 @@
   <div class="clipping-box">
     <span class="title">Agora vamo cadastrar os termos do seu clipping</span>
 
-    <form class="clipping-form" id="clipping-form" action="{% url 'positiveClipping' %}" method="post">
+    <form class="clipping-form" id="clipping-form" action="{% url 'dashboard:positiveClipping' %}" method="post">
       {% csrf_token %}
       <label for="clipping_list">
         Insira aqui os termos positivos

@@ -24,15 +24,15 @@
         alt="Tweeze Logo"
       >
       <p class="subtitle">Descubra o que falam da sua marca.</p>
-
+    {% include 'partials/_messages.html' %}
       <div class="login-box">
         <img class="img-fluid" src="{% static 'img/logo/logo_twz_branco.png' %}" alt="Tweeze Logo">
-        <form class="login-form " action="{% url 'login' %}" method="post">
+        <form class="login-form " action="{% url 'perfil:login' %}" method="POST">
           {% csrf_token %}
           <input
             type="text"
             id="login"
-            name="login"
+            name="username"
             placeholder="Nome ou e-mail cadastrado"
             required
           >
@@ -47,7 +47,7 @@
           <div class="btn-wrapper">
             <button type="submit" class="btn login-btn">Entrar</button>
             <button class="btn register-btn" href="register">
-              <a href="{% url 'register' %}">Cadastre-se</a>
+              <a href="{% url 'perfil:register' %}">Cadastre-se</a>
             </button>
           </div>
         </form>

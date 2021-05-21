@@ -40,6 +40,19 @@ class Fonte(Always):
         max_length=3, choices=ESTADOS_BR, null=True, blank=True, verbose_name="Estado de Origem da Fonte")
     source_municipio = models.CharField(
         max_length=255, null=True, blank=True, verbose_name="Município de Origem da Fonte")
+    linguagem = models.CharField(
+        default='PT',
+        max_length=2,
+        choices=(
+            ('PT', 'Portugues'),
+            ('EN', 'Inglês'),
+            ('FR', 'Francês'),
+            ('ES', 'Espanhol'),
+            ('IT', 'Italiano'),
+            ('RU', 'Russo'),
+            ('DE', 'Alemão'),
+        )
+    )
 
 
 class Noticia(Always):

@@ -25,13 +25,17 @@
         >
       </div>
 
-      {% if messages %}
-      {% for msg in messages %}
-        <div class="alert {{ msg.tags }} fadeInDown" data-wow-delay="0.3s">
-          {{ msg }}
-        </div>
-      {% endfor %}
-    {% endif %}
+      <div class="links">
+        <a href="{% url 'perfil:home' %}">Entrar</a>
+      </div>
+
+      {% comment %} {% if messages %}
+        {% for msg in messages %}
+          <div class="alert {{ msg.tags }} fadeInDown" data-wow-delay="0.3s">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %} {% endcomment %}
 
       <div class="banner-wrapper first-banner">
         <img class="img-fluid background" src="{% static 'img/moldura banner 1.jpg' %}" alt="Banner background">
@@ -133,7 +137,7 @@
           <p class="subtitle wow fadeInLeft" data-wow-delay="0.6s">Deixe seu número, nós entraremos em contato.</p>
         </div>
 
-        <form class="contact-form wow fadeInRight" data-wow-delay="0.4s" action="{% url 'landingPage' %}" method="post">
+        <form class="contact-form wow fadeInRight" data-wow-delay="0.4s" action="{% url 'frontend:landingpage' %}" method="post">
           {% csrf_token %}
           <div class="input-group">
             {% comment %} <div class="input-group-prepend">
