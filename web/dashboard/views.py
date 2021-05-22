@@ -100,6 +100,11 @@ class CriarGrupoView(baseDashboard):
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
 
+        if(list(positivas)[0] == ''):
+            arrayPositivas = None
+
+        if(list(negativas)[0] == ''):
+            arrayPositivas = None
         # EDITANDO EXISTENTE
         if groupid:
             grupo_existente = GruposDePalavras.objects.filter(
