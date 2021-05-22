@@ -100,10 +100,10 @@ class CriarGrupoView(baseDashboard):
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
 
-        if(list(positivas)[0] == ''):
+        if(list(arrayPositivas)[0] == ''):
             arrayPositivas = None
 
-        if(list(negativas)[0] == ''):
+        if(list(arrayNegativas)[0] == ''):
             arrayPositivas = None
         # EDITANDO EXISTENTE
         if groupid:
