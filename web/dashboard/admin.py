@@ -5,5 +5,5 @@ from .models import GruposDePalavras
 
 @admin.register(GruposDePalavras)
 class GruposDePalavrasAdmin(admin.ModelAdmin):
-    list_display = ('id', )
-    list_display_links = ('id',)
+    list_display = ('id', 'owner')
+    list_display_links = ('id', 'owner')

@@ -9,6 +9,7 @@ urlpatterns = [
     path('reports/', views.ReportsView.as_view(), name='reports'),
     path('searchterms/', views.SearchTermsView.as_view(), name='searchterms'),
     path('criargrupo/', views.CriarGrupoView.as_view(), name='criargrupo'),
+    path('deletargrupo/', views.DeletarGrupoView.as_view(), name='deletargrupo'),
     path('searchterms/<pk>', views.SearchTermsView.as_view(), name='editargrupo'),
     #     path('account/', views.AccountView.as_view(), name='account'),
     #     path('login/', views.LoginView.as_view(), name='login'),
