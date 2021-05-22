@@ -140,12 +140,12 @@ class SearchTermsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchTermsView, self).get_context_data(**kwargs)
-        grupos = GruposDePalavras.objects.filter(
-            owner=self.request.user.id).values('id', 'positivas', 'negativas', 'owner')
+        grupos = GruposDePalavras.objects.filter(owner=self.request.user.id).values(
+            'id', 'positivas', 'negativas', 'owner')
         print(grupos)
         context['segment'] = 'searchterms'
         context['iduser'] = self.request.user.id
-        context['grupos'] = grupos
+        context['grupos'] = list(grupos)
         return context
 
 
