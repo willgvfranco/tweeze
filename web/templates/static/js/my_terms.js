@@ -2,19 +2,46 @@ const URL = document.URL;
 const termSelect = document.getElementById("term-select");
 const termSearch = document.querySelector(".nav-search");
 const inputSearch = document.getElementById("term-search");
+const groupName = document.getElementById("group-name");
 const positiveWrapper = document.querySelector(".positive-wrapper");
 const negativeWrapper = document.querySelector(".negative-wrapper");
 const positiveInput = document.getElementById('positive-clipping-list');
 const negativeInput = document.getElementById('negative-clipping-list');
 const sendPositiveForm = document.getElementById("sendPositiveForm");
 const sendNegativeForm = document.getElementById("sendNegativeForm");
+const sendGroupId = document.getElementById("sendGroupId");
 const termsForm = document.querySelector(".terms-form");
 const submitBtn = document.querySelector(".submit-btn");
+const cancelBtn = document.querySelector(".cancel-btn");
+const closeBtn = document.getElementById("close");
+const editBtn = document.querySelectorAll(".edit-group");
+let positiveClipping = [];
+let negativeClipping = [];
 
 sessionStorage.setItem("GRUPOS", JSON.stringify(GRUPOS));
 
-let positiveClipping = [];
-let negativeClipping = [];
+editBtn.forEach(element => {
+  element.addEventListener("click", () => {
+    const groups = JSON.parse(sessionStorage.getItem("GRUPOS"));
+    const selectedGroup = groups.find(group => group.id === parseFloat(element.id.split("-")[1]));
+
+    sendGroupId.value = selectedGroup.id;
+    groupName.value = selectedGroup.grupo;
+    if (selectedGroup['positivas'][0] !== "") {
+      positiveClipping = [...selectedGroup['positivas']];
+    }
+    if (selectedGroup['negativas'][0] !== "") {
+      negativeClipping = [...selectedGroup['negativas']];
+    }
+    selectedGroup['positivas'].forEach(pos => {
+      if (pos !== "") positiveWrapper.appendChild(createPosItem(pos));
+    });
+    selectedGroup['negativas'].forEach(neg => {
+      if (neg !== "") negativeWrapper.appendChild(createNegItem(neg));
+    });
+  });
+});
+
 
 const getParams = (array) => {
   const params = {};
@@ -146,3 +173,14 @@ submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
   }
 });
+
+const resetData = () => {
+  positiveWrapper.innerHTML = '';
+  negativeWrapper.innerHTML = '';
+  positiveClipping = [];
+  negativeClipping = [];
+  groupName.value = "";
+};
+
+cancelBtn.addEventListener("click", () => resetData());
+closeBtn.addEventListener("click", () => resetData());

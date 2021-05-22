@@ -49,13 +49,14 @@
             <div class="btn-group actions" role="group" aria-label="Basic example">
               <button
                 type="button"
-                class="btn btn-outline-secondary"
+                id="edit-{{grupo.id}}"
+                class="btn btn-outline-secondary edit-group"
                 data-toggle="modal"
                 data-target="#searchtems-modal"
               >
                 <i class="far fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-outline-secondary">
+              <button type="button" id="delete-{{grupo.id}}" class="btn btn-outline-secondary delete-group">
                 <i class="far fa-trash-alt"></i>
               </button>
             </div>
@@ -110,14 +111,14 @@
 
     </div>
 
-    <div class="modal fade" id="searchtems-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="searchtems-modal" tabindex="-1" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form class="terms-form" action="{% url 'dashboard:criargrupo' %}" method="POST">
             {% csrf_token %}
             <div class="modal-header">
               <h2 class="modal-title" id="exampleModalLabel">Criar novo grupo</h2>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>  
@@ -167,6 +168,7 @@
               <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancelar</button>
                 <input type="text" name="sendPositiveForm" id="sendPositiveForm" class="hidden">
                 <input type="text" name="sendNegativeForm" id="sendNegativeForm" class="hidden">
+                <input type="text" name="sendGroupId" id="sendGroupId" class="hidden">
                 <button type="submit" class="btn btn-success submit-btn">Confirmar</button>
             </div>
           </form>
