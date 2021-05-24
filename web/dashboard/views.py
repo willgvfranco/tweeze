@@ -92,46 +92,12 @@ class ReportsView(ListView):
     vector = SearchVector('title', 'description')
     query = SearchQuery(queryPositiva)
     queryset = Noticia.objects.filter(criado__range=[
-                                      "2021-05-23", "2021-05-24"]).annotate(search=vector).filter(search=query).order_by('-id')
+                                      "2021-05-23", "2021-05-24"])
+    #   .annotate(search=vector).filter(search=query).order_by('-id')
 
     def get_queryset(self):
         qs = super().get_queryset()
-
-        # print(arrayPositivas)
-        # print(queryPositiva)
-
-        # qs = Noticia.objects.filter(criado__range=["2021-05-21", "2021-05-24"]).annotate(
-        #     search=vector).filter(search=query).order_by('-id')
-        # print(list(qs))
         return qs
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(ReportsView, self).get_context_data(**kwargs)
-    #     grupos = GruposDePalavras.objects.filter(owner=self.request.user.id).values(
-    #         'id', 'positivas', 'negativas', 'owner', 'grupo')
-    #     context['grupos'] = list(grupos)
-    #     self.request.session['grupos'] = list(grupos)
-    #     print(grupos)
-    #     return context
-
-    # def post(self, request, *args, **kwargs):
-    #     grupoID = self.request.POST.get('group')
-    #     positivas = self.request.POST.get('sendPositiveForm')
-    #     negativas = self.request.POST.get('sendNegativeForm')
-
-    #     arrayPositivas = positivas.split(',')
-    #     arrayNegativas = negativas.split(',')
-
-    #     def get_queryset(self):
-    #         qs = super().get_queryset()
-    #         termo = self.request.GET.get('termo')
-
-    #         if not termo:
-    #             return qs
-    #         print(termo)
-    #         qs = qs.filter(
-    #             Q(title__icontains=arrayPositivas)
-    #         )
 
 
 class ReportsBusca(baseDashboard):
@@ -152,62 +118,35 @@ class ReportsBusca(baseDashboard):
         arrayPositivas = positivas.split(',')
 
         queryPositiva = "'"+positivas.replace(",", "' | '")+"'"
-        # for palavra in arrayPositivas:
-        #     queryPositiva.
-        # arrayNegativas = negativas.split(',').
+
         vector = SearchVector('title', 'description')
         query = SearchQuery(queryPositiva)
         print(arrayPositivas)
         print(queryPositiva)
         news = Noticia.objects \
-            .filter(criado__range=["2021-05-21", "2021-05-24"]) \
-            .annotate(search=vector) \
-            .filter(search=query) \
+            .filter(criado__range=["2021-05-21", "2021-05-24"])
+        news = news.annotate(search=vector).filter(search=query)
 
         print(list(news))
         context['noticias_filtradas'] = list(news)
         return context
-        # if not arrayPositivas:
-        #     return qs
-        # qs = qs.filter(title__in=list(arrayPositivas)
-        #                )
-        # print(qs)
-        # return qs
 
 
 class CriarGrupoView(baseDashboard):
     def post(self, request, *args, **kwargs):
-        # print(self)
-        # print(request.user.id)
-        # print(self)
 
         grupo = self.request.POST.get('group-name')
         positivas = self.request.POST.get('create_positives')
         negativas = self.request.POST.get('create_negatives')
-        # groupid = self.request.POST.get('sendGroupId')
-        # positivas = dict.sendPositiveForm
-        # negativas = dict.sendNegativeForm
 
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
 
-        # if arrayPositivas[0] == '':
-        #     arrayPositivas = None
-
-        # if arrayNegativas[0] == '':
-        #     arrayPositivas = None
-        # EDITANDO EXISTENTE
-        # if groupid:
-        #     grupo_existente = GruposDePalavras.objects.filter(
-        #         id=groupid).first()
-        #     grupo_existente.positivas = positivas
-        #     grupo_existente.negativas = negativas
-        #     grupo_existente.grupo = grupo
-        #     grupo_existente.save()
-
-        # CRIANDO NOVO
         novogrupo = GruposDePalavras(grupo=grupo,
-                                     positivas=arrayPositivas, negativas=arrayNegativas, owner=request.user)
+                                     positivas=arrayPositivas,
+                                     negativas=arrayNegativas,
+                                     owner=request.user)
+
         novogrupo.save()
 
         print(f'positivas: {arrayPositivas}')
@@ -217,26 +156,16 @@ class CriarGrupoView(baseDashboard):
 
 
 class EditarGrupoView(baseDashboard):
-    def post(self, request, *args, **kwargs):
-        # print(self)
-        # print(request.user.id)
-        # print(self)
+    def put(self, request, *args, **kwargs):
 
-        grupo = self.request.POST.get('group-name')
-        positivas = self.request.POST.get('edit_positives')
-        negativas = self.request.POST.get('edit_negatives')
-        groupid = self.request.POST.get('edit_group_id')
-        # positivas = dict.sendPositiveForm
-        # negativas = dict.sendNegativeForm
+        grupo = self.request.PUT.get('group-name')
+        positivas = self.request.PUT.get('edit_positives')
+        negativas = self.request.PUT.get('edit_negatives')
+        groupid = self.request.PUT.get('edit_group_id')
 
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
 
-        # if(list(arrayPositivas)[0] == ''):
-        #     arrayPositivas = None
-
-        # if(list(arrayNegativas)[0] == ''):
-        #     arrayPositivas = None
         grupo_existente = GruposDePalavras.objects.filter(
             id=groupid).first()
         grupo_existente.positivas = arrayPositivas
@@ -252,10 +181,7 @@ class EditarGrupoView(baseDashboard):
 
 class DeletarGrupoView(baseDashboard):
     def delete(self, request, *args, **kwargs):
-        # print(self)
 
-        # positivas = dict.sendPositiveForm
-        # negativas = dict.sendNegativeForm
         print(str(request.body))
         sendGroupId = self.request.DELETE.get('sendGroupId')
         grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
@@ -274,20 +200,7 @@ class SearchTermsView(TemplateView):
             # .filter(owner=self.request.user.id) \
 
         context['grupos'] = list(grupos)
-        print(grupos)
         context['segment'] = 'searchterms'
         context['iduser'] = self.request.user.id
+
         return context
-
-
-# class AccountView(TemplateView):
-#     template_name = 'account.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super(AccountView, self).get_context_data(**kwargs)
-#         context['segment'] = 'account'
-
-#         return context
-
-
-# Formulario de contato (e-mail)
