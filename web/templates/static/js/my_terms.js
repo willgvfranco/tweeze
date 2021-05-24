@@ -235,7 +235,7 @@ const editGroupHandler = () => {
       const groups = JSON.parse(sessionStorage.getItem("GRUPOS"));
       const selectedGroup = groups.find(group => group.id === parseFloat(element.id.split("-")[1]));
   
-      document.getElementById("sendGroupId").value = selectedGroup.id;
+      document.getElementById("edit_group_id").value = selectedGroup.id;
       groupName.value = selectedGroup.grupo;
       if (selectedGroup['positivas'][0] !== "") {
         positiveClipping = [...selectedGroup['positivas']];
@@ -243,6 +243,8 @@ const editGroupHandler = () => {
       if (selectedGroup['negativas'][0] !== "") {
         negativeClipping = [...selectedGroup['negativas']];
       }
+      sendPositiveForm.value = positiveClipping;
+      sendNegativeForm.value = negativeClipping;
       selectedGroup['positivas'].forEach(pos => {
         if (pos !== "") positiveWrapper.appendChild(createPosItem(pos));
       });
@@ -275,6 +277,10 @@ const editGroupHandler = () => {
     if (!positiveClipping.length && !negativeClipping.length) {
       e.preventDefault();
     }
+    // e.preventDefault();
+
+    console.log(sendPositiveForm.value);
+    console.log(sendNegativeForm.value);
   });
 };
 

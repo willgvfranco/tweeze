@@ -206,10 +206,9 @@ class CriarGrupoView(baseDashboard):
         #     grupo_existente.save()
 
         # CRIANDO NOVO
-        else:
-            novogrupo = GruposDePalavras(grupo=grupo,
-                                         positivas=arrayPositivas, negativas=arrayNegativas, owner=request.user)
-            novogrupo.save()
+        novogrupo = GruposDePalavras(grupo=grupo,
+                                        positivas=arrayPositivas, negativas=arrayNegativas, owner=request.user)
+        novogrupo.save()
 
         print(f'positivas: {arrayPositivas}')
         print(f'negativas: {arrayNegativas}')
@@ -233,11 +232,11 @@ class EditarGrupoView(baseDashboard):
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
 
-        if(list(arrayPositivas)[0] == ''):
-            arrayPositivas = None
+        # if(list(arrayPositivas)[0] == ''):
+        #     arrayPositivas = None
 
-        if(list(arrayNegativas)[0] == ''):
-            arrayPositivas = None
+        # if(list(arrayNegativas)[0] == ''):
+        #     arrayPositivas = None
         grupo_existente = GruposDePalavras.objects.filter(
             id=groupid).first()
         grupo_existente.positivas = positivas
