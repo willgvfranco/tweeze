@@ -45,24 +45,24 @@
         <div class="card-header">
           <div class="card-title">
             {{grupo.grupo}}
-            <div class="btn-group actions" role="group" aria-label="Basic example">
-              <button
-                type="button"
-                id="edit-{{grupo.id}}"
-                class="btn btn-outline-secondary edit-group"
-                data-toggle="modal"
-                data-target="#edit-group"
-              >
-                <i class="far fa-edit"></i>
-              </button>
-              <form class="delete-form" action="{% url 'dashboard:deletargrupo' %}" method="DELETE">
-              {% csrf_token %}
+             <form class="delete-form" action="{% url 'dashboard:deletargrupo' %}" method="POST">
+             {% csrf_token %}
+              <div class="btn-group actions" role="group" aria-label="Basic example">
+                <button
+                  type="button"
+                  id="edit-{{grupo.id}}"
+                  class="btn btn-outline-secondary edit-group"
+                  data-toggle="modal"
+                  data-target="#edit-group"
+                >
+                  <i class="far fa-edit"></i>
+                </button>
                 <button type="submit" class="btn btn-outline-secondary delete-group">
                   <i class="far fa-trash-alt"></i>
                 </button>
                 <input type="text" name="delete_group_id" value={{grupo.id}} class="hidden">
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
         <div class="card-body">
