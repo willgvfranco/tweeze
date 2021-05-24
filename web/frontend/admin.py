@@ -4,10 +4,11 @@ from .models import Fonte, Faq
 
 @admin.register(Fonte)
 class FonteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'news_source', 'source_url_global',
+    list_display = ('id', 'linguagem', 'news_source', 'source_url_global',
                     'ativo', 'modificado')
     readonly_fields = ['source_slug']
-    list_display_links = ('id', 'news_source')
+    list_display_links = ('id', )
+    list_editable = ('linguagem',)
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
