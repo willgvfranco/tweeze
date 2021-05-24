@@ -177,10 +177,10 @@ class CriarGrupoView(baseDashboard):
 class EditarGrupoView(baseDashboard):
     def post(self, request, *args, **kwargs):
 
-        grupo = self.request.PUT.get('group-name')
-        positivas = self.request.PUT.get('edit_positives')
-        negativas = self.request.PUT.get('edit_negatives')
-        groupid = self.request.PUT.get('edit_group_id')
+        grupo = self.request.POST.get('group-name')
+        positivas = self.request.POST.get('edit_positives')
+        negativas = self.request.POST.get('edit_negatives')
+        groupid = self.request.POST.get('edit_group_id')
         # positivas = dict.sendPositiveForm
         # negativas = dict.sendNegativeForm
 
@@ -205,7 +205,7 @@ class DeletarGrupoView(SearchTermsView):
     def post(self, request, *args, **kwargs):
 
         print(str(request.body))
-        sendGroupId = self.request.DELETE.get('sendGroupId')
+        sendGroupId = self.request.POST.get('sendGroupId')
         grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
         del grupo
 
