@@ -55,9 +55,13 @@
               >
                 <i class="far fa-edit"></i>
               </button>
-              <button type="button" id="delete-{{grupo.id}}" class="btn btn-outline-secondary delete-group">
-                <i class="far fa-trash-alt"></i>
-              </button>
+              <form class="delete-form" action="{% url 'dashboard:deletargrupo' %}" method="DELETE">
+              {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary delete-group">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+                <input type="text" name="delete_group_id" value={{grupo.id}} class="hidden">
+              </form>
             </div>
           </div>
         </div>

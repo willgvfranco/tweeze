@@ -178,6 +178,6 @@ body[data-background-color="dark"] .modal .modal-content .close {
   justify-content: center;
 }
 
-.modal .modal-footer .hidden {
+.modal .modal-footer .hidden, .delete-form .hidden {
   display: none;
 }

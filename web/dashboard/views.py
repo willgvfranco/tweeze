@@ -217,15 +217,15 @@ class CriarGrupoView(baseDashboard):
 
 
 class EditarGrupoView(baseDashboard):
-    def post(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         # print(self)
         # print(request.user.id)
         # print(self)
 
-        grupo = self.request.POST.get('group-name')
-        positivas = self.request.POST.get('edit_positives')
-        negativas = self.request.POST.get('edit_negatives')
-        groupid = self.request.POST.get('edit_group_id')
+        grupo = self.request.PUT.get('group-name')
+        positivas = self.request.PUT.get('edit_positives')
+        negativas = self.request.PUT.get('edit_negatives')
+        groupid = self.request.PUT.get('edit_group_id')
         # positivas = dict.sendPositiveForm
         # negativas = dict.sendNegativeForm
 
@@ -256,10 +256,11 @@ class DeletarGrupoView(baseDashboard):
 
         # positivas = dict.sendPositiveForm
         # negativas = dict.sendNegativeForm
-        print(str(request.body))
-        sendGroupId = self.request.DELETE.get('sendGroupId')
-        grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
-        del grupo
+        # print(str(request.body))
+        sendGroupId = self.request.DELETE.get('delete_group_id')
+        # print(f'sendGroupId: {sendGroupId}')
+        # grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
+        # del grupo
 
         return redirect('dashboard:searchterms')
 
