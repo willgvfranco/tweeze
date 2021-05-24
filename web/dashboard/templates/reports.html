@@ -66,60 +66,29 @@
           </div>
           
         </div>
+        
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th><input type="checkbox"></th>
+                  {% comment %} <th><input type="checkbox"></th> {% endcomment %}
                   <th>Título</th>
                   <th>Fonte</th>
-                  <th>Link</th>
+                  {% comment %} <th>Link</th> {% endcomment %}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 1</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
+                {% for n in noticias_filtradas %}
+
+             <tr>
+                  {% comment %} <th scope="row"><input type="checkbox"></th> {% endcomment %}
+                  <td><a href="{{n.url}} target="_blank>{{n.title}}</a></td>
+                  <td>{{n.source}}</td>
+                  {% comment %} <td>Link</td> {% endcomment %}
                 </tr>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 2</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
-                </tr>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 3</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
-                </tr>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 4</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
-                </tr>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 5</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
-                </tr>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 6</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
-                </tr>
-                <tr>
-                  <th scope="row"><input type="checkbox"></th>
-                  <td>Notícia 7</td>
-                  <td>Fonte da notícia</td>
-                  <td><a href="#">url da notícia</a></td>
-                </tr>
+        {% endfor %}
+            
               </tbody>
             </table>
           </div>
