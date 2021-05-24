@@ -1,7 +1,7 @@
 <div class="modal fade" id="edit-group" tabindex="-1" data-backdrop="static" aria-labelledby="edit_group" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form class="terms-form" action="{% url 'dashboard:editargrupo' %}" method="PUT">
+      <form class="terms-form" action="{% url 'dashboard:editargrupo' %}" method="POST">
         {% csrf_token %}
         <div class="modal-header">
           <h2 class="modal-title" id="edit-group">Editar grupo</h2>
