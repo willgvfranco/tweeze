@@ -132,6 +132,25 @@ class ReportsBusca(baseDashboard):
         return context
 
 
+# TERMOS
+
+
+class SearchTermsView(TemplateView):
+    template_name = 'my_terms.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchTermsView, self).get_context_data(**kwargs)
+        grupos = GruposDePalavras.objects \
+            .values('id', 'positivas', 'negativas', 'owner', 'grupo') \
+            # .filter(owner=self.request.user.id) \
+
+        context['grupos'] = list(grupos)
+        context['segment'] = 'searchterms'
+        context['iduser'] = self.request.user.id
+
+        return context
+
+
 class CriarGrupoView(baseDashboard):
     def post(self, request, *args, **kwargs):
 
@@ -156,7 +175,7 @@ class CriarGrupoView(baseDashboard):
 
 
 class EditarGrupoView(baseDashboard):
-    def put(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
 
         grupo = self.request.PUT.get('group-name')
         positivas = self.request.PUT.get('edit_positives')
@@ -181,8 +200,9 @@ class EditarGrupoView(baseDashboard):
         return redirect('dashboard:searchterms')
 
 
-class DeletarGrupoView(baseDashboard):
-    def delete(self, request, *args, **kwargs):
+class DeletarGrupoView(SearchTermsView):
+
+    def post(self, request, *args, **kwargs):
 
         print(str(request.body))
         sendGroupId = self.request.DELETE.get('sendGroupId')
@@ -190,19 +210,3 @@ class DeletarGrupoView(baseDashboard):
         del grupo
 
         return redirect('dashboard:searchterms')
-
-
-class SearchTermsView(TemplateView):
-    template_name = 'my_terms.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchTermsView, self).get_context_data(**kwargs)
-        grupos = GruposDePalavras.objects \
-            .values('id', 'positivas', 'negativas', 'owner', 'grupo') \
-            # .filter(owner=self.request.user.id) \
-
-        context['grupos'] = list(grupos)
-        context['segment'] = 'searchterms'
-        context['iduser'] = self.request.user.id
-
-        return context
