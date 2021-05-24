@@ -207,7 +207,7 @@ class CriarGrupoView(baseDashboard):
 
         # CRIANDO NOVO
         novogrupo = GruposDePalavras(grupo=grupo,
-                                        positivas=arrayPositivas, negativas=arrayNegativas, owner=request.user)
+                                     positivas=arrayPositivas, negativas=arrayNegativas, owner=request.user)
         novogrupo.save()
 
         print(f'positivas: {arrayPositivas}')
@@ -239,8 +239,8 @@ class EditarGrupoView(baseDashboard):
         #     arrayPositivas = None
         grupo_existente = GruposDePalavras.objects.filter(
             id=groupid).first()
-        grupo_existente.positivas = positivas
-        grupo_existente.negativas = negativas
+        grupo_existente.positivas = arrayPositivas
+        grupo_existente.negativas = arrayNegativas
         grupo_existente.grupo = grupo
         grupo_existente.save()
 
@@ -248,7 +248,6 @@ class EditarGrupoView(baseDashboard):
         print(f'negativas: {arrayNegativas}')
 
         return redirect('dashboard:searchterms')
-
 
 
 class DeletarGrupoView(baseDashboard):
@@ -270,8 +269,10 @@ class SearchTermsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchTermsView, self).get_context_data(**kwargs)
-        grupos = GruposDePalavras.objects.filter(owner=self.request.user.id).values(
-            'id', 'positivas', 'negativas', 'owner', 'grupo')
+        grupos = GruposDePalavras.objects \
+            .values('id', 'positivas', 'negativas', 'owner', 'grupo') \
+            # .filter(owner=self.request.user.id) \
+
         context['grupos'] = list(grupos)
         print(grupos)
         context['segment'] = 'searchterms'
