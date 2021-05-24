@@ -91,9 +91,9 @@ class CriarGrupoView(baseDashboard):
         # print(self)
 
         grupo = self.request.POST.get('group-name')
-        positivas = self.request.POST.get('sendPositiveForm')
-        negativas = self.request.POST.get('sendNegativeForm')
-        groupid = self.request.POST.get('sendGroupId')
+        positivas = self.request.POST.get('create_positives')
+        negativas = self.request.POST.get('create_negatives')
+        # groupid = self.request.POST.get('sendGroupId')
         # positivas = dict.sendPositiveForm
         # negativas = dict.sendNegativeForm
 
@@ -106,13 +106,13 @@ class CriarGrupoView(baseDashboard):
         if(list(arrayNegativas)[0] == ''):
             arrayPositivas = None
         # EDITANDO EXISTENTE
-        if groupid:
-            grupo_existente = GruposDePalavras.objects.filter(
-                id=groupid).first()
-            grupo_existente.positivas = positivas
-            grupo_existente.negativas = negativas
-            grupo_existente.grupo = grupo
-            grupo_existente.save()
+        # if groupid:
+        #     grupo_existente = GruposDePalavras.objects.filter(
+        #         id=groupid).first()
+        #     grupo_existente.positivas = positivas
+        #     grupo_existente.negativas = negativas
+        #     grupo_existente.grupo = grupo
+        #     grupo_existente.save()
 
         # CRIANDO NOVO
         else:
@@ -124,6 +124,41 @@ class CriarGrupoView(baseDashboard):
         print(f'negativas: {arrayNegativas}')
 
         return redirect('dashboard:searchterms')
+
+
+class EditarGrupoView(baseDashboard):
+    def post(self, request, *args, **kwargs):
+        # print(self)
+        # print(request.user.id)
+        # print(self)
+
+        grupo = self.request.POST.get('group-name')
+        positivas = self.request.POST.get('edit_positives')
+        negativas = self.request.POST.get('edit_negatives')
+        groupid = self.request.POST.get('edit_group_id')
+        # positivas = dict.sendPositiveForm
+        # negativas = dict.sendNegativeForm
+
+        arrayPositivas = positivas.split(',')
+        arrayNegativas = negativas.split(',')
+
+        if(list(arrayPositivas)[0] == ''):
+            arrayPositivas = None
+
+        if(list(arrayNegativas)[0] == ''):
+            arrayPositivas = None
+        grupo_existente = GruposDePalavras.objects.filter(
+            id=groupid).first()
+        grupo_existente.positivas = positivas
+        grupo_existente.negativas = negativas
+        grupo_existente.grupo = grupo
+        grupo_existente.save()
+
+        print(f'positivas: {arrayPositivas}')
+        print(f'negativas: {arrayNegativas}')
+
+        return redirect('dashboard:searchterms')
+
 
 
 class DeletarGrupoView(baseDashboard):

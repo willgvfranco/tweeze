@@ -1,0 +1,64 @@
+<div class="modal fade" id="edit-group" tabindex="-1" data-backdrop="static" aria-labelledby="edit_group" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      {% comment %} <form class="terms-form" action="{% url 'dashboard:editargrupo' %}" method="POST"> {% endcomment %}
+      <form class="terms-form" method="POST">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h2 class="modal-title" id="edit-group">Editar grupo</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>  
+
+        <div class="modal-body">
+          <label for="group-name">Nome do Grupo</label>
+          <input
+            class="form-control"
+            type="text"
+            id="edit-group-name"
+            name="group-name"
+          />
+
+          <div class="forms-wrapper">
+            <div class="positive-clipping-form">
+              <label for="edit-positives">Insira aqui os termos positivos</label>
+              <input
+                class="form-control"
+                type="text"
+                id="edit-positives"
+                name="edit-positives"
+                placeholder="Separe as palavras com vírgula"
+              />
+
+              <label class="labels" for="key-words">Palavras-chave</label>
+              <ul class="key-words-wrapper positive-wrapper"></ul>
+            </div>
+
+            <div class="negative-clipping-form" id="negative-clipping-form">
+              <label for="edit-negatives">Insira aqui os termos negativos</label>
+              <input
+                class="form-control"
+                type="text"
+                id="edit-negatives"
+                name="edit-negatives"
+                placeholder="Separe as palavras com vírgula"
+              >
+
+              <label class="labels" for="key-words">Palavras-chave</label>
+              <ul class="key-words-wrapper negative-wrapper"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancelar</button>
+            <input type="text" name="edit_positives" id="edit_positives" class="hidden">
+            <input type="text" name="edit_negatives" id="edit_negatives" class="hidden">
+            <input type="text" name="edit_group_id" id="edit_group_id" class="hidden">
+            <button type="submit" class="btn btn-success submit-btn">Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
