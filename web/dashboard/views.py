@@ -157,22 +157,13 @@ class CriarGrupoView(baseDashboard):
 
 class EditarGrupoView(baseDashboard):
     def put(self, request, *args, **kwargs):
-<<<<<<< HEAD
-=======
-        # print(self)
-        # print(request.user.id)
-        # print(self)
->>>>>>> f534a4416aa3ae40034fc12504581558606f22b5
 
         grupo = self.request.PUT.get('group-name')
         positivas = self.request.PUT.get('edit_positives')
         negativas = self.request.PUT.get('edit_negatives')
         groupid = self.request.PUT.get('edit_group_id')
-<<<<<<< HEAD
-=======
         # positivas = dict.sendPositiveForm
         # negativas = dict.sendNegativeForm
->>>>>>> f534a4416aa3ae40034fc12504581558606f22b5
 
         arrayPositivas = positivas.split(',')
         arrayNegativas = negativas.split(',')
@@ -193,20 +184,10 @@ class EditarGrupoView(baseDashboard):
 class DeletarGrupoView(baseDashboard):
     def delete(self, request, *args, **kwargs):
 
-<<<<<<< HEAD
         print(str(request.body))
         sendGroupId = self.request.DELETE.get('sendGroupId')
         grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
         del grupo
-=======
-        # positivas = dict.sendPositiveForm
-        # negativas = dict.sendNegativeForm
-        # print(str(request.body))
-        sendGroupId = self.request.DELETE.get('delete_group_id')
-        # print(f'sendGroupId: {sendGroupId}')
-        # grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
-        # del grupo
->>>>>>> f534a4416aa3ae40034fc12504581558606f22b5
 
         return redirect('dashboard:searchterms')
 
