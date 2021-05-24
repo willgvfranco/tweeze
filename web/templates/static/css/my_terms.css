@@ -33,7 +33,7 @@
 }
 
 .card.title .input-group {
-  background-color: white;
+  background-color: #fff;
 }
 .card.title .form-group {
   min-width: fit-content;
@@ -60,6 +60,11 @@
 .card .card-title .actions button {
   font-size: 12px;
   padding: 5px 20px;
+}
+
+body[data-background-color="dark"] .card .card-title .actions button {
+  color: #fff;
+  border-color: #fff;
 }
 
 .card .card-title .actions button:nth-child(1) {
@@ -89,7 +94,7 @@ body[data-background-color="dark"] .modal .modal-content {
 
 body[data-background-color="dark"] .modal .modal-content .close {
   text-shadow: none;
-  color: white;
+  color: #fff;
 }
 
 .clipping-box {
@@ -142,6 +147,7 @@ body[data-background-color="dark"] .modal .modal-content .close {
 .positive-clipping-form .key-word, .negative-clipping-form .key-word {
   display: flex;
   align-items: baseline;
+  background-color: #fff;
   color: #09407e;
   font-size: 0.7rem;
   padding: 10px;
@@ -153,6 +159,11 @@ body[data-background-color="dark"] .modal .modal-content .close {
 .negative-clipping-form .key-word .close {
   font-size: 12px;
   margin-left: 10px;
+}
+
+body[data-background-color="dark"] .positive-clipping-form .key-word .close,
+body[data-background-color="dark"] .negative-clipping-form .key-word .close {
+  color: #767676;
 }
 
 .modal .modal-dialog {
