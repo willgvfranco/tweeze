@@ -64,8 +64,6 @@ const UrlParamsHandler = () => {
   });
 };
 
-// ----------------------------------------------------------------------------------
-
 const createGroupHandler = () => {
   const groupName = document.getElementById("create-group-name");
   const positiveWrapper = document.querySelector("#create-group .positive-wrapper");
@@ -159,8 +157,6 @@ const createGroupHandler = () => {
     }
   });  
 };
-
-// ----------------------------------------------------------------------------------
 
 const editGroupHandler = () => {
   const groupName = document.getElementById("edit-group-name");
@@ -277,10 +273,6 @@ const editGroupHandler = () => {
     if (!positiveClipping.length && !negativeClipping.length) {
       e.preventDefault();
     }
-    // e.preventDefault();
-
-    console.log(sendPositiveForm.value);
-    console.log(sendNegativeForm.value);
   });
 };
 
