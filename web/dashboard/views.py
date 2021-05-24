@@ -205,8 +205,8 @@ class DeletarGrupoView(SearchTermsView):
     def post(self, request, *args, **kwargs):
 
         print(str(request.body))
-        sendGroupId = self.request.POST.get('sendGroupId')
+        sendGroupId = self.request.POST.get('delete_group_id')
         grupo = GruposDePalavras.objects.filter(id=sendGroupId).first()
-        del grupo
+        grupo.delete()
 
         return redirect('dashboard:searchterms')
