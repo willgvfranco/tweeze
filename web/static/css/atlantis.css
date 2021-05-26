@@ -8328,8 +8328,7 @@ table.dataTable {
   clear: both;
   margin-top: 15px !important;
   margin-bottom: 15px !important;
-  max-width: none !important;
-  border-collapse: separate !important; }
+  max-width: none !important; }
   table.dataTable td, table.dataTable th {
     -webkit-box-sizing: content-box;
     box-sizing: content-box; }

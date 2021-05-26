@@ -18,12 +18,47 @@
   margin-bottom: 0;
 }
 
-.main-card .table thead th:first-child {
-  width: 60px;
+.main-card .table thead th,
+.main-card .table tbody td {
+  height: 45px;
+  padding: 15px;
 }
 
-.main-card .table-responsive {
-  max-height: 40vh;
+.main-card .table thead th:first-child {
+  width: 20px !important;
+}
+
+.main-card .table tbody .news-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+  max-width: 30rem;
+}
+
+.main-card .table thead .news-title {
+  width: 30rem !important;
+}
+
+.main-card .table tbody .news-title a {
+  color: #2183ff;
+}
+
+.main-card .table tbody .row-selected {
+  background-color: #e9e9e9;
+}
+
+body[data-background-color="dark"] .main-card .table tbody .row-selected {
+  background-color: #1c1c1ca8;
+}
+
+.main-card .table-responsive .paging_numbers {
+  padding-top: 0.85em;
+}
+
+.main-card .table-responsive .pagination .page-link {
+  width: 25px;
+  height: 25px;
+  padding: .2rem .5rem;
 }
 
 .card.title .card-title {
@@ -48,6 +83,11 @@
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 25px;
+}
+
+.page-inner .card-subtitle {
+  display: flex;
+  justify-content: space-between;
 }
 
 .page-inner .card-title .wrapper, .page-inner .card-subtitle .wrapper {
@@ -84,7 +124,7 @@
   color: #8d9498;
 }
 
-.automatic-report .card-body {
+.automatic-report .card-body .generate-report-form {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -126,7 +166,8 @@ body[data-background-color="dark"] .automatic-report .form-control {
   font-size: 18px;
 }
 
-.automatic-report .actions-wrapper .generate {
+.automatic-report .actions-wrapper .generate,
+.main-card .card-header .apply-changes {
   font-size: 14px;
   padding: 5px 10px;
 }

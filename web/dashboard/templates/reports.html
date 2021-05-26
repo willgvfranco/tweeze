@@ -23,10 +23,13 @@
             <div class="wrapper">
               <span>Selecione o grupo para o clipping</span>
               <div class="form-group">
-                <select class="form-control form-control" id="defaultSelect">
-                  <option>Grupo 1</option>
-                  <option>Grupo 2</option>
-                  <option>Grupo 3</option>
+                <select class="form-control form-control" id="group">
+                  <option value="none" selected disabled hidden>
+                    Selecione um grupo
+                  </option>
+                  <option value="group_id_1">Grupo 1</option>
+                  <option value="group_id_2">Grupo 2</option>
+                  <option value="group_id_3">Grupo 3</option>
                 </select>
               </div>
             </div>
@@ -43,51 +46,50 @@
             <div class="wrapper checkboxes">
               <span class="checkboxes-title">Incluir relatórios de:</span>
               <div class="checkbox-item">
-                <input type="checkbox">
+                <input type="checkbox" id="most-quoted">
                 <span>Onde você é mais citado</span>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox">
+                <input type="checkbox" id="latest-news">
                 <span>Últimas notícias</span>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox">
+                <input type="checkbox" id="local-news">
                 <span>Locais</span>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox">
+                <input type="checkbox" id="user-sentiment">
                 <span>Sentimento do usuário</span>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox">
+                <input type="checkbox" id="select-all">
                 <span>Selecionar todos</span>
               </div>
-            </div>   
+            </div>
+
+            <button class="btn btn-primary apply-changes" id="apply-changes">Aplicar</button>
           </div>
           
         </div>
         
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="table-news">
               <thead>
                 <tr>
-                  {% comment %} <th><input type="checkbox"></th> {% endcomment %}
-                  <th>Título</th>
+                  <th><input type="checkbox" id="all-news" class="select-all-news"></th>
+                  <th class="news-title">Título</th>
                   <th>Fonte</th>
-                  {% comment %} <th>Link</th> {% endcomment %}
                 </tr>
               </thead>
               <tbody>
                 {% for n in noticias_filtradas %}
-
-             <tr>
-                  {% comment %} <th scope="row"><input type="checkbox"></th> {% endcomment %}
-                  <td><a href="{{n.url}}" target="_blank">{{n.title}}</a></td>
-                  <td>{{n.source}}</td>
-                  {% comment %} <td>Link</td> {% endcomment %}
-                </tr>
-        {% endfor %}
+                  <tr>
+                    <td><input type="checkbox" class="news-check" id={{n.id}}></td>
+                    <td class="news-title"><a href="{{n.url}}" target="_blank">{{n.title}}</a></td>
+                    <td class="news-source">{{n.source}}</td>
+                  </tr>
+                {% endfor %}
             
               </tbody>
             </table>
@@ -98,32 +100,38 @@
       <div class="card automatic-report">
         <div class="card-title">Geração automática de relatórios</div>
         <div class="card-body">
-          <div class="wrapper">
-            <input type="checkbox">
-            <span>Deseja habilitar o envio automático desse clipping?</span>
-            <input class="form-control email" type="email" name="email" id="email" placeholder="email1@mail.com,email2@mail.com">
-          </div>
-
-          <div class="wrapper">
-            <span>Defina a frequência</span>
-            <div class="form-group">
-              <select class="form-control form-control" id="defaultSelect">
-                <option>1 hora</option>
-                <option>3 horas</option>
-                <option>6 horas</option>
-                <option>12 horas</option>
-                <option>1 dia</option>
-                <option>7 dias</option>
-                <option>30 dias</option>
-              </select>
+          {% comment %} <form class="delete-form" action="{% url 'dashboard:deletargrupo' %}" method="POST"> {% endcomment %}
+          <form class="generate-report-form" method="POST">
+            {% csrf_token %}
+            <div class="wrapper">
+              <input type="checkbox">
+              <span>Deseja habilitar o envio automático desse clipping?</span>
+              <input class="form-control email" type="email" name="email" id="email" placeholder="email1@mail.com,email2@mail.com">
             </div>
-          </div>
 
-          <div class="actions-wrapper">
-            <i class="fas fa-share-square"></i>
-            <i class="fas fa-download"></i>
-            <button class="btn btn-primary generate">Gerar relatório</button>
-          </div>
+            <div class="wrapper">
+              <span>Defina a frequência</span>
+              <div class="form-group">
+                <select class="form-control form-control" id="defaultSelect">
+                  <option>1 hora</option>
+                  <option>3 horas</option>
+                  <option>6 horas</option>
+                  <option>12 horas</option>
+                  <option>1 dia</option>
+                  <option>7 dias</option>
+                  <option>30 dias</option>
+                </select>
+              </div>
+            </div>
+
+            <input type="text" name="selected_news_array" id="selected_news_array" class="hidden">
+
+            <div class="actions-wrapper">
+              <i class="fas fa-share-square"></i>
+              <i class="fas fa-download"></i>
+              <button type="submit" class="btn btn-primary generate">Gerar relatório</button>
+            </div>
+          </form>
         </div>
       </div>
     </div> 
@@ -133,5 +141,16 @@
 
 {% block javascripts %}
 	<script src="{% static 'js/backgroundColor.js' %}"></script>
-	<!-- <script src="{% static 'js/reports.js' %}"></script> -->
+	<script src="{% static 'js/reports.js' %}"></script>
+  <script >
+		$(document).ready(function() {
+      $('#table-news').DataTable({
+        columnDefs: [{ orderable: false, targets: 0 }],
+        order: [[1, 'asc']],
+        scrollY: "30vh",
+        pagingType: "numbers"
+      });
+
+		});
+	</script>
 {% endblock javascripts %}
