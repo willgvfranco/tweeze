@@ -18,13 +18,15 @@
   <body>
     <div class="page-left"></div>
     <div class="page-right">
+      {% include 'partials/_messages.html' %}
       <img
         class="img-fluid main-logo"
         src="{% static 'img/logo/logo_tweeze_azul.png' %}"
         alt="Tweeze Logo"
       >
       <p class="subtitle">Descubra o que falam da sua marca.</p>
-    {% include 'partials/_messages.html' %}
+
+      <!-- Caixa de Login  -->
       <div class="login-box">
         <img class="img-fluid" src="{% static 'img/logo/logo_twz_branco.png' %}" alt="Tweeze Logo">
         <form class="login-form " action="{% url 'perfil:login' %}" method="POST">
@@ -52,7 +54,9 @@
           </div>
         </form>
       </div>
+      <!-- Fim da Caixa de Login  -->
 
+      <!-- Login com Mídias Sociais  -->
       <div class="social-media-wrapper">
         <button class="social-media-btn facebook-btn">
           <img src="{% static 'icons/social_media/facebook-outline.svg' %}" alt="">
@@ -63,13 +67,14 @@
           <span>Log in with Google</span>
         </button>
       </div>
+      <!-- Fim do Login com Mídias Sociais  -->
 
+      <!-- Termos  -->
       <footer>
         <p>Informações e termos legais <a href="#">aqui</a>. @2021</p>
       </footer>
+      <!-- Fim dos Termos  -->
     </div>
-
-
     <script src="{% static 'js/jquery-min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/wow.js' %}"></script>
