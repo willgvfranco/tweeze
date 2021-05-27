@@ -171,3 +171,19 @@ body[data-background-color="dark"] .automatic-report .form-control {
   font-size: 14px;
   padding: 5px 10px;
 }
+
+.generate-report-form .hidden {
+  display: none;
+}
+
+.form-check {
+  padding: 0;
+}
+
+.form-check .form-check-label {
+  margin: 0;
+}
+
+.form-check .form-check-label .form-check-sign {
+  font-weight: normal;
+}

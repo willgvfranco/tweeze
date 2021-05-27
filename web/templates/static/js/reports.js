@@ -13,6 +13,8 @@ const newsCheckArray = document.querySelectorAll(".news-check");
 const rowsArray = document.querySelectorAll(".table tbody tr");
 
 const reportForm = document.querySelector(".generate-report-form");
+const emailArray = document.getElementById("report_emails");
+const reportFrequency = document.getElementById("report_frequency");
 const selectedNewsInput = document.getElementById("selected_news_array");
 const sendReport = document.querySelector(".generate");
 
@@ -36,11 +38,11 @@ newsCheckArray.forEach(checkElement => {
     if (e.target.checked) {
       if (newsSelected.find(el => el === checkElement.id)) return;
       newsSelected.push(checkElement.id);
-      e.target.parentNode.parentNode.classList.add("row-selected");
+      e.target.parentNode.parentNode.parentNode.parentNode.classList.add("row-selected");
     } else {
       const index = newsSelected.findIndex(news => news === checkElement.id);
       index > -1 && newsSelected.splice(index, 1);
-      e.target.parentNode.parentNode.classList.remove("row-selected");
+      e.target.parentNode.parentNode.parentNode.parentNode.classList.remove("row-selected");
     }
   });
 });
@@ -52,7 +54,8 @@ reportForm.addEventListener("keypress", (e) => {
 sendReport.addEventListener("click", (e) => {
   e.preventDefault();
   selectedNewsInput.value = newsSelected;
-  console.log('selectedNewsInput.value', selectedNewsInput.value)
+  console.log('selectedNewsInput', selectedNewsInput.value);
+  console.log('emailArray', emailArray.value);
   console.log('newsSelected', newsSelected);
 });
 

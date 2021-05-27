@@ -16,7 +16,7 @@
     </div>
 
 		<div class="page-inner">
-
+	  <!-- Filtro e Seleção das Notícias -->
       <div class="main-card card">
         <div class="card-header">
           <div class="card-title">
@@ -46,38 +46,65 @@
             <div class="wrapper checkboxes">
               <span class="checkboxes-title">Incluir relatórios de:</span>
               <div class="checkbox-item">
-                <input type="checkbox" id="most-quoted">
-                <span>Onde você é mais citado</span>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="most-quoted">
+                    <span class="form-check-sign">Onde você é mais citado</span>
+                  </label>
+                </div>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="latest-news">
-                <span>Últimas notícias</span>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="latest-news">
+                    <span class="form-check-sign">Últimas notícias</span>
+                  </label>
+                </div>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="local-news">
-                <span>Locais</span>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="local-news">
+                    <span class="form-check-sign">Locais</span>
+                  </label>
+                </div>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="user-sentiment">
-                <span>Sentimento do usuário</span>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="user-sentiment">
+                    <span class="form-check-sign">Sentimento do usuário</span>
+                  </label>
+                </div>
               </div>
               <div class="checkbox-item">
-                <input type="checkbox" id="select-all">
-                <span>Selecionar todos</span>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="select-all">
+                    <span class="form-check-sign">Selecionar todos</span>
+                  </label>
+                </div>
               </div>
             </div>
 
             <button class="btn btn-primary apply-changes" id="apply-changes">Aplicar</button>
           </div>
-          
         </div>
         
+        <!-- Tabela de Notícias -->
         <div class="card-body">
           <div class="table-responsive">
             <table class="table" id="table-news">
               <thead>
                 <tr>
-                  <th><input type="checkbox" id="all-news" class="select-all-news"></th>
+                  <th>
+                     <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" id="all-news" class="form-check-input select-all-news">
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </div>
+                  </th>
                   <th class="news-title">Título</th>
                   <th>Fonte</th>
                 </tr>
@@ -85,7 +112,14 @@
               <tbody>
                 {% for n in noticias_filtradas %}
                   <tr>
-                    <td><input type="checkbox" class="news-check" id={{n.id}}></td>
+                    <td>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input news-check" id={{n.id}}>
+                          <span class="form-check-sign"></span>
+                        </label>
+                      </div>
+                    </td>
                     <td class="news-title"><a href="{{n.url}}" target="_blank">{{n.title}}</a></td>
                     <td class="news-source">{{n.source}}</td>
                   </tr>
@@ -95,8 +129,11 @@
             </table>
           </div>
         </div>
+        <!-- Fim da Tabela de Notícias -->
       </div>
+      <!-- Fim do Filtro e Seleção das Notícias -->
 
+      <!-- Geração Automática do Relatório -->
       <div class="card automatic-report">
         <div class="card-title">Geração automática de relatórios</div>
         <div class="card-body">
@@ -104,15 +141,27 @@
           <form class="generate-report-form" method="POST">
             {% csrf_token %}
             <div class="wrapper">
-              <input type="checkbox">
-              <span>Deseja habilitar o envio automático desse clipping?</span>
-              <input class="form-control email" type="email" name="email" id="email" placeholder="email1@mail.com,email2@mail.com">
+              
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="automatic_report" id="automatic_report" value="">
+                  <span class="form-check-sign">Deseja habilitar o envio automático desse clipping?</span>
+                </label>
+              </div>
+
+              <input
+                class="form-control email"
+                type="email"
+                name="report_emails"
+                id="report_emails"
+                placeholder="email1@mail.com,email2@mail.com"
+              >
             </div>
 
             <div class="wrapper">
               <span>Defina a frequência</span>
               <div class="form-group">
-                <select class="form-control form-control" id="defaultSelect">
+                <select class="form-control form-control" id="report_frequency">
                   <option>1 hora</option>
                   <option>3 horas</option>
                   <option>6 horas</option>
@@ -127,13 +176,14 @@
             <input type="text" name="selected_news_array" id="selected_news_array" class="hidden">
 
             <div class="actions-wrapper">
-              <i class="fas fa-share-square"></i>
-              <i class="fas fa-download"></i>
+              <i class="fas fa-share-square" id="export-btn"></i>
+              <i class="fas fa-download" id="download-btn"></i>
               <button type="submit" class="btn btn-primary generate">Gerar relatório</button>
             </div>
           </form>
         </div>
       </div>
+      <!-- Fim da Geração Automática do Relatório -->
     </div> 
 	</div>
 
