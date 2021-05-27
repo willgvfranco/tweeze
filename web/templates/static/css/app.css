@@ -50,7 +50,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .navbar .topbar-nav {
-  margin-left: 5rem !important;
+  margin-left: 3rem !important;
 }
 
 .sidebar .nav>.nav-item.active>a {

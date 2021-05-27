@@ -3933,7 +3933,7 @@ label.error {
 
 /*     User Dropdown    */
 .dropdown-user {
-  width: 260px; }
+  width: 100%; }
 
 .user-box {
   display: flex;

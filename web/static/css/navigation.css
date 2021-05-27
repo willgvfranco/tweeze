@@ -1,3 +1,7 @@
+.container-fluid {
+  flex-wrap: nowrap;
+}
+
 .container-fluid .logo .tweeze-logo {
   width: 160px;
 }
