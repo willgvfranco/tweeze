@@ -50,7 +50,6 @@ const UrlParamsHandler = () => {
     }
   
     urlObj.params.type = selected;
-    console.log('urlObj', urlObj);
     reloadWithParams();
   });
   
@@ -58,7 +57,6 @@ const UrlParamsHandler = () => {
     if (e.key === "Enter") {
       e.preventDefault();
       urlObj.params.search = e.target.value;
-      console.log('urlObj', urlObj)
       reloadWithParams();
     }
   });
@@ -276,6 +274,22 @@ const editGroupHandler = () => {
   });
 };
 
+const deleteGroupHandler = () => {
+  const groupId = document.getElementById("delete_group_id");
+  const groupTitle = document.querySelector(".group-title");
+  
+  document.querySelectorAll(".delete-group").forEach(element => {
+    element.addEventListener("click", () => {
+      const groups = JSON.parse(sessionStorage.getItem("GRUPOS"));
+      const selectedGroup = groups.find(group => group.id === parseFloat(element.id.split("-")[1]));
+  
+      groupTitle.innerHTML = selectedGroup.grupo;
+      groupId.value = selectedGroup.id;
+    });
+  }); 
+};
+
 UrlParamsHandler();
 createGroupHandler();
 editGroupHandler();
+deleteGroupHandler();

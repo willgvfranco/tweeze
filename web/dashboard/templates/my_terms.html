@@ -11,6 +11,7 @@
 {% block content %}
 
 	<div class="content">
+    <!-- Filtro dos Termos e Grupos -->
     <div class="card header-card title">
       <div class="card-title">Meus termos e grupos</div>
       <div class="card-body">
@@ -38,83 +39,99 @@
         </button>
       </div>
     </div>
+    <!-- Fim do Filtro dos Termos e Grupos -->
 
+    <!-- Grupos Cadastrados -->
 		<div class="page-inner">
+    {% if grupos %}
       {% for grupo in grupos %}
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            {{grupo.grupo}}
-             <form class="delete-form" action="{% url 'dashboard:deletargrupo' %}" method="POST">
-             {% csrf_token %}
-              <div class="btn-group actions" role="group" aria-label="Basic example">
-                <button
-                  type="button"
-                  id="edit-{{grupo.id}}"
-                  class="btn btn-outline-secondary edit-group"
-                  data-toggle="modal"
-                  data-target="#edit-group"
-                >
-                  <i class="far fa-edit"></i>
-                </button>
-                <button type="submit" class="btn btn-outline-secondary delete-group">
-                  <i class="far fa-trash-alt"></i>
-                </button>
-                <input type="text" name="delete_group_id" value={{grupo.id}} class="hidden">
-              </div>
-            </form>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              {{grupo.grupo}}
+                <div class="btn-group actions" role="group" aria-label="Basic example">
+                  <button
+                    type="button"
+                    id="edit-{{grupo.id}}"
+                    class="btn btn-outline-secondary edit-group"
+                    data-toggle="modal"
+                    data-target="#edit-group"
+                  >
+                    <i class="far fa-edit"></i>
+                  </button>
+                  <button
+                    type="submit"
+                    id="delete-{{grupo.id}}"
+                    class="btn btn-outline-secondary delete-group"
+                    data-toggle="modal"
+                    data-target="#delete-group"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </div>
+            </div>
           </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-          
-            {% if grupo.positivas|length >= 1 and grupo.positivas.0 != "" %}
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="text-center">
-                      <button class="btn btn-success">Termos Positivos</button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for termo in grupo.positivas %}
-                    <tr>
-                      <td class="text-center">{{termo}}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            {% endif %}
-
-            {% if grupo.negativas|length >= 1 and grupo.negativas.0 != "" %}
+          <div class="card-body">
+            <div class="table-responsive">
             
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="text-center">
-                      <button class="btn btn-danger">Termos Negativo</button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for termo in grupo.negativas %}
+              {% if grupo.positivas|length >= 1 and grupo.positivas.0 != "" %}
+                <table class="table">
+                  <thead>
                     <tr>
-                      <td class="text-center">{{termo}}</td>
+                      <th class="text-center">
+                        <button class="btn btn-success">Termos Positivos</button>
+                      </th>
                     </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            {% endif %}
+                  </thead>
+                  <tbody>
+                    {% for termo in grupo.positivas %}
+                      <tr>
+                        <td class="text-center">{{termo}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% endif %}
+
+              {% if grupo.negativas|length >= 1 and grupo.negativas.0 != "" %}
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">
+                        <button class="btn btn-danger">Termos Negativo</button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for termo in grupo.negativas %}
+                      <tr>
+                        <td class="text-center">{{termo}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% endif %}
+            </div>
           </div>
         </div>
+      {% endfor %}
+
+    {% else %}
+      <div class="empty-groups">
+        <i class="icon-cup"></i>
+        <p>Parece que você não tem nenhum grupo cadastrado.</p>
+        <p>Clique em "Criar grupo" para começar!</p>
       </div>
-      {% endfor %}     
+    {% endif %}
 
     </div>
+    <!-- Fim dos Grupos Cadastrados -->
 
+    <!-- Modal -->
     {% include "create_group_modal.html" %}
     {% include "edit_group_modal.html" %}
+    {% include "delete_group_modal.html" %}
+    <!-- Fim do Modal -->
 	</div>
 {% endblock content %}
 
