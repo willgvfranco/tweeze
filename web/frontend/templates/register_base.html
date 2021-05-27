@@ -17,7 +17,9 @@
   </head>
   <body>
     <header>
+    <a href="{% url 'perfil:home' %}">
       <img class="img-fluid" src="{% static 'img/logo/logo_twz_branco.png' %}" alt="Tweeze Logo">
+    </a>
     </header>
     {% comment %} {% include 'parciais/_messages.html' %} {% endcomment %}
     {% block content %}
@@ -29,9 +31,9 @@
     <script src="{% static 'js/wow.js' %}"></script>
     <script src="{% static 'js/jquery.nav.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script type="text/javascript">
+    {% comment %} <script type="text/javascript">
       const CLOSE_ICON = "{% static 'icons/close_black_24dp.svg' %}";
     </script>
-    <script src="{% static 'js/clipping.js' %}"></script>
+    <script src="{% static 'js/clipping.js' %}"></script> {% endcomment %}
   </body>
 </html>
