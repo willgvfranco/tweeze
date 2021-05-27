@@ -24,8 +24,6 @@
 
 	<!-- Navbar Header -->
 	<nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
-		
-		{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
 		<div class="container-fluid">
 			<a href="{% url 'dashboard:home' %}" class="logo">
 				<img src="{% static 'img/logo/logo_tweeze_branco.png' %}" alt="Tweeeze Logo" class="tweeze-logo">
@@ -37,12 +35,6 @@
 			</div>
 
 			<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-				<li class="nav-item toggle-nav-search hidden-caret">
-					<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
-						<i class="fa fa-search"></i>
-					</a>
-				</li>
-				
 				<li class="nav-item dropdown hidden-caret">
 					<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 						<div class="avatar-sm">
@@ -52,17 +44,15 @@
 					<ul class="dropdown-menu dropdown-user animated fadeIn">
 						<div class="dropdown-user-scroll scrollbar-outer">
 							<li>
-								<a class="dropdown-item" href="#">Account Setting</a>
+								<a class="dropdown-item" href="#">Configurações</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="{% url 'perfil:logout' %}">Logout</a>
+								<a class="dropdown-item" href="{% url 'perfil:logout' %}">Sair</a>
 							</li>
 						</div>
 					</ul>
 				</li>
 			</ul>
 		</div>
-		{% comment %} {% endif %} {% endcomment %}
-
 	</nav>
 	<!-- End Navbar -->
 </div>
