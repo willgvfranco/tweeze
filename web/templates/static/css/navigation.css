@@ -2,23 +2,48 @@
   flex-wrap: nowrap !important;
 }
 
-.container-fluid .logo .tweeze-logo {
+.main-header .logo .tweeze-logo {
   width: 160px;
 }
+
+@media (max-width: 991.98px) {
+  .container-fluid .logo .tweeze-logo {
+    display: none;
+  }
+
+}
+
 
 .btnSwitch {
   margin-left: auto;
 }
 
-.dropdown .avatar-sm {
+.dropdown .avatar {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: all 0.4s;
+  border-radius: 50%;
 }
 
-.dropdown .avatar-sm .icon-user {
-  font-size: 24px;
+.dropdown .avatar:hover {
+  box-shadow: 0px 0px 2px 2.5px rgb(255 255 255);
+  transform: scale(1.1);
+}
+
+.dropdown .avatar:active {
+  transform: translateX(-0.5px) translateY(-0.5px);
+}
+
+.dropdown .avatar .avatar-title {
   color: #fff;
+}
+
+.dropdown-item:active {
+  color: inherit;
+  background-color: inherit;
 }
 
 .navbar-header .navbar-nav {

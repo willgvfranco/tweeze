@@ -262,13 +262,9 @@ $(document).ready(function(){
 	}
 
 	$('.sidebar').hover(function() {
-		if ($('.wrapper').hasClass('sidebar_minimize')){
-			$('.wrapper').addClass('sidebar_minimize_hover');
-		}
+		if ($('.wrapper').hasClass('sidebar_minimize')){}
 	}, function(){
-		if ($('.wrapper').hasClass('sidebar_minimize')){
-			$('.wrapper').removeClass('sidebar_minimize_hover');
-		}
+		if ($('.wrapper').hasClass('sidebar_minimize')){}
 	});
 
 	//Chat Open

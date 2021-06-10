@@ -13,12 +13,18 @@
 				<i class="icon-menu"></i>
 			</span>
 		</button>
+
 		<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+
 		<div class="nav-toggle">
 			<button class="btn btn-toggle toggle-sidebar">
 				<i class="icon-menu"></i>
 			</button>
 		</div>
+
+		<a href="{% url 'dashboard:home' %}" class="logo">
+			<img src="{% static 'img/logo/logo_tweeze_branco.png' %}" alt="Tweeeze Logo" class="tweeze-logo">
+		</a>
 	</div>
 	<!-- End Logo Header -->
 
@@ -37,14 +43,14 @@
 			<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 				<li class="nav-item dropdown hidden-caret">
 					<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-						<div class="avatar-sm">
-							<i class="icon-user rounded-circle"></i>
+						<div class="avatar">
+							<span class="avatar-title rounded-circle border-white">CF</span>
 						</div>
 					</a>
 					<ul class="dropdown-menu dropdown-user animated fadeIn">
 						<div class="dropdown-user-scroll scrollbar-outer">
 							<li>
-								<a class="dropdown-item" href="#">Configurações</a>
+								<a class="dropdown-item" href="{% url 'perfil:account' %}">Configurações</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{% url 'perfil:logout' %}">Sair</a>
 							</li>

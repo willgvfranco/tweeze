@@ -1,25 +1,8 @@
 html {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-body::-webkit-scrollbar {
-  width: 10px;
-  border-radius: 20px;
-}
-
-body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #09407e50;
-  border-radius: 20px;
-}
-
-.main-header,
-.main-header .logo-header,
-.main-header .navbar-header,
-.sidebar {
+.main-header, .main-header .logo-header, .main-header .navbar-header, .sidebar {
   background-color: #09407e !important;
 }
 
@@ -39,7 +22,7 @@ body::-webkit-scrollbar-thumb {
   background-color: #3a6494 !important;
 }
 
-.sidebar .nav>.nav-item a i {
+.sidebar .nav > .nav-item a i {
   width: fit-content;
   margin-right: 0;
   text-align: inherit;
@@ -50,10 +33,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .navbar .topbar-nav {
-  margin-left: 3rem !important;
+  margin-left: 2rem !important;
 }
 
-.sidebar .nav>.nav-item.active>a {
+.sidebar .nav > .nav-item.active > a {
   background: inherit !important;
 }
 
@@ -65,12 +48,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .btnSwitch i {
-  display: initial;
-  cursor: pointer;
-  font-size: 20px;
-  color: white;
+	display: initial;
+	cursor: pointer;
+	font-size: 20px;
+	color: white;
 }
 
 .btnSwitch i.hidden {
-  display: none;
+	display: none;
 }

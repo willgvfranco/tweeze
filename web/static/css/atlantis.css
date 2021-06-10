@@ -975,7 +975,7 @@ body {
       .sidebar_minimize.sidebar_minimize_hover .logo-header .logo img {
         display: inline-block !important; }
   .sidebar_minimize.sidebar_minimize_hover .main-panel {
-    width: calc(100% - 250px); }
+    width: calc(100% - 200px); }
 }
 /*    overlay sidebar    */
 .overlay-sidebar:not(.is-show) .sidebar {

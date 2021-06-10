@@ -1,0 +1,14 @@
+.header-card {
+  width: 100%;
+  padding: 10px 24px 70px 35px;
+  background: linear-gradient(180deg, #dfdfdf, #fff);
+}
+
+body[data-background-color="dark"] .header-card {
+  background: linear-gradient(180deg, #0c0b20, #1b2136);
+}
+
+.header-card .card-title {
+  color: #555;
+  font-size: 22px;
+}

@@ -1,27 +1,15 @@
-.page-inner {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0;
-  padding-bottom: 0;
-}
+@import 'dashboard_common.css';
+@import 'header_card.css';
+@import 'btn.css';
 
-.card {
-  margin: 15px;
-  padding: 5px;
-}
-
-.header-card {
-  margin-bottom: 0;
-}
-
-.secondary-card {
+.card, .secondary-card {
   width: 100%;
   margin-left: 0;
   margin-right: 0;
+}
+
+.secondary-card {
+  margin-top: 60px;
 }
 
 .user-data .card-body {
@@ -71,10 +59,6 @@
 
 .card.title .card-title {
   padding: 10px 20px;
-}
-
-.header-card .card-title {
-  text-transform: uppercase;
 }
 
 .secondary-card .card-body {

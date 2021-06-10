@@ -1,31 +1,27 @@
-.page-inner {
+@import 'dashboard_common.css';
+@import 'header_card.css';
+@import 'btn.css';
+
+.groups {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .card {
-  margin: 15px;
-  padding: 5px;
   max-height: 35rem;
   height: fit-content;
-  overflow-y: auto;
 }
 
-.header-card {
-  margin-bottom: 0;
+.card.title {
+  margin-top: 60px;
 }
 
 .card.title .card-body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding-top: 0;
 }
 
 .card.title .card-title {
