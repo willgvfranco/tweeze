@@ -36,13 +36,35 @@ export default function PageRegister() {
                         className="d-flex align-items-center justify-content-center flex-column">
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-4">
-                          <h1 className="font-size-xxl mb-1 font-weight-bold">
-                            Criação de conta
-                          </h1>
-                          <p className="mb-0 text-black-50">
-                            Comece com os benefícios de nossa plataforma agora mesmo.
-                          </p>
+                        <h1 className="font-size-xxl mb-1 font-weight-bold">
+                        Criação de conta
+                        </h1>
+                        <p className="mb-0 text-black-50">
+                        Comece com os benefícios de nossa plataforma agora mesmo.
+                        </p>
                         </div>
+                        <div className="text-center mb-3">
+                            <Button
+                              className="m-2 btn-pill px-4 font-weight-bold btn-google"
+                              size="small">
+                              <span className="btn-wrapper--icon">
+                                <FontAwesomeIcon icon={['fab', 'google']} />
+                              </span>
+                              <span className="btn-wrapper--label">
+                                Login com Google
+                              </span>
+                            </Button>
+                            <Button
+                              className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
+                              size="small">
+                              <span className="btn-wrapper--icon">
+                                <FontAwesomeIcon icon={['fab', 'facebook']} />
+                              </span>
+                              <span className="btn-wrapper--label">
+                                Login com Facebook
+                              </span>
+                            </Button>
+                          </div>
                         <div className="px-5 py-4">
                           <div className="mb-3">
                             <label className="font-weight-bold mb-2">
