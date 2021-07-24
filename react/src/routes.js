@@ -33,6 +33,7 @@ import Error505 from './views/errors/505';
 const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing'));
 const Blank = lazy(() => import('./views/BlankView'));
+const Noticias = lazy(() => import('./views/Noticias'));
 
 const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
@@ -296,6 +297,7 @@ const Routes = () => {
               path={[
                 '/home',
                 '/blank',
+                '/noticias',
                 '/DashboardMonitoring',
                 '/DashboardCommerce',
                 '/DashboardAnalytics',
@@ -388,6 +390,7 @@ const Routes = () => {
                     variants={pageVariants}
                     transition={pageTransition}>
                     <Route path="/home" component={Home} />
+                    <Route path="/noticias" component={Noticias} />
                     <Route path="/blank" component={Blank} />
                     <Route
                       path="/DashboardMonitoring"
