@@ -192,7 +192,6 @@ const EnhancedTableToolbar = (props) => {
           Nutrition
         </Typography>
       )}
-
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">
@@ -235,7 +234,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LivePreviewExample() {
+export default function TabelaNoticias() {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
