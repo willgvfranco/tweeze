@@ -18,12 +18,19 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+api_urlpatterns = [
+    path('accounts/', include('rest_registration.api.urls')),
+]
+
+
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('neuadmin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
     path('perfil/', include('perfil.urls')),
     path('', include('frontend.urls')),
+    path('api/v1/', include(api_urlpatterns)),
+
 ]
 
 
