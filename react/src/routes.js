@@ -27,6 +27,7 @@ import PageError500 from './example-pages/PageError500';
 import PageError505 from './example-pages/PageError505';
 
 const Overview = lazy(() => import('./example-pages/Overview'));
+const Home = lazy(() => import('./views/Home'));
 const DashboardMonitoring = lazy(() =>
   import('./example-pages/DashboardMonitoring')
 );
@@ -280,6 +281,7 @@ const Routes = () => {
 
             <Route
               path={[
+                '/home',
                 '/DashboardMonitoring',
                 '/DashboardCommerce',
                 '/DashboardAnalytics',
@@ -371,6 +373,7 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
+                    <Route path="/home" component={Home} />
                     <Route
                       path="/DashboardMonitoring"
                       component={DashboardMonitoring}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './config/configureStore';
 import { Provider } from 'react-redux';
-import Routes from './Routes';
+import Routes from './routes';
 import ScrollToTop from './utils/ScrollToTop';
 import './assets/base.scss';
 
