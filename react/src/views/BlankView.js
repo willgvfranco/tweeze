@@ -13,12 +13,12 @@ export default function Blank() {
         titleDescription="Exemplo de descrição"
       />
 
-      <ExampleWrapperSeamless>
+      {/* <ExampleWrapperSeamless>
         <div>Exemplo 1</div>
       </ExampleWrapperSeamless>
       <ExampleWrapperSimple>
         <div>Exemplo 2</div>
-      </ExampleWrapperSimple>
+      </ExampleWrapperSimple> */}
     </>
   );
 }
