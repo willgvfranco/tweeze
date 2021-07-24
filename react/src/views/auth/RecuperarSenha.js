@@ -141,7 +141,7 @@ export default function PageRecover() {
             <Container>
               <div className="py-3 d-block d-lg-flex font-size-xs justify-content-between">
                 <div className="text-center d-block mb-3 mb-md-0 text-white">
-                  Copyright &copy; 2020 - UiFort.com
+                  Copyright &copy; 2021 - Tweeze
                 </div>
                </div>
             </Container>

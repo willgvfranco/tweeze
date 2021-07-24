@@ -86,7 +86,7 @@ export default function LivePreviewExample() {
                                 fullWidth
                                 variant="outlined"
                                 id="textfield-email"
-                                label="Email address"
+                                label="Email"
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
@@ -222,7 +222,7 @@ export default function LivePreviewExample() {
             <Container>
               <div className="py-3 d-block d-lg-flex font-size-xs justify-content-between">
                 <div className="text-center d-block mb-3 mb-md-0 text-white">
-                  Copyright &copy; 2020 - UiFort.com
+                  Copyright &copy; 2021 - Tweeze
                 </div>
                 <List
                   component="div"
@@ -232,14 +232,14 @@ export default function LivePreviewExample() {
                     className="text-white-50"
                     href="#/"
                     onClick={(e) => e.preventDefault()}>
-                    Privacy Policy
+                    Política de privacidade
                   </ListItem>
                   <ListItem
                     button
                     className="text-white-50"
                     href="#/"
                     onClick={(e) => e.preventDefault()}>
-                    Terms of Service
+                    Termos de serviço
                   </ListItem>
                 </List>
               </div>
