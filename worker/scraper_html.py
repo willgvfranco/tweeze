@@ -1,5 +1,5 @@
 from datetime import date
-
+import random
 import feedparser
 from bs4 import BeautifulSoup
 import re
@@ -12,8 +12,7 @@ import json
 from utils import html_clear
 
 
-
-def html_scraper(source_url_global, news_container, news_url, news_source, source_slug, id, source_initial_timer=15, news_regex=None, *args, **kwargs):
+def html_scraper(source_url_global, news_container, news_url, news_source, source_slug, id, source_initial_timer=60, news_regex=None, *args, **kwargs):
 
     timer = source_initial_timer
     cachero_list_etags = source_slug.lower() + "_etag_cache-" + str(id)
@@ -25,9 +24,26 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
 
     while True:
         count = 0
+        timer = int(timer * round(random.uniform(1,1.4),3))
+
+        try:
+            response = requests.get(source_url_global, headers=headers)
+        except:
+            print(f'[REQUEST] -- {source_slug} IS FUCKING DEAD = REQUEST')
+            Cachero.listpush('postmortens_request', source_slug)
+            if timer < 300:
+                timer = 300
+            if timer > 10800:
+                Cachero.listpush('postmortens_definitive', source_slug)
+                break
+            timer = int(timer * 1.4)
+            print(f"{id}:{source_slug}: [ERROR] sleeping for {timer}s")
+            sleep(timer)
+            continue
+
         if timer > 5400:
             timer = 5400
-        response = requests.get(source_url_global, headers=headers)
+
         soup = BeautifulSoup(response.content, 'html5lib',
                              from_encoding='utf-8')
 
@@ -103,7 +119,11 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
                 with Goose() as g:
 
                     for tmp in urls_list:
-                        art = g.extract(url=tmp)
+                        try:
+                            art = g.extract(url=tmp)
+                        except:
+                            continue
+                        
                         # print(article.cleaned_text)
                         noticia_final = {
                             "title": art.title,
@@ -117,7 +137,7 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
 
                 timer = source_initial_timer
                 tweeze_store_db(article_list, source_slug, count, timer)
-                Cachero.listpush(cachero_list_etags, etag)
+                Cachero.listpush(cachero_list_etags, etag_encode)
 
                 Cachero.listtrim(cachero_list_etags, 0, 7)
                 Cachero.listtrim(cachero_list_individual_hashes, 0, 511)
@@ -125,45 +145,12 @@ def html_scraper(source_url_global, news_container, news_url, news_source, sourc
 
             else:
                 timer = int(timer * 1.2)
-                print(f"{source_slug}: No updates available, sleeping for {timer}s")
+                print(f"{id}:{source_slug}: [IND] No updates available, sleeping for {timer}s")
+                Cachero.listpush(cachero_list_etags, etag_encode)
+
                 sleep(timer)
 
         else:
-            timer = int(timer * 1.2)
-            print(f"{source_slug}: No updates available, sleeping for {timer}s")
+            timer = int(timer * 1.4)
+            print(f"{id}:{source_slug}: [ALL] No updates available, sleeping for {timer}s")
             sleep(timer)
-    # urls_list = html_scraper(global_url, news_container, news_url, news_regex)
-
-
-# def scrap_one(urls_list):
-#     g = Goose()
-#     art = g.extract(urls_list)
-#     news = {
-#         "title": art.title,
-#         "link": art.final_url,
-#         "description": art.cleaned_text,
-#         "data": art.publish_datetime_utc
-#     }
-#     return news
-
-
-# def scrap_them_all(urls_list, news_source, id):
-#     article_list = []
-
-#     if not isinstance(urls_list, list):
-#         return scrap_one(urls_list)
-
-#     with Goose() as g:
-
-#         for tmp in urls_list:
-#             art = g.extract(url=tmp)
-#             # print(article.cleaned_text)
-#             noticia_final = ({
-#                 "title": art.title,
-#                 "link": art.final_url,
-#                 "description": art.cleaned_text if 'description' in art else '',
-#                 "pub_data": art.publish_datetime_utc if 'publish_datetime_utc' in art else date.today().strftime('%d/%m/%Y')
-#             })
-#             article_list.append(noticia_final)
-
-#     return article_list
