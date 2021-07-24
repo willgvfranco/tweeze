@@ -32,6 +32,7 @@ import Error505 from './views/errors/505';
 
 const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing'));
+const Blank = lazy(() => import('./views/BlankView'));
 
 const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
@@ -50,7 +51,7 @@ const DashboardStatistics = lazy(() =>
   import('./example-pages/DashboardStatistics')
 );
 
-const Overview = lazy(() => import('./example-pages/Overview'));
+// const Overview = lazy(() => import('./example-pages/Overview'));
 
 const ElementsAvatars = lazy(() => import('./example-pages/ElementsAvatars'));
 const ElementsBadges = lazy(() => import('./example-pages/ElementsBadges'));
@@ -294,6 +295,7 @@ const Routes = () => {
             <Route
               path={[
                 '/home',
+                '/blank',
                 '/DashboardMonitoring',
                 '/DashboardCommerce',
                 '/DashboardAnalytics',
@@ -386,7 +388,7 @@ const Routes = () => {
                     variants={pageVariants}
                     transition={pageTransition}>
                     <Route path="/home" component={Home} />
-
+                    <Route path="/blank" component={Blank} />
                     <Route
                       path="/DashboardMonitoring"
                       component={DashboardMonitoring}
