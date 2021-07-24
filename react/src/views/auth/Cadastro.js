@@ -99,12 +99,12 @@ export default function PageRegister() {
                             </Grid>
                           </Grid>
                           <div className="my-4">
-                            Clicando no botão <strong>Criação de Conta</strong>{' '}
+                            Clicando no botão <strong>Criar Conta</strong>{' '}
                             você concorda com os termos de serviço e a política de privacidade.
                           </div>
                           <div className="text-center mb-4">
                             <Button className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
-                              Criação de Conta
+                              Criar Conta
                             </Button>
                           </div>
                         </div>
@@ -180,7 +180,7 @@ export default function PageRegister() {
             <Container>
               <div className="py-3 d-block d-lg-flex font-size-xs justify-content-between">
                 <div className="text-center d-block mb-3 mb-md-0 text-white">
-                  Copyright &copy; 2020 - UiFort.com
+                  Copyright &copy; 2021 - Tweeze
                 </div>
                 <List
                   component="div"
@@ -190,14 +190,14 @@ export default function PageRegister() {
                     className="text-white-50"
                     href="#/"
                     onClick={(e) => e.preventDefault()}>
-                    Privacy Policy
+                    Política de privacidade
                   </ListItem>
                   <ListItem
                     button
                     className="text-white-50"
                     href="#/"
                     onClick={(e) => e.preventDefault()}>
-                    Terms of Service
+                    Termos de Serviço
                   </ListItem>
                 </List>
               </div>
