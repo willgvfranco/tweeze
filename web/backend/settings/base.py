@@ -80,14 +80,18 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend', 'dashboard', 'perfil',
-                   'axes',  'crispy_forms', 'django.contrib.humanize')
+                   'axes',  'crispy_forms', 'django.contrib.humanize', 'rest_framework',  'rest_registration',)
 
 MIDDLEWARE += ('axes.middleware.AxesMiddleware',)
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+REST_REGISTRATION = {
+    'REGISTER_VERIFICATION_ENABLED': False,
+    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
+    'RESET_PASSWORD_VERIFICATION_ENABLED': False,
+}
 # VIEW.PY => messages.success(self.request, 'Success!') // from django.contrib import messages
 # Template.html => {% include "partials/_messages.html" %}
 MESSAGE_TAGS = {
