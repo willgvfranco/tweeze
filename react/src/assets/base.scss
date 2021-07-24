@@ -1,6 +1,6 @@
 // Core
 
-@import "core";
+@import 'core';
 
 // Fonts
 
@@ -8,20 +8,19 @@
 
 // Widgets
 
-@import "widgets";
+@import 'widgets';
 
 // Components
 
-@import "components";
+@import 'components';
 
 // Layout Components
 
-@import "layout-components";
+@import 'layout-components';
 
 // Layout Blueprints
 
-@import "layout-blueprints";
-
+@import 'layout-blueprints';
 
 .fade-enter {
   opacity: 0.01;
@@ -41,12 +40,21 @@
   transition: opacity 300ms ease-in;
 }
 
+// /views/auth/CADASTRO.JS
+
 // botão de login do facebook e google mais para baixo na página de cadastro
 .cadastro-button-loginmidiassociais {
-padding: 1.1rem;
+  padding: 1.1rem;
 }
 
 // título da pagina um pouco para baixo
 .landingcadastro-acerto-header {
-margin-top: 2.3rem;
+  margin-top: 2.3rem;
 }
+
+@media (max-width: 767px) {
+  .cadastro-no-top-padding {
+    padding-top: 0 !important;
+  }
+}
+// END CADASTRO.JS

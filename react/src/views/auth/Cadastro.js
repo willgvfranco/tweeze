@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -14,6 +14,26 @@ import {
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 
 export default function PageRegister() {
+  const [form, setForm] = useState({
+    password: '',
+    password_confirm: '',
+    username: '',
+    first_name: '',
+    last_name: ''
+  });
+
+  const handleChange = (event) => {
+    // console.log(event.target.name, event.target.value);
+    const field = event.target.name;
+    const value = event.target.value;
+    setForm({ ...form, [field]: value });
+  };
+
+  const sendRegister = (e) => {
+    console.log(form);
+    axios.post('http://127.0.0.1:8000/api/v1/accounts/register/', form);
+  };
+
   return (
     <>
       <div className="app-wrapper min-vh-100 bg-white">
@@ -36,46 +56,51 @@ export default function PageRegister() {
                         className="d-flex align-items-center justify-content-center flex-column">
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-4">
-                        <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
-                        Criação de conta
-                        </h1>
-                        <p className="mb-0 text-black-50">
-                        Comece com os benefícios de nossa plataforma agora mesmo.
-                        </p>
+                          <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
+                            Criação de conta
+                          </h1>
+                          <p className="mb-0 text-black-50">
+                            Comece com os benefícios de nossa plataforma agora
+                            mesmo.
+                          </p>
                         </div>
                         <div className="text-center mb-3 cadastro-button-loginmidiassociais">
-                            <Button
-                              className="m-2 btn-pill px-4 font-weight-bold btn-google"
-                              size="small">
-                              <span className="btn-wrapper--icon">
-                                <FontAwesomeIcon icon={['fab', 'google']} />
-                              </span>
-                              <span className="btn-wrapper--label">
-                                Login com Google
-                              </span>
-                            </Button>
-                            <Button
-                              className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
-                              size="small">
-                              <span className="btn-wrapper--icon">
-                                <FontAwesomeIcon icon={['fab', 'facebook']} />
-                              </span>
-                              <span className="btn-wrapper--label">
-                                Login com Facebook
-                              </span>
-                            </Button>
-                          </div>
+                          <Button
+                            className="m-2 btn-pill px-4 font-weight-bold btn-google"
+                            size="small">
+                            <span className="btn-wrapper--icon">
+                              <FontAwesomeIcon icon={['fab', 'google']} />
+                            </span>
+                            <span className="btn-wrapper--label">
+                              Login com Google
+                            </span>
+                          </Button>
+                          <Button
+                            className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
+                            size="small">
+                            <span className="btn-wrapper--icon">
+                              <FontAwesomeIcon icon={['fab', 'facebook']} />
+                            </span>
+                            <span className="btn-wrapper--label">
+                              Login com Facebook
+                            </span>
+                          </Button>
+                        </div>
                         <div className="px-5 py-4">
                           <div className="mb-3">
                             <label className="font-weight-bold mb-2">
                               Email
                             </label>
                             <TextField
+                              onChange={(event) => {
+                                handleChange(event);
+                              }}
                               variant="outlined"
                               size="small"
                               fullWidth
                               placeholder="Entre com seu e-mail"
                               type="email"
+                              name="username"
                             />
                           </div>
                           <div className="mb-3">
@@ -85,13 +110,17 @@ export default function PageRegister() {
                               </label>
                             </div>
                             <TextField
+                              onChange={(e) => {
+                                handleChange(e);
+                              }}
                               variant="outlined"
                               size="small"
                               fullWidth
                               placeholder="Entre com a sua senha"
                               type="password"
+                              name="password"
                             />
-                            </div>
+                          </div>
                           <div className="mb-3">
                             <div className="d-flex justify-content-between">
                               <label className="font-weight-bold mb-2">
@@ -99,11 +128,15 @@ export default function PageRegister() {
                               </label>
                             </div>
                             <TextField
+                              onChange={(e) => {
+                                handleChange(e);
+                              }}
                               variant="outlined"
                               size="small"
                               fullWidth
                               placeholder="Entre com a sua senha"
                               type="password"
+                              name="password_confirm"
                             />
                           </div>
                           <Grid container spacing={6}>
@@ -113,33 +146,49 @@ export default function PageRegister() {
                                   Nome
                                 </label>
                                 <TextField
+                                  onChange={(e) => {
+                                    handleChange(e);
+                                  }}
                                   variant="outlined"
                                   size="small"
                                   fullWidth
                                   placeholder="Nome"
+                                  name="first_name"
                                 />
                               </div>
                             </Grid>
-                            <Grid item md={6}>
+                            <Grid
+                              className="cadastro-no-top-padding"
+                              item
+                              md={6}>
                               <div>
                                 <label className="font-weight-bold mb-2">
                                   Sobrenome
                                 </label>
                                 <TextField
+                                  onChange={(e) => {
+                                    handleChange(e);
+                                  }}
                                   variant="outlined"
                                   size="small"
                                   fullWidth
                                   placeholder="Sobrenome"
+                                  name="last_name"
                                 />
                               </div>
                             </Grid>
                           </Grid>
                           <div className="my-4">
-                            Clicando no botão <strong>Criar Conta</strong>{' '}
-                            você concorda com os termos de serviço e a política de privacidade.
+                            Clicando no botão <strong>Criar Conta</strong> você
+                            concorda com os termos de serviço e a política de
+                            privacidade.
                           </div>
                           <div className="text-center mb-4">
-                            <Button className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
+                            <Button
+                              onClick={() => {
+                                sendRegister();
+                              }}
+                              className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
                               Criar Conta
                             </Button>
                           </div>
@@ -163,7 +212,8 @@ export default function PageRegister() {
                                   Tweeze
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  As mais modernas tecnologias para captura, análise e distribuição de informações.
+                                  As mais modernas tecnologias para captura,
+                                  análise e distribuição de informações.
                                 </p>
                               </div>
                             </div>
@@ -181,7 +231,10 @@ export default function PageRegister() {
                                   Compromisso!
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                 Nosso compromisso é deixar nossos clientes o mais informado possível. Somente nos ultimos 4 meses foram captadas aproximadamente 2 milhões de notícias do Brasil e do mundo. 
+                                  Nosso compromisso é deixar nossos clientes o
+                                  mais informado possível. Somente nos ultimos 4
+                                  meses foram captadas aproximadamente 2 milhões
+                                  de notícias do Brasil e do mundo.
                                 </p>
                               </div>
                             </div>
@@ -199,7 +252,13 @@ export default function PageRegister() {
                                   Jul.IA
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  Jul.IA é inteligência artificial desenvolvida com foco no processamento de linguagem natural. Do Brasil para o mundo, antenada, conectada e extremamente rápida. Jul.IA está presente em todo o nosso sistema, gerenciamento marcas e auxiliando na identificação de potenciais crises.
+                                  Jul.IA é inteligência artificial desenvolvida
+                                  com foco no processamento de linguagem
+                                  natural. Do Brasil para o mundo, antenada,
+                                  conectada e extremamente rápida. Jul.IA está
+                                  presente em todo o nosso sistema,
+                                  gerenciamento marcas e auxiliando na
+                                  identificação de potenciais crises.
                                 </p>
                               </div>
                             </div>
