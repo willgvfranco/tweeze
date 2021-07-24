@@ -4,10 +4,6 @@ from arauto import tweeze_get_sources_db
 from scraper_html import html_scraper
 from scraper_xml import xml_scraper
 import threading
-# from celery import Celery
-
-# app = Celery('bridge', broker='redis://localhost')
-
 
 # @app.task(bind=True)
 def warp_gate():
