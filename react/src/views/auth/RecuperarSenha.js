@@ -143,25 +143,7 @@ export default function PageRecover() {
                 <div className="text-center d-block mb-3 mb-md-0 text-white">
                   Copyright &copy; 2020 - UiFort.com
                 </div>
-                <List
-                  component="div"
-                  className="nav-transparent text-nowrap d-flex justify-content-center">
-                  <ListItem
-                    button
-                    className="text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    Privacy Policy
-                  </ListItem>
-                  <ListItem
-                    button
-                    className="text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    Terms of Service
-                  </ListItem>
-                </List>
-              </div>
+               </div>
             </Container>
           </div>
         </div>
