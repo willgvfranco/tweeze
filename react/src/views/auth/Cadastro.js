@@ -36,14 +36,14 @@ export default function PageRegister() {
                         className="d-flex align-items-center justify-content-center flex-column">
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-4">
-                        <h1 className="font-size-xxl mb-1 font-weight-bold">
+                        <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
                         Criação de conta
                         </h1>
                         <p className="mb-0 text-black-50">
                         Comece com os benefícios de nossa plataforma agora mesmo.
                         </p>
                         </div>
-                        <div className="text-center mb-3">
+                        <div className="text-center mb-3 cadastro-button-loginmidiassociais">
                             <Button
                               className="m-2 btn-pill px-4 font-weight-bold btn-google"
                               size="small">
@@ -82,6 +82,20 @@ export default function PageRegister() {
                             <div className="d-flex justify-content-between">
                               <label className="font-weight-bold mb-2">
                                 Senha
+                              </label>
+                            </div>
+                            <TextField
+                              variant="outlined"
+                              size="small"
+                              fullWidth
+                              placeholder="Entre com a sua senha"
+                              type="password"
+                            />
+                            </div>
+                          <div className="mb-3">
+                            <div className="d-flex justify-content-between">
+                              <label className="font-weight-bold mb-2">
+                                Confirme a senha
                               </label>
                             </div>
                             <TextField

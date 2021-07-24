@@ -55,7 +55,7 @@ export default function LivePreviewExample() {
                           </p>
                         </div>
                         <div className="py-4">
-                          <div className="text-center mb-3 buttoncadastro">
+                          <div className="text-center mb-3">
                             <Button
                               className="m-2 btn-pill px-4 font-weight-bold btn-google"
                               size="small">
