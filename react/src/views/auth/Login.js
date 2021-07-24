@@ -48,10 +48,10 @@ export default function LivePreviewExample() {
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-4">
                           <h1 className="font-size-xxl mb-1 font-weight-bold">
-                            Login
+                            Tweeze
                           </h1>
                           <p className="mb-0 text-black-50">
-                            Fill in the fields below to login to your account
+                            Acesso ao Painel de Controle
                           </p>
                         </div>
                         <div className="py-4">
@@ -63,7 +63,7 @@ export default function LivePreviewExample() {
                                 <FontAwesomeIcon icon={['fab', 'google']} />
                               </span>
                               <span className="btn-wrapper--label">
-                                Login with Google
+                                Login com Google
                               </span>
                             </Button>
                             <Button
@@ -73,12 +73,12 @@ export default function LivePreviewExample() {
                                 <FontAwesomeIcon icon={['fab', 'facebook']} />
                               </span>
                               <span className="btn-wrapper--label">
-                                Login with Facebook
+                                Login com Facebook
                               </span>
                             </Button>
                           </div>
                           <div className="text-center text-black-50 py-2 mb-4">
-                            or sign in with credentials
+                            ou entre com as suas credenciais
                           </div>
                           <div>
                             <div className="mb-4">
@@ -123,29 +123,29 @@ export default function LivePreviewExample() {
                                   />
                                 }
                                 className="font-size-md"
-                                label="Remember me"
+                                label="Lembrar acesso"
                               />
                               <div>
                                 <a
                                   className="text-first"
                                   href="#/"
                                   onClick={(e) => e.preventDefault()}>
-                                  Recover password
+                                  Recupere a sua senha
                                 </a>
                               </div>
                             </div>
                             <div className="text-center py-4">
                               <Button className="btn-second font-weight-bold w-50 my-2">
-                                Sign in
+                                Logar!
                               </Button>
                             </div>
                             <div className="text-center text-black-50 mt-3">
-                              Don't have an account?{' '}
+                              Não tem uma conta?{' '}
                               <a
                                 className="text-first"
                                 href="#/"
                                 onClick={(e) => e.preventDefault()}>
-                                Sign up
+                                Crie aqui.
                               </a>
                             </div>
                           </div>
@@ -166,13 +166,10 @@ export default function LivePreviewExample() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Widgets
+                                  Tweeze
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  You can build unlimited layout styles using
-                                  any of the 500+ included components and
-                                  elements. Powerful, unique template built for
-                                  React and Material-UI.
+                                  As mais modernas tecnologias para captura, análise e distribuição de informações.
                                 </p>
                               </div>
                             </div>
@@ -187,12 +184,10 @@ export default function LivePreviewExample() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Components
+                                  Compromisso!
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  View any of the 5+ live previews we&#39;ve set
-                                  up to learn why this dashboard template is the
-                                  last one you&#39;ll ever need!
+                                  Nosso compromisso é deixar nossos clientes o mais informado possível. Somente nos ultimos 4 meses foram captadas aproximadamente 2 milhões de notícias do Brasil e do mundo. 
                                 </p>
                               </div>
                             </div>
@@ -207,13 +202,10 @@ export default function LivePreviewExample() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Elements
+                                Jul.IA
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  You can build unlimited layout styles using
-                                  any of the 500+ included components and
-                                  elements. Powerful, unique template built for
-                                  React and Material-UI.
+                                Jul.IA é inteligência artificial desenvolvida com foco no processamento de linguagem natural. Do Brasil para o mundo, antenada, conectada e extremamente rápida. Jul.IA está presente em todo o nosso sistema, gerenciamento marcas e auxiliando na identificação de potenciais crises.
                                 </p>
                               </div>
                             </div>
