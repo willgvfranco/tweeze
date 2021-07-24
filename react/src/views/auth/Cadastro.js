@@ -37,36 +37,36 @@ export default function PageRegister() {
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-4">
                           <h1 className="font-size-xxl mb-1 font-weight-bold">
-                            Create account
+                            Criação de conta
                           </h1>
                           <p className="mb-0 text-black-50">
-                            Start benefiting from our tools right away!
+                            Comece com os benefícios de nossa plataforma agora mesmo.
                           </p>
                         </div>
                         <div className="px-5 py-4">
                           <div className="mb-3">
                             <label className="font-weight-bold mb-2">
-                              Email address
+                              Email
                             </label>
                             <TextField
                               variant="outlined"
                               size="small"
                               fullWidth
-                              placeholder="Enter your email address"
+                              placeholder="Entre com seu e-mail"
                               type="email"
                             />
                           </div>
                           <div className="mb-3">
                             <div className="d-flex justify-content-between">
                               <label className="font-weight-bold mb-2">
-                                Password
+                                Senha
                               </label>
                             </div>
                             <TextField
                               variant="outlined"
                               size="small"
                               fullWidth
-                              placeholder="Enter your password"
+                              placeholder="Entre com a sua senha"
                               type="password"
                             />
                           </div>
@@ -74,38 +74,37 @@ export default function PageRegister() {
                             <Grid item md={6}>
                               <div>
                                 <label className="font-weight-bold mb-2">
-                                  First name
+                                  Nome
                                 </label>
                                 <TextField
                                   variant="outlined"
                                   size="small"
                                   fullWidth
-                                  placeholder="Enter your first name"
+                                  placeholder="Nome"
                                 />
                               </div>
                             </Grid>
                             <Grid item md={6}>
                               <div>
                                 <label className="font-weight-bold mb-2">
-                                  Last name
+                                  Sobrenome
                                 </label>
                                 <TextField
                                   variant="outlined"
                                   size="small"
                                   fullWidth
-                                  placeholder="Enter your last name"
+                                  placeholder="Sobrenome"
                                 />
                               </div>
                             </Grid>
                           </Grid>
                           <div className="my-4">
-                            By clicking the <strong>Create account</strong>{' '}
-                            button below you agree to our terms of service and
-                            privacy statement.
+                            Clicando no botão <strong>Criação de Conta</strong>{' '}
+                            você concorda com os termos de serviço e a política de privacidade.
                           </div>
                           <div className="text-center mb-4">
                             <Button className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
-                              Create account
+                              Criação de Conta
                             </Button>
                           </div>
                         </div>
@@ -125,13 +124,10 @@ export default function PageRegister() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Widgets
+                                  Tweeze
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  You can build unlimited layout styles using
-                                  any of the 500+ included components and
-                                  elements. Powerful, unique template built for
-                                  React and Material-UI.
+                                  As mais modernas tecnologias para captura, análise e distribuição de informações.
                                 </p>
                               </div>
                             </div>
@@ -146,12 +142,10 @@ export default function PageRegister() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Components
+                                  Compromisso!
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  View any of the 5+ live previews we&#39;ve set
-                                  up to learn why this dashboard template is the
-                                  last one you&#39;ll ever need!
+                                 Nosso compromisso é deixar nossos clientes o mais informado possível. Somente nos ultimos 4 meses foram captadas aproximadamente 2 milhões de notícias do Brasil e do mundo. 
                                 </p>
                               </div>
                             </div>
@@ -166,13 +160,10 @@ export default function PageRegister() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Elements
+                                  Jul.IA
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  You can build unlimited layout styles using
-                                  any of the 500+ included components and
-                                  elements. Powerful, unique template built for
-                                  React and Material-UI.
+                                  Jul.IA é inteligência artificial desenvolvida com foco no processamento de linguagem natural. Do Brasil para o mundo, antenada, conectada e extremamente rápida. Jul.IA está presente em todo o nosso sistema, gerenciamento marcas e auxiliando na identificação de potenciais crises.
                                 </p>
                               </div>
                             </div>
