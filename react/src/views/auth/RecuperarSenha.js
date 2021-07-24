@@ -39,11 +39,10 @@ export default function PageRecover() {
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-5">
                           <h1 className="display-4 mb-1 font-weight-bold">
-                            Recover Password
+                            Recuperação de Senha
                           </h1>
                           <p className="font-size-lg mb-0 text-black-50">
-                            Forgot your password? No worries, we're here to
-                            help!
+                            Esqueceu a sua senha? Vamos te ajudar!
                           </p>
                         </div>
                         <div className="p-5 w-100">
@@ -52,7 +51,7 @@ export default function PageRecover() {
                               fullWidth
                               variant="outlined"
                               id="textfield-email"
-                              label="Email address"
+                              label="Email"
                               InputProps={{
                                 startAdornment: (
                                   <InputAdornment position="start">
@@ -66,7 +65,7 @@ export default function PageRecover() {
                             <Button
                               fullWidth
                               className="text-uppercase font-weight-bold font-size-sm mt-4 btn-primary">
-                              Send password
+                              Enviar senha!
                             </Button>
                           </div>
                         </div>
@@ -86,13 +85,10 @@ export default function PageRecover() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Widgets
+                                  Tweeze
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  You can build unlimited layout styles using
-                                  any of the 500+ included components and
-                                  elements. Powerful, unique template built for
-                                  React and Material-UI.
+                                 As mais modernas tecnologias para captura, análise e distribuição de informações.
                                 </p>
                               </div>
                             </div>
@@ -107,12 +103,10 @@ export default function PageRecover() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Components
+                                  Compromisso!
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  View any of the 5+ live previews we&#39;ve set
-                                  up to learn why this dashboard template is the
-                                  last one you&#39;ll ever need!
+                                Nosso compromisso é deixar nossos clientes o mais informado possível. Somente nos ultimos 4 meses foram captadas aproximadamente 2 milhões de notícias do Brasil e do mundo.
                                 </p>
                               </div>
                             </div>
@@ -127,13 +121,10 @@ export default function PageRecover() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Elements
+                                  Jul.IA
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  You can build unlimited layout styles using
-                                  any of the 500+ included components and
-                                  elements. Powerful, unique template built for
-                                  React and Material-UI.
+                                  Jul.IA é inteligência artificial desenvolvida com foco no processamento de linguagem natural. Do Brasil para o mundo, antenada, conectada e extremamente rápida. Jul.IA está presente em todo o nosso sistema, gerenciamento marcas e auxiliando na identificação de potenciais crises.
                                 </p>
                               </div>
                             </div>
@@ -152,25 +143,7 @@ export default function PageRecover() {
                 <div className="text-center d-block mb-3 mb-md-0 text-white">
                   Copyright &copy; 2020 - UiFort.com
                 </div>
-                <List
-                  component="div"
-                  className="nav-transparent text-nowrap d-flex justify-content-center">
-                  <ListItem
-                    button
-                    className="text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    Privacy Policy
-                  </ListItem>
-                  <ListItem
-                    button
-                    className="text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    Terms of Service
-                  </ListItem>
-                </List>
-              </div>
+               </div>
             </Container>
           </div>
         </div>
