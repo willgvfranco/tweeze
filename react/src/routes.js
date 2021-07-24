@@ -26,6 +26,10 @@ import PageError404 from './example-pages/PageError404';
 import PageError500 from './example-pages/PageError500';
 import PageError505 from './example-pages/PageError505';
 
+import Error404 from './views/errors/404';
+import Error500 from './views/errors/500';
+import Error505 from './views/errors/505';
+
 const Overview = lazy(() => import('./example-pages/Overview'));
 const Home = lazy(() => import('./views/Home'));
 
@@ -669,6 +673,9 @@ const Routes = () => {
                 '/login',
                 '/cadastro',
                 '/recuperar-senha',
+                '/error-404',
+                '/error-500',
+                '/error-505',
                 '/PageLoginBasic',
                 '/PageLoginCover',
                 '/PageLoginIllustration',
@@ -698,6 +705,9 @@ const Routes = () => {
                     <Route path="/recuperar-senha" component={RecuperarSenha} />
                     <Route path="/PageLoginBasic" component={PageLoginBasic} />
                     <Route path="/PageLoginCover" component={PageLoginCover} />
+                    <Route path="/error-404" component={Error404} />
+                    <Route path="/error-500" component={Error500} />
+                    <Route path="/error-505" component={Error505} />
                     <Route
                       path="/PageLoginIllustration"
                       component={PageLoginIllustration}

@@ -3,8 +3,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, Container, Button } from '@material-ui/core';
 
-import illustration1 from '../../../assets/images/illustrations/pack1/security.svg';
-import particles2 from '../../../assets/images/hero-bg/particles-2.svg';
+import illustration1 from '../../assets/images/illustrations/pack1/security.svg';
+import particles2 from '../../assets/images/hero-bg/particles-2.svg';
 
 export default function LivePreviewExample() {
   return (
