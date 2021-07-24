@@ -28,6 +28,11 @@ import PageError505 from './example-pages/PageError505';
 
 const Overview = lazy(() => import('./example-pages/Overview'));
 const Home = lazy(() => import('./views/Home'));
+
+const Login = lazy(() => import('./views/auth/Login'));
+const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
+const Cadastro = lazy(() => import('./views/auth/Cadastro'));
+
 const DashboardMonitoring = lazy(() =>
   import('./example-pages/DashboardMonitoring')
 );
@@ -374,6 +379,7 @@ const Routes = () => {
                     variants={pageVariants}
                     transition={pageTransition}>
                     <Route path="/home" component={Home} />
+
                     <Route
                       path="/DashboardMonitoring"
                       component={DashboardMonitoring}
@@ -660,6 +666,9 @@ const Routes = () => {
 
             <Route
               path={[
+                '/login',
+                '/cadastro',
+                '/recuperar-senha',
                 '/PageLoginBasic',
                 '/PageLoginCover',
                 '/PageLoginIllustration',
@@ -684,6 +693,9 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
+                    <Route path="/login" component={Login} />
+                    <Route path="/cadastro" component={Cadastro} />
+                    <Route path="/recuperar-senha" component={RecuperarSenha} />
                     <Route path="/PageLoginBasic" component={PageLoginBasic} />
                     <Route path="/PageLoginCover" component={PageLoginCover} />
                     <Route

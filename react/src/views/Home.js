@@ -8,7 +8,6 @@ import DashboardMonitoring3 from '../components/DashboardMonitoring/DashboardMon
 import DashboardMonitoring4 from '../components/DashboardMonitoring/DashboardMonitoring4';
 import DashboardMonitoring5 from '../components/DashboardMonitoring/DashboardMonitoring5';
 import DashboardMonitoring6 from '../components/DashboardMonitoring/DashboardMonitoring6';
-
 export default function Home() {
   return (
     <>
