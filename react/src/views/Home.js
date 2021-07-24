@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PageTitle } from '../layout-components';
-
+import TabelaNoticias from '../components/TabelaNoticias';
 import DashboardMonitoring1 from '../components/DashboardMonitoring/DashboardMonitoring1';
 import DashboardMonitoring2 from '../components/DashboardMonitoring/DashboardMonitoring2';
 import DashboardMonitoring3 from '../components/DashboardMonitoring/DashboardMonitoring3';
@@ -15,7 +15,7 @@ export default function Home() {
         titleHeading="Tweeze Dashboard"
         titleDescription="Painel de controle de inteligência da Tweeze"
       />
-
+      <TabelaNoticias />
       <DashboardMonitoring1 />
       <DashboardMonitoring2 />
       <DashboardMonitoring3 />

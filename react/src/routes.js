@@ -30,8 +30,8 @@ import Error404 from './views/errors/404';
 import Error500 from './views/errors/500';
 import Error505 from './views/errors/505';
 
-const Overview = lazy(() => import('./example-pages/Overview'));
 const Home = lazy(() => import('./views/Home'));
+const Landing = lazy(() => import('./views/Landing'));
 
 const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
@@ -49,6 +49,9 @@ const DashboardAnalytics = lazy(() =>
 const DashboardStatistics = lazy(() =>
   import('./example-pages/DashboardStatistics')
 );
+
+const Overview = lazy(() => import('./example-pages/Overview'));
+
 const ElementsAvatars = lazy(() => import('./example-pages/ElementsAvatars'));
 const ElementsBadges = lazy(() => import('./example-pages/ElementsBadges'));
 const ElementsButtons = lazy(() => import('./example-pages/ElementsButtons'));
@@ -272,8 +275,8 @@ const Routes = () => {
       <AnimatePresence>
         <Suspense fallback={<SuspenseLoading />}>
           <Switch>
-            <Redirect exact from="/" to="/Overview" />
-            <Route path={['/Overview']}>
+            <Redirect exact from="/" to="/landing" />
+            <Route path={['/landing']}>
               <PresentationLayout>
                 <Switch location={location} key={location.pathname}>
                   <motion.div
@@ -282,7 +285,7 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
-                    <Route path="/Overview" component={Overview} />
+                    <Route path="/landing" component={Landing} />
                   </motion.div>
                 </Switch>
               </PresentationLayout>
