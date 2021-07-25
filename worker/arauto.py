@@ -51,9 +51,8 @@ def tweeze_store_db(sqlquery, slug, counting, timer):
         # print('store inside')
 
         # connect to PostgreSQL
-        conn = psycopg2.connect(
-            "dbname=%s host=%s user=%s password=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD')))
-
+        conn = psycopg2.connect("dbname=%s host=%s user=%s password=%s port=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD'), config('DB_PORT')))
+        
         dt = datetime.now().astimezone(timezone('America/Sao_Paulo'))
         # the SQL INSERT statement we will use
         insert_sql = ('INSERT INTO public."frontend_noticia"(criado, modificado, ativo, source, title, url, description, pub_data, fonte_id) ' +
