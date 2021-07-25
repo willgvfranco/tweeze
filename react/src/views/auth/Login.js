@@ -202,7 +202,8 @@ export default function Loginform() {
                                   Tweeze
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  As mais modernas tecnologias para captura, análise e distribuição de informações.
+                                  As mais modernas tecnologias para captura,
+                                  análise e distribuição de informações.
                                 </p>
                               </div>
                             </div>
@@ -220,7 +221,10 @@ export default function Loginform() {
                                   Compromisso!
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                  Nosso compromisso é deixar nossos clientes o mais informado possível. Somente nos ultimos 4 meses foram captadas aproximadamente 2 milhões de notícias do Brasil e do mundo. 
+                                  Nosso compromisso é deixar nossos clientes o
+                                  mais informado possível. Somente nos ultimos 4
+                                  meses foram captadas aproximadamente 2 milhões
+                                  de notícias do Brasil e do mundo.
                                 </p>
                               </div>
                             </div>
@@ -235,10 +239,16 @@ export default function Loginform() {
                               </div>
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
-                                Jul.IA
+                                  Jul.IA
                                 </div>
                                 <p className="mb-0 text-black-50">
-                                Jul.IA é inteligência artificial desenvolvida com foco no processamento de linguagem natural. Do Brasil para o mundo, antenada, conectada e extremamente rápida. Jul.IA está presente em todo o nosso sistema, gerenciamento marcas e auxiliando na identificação de potenciais crises.
+                                  Jul.IA é inteligência artificial desenvolvida
+                                  com foco no processamento de linguagem
+                                  natural. Do Brasil para o mundo, antenada,
+                                  conectada e extremamente rápida. Jul.IA está
+                                  presente em todo o nosso sistema,
+                                  gerenciamento marcas e auxiliando na
+                                  identificação de potenciais crises.
                                 </p>
                               </div>
                             </div>
