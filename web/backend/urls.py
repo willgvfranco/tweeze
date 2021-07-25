@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 api_urlpatterns = [
     path('accounts/', include('rest_registration.api.urls')),
+    path('social/', include('allauth.urls')),
 ]
 
 
