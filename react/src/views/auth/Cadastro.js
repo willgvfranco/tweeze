@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
-
+import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 export default function PageRegister() {
   const [form, setForm] = useState({
     password: '',
@@ -54,16 +54,17 @@ export default function PageRegister() {
             <div className="bg-composed-wrapper--bg bg-premium-dark opacity-5" />
             <div className="bg-composed-wrapper--content p-3 p-md-5">
               <Container>
-                <Card className="rounded-sm modal-content p-3 bg-white-10">
-                  <Card className="rounded-sm shadow-none font-size-sm p-3 p-sm-0">
-                    <Grid container spacing={0}>
-                      <Grid
-                        item
-                        lg={6}
-                        className="d-flex align-items-center justify-content-center flex-column">
-                        <div className="divider-v divider-v-lg d-none d-lg-block" />
-                        <div className="text-center mt-4">
-                          <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
+              <Card className="rounded-sm modal-content p-3 bg-white-10">
+              <Card className="rounded-sm shadow-none font-size-sm p-3 p-sm-0">
+              <Grid container spacing={0}>
+              <Grid
+              item
+              lg={6}
+              className="d-flex align-items-center justify-content-center flex-column">
+              <div className="divider-v divider-v-lg d-none d-lg-block" />
+              <div className="text-center mt-5">
+              <img className="logo-tweeze-css" src={logoTweeze}></img>
+              <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
                             Criação de conta
                           </h1>
                           <p className="mb-0 text-black-50">

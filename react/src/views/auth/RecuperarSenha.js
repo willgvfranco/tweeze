@@ -15,7 +15,7 @@ import {
 import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 
 import particles3 from '../../assets/images/hero-bg/particles-3.svg';
-
+import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 export default function PageRecover() {
   return (
     <>
@@ -32,12 +32,13 @@ export default function PageRecover() {
                 <Card className="rounded-sm modal-content p-3 bg-white-10">
                   <Card className="rounded-sm overflow-hidden shadow-xxl font-size-sm p-3 p-sm-0">
                     <Grid container spacing={0}>
-                      <Grid
-                        item
-                        lg={6}
-                        className="d-flex align-items-center justify-content-center flex-column">
-                        <div className="divider-v divider-v-lg d-none d-lg-block" />
-                        <div className="text-center mt-5">
+                    <Grid
+                    item
+                    lg={6}
+                    className="d-flex align-items-center justify-content-center flex-column">
+                    <div className="divider-v divider-v-lg d-none d-lg-block" />
+                    <div className="text-center mt-5">
+                    <img className="logo-tweeze-css" src={logoTweeze}></img>
                           <h1 className="display-4 mb-1 font-weight-bold">
                             Recuperação de Senha
                           </h1>
