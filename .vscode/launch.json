@@ -5,6 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch via NPM",
+      "request": "launch",
+      "runtimeArgs": ["run-script", "start"],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}/react"
+    },
+
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000", // create-react-app's default port 3000
+      "webRoot": "/src",
+      "preLaunchTask": "npm: start" // Add prelaunch Task npm: start (defined in tasks.json)
+    },
+
+    {
       "name": "Python: Arquivo Atual",
       "type": "python",
       "request": "launch",
