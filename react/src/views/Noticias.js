@@ -5,14 +5,17 @@ import { PageTitle } from '../layout-components';
 import { ExampleWrapperSeamless } from '../layout-components';
 import { ExampleWrapperSimple } from '../layout-components';
 import TabelaNoticias from '../components/TabelaNoticias';
+import Searchbar from '../example-components/ElementsSearchBars/SearchBars4'
 export default function Blank() {
   return (
     <>
       <PageTitle
-        titleHeading="Titulo"
+         titleHeading="Titulo"
         titleDescription="Exemplo de descrição"
       />
-
+      
+        <Searchbar/>
+      <div className="espaçamento-do-cris"></div>
       <TabelaNoticias></TabelaNoticias>
 
       {/* <ExampleWrapperSeamless>
