@@ -19,11 +19,10 @@ import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-
 export default function Loginform() {
   const [form, setForm] = useState({
     password: '',
-    login: '',
+    login: ''
   });
 
   const [checked1, setChecked] = useState(true);
@@ -36,16 +35,15 @@ export default function Loginform() {
   };
 
   const headers = { 'Content-Type': 'application/json' };
-  
+
   const sendRegister = async (e) => {
-       const response = await axios.post(
-      'http://localhost:8000/api/v1/accounts/login',
+    const response = await axios.post(
+      'http://localhost:8000/api/v1/accounts/login/',
       form
     );
 
     console.log(response);
   };
-
 
   return (
     <>
@@ -104,9 +102,9 @@ export default function Loginform() {
                           <div>
                             <div className="mb-4">
                               <TextField
-                              onChange={(event) => {
-                                handleChange(event);
-                              }}
+                                onChange={(event) => {
+                                  handleChange(event);
+                                }}
                                 fullWidth
                                 variant="outlined"
                                 id="textfield-email"
@@ -124,7 +122,7 @@ export default function Loginform() {
                             <div className="mb-3">
                               <TextField
                                 onChange={(e) => {
-                                handleChange(e);
+                                  handleChange(e);
                                 }}
                                 fullWidth
                                 variant="outlined"
@@ -165,10 +163,10 @@ export default function Loginform() {
                             </div>
                             <div className="text-center py-4">
                               <Button
-                              onClick={() => {
-                                sendRegister();
-                              }}
-                              className="btn-second font-weight-bold w-50 my-2">
+                                onClick={() => {
+                                  sendRegister();
+                                }}
+                                className="btn-second font-weight-bold w-50 my-2">
                                 Logar!
                               </Button>
                             </div>
