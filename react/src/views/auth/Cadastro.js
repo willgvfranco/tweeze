@@ -29,9 +29,16 @@ export default function PageRegister() {
     setForm({ ...form, [field]: value });
   };
 
-  const sendRegister = (e) => {
-    console.log(form);
-    axios.post('http://127.0.0.1:8000/api/v1/accounts/register/', form);
+  const headers = { 'Content-Type': 'application/json' };
+  const sendRegister = async (e) => {
+    const body = form;
+    body['email'] = form.username;
+    const response = await axios.post(
+      'http://localhost:8000/api/v1/accounts/register/',
+      body
+    );
+
+    console.log(response);
   };
 
   return (

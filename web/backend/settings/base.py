@@ -80,11 +80,11 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend', 'dashboard', 'perfil',
-                   'axes',  'crispy_forms', 'django.contrib.humanize', 'rest_framework',  'rest_registration',)
+                   'axes',  'crispy_forms', 'django.contrib.humanize', 'rest_framework',  'rest_registration',  'corsheaders',)
 
-MIDDLEWARE += ('axes.middleware.AxesMiddleware',)
+MIDDLEWARE += ('axes.middleware.AxesMiddleware','corsheaders.middleware.CorsMiddleware',)
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_REGISTRATION = {
