@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -19,12 +19,33 @@ import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-export default function LivePreviewExample() {
-  const [checked1, setChecked1] = useState(true);
 
-  const handleChange1 = (event) => {
-    setChecked1(event.target.checked);
+export default function Loginform() {
+  const [form, setForm] = useState({
+    password: '',
+    login: '',
+  });
+
+  const [checked1, setChecked] = useState(true);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    const field = event.target.name;
+    const value = event.target.value;
+    setForm({ ...form, [field]: value });
   };
+
+  const headers = { 'Content-Type': 'application/json' };
+  
+  const sendRegister = async (e) => {
+       const response = await axios.post(
+      'http://localhost:8000/api/v1/accounts/login',
+      form
+    );
+
+    console.log(response);
+  };
+
 
   return (
     <>
@@ -83,10 +104,14 @@ export default function LivePreviewExample() {
                           <div>
                             <div className="mb-4">
                               <TextField
+                              onChange={(event) => {
+                                handleChange(event);
+                              }}
                                 fullWidth
                                 variant="outlined"
                                 id="textfield-email"
                                 label="Email"
+                                name="login"
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
@@ -98,10 +123,14 @@ export default function LivePreviewExample() {
                             </div>
                             <div className="mb-3">
                               <TextField
+                                onChange={(e) => {
+                                handleChange(e);
+                                }}
                                 fullWidth
                                 variant="outlined"
                                 id="textfield-password"
                                 label="Password"
+                                name="password"
                                 type="password"
                                 InputProps={{
                                   startAdornment: (
@@ -117,8 +146,8 @@ export default function LivePreviewExample() {
                                 control={
                                   <Checkbox
                                     checked={checked1}
-                                    onChange={handleChange1}
-                                    value="checked1"
+                                    onChange={handleChange}
+                                    value="checked"
                                     color="primary"
                                   />
                                 }
@@ -135,7 +164,11 @@ export default function LivePreviewExample() {
                               </div>
                             </div>
                             <div className="text-center py-4">
-                              <Button className="btn-second font-weight-bold w-50 my-2">
+                              <Button
+                              onClick={() => {
+                                sendRegister();
+                              }}
+                              className="btn-second font-weight-bold w-50 my-2">
                                 Logar!
                               </Button>
                             </div>
