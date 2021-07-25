@@ -11,7 +11,7 @@ from pytz import timezone
 def tweeze_get_sources_db(*args):
     try:
         conn = psycopg2.connect(
-            "dbname=%s host=%s user=%s password=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD')))
+            "dbname=%s host=%s user=%s password=%s port=%s" % (config('DB_NAME'), config('DB_HOST'), config('DB_USER'), config('DB_PASSWORD'), config('DB_PORT')))
         query = ('SELECT * FROM public.frontend_fonte')
 
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
