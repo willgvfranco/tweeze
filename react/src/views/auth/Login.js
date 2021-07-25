@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -17,16 +19,25 @@ import {
 import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
+import { login } from '../../reducers/AuthDuck';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-export default function Loginform() {
+// export class LoginForm extends React.Component {
+//   state = {
+//     form: {
+//       password: '',
+//       login: ''
+//     },
+//     checked: true
+//   }
+function LoginForm() {
   const [form, setForm] = useState({
     password: '',
     login: ''
   });
 
   const [checked1, setChecked] = useState(true);
-
+  const dispatch = useDispatch();
   const handleChange = (event) => {
     setChecked(event.target.checked);
     const field = event.target.name;
@@ -37,12 +48,13 @@ export default function Loginform() {
   const headers = { 'Content-Type': 'application/json' };
 
   const sendRegister = async (e) => {
-    const response = await axios.post(
-      'http://localhost:8000/api/v1/accounts/login/',
-      form
-    );
+    // const response = await axios.post(
+    //   'http://localhost:8000/api/v1/accounts/login/',
+    //   form
+    // );
+    dispatch(login(form));
 
-    console.log(response);
+    // console.log(response);
   };
 
   return (
@@ -291,3 +303,11 @@ export default function Loginform() {
     </>
   );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: (action) => dispatch(action)
+});
+
+const ConnectedLoginForm = connect()(LoginForm);
+
+export default ConnectedLoginForm;
