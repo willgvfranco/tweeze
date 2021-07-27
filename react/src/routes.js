@@ -34,6 +34,7 @@ const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing'));
 const Blank = lazy(() => import('./views/BlankView'));
 const Noticias = lazy(() => import('./views/Noticias'));
+const MinhaConta = lazy(() => import('./views/MinhaConta'));
 
 const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
@@ -298,6 +299,7 @@ const Routes = () => {
                 '/home',
                 '/blank',
                 '/noticias',
+                '/minha-conta',
                 '/DashboardMonitoring',
                 '/DashboardCommerce',
                 '/DashboardAnalytics',
@@ -391,6 +393,7 @@ const Routes = () => {
                     transition={pageTransition}>
                     <Route path="/home" component={Home} />
                     <Route path="/noticias" component={Noticias} />
+                    <Route path="/minha-conta" component={MinhaConta} />
                     <Route path="/blank" component={Blank} />
                     <Route
                       path="/DashboardMonitoring"
