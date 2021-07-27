@@ -5,13 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch via NPM",
+      "command": "npm run start",
+      "name": "npm run start",
       "request": "launch",
-      "runtimeArgs": ["run-script", "start"],
-      "runtimeExecutable": "npm",
-      "skipFiles": ["<node_internals>/**"],
-      "type": "pwa-node",
-      "cwd": "${workspaceFolder}/react"
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}/server"
     },
 
     {
