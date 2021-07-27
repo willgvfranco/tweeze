@@ -28,7 +28,7 @@ export default function LivePreviewExample() {
             style={{ backgroundImage: 'url(' + hero1 + ')' }}
           />
           <div className="bg-composed-wrapper--bg bg-deep-sky opacity-6" />
-          <div className="bg-composed-wrapper--bg bg-sunrise-purple opacity-6" />
+          <div className="bg-composed-wrapper--bg bg-sunrise-blue opacity-6" />
           <div
             className="bg-composed-wrapper--image opacity-9"
             style={{ backgroundImage: 'url(' + particles2 + ')' }}
@@ -41,16 +41,14 @@ export default function LivePreviewExample() {
                 lg={10}
                 xl={8}
                 className="mx-auto py-3 py-lg-5">
-                <h2 className="display-3 font-weight-bold">
-                  Bamburgh React Admin Dashboard with Material-UI PRO
-                </h2>
-                <p className="font-size-xl py-3 text-white-50">
-                  Premium admin template powered by the most popular UI
-                  components framework available for React: Material-UI.
-                  Features hundreds of examples making web development fast and
-                  easy. Start from one of the individual apps included or from
-                  the general dashboard and build beautiful scalable
-                  applications and presentation websites.
+                <h1 className="display-3 font-weight-bold">
+                  Tweeze 
+                </h1>
+                <p className="font-size-xl py-3">
+                Transformando dados em inteligência.
+                </p>
+                <p className="font-size-xs">
+                Plataforma de clipping com inteligência artificial (I.A.) para captação, análise, monitoramento e distribuição de informações úteis a respeito de marcas e temas de interesse. Diariamente são tratadas aproximadamente 50 mil notícias do Brasil e do mundo. Somente nos ultimos 3 mesês captamos 1.5 milhões de notícias.
                 </p>
                 <div className="py-4 mb-4">
                   <Button
@@ -62,7 +60,7 @@ export default function LivePreviewExample() {
                       <FontAwesomeIcon icon={['fas', 'arrow-right']} />
                     </span>
                     <span className="btn-wrapper--label">
-                      Browse Dashboards
+                      Quero experimentar agora!
                     </span>
                   </Button>
                   <Button
@@ -71,7 +69,7 @@ export default function LivePreviewExample() {
                     target="_blank"
                     size="large"
                     className="bg-white-10 text-white shadow-second-sm btn-pill ml-3">
-                    <span>Product Details</span>
+                    <span>Planos de Serviços</span>
                   </Button>
                 </div>
               </Grid>
@@ -86,9 +84,9 @@ export default function LivePreviewExample() {
                           <TrendingUpTwoToneIcon className="d-30 text-danger" />
                         </div>
                         <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">1000+</b>
+                          <b className="font-size-xxl pb-2">1.500.000+</b>
                           <span className="text-white-50 font-size-lg d-block">
-                            components
+                            Notícias
                           </span>
                         </div>
                       </div>
@@ -101,9 +99,9 @@ export default function LivePreviewExample() {
                           <ListAltTwoToneIcon className="d-30 text-warning" />
                         </div>
                         <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">5+</b>
+                          <b className="font-size-xxl pb-2">1300+</b>
                           <span className="text-white-50 font-size-lg d-block">
-                            applications
+                            fontes
                           </span>
                         </div>
                       </div>
@@ -115,9 +113,9 @@ export default function LivePreviewExample() {
                           <EmojiEventsTwoToneIcon className="d-30 text-info" />
                         </div>
                         <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">100+</b>
+                          <b className="font-size-xxl pb-2">800.000+</b>
                           <span className="text-white-50 font-size-lg d-block">
-                            pages
+                            Tweetes
                           </span>
                         </div>
                       </div>
@@ -128,9 +126,9 @@ export default function LivePreviewExample() {
                           <TuneTwoToneIcon className="d-30 text-success" />
                         </div>
                         <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">100+</b>
+                          <b className="font-size-xxl pb-2">I.A.</b>
                           <span className="text-white-50 font-size-lg d-block">
-                            widgets
+                            Ready
                           </span>
                         </div>
                       </div>
