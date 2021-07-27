@@ -11,62 +11,43 @@ import {
 } from '@material-ui/core';
 
 import { PageTitle } from '../layout-components';
-import Select from "../components/Select";
+import Select from '../components/Select';
+
+const mockData = [
+  ['Março', 'dd/mm/aa', 'R$45,56', 'Pago'],
+  ['Fevereiro', 'dd/mm/aa', 'R$586,57', 'Pago'],
+  ['Janeiro', 'dd/mm/aa', 'R$657', 'Pago'],
+  ['Dezembro', 'dd/mm/aa', 'R$12,47', 'Pago'],
+  ['Novembro', 'dd/mm/aa', 'R$45,57', 'Pago']
+];
 
 const PaymentTable = () => (
   <div className="table-responsive-md">
     <Table className="table table-borderless text-nowrap mb-0">
       <thead>
         <tr>
-          <th className="text-uppercase bg-secondary">
-            Application
-          </th>
-          <th className="text-uppercase bg-secondary">Date</th>
-          <th className="text-uppercase bg-secondary">Payouts</th>
+          <th className="text-uppercase bg-secondary">Mês de referência</th>
+          <th className="text-uppercase bg-secondary">Vencimento em</th>
+          <th className="text-uppercase bg-secondary">Valor</th>
           <th className="text-uppercase bg-secondary">Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>File Manager</td>
-          <td>Aug 11, 2020</td>
-          <td>$45,567</td>
-          <td>
-            <div className="badge badge-success">Paid</div>
-          </td>
-        </tr>
-        <tr>
-          <td>Calendar App</td>
-          <td>Nov 12, 2020</td>
-          <td>$586,567</td>
-          <td>
-            <div className="badge badge-success">Paid</div>
-          </td>
-        </tr>
-        <tr>
-          <td>Tasks Management</td>
-          <td>Nov 13, 2020</td>
-          <td>$657</td>
-          <td>
-            <div className="badge badge-warning">Pending</div>
-          </td>
-        </tr>
-        <tr>
-          <td>Tickets App</td>
-          <td>Nov 22, 2020</td>
-          <td>$12,478</td>
-          <td>
-            <div className="badge badge-danger">Overdue</div>
-          </td>
-        </tr>
-        <tr>
-          <td>Dashboard App</td>
-          <td>Aug 15, 2020</td>
-          <td>$45,57</td>
-          <td>
-            <div className="badge badge-success">Paid</div>
-          </td>
-        </tr>
+        {mockData.map((el) => (
+          <tr key={el[0]}>
+            <td>{el[0]}</td>
+            <td>{el[1]}</td>
+            <td>{el[2]}</td>
+            <td>
+              <div
+                className={`badge badge-${
+                  el[3] === 'Pendente' ? 'warning' : 'success'
+                } text-uppercase`}>
+                {el[3]}
+              </div>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   </div>
@@ -75,8 +56,8 @@ const PaymentTable = () => (
 const MinhaConta = () => {
   const [personalType, setPersonalType] = useState(false);
   const [companyType, setCompanyType] = useState(false);
-  const [month, setMonth] = useState(null);
-  const [year, setYear] = useState(null);
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
 
   const handleChange = (event, handler) => handler(event.target.value);
 
@@ -84,9 +65,7 @@ const MinhaConta = () => {
     <>
       <PageTitle
         titleHeading="Minha Conta"
-        titleDescription="Alterar informações pessoais e/ou financeiras"
-      >
-      </PageTitle>
+        titleDescription="Alterar informações pessoais e/ou financeiras"></PageTitle>
 
       <Card className="rounded w-100 bg-white p-3">
         <CardHeader title="Dados Pessoais" />
@@ -97,14 +76,14 @@ const MinhaConta = () => {
               id="cnpj-cpf"
               label="CNPJ/CPF"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
             <TextField
               className="m-2"
               id="full-name"
               label="Nome Completo"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
           </Grid>
 
@@ -114,14 +93,14 @@ const MinhaConta = () => {
               id="password"
               label="Alterar senha"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
             <TextField
               className="m-2"
               id="password-confirm"
               label="Confirmar nova senha"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
           </Grid>
 
@@ -156,14 +135,14 @@ const MinhaConta = () => {
               id="adress"
               label="Endereço"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
             <TextField
               className="m-2"
               id="complement"
               label="Complemento"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
           </Grid>
 
@@ -173,7 +152,9 @@ const MinhaConta = () => {
         </Grid>
       </Card>
 
-      <Card style={{ displa: "flex" }} className="rounded w-100 bg-white mt-3 p-3">
+      <Card
+        style={{ displa: 'flex' }}
+        className="rounded w-100 bg-white mt-3 p-3">
         <CardHeader title="Dados Financeiros" />
 
         <Grid container spacing={2}>
@@ -184,41 +165,54 @@ const MinhaConta = () => {
               id="credit-card"
               label="Número do cartão"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
             <TextField
               className="m-2"
               id="card-name"
               label="Nome do Titular"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
             <TextField
               className="m-2"
               id="security-code"
               label="Código de segurança"
               variant="outlined"
-              style={{ width: "45%" }}
+              style={{ width: '45%' }}
             />
             <Select
               className="m-2"
-              style={{ width: "8rem" }}
+              style={{ width: '8rem' }}
               id="month-select"
               labelId="month"
               label="Mês"
               value={month}
               onChange={(e) => handleChange(e, setMonth)}
-              items={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+              items={['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
             />
             <Select
               className="m-2 ml-auto"
-              style={{ width: "8rem" }}
+              style={{ width: '8rem' }}
               id="year-select"
               labelId="year"
               label="Ano"
               value={year}
               onChange={(e) => handleChange(e, setYear)}
-              items={[2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032]}
+              items={[
+                '',
+                2022,
+                2023,
+                2024,
+                2025,
+                2026,
+                2027,
+                2028,
+                2029,
+                2030,
+                2031,
+                2032
+              ]}
             />
             <Button variant="contained" className="btn-primary m-2 mt-5">
               Adicionar forma de pagamento
@@ -230,10 +224,9 @@ const MinhaConta = () => {
             <PaymentTable />
           </Grid>
         </Grid>
-
       </Card>
     </>
   );
-}
+};
 
 export default MinhaConta;
