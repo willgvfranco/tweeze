@@ -29,20 +29,24 @@ export default function LivePreviewExample() {
             <Container className="pb-5 py-lg-5 text-center">
               <div className="mb-4">
                 <div className="badge badge-success mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
-                  Included
+                Tweeze
                 </div>
                 <h4 className="font-weight-bold text-white display-3">
-                  Individual Applications
+                  Entenda como podemos te ajudar
                 </h4>
                 <Grid item md={11} lg={10} className="mx-auto">
-                  <p className="text-white opacity-6 mt-3 mb-5 font-size-xxl">
-                    This template comes with included individual applications,
-                    making it easy to start with something closer to your
-                    project requirements
-                  </p>
+                 <p className="text-white opacity-6 mt-3 mb-5 font-size-xxl">
+                 Com a Tweeze, você pode pinçar as notícias mais importantes para o seu negócio, descobrir o que dizem da sua marca e ainda gerar relatórios e enviá-los de forma fácil e intuitiva.
+                    </p>
                 </Grid>
               </div>
-              <Grid container spacing={6}>
+
+              <div class="videoWrapper">
+              <iframe width="100%" height="480px" src="https://youtube.com/embed/WZRxRf0DPfY" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+
+              {/*<Grid container spacing={6}>
                 <Grid item md={6}>
                   <div className="card shadow-sm-dark rounded-lg bg-transparent">
                     <div className="card-img-wrapper">
@@ -108,7 +112,7 @@ export default function LivePreviewExample() {
                     Commerce
                   </p>
                 </Grid>
-              </Grid>
+                  </Grid>*/}
 
               <div className="py-4 mb-4">
                 <Button
@@ -117,7 +121,7 @@ export default function LivePreviewExample() {
                   target="_blank"
                   className="btn-pill shadow-second-sm btn-first"
                   size="large">
-                  <span>View Product Details</span>
+                  <span>Veja detalhes de nossas soluções</span>
                 </Button>
               </div>
             </Container>

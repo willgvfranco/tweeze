@@ -7,21 +7,25 @@ import CheckIcon from '@material-ui/icons/Check';
 export default function LivePreviewExample() {
   return (
     <>
-      <div className="bg-light z-over" style={{ marginTop: '-70px' }}>
+      <div className="bg-light z-over" style={{ marginTop: '-30px' }}>
         <Container className="pb-5 text-center">
           <div>
-            <div className="badge badge-success mb-4 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
+            {/*<div className="badge badge-success mb-4 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
               Overview
-            </div>
+            </div>*/}
             <h4 className="font-weight-bold text-second display-3">
-              Highlights
+            Descubra o que falam da sua marca:
             </h4>
+            <h2>
+            é fácil, simples e instantâneo.
+            </h2>
             <Grid item md={8} lg={6} className="mx-auto">
               <p className="text-second opacity-6 mt-3 mb-5 font-size-xxl">
-                You can build unlimited layout styles using any of the 500+
-                included components and elements. Powerful, unique template
-                built for React and Material-UI.
+                Você terá acesso gratuitamente a milhares de notícias sobre o seu tema de interesse.
               </p>
+              <button className=" buttonregister badge badge-success mb-4 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
+                Registre-se!
+              </button>
             </Grid>
           </div>
 
@@ -46,11 +50,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Powered by Material-UI
+                    Clipping jornalístico
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Bamburgh uses the Material-UI components framework for
-                    React.
+                    Nossa plataforma em questões de poucos segundos realiza o serviço de clipping jornalístico
                   </p>
                 </Card>
               </Grid>
@@ -73,10 +76,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Modular Architecture
+                    E-mail automatizado
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Easy to customize and mold for all your dev requirements
+                   Configure a frequência desejada para receber um relatório de clipping personalizado
                   </p>
                 </Card>
               </Grid>
@@ -99,11 +102,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Extensive Docs
+                  Notícias
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Check out the powerful online documentation section we've
-                    set up
+                  Analisamos milhares de noticias diariamente. Tecnologia para manter você bem informado
                   </p>
                 </Card>
               </Grid>
@@ -126,10 +128,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Consistent Design
+                    Tweeter
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Build the same experience across all your apps and websites
+                    Integrados completamente com o Tweeter analisamos milhões de informações sobre temas de interesse.
                   </p>
                 </Card>
               </Grid>
@@ -152,11 +154,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Fully Responsive
+                    Responsível
                   </h5>
                   <p className="mb-4 text-black-50">
-                    We've built this template to fit all viewports and screen
-                    widths
+                    Acesse de qualquer lugar e em qualquer dispositivo, seja computador, tablet ou Smartphone
                   </p>
                 </Card>
               </Grid>
@@ -179,11 +180,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Clean Code
+                   Intuitivo
                   </h5>
                   <p className="mb-4 text-black-50">
-                    We've written plain and easy to follow code for all pages
-                    and sections
+                  Plataforma fácil de utilizar e intuitiva. Design moderno com suporte com horário extendido.
                   </p>
                 </Card>
               </Grid>

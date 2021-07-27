@@ -69,5 +69,25 @@
 
   //margin-left: 35%;
   
+//landing page vídeo configuration
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-left: 0px;
+  
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  
+}
+}
 
+@media (max-width: 600px) {
+  .videoWrapper{
+    width: 100%;
+  }
 }
