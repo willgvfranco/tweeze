@@ -13,9 +13,29 @@ services:
       - MONGODB_USERNAME=tweezeauth
       - MONGO_INITDB_ROOT_PASSWORD=admin777
       - MONGODB_PASSWORD=admin777
+    networks:
+      - tweeze
     volumes:
       - ./db/docker/Volumes/MongoDB:/data/db
 
+  accounts:
+    build:
+      dockerfile: ./config/node.dockerfile
+      context: .
+    container_name: tweeze-accounts
+    restart: always
+    ports:
+      - "7777:7777"
+    networks:
+      - tweeze
+    depends_on:
+      - mongo
+    environment:
+      WAIT_HOSTS: mongo:27037
+
+networks:
+  tweeze:
+    driver: bridge
   # mongo-express:
   #   image: mongo-express
   #   container_name: tweeze-mongo-express
