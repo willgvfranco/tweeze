@@ -7,7 +7,8 @@ neusdoc
 .idea
 # C extensions
 *.so
-
+db/
+node_modules/
 # Distribution / packaging
 .Python
 build/
