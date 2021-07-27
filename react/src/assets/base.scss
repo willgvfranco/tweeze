@@ -4,7 +4,7 @@
 
 // Fonts
 
-@import url('https://fonts.googleapis.com/css?family=Heebo:400,700&display=swap');
+@import url('https://fonts.googleapis.com/{?family=Heebo:400,700&display=swap');
 
 // Widgets
 
@@ -48,9 +48,9 @@
 }
 
 // título da pagina um pouco para baixo
-.landingcadastro-acerto-header {
-  margin-top: 2.3rem;
-}
+// .landingcadastro-acerto-header {
+//   margin-top: 2.3rem;
+// }
 
 @media (max-width: 767px) {
   .cadastro-no-top-padding {
@@ -62,4 +62,12 @@
 //espaçamento na pagina de noticias entre table e search bar
 .espaçamento-do-cris {
   margin-bottom: 2em;
+}
+
+.logo-tweeze-css {
+  width: 9em;
+
+  //margin-left: 35%;
+  
+
 }

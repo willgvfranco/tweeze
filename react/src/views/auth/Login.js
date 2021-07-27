@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 import {
   Grid,
   Container,
@@ -77,10 +78,9 @@ function LoginForm() {
                         lg={6}
                         className="d-flex align-items-center justify-content-center flex-column">
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
-                        <div className="text-center mt-4">
-                          <h1 className="font-size-xxl mb-1 font-weight-bold">
-                            Tweeze
-                          </h1>
+                        <div className="text-center mt-5">
+                        <img className="logo-tweeze-css" src={logoTweeze}></img>
+                          
                           <p className="mb-0 text-black-50">
                             Acesso ao Painel de Controle
                           </p>
@@ -198,8 +198,11 @@ function LoginForm() {
                         item
                         lg={6}
                         className="d-flex align-items-center justify-content-center flex-column bg-secondary">
+                        
                         <div className="p-3">
-                          <div className="p-4">
+                        <div className="p-4">
+                      
+                        
                             <div className="d-block d-xl-flex">
                               <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
                                 <FontAwesomeIcon
@@ -207,6 +210,8 @@ function LoginForm() {
                                   className="font-size-xl text-first"
                                 />
                               </div>
+                                
+
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">
                                   Tweeze
