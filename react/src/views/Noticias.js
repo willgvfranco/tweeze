@@ -5,41 +5,20 @@ import {
   Button,
   Checkbox,
   Card,
-  InputAdornment,
   TextField
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
-import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
 import 'date-fns';
 
-import { PageTitle } from '../layout-components';
+import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
 import TabelaNoticias from '../components/TabelaNoticias';
 
-const SearchBar = () => (
-  <div style={{ width: '30rem' }}>
-    <TextField
-      variant="outlined"
-      size="small"
-      id="input-with-icon-textfield1"
-      fullWidth
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchTwoToneIcon />
-          </InputAdornment>
-        )
-      }}
-    />
-  </div>
-);
-
 const Noticias = () => {
   const [group, setGroup] = useState('');
-  const [reportType, setReportType] = useState('');
   const [days, setDays] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date('2020-08-18'));
   const [automatic, setAutomatic] = useState(false);
@@ -53,14 +32,8 @@ const Noticias = () => {
       <PageTitle
         titleHeading="Relatórios"
         titleDescription="Consulta de clippings e geração de relatórios">
-        <SearchBar />
-      </PageTitle>
-
-      <Card
-        style={{ display: 'flex', alignItems: 'center' }}
-        className="rounded w-100 bg-white p-3 mb-3">
         <Select
-          className="w-50"
+          style={{ width: '20rem' }}
           id="clipping-group-select"
           labelId="clipping-group"
           label="Selecione o grupo para o clipping"
@@ -86,18 +59,7 @@ const Noticias = () => {
             />
           </div>
         </MuiPickersUtilsProvider>
-
-        <Select
-          className="m-3"
-          style={{ width: '15rem' }}
-          id="report-type-select"
-          labelId="report-type"
-          label="Incluir relatórios de"
-          value={reportType}
-          onChange={(e) => handleChange(e, setReportType)}
-          items={['tipo 1', 'tipo 2', 'tipo 3']}
-        />
-      </Card>
+      </PageTitle>
 
       <TabelaNoticias />
 
