@@ -35,6 +35,7 @@ const Landing = lazy(() => import('./views/Landing'));
 const Blank = lazy(() => import('./views/BlankView'));
 const Noticias = lazy(() => import('./views/Noticias'));
 const MinhaConta = lazy(() => import('./views/MinhaConta'));
+const Grupos = lazy(() => import('./views/Grupos'));
 
 const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
@@ -300,6 +301,7 @@ const Routes = () => {
                 '/blank',
                 '/noticias',
                 '/minha-conta',
+                '/grupos',
                 '/DashboardMonitoring',
                 '/DashboardCommerce',
                 '/DashboardAnalytics',
@@ -394,6 +396,7 @@ const Routes = () => {
                     <Route path="/home" component={Home} />
                     <Route path="/noticias" component={Noticias} />
                     <Route path="/minha-conta" component={MinhaConta} />
+                    <Route path="/grupos" component={Grupos} />
                     <Route path="/blank" component={Blank} />
                     <Route
                       path="/DashboardMonitoring"
