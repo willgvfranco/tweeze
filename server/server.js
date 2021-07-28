@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
 import {
   USER,
@@ -30,9 +29,10 @@ db.mongoose
 
 var corsOptions = {
   origin: "http://localhost:7777",
+  origin: "http://localhost:3000",
 };
 
-// Cors = app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 app.use(
   express.urlencoded({

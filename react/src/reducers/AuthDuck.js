@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 // Action Types
 
 export const Types = {
@@ -9,17 +8,10 @@ export const Types = {
 
 // Action Creators
 
-export function login(form) {
-  const response = axios
-    .post('http://localhost:8000/api/v1/accounts/login/', form)
-    .then((response) => {
-      console.log(response);
-    });
+export function login(data) {
   return {
     type: Types.LOGIN,
-    payload: {
-      response
-    }
+    payload: data
   };
 }
 
@@ -42,7 +34,9 @@ export default function reducer(state = initialState, action) {
     case Types.LOGIN:
       return {
         ...state,
-        auth: action.payload
+        user: action.payload,
+        token: action.payload.accessToken,
+        isLogged: true
       };
     case Types.LOGOUT:
       return {

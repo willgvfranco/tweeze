@@ -8,11 +8,12 @@ import { hashSync, compareSync } from "bcryptjs";
 export function signup(req, res) {
   const body = req.body;
   const user = new User({
-    username: body.username,
     email: body.email,
     password: hashSync(body.password, 8),
-    firstname: body.firstname,
-    lastname: body.lastname,
+    data_nascimento: body.nascimento,
+    first_name: body.first_name,
+    last_name: body.last_name,
+    cpf: body.cpf,
   });
 
   user.save((err, user) => {
@@ -56,6 +57,7 @@ export function signup(req, res) {
             res.status(500).send({ message: err });
             return;
           }
+          // TODO: Enviar dados para login do cidadão
 
           res.send({ message: "User was registered successfully!" });
         });
@@ -66,7 +68,7 @@ export function signup(req, res) {
 
 export function signin(req, res) {
   User.findOne({
-    username: req.body.username,
+    email: req.body.email,
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
@@ -76,7 +78,8 @@ export function signin(req, res) {
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(400).send({ message: "User Not found." });
+        // return res.status(404).send({ message: "User Not found." });
       }
 
       var passwordIsValid = compareSync(req.body.password, user.password);
@@ -99,10 +102,14 @@ export function signin(req, res) {
       }
       res.status(200).send({
         id: user._id,
-        username: user.username,
         email: user.email,
+        data_nascimento: user.nascimento,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        cpf: user.cpf,
         roles: authorities,
         accessToken: token,
+        grupo_palavras: user.grupo_palavras,
       });
     });
 }

@@ -18,7 +18,6 @@ export default function (app) {
   app.get("/api/test/all", allAccess);
 
   app.get("/api/test/user", [authJwt.verifyToken], userBoard);
-
   app.get(
     "/api/test/mod",
     [authJwt.verifyToken, authJwt.isModerator],
@@ -30,4 +29,7 @@ export default function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     adminBoard
   );
+
+  // app.post("/api/grupos-palavras")
+  // body: ['flamengo', 'fluminense']
 }

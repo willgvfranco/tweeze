@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { ROOT_URL } from '../../config/env';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -14,10 +16,11 @@ import {
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 export default function PageRegister() {
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     password: '',
     password_confirm: '',
-    username: '',
+    email: '',
     first_name: '',
     last_name: ''
   });
@@ -32,13 +35,19 @@ export default function PageRegister() {
   const headers = { 'Content-Type': 'application/json' };
   const sendRegister = async (e) => {
     const body = form;
-    body['email'] = form.username;
-    const response = await axios.post(
-      'http://localhost:8000/api/v1/accounts/register/',
-      body
-    );
-
-    console.log(response);
+    if (body.password !== body.password_confirm) {
+      return;
+    }
+    axios
+      .post(`${ROOT_URL}/api/auth/signup/`, form)
+      .then((response) => {
+        console.log(response);
+        // dispatch(login(response.data));
+        // TODO: logar o cidadão
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -54,17 +63,19 @@ export default function PageRegister() {
             <div className="bg-composed-wrapper--bg bg-premium-dark opacity-5" />
             <div className="bg-composed-wrapper--content p-3 p-md-5">
               <Container>
-              <Card className="rounded-sm modal-content p-3 bg-white-10">
-              <Card className="rounded-sm shadow-none font-size-sm p-3 p-sm-0">
-              <Grid container spacing={0}>
-              <Grid
-              item
-              lg={6}
-              className="d-flex align-items-center justify-content-center flex-column">
-              <div className="divider-v divider-v-lg d-none d-lg-block" />
-              <div className="text-center mt-5">
-              <img className="logo-tweeze-css" src={logoTweeze}></img>
-              <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
+                <Card className="rounded-sm modal-content p-3 bg-white-10">
+                  <Card className="rounded-sm shadow-none font-size-sm p-3 p-sm-0">
+                    <Grid container spacing={0}>
+                      <Grid
+                        item
+                        lg={6}
+                        className="d-flex align-items-center justify-content-center flex-column">
+                        <div className="divider-v divider-v-lg d-none d-lg-block" />
+                        <div className="text-center mt-5">
+                          <img
+                            className="logo-tweeze-css"
+                            src={logoTweeze}></img>
+                          <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
                             Criação de conta
                           </h1>
                           <p className="mb-0 text-black-50">
@@ -108,7 +119,7 @@ export default function PageRegister() {
                               fullWidth
                               placeholder="Entre com seu e-mail"
                               type="email"
-                              name="username"
+                              name="email"
                             />
                           </div>
                           <div className="mb-3">
