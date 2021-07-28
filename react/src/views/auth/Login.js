@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ROOT_URL } from '../../config/env';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -34,7 +35,7 @@ import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 function LoginForm() {
   const [form, setForm] = useState({
     password: '',
-    login: ''
+    email: ''
   });
 
   const [checked1, setChecked] = useState(true);
@@ -49,11 +50,15 @@ function LoginForm() {
   const headers = { 'Content-Type': 'application/json' };
 
   const sendRegister = async (e) => {
-    // const response = await axios.post(
-    //   'http://localhost:8000/api/v1/accounts/login/',
-    //   form
-    // );
-    dispatch(login(form));
+    axios
+      .post(`${ROOT_URL}/api/auth/signin/`, form)
+      .then((response) => {
+        console.log(response);
+        dispatch(login(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     // console.log(response);
   };
@@ -79,8 +84,10 @@ function LoginForm() {
                         className="d-flex align-items-center justify-content-center flex-column">
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-5">
-                        <img className="logo-tweeze-css" src={logoTweeze}></img>
-                          
+                          <img
+                            className="logo-tweeze-css"
+                            src={logoTweeze}></img>
+
                           <p className="mb-0 text-black-50">
                             Acesso ao Painel de Controle
                           </p>
@@ -121,7 +128,7 @@ function LoginForm() {
                                 variant="outlined"
                                 id="textfield-email"
                                 label="Email"
-                                name="login"
+                                name="email"
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
@@ -198,11 +205,8 @@ function LoginForm() {
                         item
                         lg={6}
                         className="d-flex align-items-center justify-content-center flex-column bg-secondary">
-                        
                         <div className="p-3">
-                        <div className="p-4">
-                      
-                        
+                          <div className="p-4">
                             <div className="d-block d-xl-flex">
                               <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
                                 <FontAwesomeIcon
@@ -210,7 +214,6 @@ function LoginForm() {
                                   className="font-size-xl text-first"
                                 />
                               </div>
-                                
 
                               <div className="pl-0 pl-xl-3">
                                 <div className="text-black font-weight-bold font-size-lg mb-1">

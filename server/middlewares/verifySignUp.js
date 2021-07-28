@@ -3,22 +3,9 @@ import User from "../models/user.model.js";
 
 const checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
-  User.findOne({
-    username: req.body.username,
-  }).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-
-    if (user) {
-      res.status(400).send({ message: "Failed! Username is already in use!" });
-      return;
-    }
-
-    // Email
+  if (req.body.cpf) {
     User.findOne({
-      email: req.body.email,
+      cpf: req.body.cpf,
     }).exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -26,12 +13,27 @@ const checkDuplicateUsernameOrEmail = (req, res, next) => {
       }
 
       if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use!" });
+        res.status(400).send({ message: "Failed! CPF is already in use!" });
         return;
       }
-
-      next();
     });
+  }
+
+  // Email
+  User.findOne({
+    email: req.body.email,
+  }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (user) {
+      res.status(400).send({ message: "Failed! Email is already in use!" });
+      return;
+    }
+
+    next();
   });
 };
 
