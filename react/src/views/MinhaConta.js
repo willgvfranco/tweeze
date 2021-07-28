@@ -10,7 +10,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import { PageTitle } from '../layout-components';
+import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
 
 const mockData = [
@@ -65,7 +65,8 @@ const MinhaConta = () => {
     <>
       <PageTitle
         titleHeading="Minha Conta"
-        titleDescription="Alterar informações pessoais e/ou financeiras"></PageTitle>
+        titleDescription="Alterar informações pessoais e/ou financeiras"
+      />
 
       <Card className="rounded w-100 bg-white p-3">
         <CardHeader title="Dados Pessoais" />
