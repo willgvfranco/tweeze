@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -73,67 +74,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const GRUPOS = {
-  '0': {
-    id: 0,
-    name: 'Grupo 01',
-    pos: ['termo 1', ' termo grande texto largo quebra de linha', 'termo 3'],
-    neg: ['termo grande texto largo', ' termo 2', 'termo 3']
-  },
-  '1': {
-    id: 1,
-    name: 'Grupo 02',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  '2': {
-    id: 2,
-    name: 'Grupo 03',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  '3': {
-    id: 3,
-    name: 'Grupo 04',
-    pos: [
-      'termo 1',
-      'termo 2',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3'
-    ],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  '4': {
-    id: 4,
-    name: 'Grupo 05',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  '5': {
-    id: 5,
-    name: 'Grupo 06',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  '6': {
-    id: 6,
-    name: 'Grupo 07',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: [
-      'termo 1',
-      'termo 2',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3'
-    ]
-  }
-};
-
 const Positivas = ({ grupo }) => (
   <List
     style={{
@@ -192,7 +132,7 @@ const Header = ({ grupo, handleEdit, handleDelete }) => (
   </div>
 );
 
-const EditDialog = ({ open, onClose, selectedGroup }) => {
+const EditDialog = ({ open, onClose, selectedGroup, groups }) => {
   const classes = useStyles();
 
   return (
@@ -204,7 +144,7 @@ const EditDialog = ({ open, onClose, selectedGroup }) => {
       }}
       aria-labelledby="simple-dialog-title">
       <div className="p-3 font-size-xl font-weight-bold">Editar Grupo</div>
-      <CardHeader title={GRUPOS[selectedGroup]?.name} />
+      <CardHeader title={groups[selectedGroup]?.name} />
       <Divider />
       <div className={classes.wrapper}>
         <div>
@@ -216,7 +156,7 @@ const EditDialog = ({ open, onClose, selectedGroup }) => {
             variant="outlined"
           />
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {GRUPOS[selectedGroup]?.pos.map((pos, index) => (
+            {groups[selectedGroup]?.pos.map((pos, index) => (
               <Chip
                 label={pos}
                 classes={{ root: classes.chipPos }}
@@ -236,7 +176,7 @@ const EditDialog = ({ open, onClose, selectedGroup }) => {
             variant="outlined"
           />
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {GRUPOS[selectedGroup]?.neg.map((neg, index) => (
+            {groups[selectedGroup]?.neg.map((neg, index) => (
               <Chip
                 label={neg}
                 classes={{ root: classes.chipNeg }}
@@ -270,7 +210,7 @@ const EditDialog = ({ open, onClose, selectedGroup }) => {
   );
 };
 
-const DeleteDialog = ({ open, onClose, selectedGroup }) => (
+const DeleteDialog = ({ open, onClose, selectedGroup, groups }) => (
   <Dialog
     open={open}
     onClose={onClose}
@@ -285,7 +225,7 @@ const DeleteDialog = ({ open, onClose, selectedGroup }) => (
         </div>
       </div>
       <h4 className="font-weight-bold mt-4">
-        Tem certeza que deseja deletar o grupo '{GRUPOS[selectedGroup]?.name}'?
+        Tem certeza que deseja deletar o grupo '{groups[selectedGroup]?.name}'?
       </h4>
       <p className="mb-0 font-size-lg text-muted">
         Você não poderá desfazer essa ação.
@@ -304,7 +244,7 @@ const DeleteDialog = ({ open, onClose, selectedGroup }) => (
   </Dialog>
 );
 
-const Grupos = () => {
+const Grupos = ({ groups }) => {
   const [type, setType] = useState('Todos os termos');
   const [editDialog, setEditDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -345,7 +285,7 @@ const Grupos = () => {
 
       <Card className="rounded w-100 bg-white p-3">
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {Object.values(GRUPOS).map((grupo, index) => (
+          {Object.values(groups).map((grupo, index) => (
             <div
               key={`${index}-${grupo.name}`}
               className={classes.groups}
@@ -379,11 +319,13 @@ const Grupos = () => {
 
       <EditDialog
         open={editDialog}
+        groups={groups}
         selectedGroup={selectedGroup}
         onClose={() => handleDialogClose(setEditDialog)}
       />
       <DeleteDialog
         open={deleteDialog}
+        groups={groups}
         selectedGroup={selectedGroup}
         onClose={() => handleDialogClose(setDeleteDialog)}
       />
@@ -391,4 +333,6 @@ const Grupos = () => {
   );
 };
 
-export default Grupos;
+const mapStateToProps = ({ groups }) => ({ groups });
+
+export default connect(mapStateToProps)(Grupos);
