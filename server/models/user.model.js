@@ -14,15 +14,17 @@ const User = mongoose.model(
     _created: { type: Date, default: Date.now },
     _updated: { type: Date, default: Date.now },
     cpf: String,
-
+    grupo_palavras: [{ name: String, pos: [String], neg: [String] }],
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Role",
       },
     ],
-    grupo_palavras: [String],
+    // grupo_palavras: [String],
   })
 );
+
+// http://142.93.15.67:5000/search?positivo=bolsonaro&negativo=lula&qtd=1000
 
 export default User;

@@ -50,8 +50,11 @@ app.get("/", (req, res) => {
 // routes
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import elkRoutes from "./routes/elk.routes.js";
+
 authRoutes(app);
 userRoutes(app);
+elkRoutes(app);
 
 const PORT = process.env.PORT || 7777;
 app.listen(PORT, () => {
