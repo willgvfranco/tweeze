@@ -1,7 +1,8 @@
 var elasticsearch = require("elasticsearch");
+require("dotenv").config();
 
 var client = new elasticsearch.Client({
-  host: "134.209.40.184:9200",
+  host: `${process.env.ELK_HOST}:${process.env.ELK_PORT}`,
   log: "trace",
   httpAuth: "elastic:PiLFSnE1MlS1ySmv9czF",
 });

@@ -14,7 +14,12 @@ const User = mongoose.model(
     _created: { type: Date, default: Date.now },
     _updated: { type: Date, default: Date.now },
     cpf: String,
-    grupo_palavras: [{ name: String, pos: [String], neg: [String] }],
+    words: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Words",
+      },
+    ],
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,

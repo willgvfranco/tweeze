@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ROOT_URL } from '../../config/env';
+import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -51,7 +51,7 @@ function LoginForm() {
 
   const sendRegister = async (e) => {
     axios
-      .post(`${ROOT_URL}/api/auth/signin/`, form)
+      .post(BACKEND.login, form)
       .then((response) => {
         console.log(response);
         dispatch(login(response.data));

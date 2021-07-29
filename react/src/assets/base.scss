@@ -1,44 +1,22 @@
 // Core
-
 @import 'core';
 
 // Fonts
-
 @import url('https://fonts.googleapis.com/{?family=Heebo:400,700&display=swap');
 
 // Widgets
-
 @import 'widgets';
 
 // Components
-
 @import 'components';
 
 // Layout Components
-
 @import 'layout-components';
 
 // Layout Blueprints
-
 @import 'layout-blueprints';
 
-body::-webkit-scrollbar,
-.tweeze-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  border-radius: 20px;
-}
-
-body::-webkit-scrollbar-track,
-.tweeze-scrollbar::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb,
-.tweeze-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba($sidebar-bg, 0.7);
-  /* outline: 1px solid slategrey; */
-  border-radius: 20px;
-}
+@import 'scrollbar';
 
 .fade-enter {
   opacity: 0.01;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
 import { ROOT_URL } from '../../config/env';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,7 +40,7 @@ export default function PageRegister() {
       return;
     }
     axios
-      .post(`${ROOT_URL}/api/auth/signup/`, form)
+      .post(BACKEND.cadastro, form)
       .then((response) => {
         console.log(response);
         // dispatch(login(response.data));

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +10,9 @@ import {
   List,
   ListItem,
   ListItemText,
-  Dialog
+  Dialog,
+  Chip,
+  TextField
 } from '@material-ui/core';
 
 import PageTitle from '../components/PageTitle';
@@ -28,64 +31,48 @@ const useStyles = makeStyles((theme) => ({
       width: '30%'
     }
   },
-  select: { padding: '11.5px 14px' }
-}));
-
-const GRUPOS = [
-  {
-    name: 'Grupo 01',
-    pos: ['termo 1', ' termo grande texto largo quebra de linha', 'termo 3'],
-    neg: ['termo grande texto largo', ' termo 2', 'termo 3']
+  select: { padding: '11.5px 14px' },
+  editDialog: {
+    maxWidth: '50vw',
+    [theme.breakpoints.down('lg')]: {
+      maxWidth: '80vw'
+    },
+    minHeight: '30rem'
   },
-  {
-    name: 'Grupo 02',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      marginBottim: '4rem'
+    },
+    '& > div': {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '1rem',
+      width: '45%',
+      [theme.breakpoints.down('md')]: {
+        width: '80%'
+      }
+    }
   },
-  {
-    name: 'Grupo 03',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
+  chipPos: {
+    margin: '4px 2px',
+    color: theme.palette.success.main,
+    border: `1px solid ${theme.palette.success.main}`,
+    '& .MuiChip-deleteIcon': {
+      color: theme.palette.success.main
+    }
   },
-  {
-    name: 'Grupo 04',
-    pos: [
-      'termo 1',
-      'termo 2',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3'
-    ],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  {
-    name: 'Grupo 05',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  {
-    name: 'Grupo 06',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: ['termo 1', 'termo 2', 'termo 3']
-  },
-  {
-    name: 'Grupo 07',
-    pos: ['termo 1', 'termo 2', 'termo 3'],
-    neg: [
-      'termo 1',
-      'termo 2',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3',
-      'termo 3'
-    ]
+  chipNeg: {
+    margin: '4px 2px',
+    color: theme.palette.error.main,
+    border: `1px solid ${theme.palette.error.main}`,
+    '& .MuiChip-deleteIcon': {
+      color: theme.palette.error.main
+    }
   }
-];
-
-const emails = ['example1@example.com', 'example2@example.com'];
+}));
 
 const Positivas = ({ grupo }) => (
   <List
@@ -97,8 +84,11 @@ const Positivas = ({ grupo }) => (
     }}>
     <div className={`badge badge-success text-uppercase`}>Positivas</div>
     {grupo.pos.map((el, index) => (
-      <ListItem key={`${index}-${el}`}>
-        <ListItemText primary={el} style={{ textAlign: 'center' }} />
+      <ListItem key={`${index}-${el}`} style={{ margin: '0' }}>
+        <ListItemText
+          primary={el}
+          style={{ textAlign: 'center', margin: '0' }}
+        />
       </ListItem>
     ))}
   </List>
@@ -114,8 +104,11 @@ const Negativas = ({ grupo }) => (
     }}>
     <div className={`badge badge-danger text-uppercase`}>Negativas</div>
     {grupo.neg.map((el, index) => (
-      <ListItem key={`${index}-${el}`}>
-        <ListItemText primary={el} style={{ textAlign: 'center' }} />
+      <ListItem key={`${index}-${el}`} style={{ margin: '0' }}>
+        <ListItemText
+          primary={el}
+          style={{ textAlign: 'center', margin: '0' }}
+        />
       </ListItem>
     ))}
   </List>
@@ -139,47 +132,92 @@ const Header = ({ grupo, handleEdit, handleDelete }) => (
   </div>
 );
 
-const EditDialog = (props) => {
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+const EditDialog = ({ open, onClose, selectedGroup, groups }) => {
+  const classes = useStyles();
 
   return (
     <Dialog
-      onClose={handleClose}
-      classes={{ paper: 'modal-content rounded-lg w-100 p-3' }}
-      aria-labelledby="simple-dialog-title"
-      open={open}>
+      open={open}
+      onClose={onClose}
+      classes={{
+        paper: `modal-content rounded-lg w-100 p-3 ${classes.editDialog}`
+      }}
+      aria-labelledby="simple-dialog-title">
       <div className="p-3 font-size-xl font-weight-bold">Editar Grupo</div>
-      <CardHeader title={GRUPOS[0].name} />
+      <CardHeader title={groups[selectedGroup]?.name} />
       <Divider />
-      <List>
-        {GRUPOS[0].pos.map((pos, index) => (
-          <ListItem button key={`${index}-${pos.name}-${index}`}>
-            <ListItemText primary={pos} />
-          </ListItem>
-        ))}
-        <Divider />
-        {GRUPOS[0].neg.map((neg, index) => (
-          <ListItem button key={`${index}-${neg.name}-${index}`}>
-            <ListItemText primary={neg} />
-          </ListItem>
-        ))}
-      </List>
+      <div className={classes.wrapper}>
+        <div>
+          <TextField
+            className="m-2 mb-4"
+            fullWidth
+            id="pos"
+            label="Insira os termos positivos"
+            variant="outlined"
+          />
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {groups[selectedGroup]?.pos.map((pos, index) => (
+              <Chip
+                label={pos}
+                classes={{ root: classes.chipPos }}
+                key={`${index}-${pos.name}-${index}`}
+                variant="outlined"
+                onDelete={() => {}}
+              />
+            ))}
+          </div>
+        </div>
+        <div>
+          <TextField
+            className="m-2 mb-4"
+            fullWidth
+            id="neg"
+            label="Insira os termos negativos"
+            variant="outlined"
+          />
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {groups[selectedGroup]?.neg.map((neg, index) => (
+              <Chip
+                label={neg}
+                classes={{ root: classes.chipNeg }}
+                key={`${index}-${neg.name}-${index}`}
+                variant="outlined"
+                onDelete={() => {}}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          margin: 'auto auto 2rem auto',
+          display: 'flex',
+          justifyContent: 'space-around',
+          width: '30%'
+        }}>
+        <Button
+          onClick={onClose}
+          variant="outlined"
+          className="btn-secondary btn-pill mx-1">
+          <span className="btn-wrapper--label">Cancelar</span>
+        </Button>
+        <Button onClick={onClose} className="btn-primary btn-pill mx-1">
+          <span className="btn-wrapper--label">Salvar</span>
+        </Button>
+      </div>
     </Dialog>
   );
 };
 
-const DeleteDialog = ({ open, onClose }) => (
+const DeleteDialog = ({ open, onClose, selectedGroup, groups }) => (
   <Dialog
     open={open}
     onClose={onClose}
     classes={{ paper: 'shadow-lg rounded' }}>
     <div className="text-center p-5">
       <div className="avatar-icon-wrapper rounded-circle m-0">
-        <div className="d-inline-flex justify-content-center p-0 rounded-circle btn-icon avatar-icon-wrapper bg-neutral-danger text-danger m-0 d-130">
+        <div className="d-inline-flex justify-content-center p-0 rounded-circle btn-icon avatar-icon-wrapper bg-neutral-danger text-danger m-0 d-80">
           <FontAwesomeIcon
             icon={['fas', 'times']}
             className="d-flex align-self-center display-3"
@@ -187,7 +225,7 @@ const DeleteDialog = ({ open, onClose }) => (
         </div>
       </div>
       <h4 className="font-weight-bold mt-4">
-        Tem certeza que deseja deletar esse grupo?
+        Tem certeza que deseja deletar o grupo '{groups[selectedGroup]?.name}'?
       </h4>
       <p className="mb-0 font-size-lg text-muted">
         Você não poderá desfazer essa ação.
@@ -206,24 +244,23 @@ const DeleteDialog = ({ open, onClose }) => (
   </Dialog>
 );
 
-const Grupos = () => {
-  const [open, setOpen] = useState(false);
+const Grupos = ({ groups }) => {
   const [type, setType] = useState('Todos os termos');
-  const [modal2, setModal2] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(emails[1]);
+  const [editDialog, setEditDialog] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState(undefined);
   const classes = useStyles();
 
   const handleChange = (event, handler) => handler(event.target.value);
 
-  const toggle2 = () => setModal2(!modal2);
-
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
+  const handleDialogOpen = (groupId, handler) => {
+    setSelectedGroup(groupId);
+    handler(true);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleDialogClose = (handler) => {
+    handler(false);
+    setSelectedGroup(undefined);
   };
 
   return (
@@ -248,7 +285,7 @@ const Grupos = () => {
 
       <Card className="rounded w-100 bg-white p-3">
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {GRUPOS.map((grupo, index) => (
+          {Object.values(groups).map((grupo, index) => (
             <div
               key={`${index}-${grupo.name}`}
               className={classes.groups}
@@ -259,8 +296,8 @@ const Grupos = () => {
               }}>
               <Header
                 grupo={grupo}
-                handleEdit={handleClickOpen}
-                handleDelete={toggle2}
+                handleEdit={() => handleDialogOpen(grupo.id, setEditDialog)}
+                handleDelete={() => handleDialogOpen(grupo.id, setDeleteDialog)}
               />
 
               <Divider />
@@ -281,14 +318,21 @@ const Grupos = () => {
       </Card>
 
       <EditDialog
-        selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
+        open={editDialog}
+        groups={groups}
+        selectedGroup={selectedGroup}
+        onClose={() => handleDialogClose(setEditDialog)}
       />
-
-      <DeleteDialog open={modal2} onClose={toggle2} />
+      <DeleteDialog
+        open={deleteDialog}
+        groups={groups}
+        selectedGroup={selectedGroup}
+        onClose={() => handleDialogClose(setDeleteDialog)}
+      />
     </>
   );
 };
 
-export default Grupos;
+const mapStateToProps = ({ groups }) => ({ groups });
+
+export default connect(mapStateToProps)(Grupos);
