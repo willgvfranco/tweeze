@@ -12,7 +12,6 @@ const app = express();
 import initial from "./utils/db-initial";
 import db from "./models/index.js";
 const Role = db.role;
-
 db.mongoose
   .connect(`mongodb://${USER}:${PWD}@${HOST}:${_PORT}/${DB}${AUTH_LINE}`, {
     useNewUrlParser: true,
