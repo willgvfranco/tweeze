@@ -12,30 +12,29 @@ body {
   .MuiTextField-root.text-white-50 {
     .MuiInputBase-root,
     .MuiInputLabel-root {
-      color: rgba($white, .8);
+      color: rgba($white, 0.8);
     }
 
     .MuiOutlinedInput-root,
     .MuiOutlinedInput-notchedOutline {
-      border-color: rgba($white, .5);
+      border-color: rgba($white, 0.5);
 
       &:hover {
-        border-color: rgba($white, .8);
+        border-color: rgba($white, 0.8);
       }
     }
   }
 
-  .MuiChip-root {
-    background: $primary;
-    color: color-yiq($primary);
+  // .MuiChip-root {
+  //   background: $primary;
+  //   color: color-yiq($primary);
 
-    .MuiChip-deleteIcon {
-      color: color-yiq($primary);
-    }
+  //   .MuiChip-deleteIcon {
+  //     color: color-yiq($primary);
+  //   }
 
-    &.Mui-disabled {
-      opacity: .65;
-    }
-  }
+  //   &.Mui-disabled {
+  //     opacity: .65;
+  //   }
+  // }
 }
-
