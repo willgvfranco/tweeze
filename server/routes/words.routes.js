@@ -102,7 +102,7 @@ export default function (app) {
   app.post("/api/words/add", addWords);
   app.post("/api/words/delete", removeWords);
   app.post("/api/words/update", updateWords);
-  app.post("/api/user/words/update", updateUserWords);
+  // app.post("/api/user/words/update", updateUserWords);
 }
 
 // [ 61022e333fa1b24f11f9c665, 61022e363fa1b24f11f9c668 ]
