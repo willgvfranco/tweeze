@@ -15,6 +15,10 @@ import hero1 from '../../../assets/images/hero-bg/hero-5.jpg';
 
 import NotificationsActiveTwoToneIcon from '@material-ui/icons/NotificationsActiveTwoTone';
 
+import BlocksChartsSmall1 from '../../../example-components/BlocksChartsSmall/BlocksChartsSmall1';
+
+
+
 export default function LivePreviewExample() {
   return (
     <>
@@ -28,7 +32,7 @@ export default function LivePreviewExample() {
           <div className="bg-composed-wrapper--content align-self-center p-4 p-xl-5">
             <Container className="pb-5 py-lg-5 text-center">
               <div className="mb-4">
-                <div className="badge badge-success mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
+                <div className="badge badge-primary mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
                 Tweeze
                 </div>
                 <h4 className="font-weight-bold text-white display-3">
@@ -42,7 +46,7 @@ export default function LivePreviewExample() {
               </div>
 
               <div class="videoWrapper">
-              <iframe width="100%" height="480px" src="https://youtube.com/embed/WZRxRf0DPfY" frameborder="0" allowfullscreen></iframe>
+              <iframe src="https://youtube.com/embed/WZRxRf0DPfY" frameborder="0" allowfullscreen></iframe>
             </div>
 
 
@@ -114,7 +118,7 @@ export default function LivePreviewExample() {
                 </Grid>
                   </Grid>*/}
 
-              <div className="py-4 mb-4">
+              <div className="py-4 mb-4 buttonvideo">
                 <Button
                   href="https://uifort.com/template/bamburgh-react-admin-dashboard-material-ui-pro"
                   rel="noopener noreferrer"
@@ -132,16 +136,15 @@ export default function LivePreviewExample() {
       <div className="py-4 feature-box">
         <Container className="py-5">
           <div className="mb-4 text-center">
-            <div className="badge badge-neutral-success text-success mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
-              Unlimited Options
+            <div className="badge badge-primary text mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
+              OPÇÕES ILIMITADAS
             </div>
             <h4 className="font-weight-bold text-second display-3">
-              Build anything you want
+              Tenha a informação que você precisar
             </h4>
             <Grid item md={11} lg={10} className="mx-auto">
               <p className="text-second opacity-6 mt-3 mb-5 font-size-xxl">
-                We've got you covered with over 500 custom components ready to
-                use
+                Sua empresa terá acesso a todas as informações divulgadas por veículos de imprensa nacionais e internacionais
               </p>
             </Grid>
           </div>
@@ -151,51 +154,46 @@ export default function LivePreviewExample() {
                 <Grid item lg={4} xl={12}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
-                      Marketing Sections
+                      Captação 
                     </h3>
                     <p className="text-black-50 mb-3">
-                      These can be used to build presentation websites in the
-                      same consistent style like your application.
+                      Captamos dezenas de milhares de notícias diariamente. Nossa plataforma é capaz de coletar notícias nos idiomas portugues, ingles e francês. Além disso, integração com o Twiiter, onde as notícias sempre chegam primeiro.
                     </p>
                   </div>
                 </Grid>
                 <Grid item lg={4} xl={12}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
-                      Data Display
+                      Análise
                     </h3>
                     <p className="text-black-50 mb-3">
-                      We've built a plethora of component blocks that can be
-                      composed to form new elements or sections.
+                      Todas essas notícias são organizadas imediatamente para serem facilmente encontradas por quem precisa. Nos próximos milissegundos a esse momento, nossa inteligência artifial - Jull.IA, precesso o texto, identificando nele aspectos positivos ou negativos. 
                     </p>
                   </div>
                 </Grid>
                 <Grid item lg={4} xl={12}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
-                      UI Widgets
+                      Monitoramento
                     </h3>
                     <p className="text-black-50 mb-3">
-                      Interaction is important in all apps, this being the
-                      reason we've built over 200 examples with the 80+
-                      integrated widgets.
-                    </p>
+                      O monitoramento das informações é 24 horas por dia, 7 dias por semana e 365 dias do ano. O monitoramento se extende de veículos de imprensa à mídias sociais. Dentre em breve mais novidades!
+                    </p>  
                   </div>
                 </Grid>
                 <Grid item lg={4} xl={12}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
-                      Forms Plugins
+                      Distribuição
                     </h3>
                     <p className="text-black-50 mb-3">
-                      Custom upload forms, multiple style sliders, tabs,
-                      accordions - you'll get them all with this template.
+                      Nossos clientes são nosssa prioridade! Somos uma empresa que presa por clientes satisfeitos e tecnologia de ponta. Construímos a mais rápida plataforma e distribuimos dados em tempo real. 
                     </p>
                   </div>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item md={8} xl={5} className="d-flex align-items-center">
+            <Grid item md={8} xl={12} className="d-flex align-items-center">
               <Card className="bg-second shadow-xxl card-box card-box-hover-rise card-box-hover rounded-lg text-center p-3 p-xl-4 mb-4 mb-md-0 d-block">
                 <div className="d-100 object-skew hover-scale-sm icon-blob btn-icon text-warning mx-auto">
                   <svg
@@ -214,18 +212,17 @@ export default function LivePreviewExample() {
                   </div>
                 </div>
                 <h5 className="font-weight-bold font-size-lg text-white mb-2">
-                  Berlin Data Center
+                  Avaliação geral da marca
                 </h5>
                 <p className="mb-4 text-white-50">
-                  View any of the 5+ live previews we&#39;ve set up to learn why
-                  this dashboard template is the last one you&#39;ll ever need!
+                  Este é um dos indicadores da nossa plataforma que te possibilatará entender o quão bem ou mal estão falando sobre sua marca ou tema de interesse.
                 </p>
                 <GaugeChart
                   id="chartsGauges1B"
                   nrOfLevels={24}
                   colors={['rgba(0,2,255,0.6)', 'rgba(255,11,244,0.8)']}
                   arcWidth={0.3}
-                  percent={0.72}
+                  percent={0.82}
                 />
                 <Button
                   component={NavLink}
@@ -240,20 +237,36 @@ export default function LivePreviewExample() {
                 </Button>
               </Card>
             </Grid>
-            <Grid item md={4} xl={3} className="d-flex align-items-center">
-              <div className="py-2 py-xl-4">
-                <div className="d-flex align-items-end flex-column">
-                  <div className="feature-box">
-                    <h3 className="font-size-lg font-weight-bold my-3">
+            
+            {/* tentativa de add small chart + responsivo */}
+
+            <Grid item md={4} xl={5} className="d-flex">
+              <div className="card-box w-100 p-4 d-flex align-items-center card-box-hover-rise">
+                <div className="d-flex flex-column flex-grow-1 justify-content-center w-100">
+                  <div className="feature-box card-header-alt d-flex justify-content-between align-items-center">
+                  <div class="font-weight-bold font-size-lg mb-0 text-black"></div>
+                  <GaugeChart
+                  id="chartsGauges4B"
+                  arcPadding={0.1}
+                  cornerRadius={3}
+                  textColor="rgba(0,0,0,.5"
+                  colors={[
+                    'rgba(244,119,46,0.1)',
+                    'rgba(244,119,46,0.5)',
+                    'rgba(244,119,46,0.99)'
+                  ]}
+                 animDelay={0}
+                />
+                </div>
+                   {/*  <h3 className="font-size-lg font-weight-bold my-3">
                       <div className="display-4 text-primary font-weight-bold">
-                        Gauges, maybe?
+                        Quer entender mais sobre como podemos te ajudar?
                       </div>
                     </h3>
                     <p className="text-black-50 font-size-lg mb-0">
-                      This is just one example of what comes packed in this
-                      template.
-                    </p>
-                  </div>
+                      Cadastre-se agora ou solicite uma visita guiada pela nossa plataforma.
+                    </p>*/}
+                  
                 </div>
               </div>
             </Grid>

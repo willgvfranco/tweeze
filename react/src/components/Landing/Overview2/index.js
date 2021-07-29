@@ -23,7 +23,7 @@ export default function LivePreviewExample() {
               <p className="text-second opacity-6 mt-3 mb-5 font-size-xxl">
                 Você terá acesso gratuitamente a milhares de notícias sobre o seu tema de interesse.
               </p>
-              <button className=" buttonregister badge badge-success mb-4 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
+              <button className=" buttonregister badge badge-primary mb-4 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
                 Registre-se!
               </button>
             </Grid>

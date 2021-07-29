@@ -1495,7 +1495,7 @@ export default function LivePreviewExample() {
               rel="noopener noreferrer"
               target="_blank"
               className="rounded-lg text-nowrap font-size-xs text-uppercase shadow-second-sm btn-danger font-weight-bold">
-              Buy Now
+              Login
             </Button>
           </span>
           <span className="d-block d-lg-none">

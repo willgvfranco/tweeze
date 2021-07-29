@@ -9,7 +9,6 @@ import Overview6 from '../components/Landing/Overview6';
 export default function Overview() {
   return (
     <>
-      <div>Estamos On</div>
       <Overview1 />
       <Overview2 />
       <Overview3 />

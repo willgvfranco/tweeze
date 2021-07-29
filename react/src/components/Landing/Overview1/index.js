@@ -5,7 +5,7 @@ import { Grid, Container, Button } from '@material-ui/core';
 
 import { NavLink } from 'react-router-dom';
 
-import particles2 from '../../../assets/images/hero-bg/particles-1.svg';
+import bannerInicial from '../../../assets/images/banner.jpg';
 import hero1 from '../../../assets/images/hero-bg/hero-9.jpg';
 import EmojiEventsTwoToneIcon from '@material-ui/icons/EmojiEventsTwoTone';
 import ListAltTwoToneIcon from '@material-ui/icons/ListAltTwoTone';
@@ -31,7 +31,7 @@ export default function LivePreviewExample() {
           <div className="bg-composed-wrapper--bg bg-sunrise-blue opacity-6" />
           <div
             className="bg-composed-wrapper--image opacity-9"
-            style={{ backgroundImage: 'url(' + particles2 + ')' }}
+            style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
           />
           <div className="bg-composed-wrapper--content">
             <Container className="z-over shadow-container-content-5 text-white text-center pt-5">

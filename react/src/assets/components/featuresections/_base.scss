@@ -34,10 +34,12 @@
     position: absolute;
     left: 0;
     top: 0;
+    color: blue;
   }
 
   .blob-icon-wrapper {
     font-size: $font-size-xl;
+    color: #09407e;
 
     svg {
       height: 25%;
