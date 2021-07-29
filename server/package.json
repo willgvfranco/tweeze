@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel-node": "babel-node --presets=latest",
     "start": "nodemon --exec npm run babel-node -- ./server.js",
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "prod": "babel ./server.js --out-dir ./build --presets=@babel/env",
+    "server": "babel-node ./server.js"
   },
   "author": "",
   "license": "ISC",
