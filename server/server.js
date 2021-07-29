@@ -50,10 +50,12 @@ app.get("/", (req, res) => {
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import elkRoutes from "./routes/elk.routes.js";
+import wordsRoutes from "./routes/words.routes.js";
 
 authRoutes(app);
 userRoutes(app);
 elkRoutes(app);
+wordsRoutes(app);
 
 const PORT = process.env.PORT || 7777;
 app.listen(PORT, () => {
