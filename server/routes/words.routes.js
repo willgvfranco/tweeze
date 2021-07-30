@@ -105,6 +105,7 @@ const listWordsByUser = (req, res) => {
   User.findOne({
     _id: userId,
   })
+
     .populate("words", "-__v")
     .exec((err, user) => {
       if (err) {
