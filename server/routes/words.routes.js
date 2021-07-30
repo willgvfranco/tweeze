@@ -101,7 +101,7 @@ const removeWords = (req, res) => {
 
 const listWordsByUser = (req, res) => {
   const userId = req.body.userId;
-
+  console.log(req.body);
   User.findOne({
     _id: userId,
   })
@@ -109,6 +109,10 @@ const listWordsByUser = (req, res) => {
     .exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
+        return;
+      }
+      if (!user || !user.words) {
+        res.status(422).send({ message: "Erro" });
         return;
       }
       console.log(user);
@@ -130,7 +134,7 @@ export default function (app) {
   app.post("/api/words/add", addWords);
   app.post("/api/words/delete", removeWords);
   app.post("/api/words/update", updateWords, listWordsByUser);
-  app.get("/api/words/list", listWordsByUser);
+  app.post("/api/words/list", listWordsByUser);
   // app.post("/api/user/words/update", updateUserWords);
 }
 
