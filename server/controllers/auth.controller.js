@@ -71,6 +71,7 @@ export function signin(req, res) {
     email: req.body.email,
   })
     .populate("roles", "-__v")
+    .populate("words", "-__v")
     .exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -100,6 +101,13 @@ export function signin(req, res) {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
+      var words_group = [];
+
+      for (let i = 0; i < user.words.length; i++) {
+        // const wordId = user.words[i]
+
+        words_group.push(user.words[i]);
+      }
       res.status(200).send({
         id: user._id,
         email: user.email,
@@ -109,7 +117,7 @@ export function signin(req, res) {
         cpf: user.cpf,
         roles: authorities,
         accessToken: token,
-        grupo_palavras: user.grupo_palavras,
+        grupo_palavras: words_group,
       });
     });
 }
