@@ -50,7 +50,7 @@ const addWords = (req, res) => {
 //   });
 // };
 
-const updateWords = (req, res) => {
+const updateWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
   //   const words = req.body.words;
   const pos = req.body.pos || [];
@@ -62,8 +62,9 @@ const updateWords = (req, res) => {
     new: true,
   }).then((user) => {
     console.log("updated 'Words' to Words collection");
-    res.sendStatus(201);
-    return;
+    next();
+    // res.sendStatus(201);
+    // return;
   });
 };
 
@@ -98,10 +99,38 @@ const removeWords = (req, res) => {
 //     });
 //   };
 
+const listWordsByUser = (req, res) => {
+  const userId = req.body.userId;
+
+  User.findOne({
+    _id: userId,
+  })
+    .populate("words", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      console.log(user);
+      var words_group = [];
+
+      for (let i = 0; i < user.words.length; i++) {
+        // const wordId = user.words[i]
+
+        words_group.push(user.words[i]);
+      }
+
+      res.status(200).send({
+        grupo_palavras: words_group,
+      });
+    });
+};
+
 export default function (app) {
   app.post("/api/words/add", addWords);
   app.post("/api/words/delete", removeWords);
-  app.post("/api/words/update", updateWords);
+  app.post("/api/words/update", updateWords, listWordsByUser);
+  app.get("/api/words/list", listWordsByUser);
   // app.post("/api/user/words/update", updateUserWords);
 }
 
