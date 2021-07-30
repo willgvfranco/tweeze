@@ -1,9 +1,9 @@
 import ThemeOptions from './ThemeOptions';
 import AuthReducer from './AuthDuck';
-import GroupsReducer from './GroupsDuck';
+import WordsReducer from './WordsDuck';
 
 export default {
   ThemeOptions,
   auth: AuthReducer,
-  groups: GroupsReducer
+  words: WordsReducer
 };

@@ -8,6 +8,7 @@ export default function configureStore() {
     combineReducers({
       ...reducers
     }),
+    {},
     composeWithDevTools(applyMiddleware(ReduxThunk))
   );
 }
