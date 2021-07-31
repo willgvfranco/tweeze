@@ -1,7 +1,7 @@
 import Words from "../models/words.model.js";
 import User from "../models/user.model.js";
 
-const addWords = (req, res) => {
+const addWords = (req, res, next) => {
   const pos = req.body.pos || "";
   const neg = req.body.neg || "";
   const name = req.body.name || "";
@@ -24,8 +24,10 @@ const addWords = (req, res) => {
         new: true,
       }).then((user) => {
         console.log("added 'grupo' to Words collection");
-        res.sendStatus(201);
-        return;
+        next();
+
+        // res.sendStatus(201);
+        // return;
       });
     } else {
       console.log("added 'grupo' to Words collection");
@@ -50,7 +52,7 @@ const addWords = (req, res) => {
 //   });
 // };
 
-const updateWords = (req, res) => {
+const updateWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
   //   const words = req.body.words;
   const pos = req.body.pos || [];
@@ -62,12 +64,13 @@ const updateWords = (req, res) => {
     new: true,
   }).then((user) => {
     console.log("updated 'Words' to Words collection");
-    res.sendStatus(201);
-    return;
+    next();
+    // res.sendStatus(201);
+    // return;
   });
 };
 
-const removeWords = (req, res) => {
+const removeWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
 
   Words.findByIdAndRemove(wordsId).save((err) => {
@@ -75,8 +78,7 @@ const removeWords = (req, res) => {
       console.log("error", err);
     }
     console.log("removed 'grupo' from Words collection");
-    res.sendStatus(200);
-    return;
+    next();
   });
 };
 
@@ -98,10 +100,44 @@ const removeWords = (req, res) => {
 //     });
 //   };
 
+const listWordsByUser = (req, res) => {
+  const userId = req.body.userId;
+  console.log(req.body);
+  User.findOne({
+    _id: userId,
+  })
+
+    .populate("words", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      if (!user || !user.words) {
+        res.status(422).send({ message: "Erro s" });
+        //  teste
+        return;
+      }
+      console.log(user);
+      var words_group = [];
+
+      for (let i = 0; i < user.words.length; i++) {
+        // const wordId = user.words[i]
+
+        words_group.push(user.words[i]);
+      }
+
+      res.status(200).send({
+        grupo_palavras: words_group,
+      });
+    });
+};
+
 export default function (app) {
-  app.post("/api/words/add", addWords);
-  app.post("/api/words/delete", removeWords);
-  app.post("/api/words/update", updateWords);
+  app.post("/api/words/add", addWords, listWordsByUser);
+  app.post("/api/words/delete", removeWords, listWordsByUser);
+  app.post("/api/words/update", updateWords, listWordsByUser);
+  app.post("/api/words/list", listWordsByUser);
   // app.post("/api/user/words/update", updateUserWords);
 }
 
