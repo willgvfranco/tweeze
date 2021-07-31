@@ -15,7 +15,7 @@ import hero1 from '../../../assets/images/hero-bg/hero-5.jpg';
 
 import NotificationsActiveTwoToneIcon from '@material-ui/icons/NotificationsActiveTwoTone';
 
-import BlocksChartsSmall1 from '../../../example-components/BlocksChartsSmall/BlocksChartsSmall1';
+
 
 
 
@@ -45,12 +45,16 @@ export default function LivePreviewExample() {
                 </Grid>
               </div>
 
-              <div class="videoWrapper">
-              <iframe src="https://youtube.com/embed/WZRxRf0DPfY" frameborder="0" allowfullscreen></iframe>
+              <div className="videoWrapper">
+              <iframe src="https://youtube.com/embed/WZRxRf0DPfY" frameBorder="0" allowfullscreen></iframe>
             </div>
 
-
-              {/*<Grid container spacing={6}>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              
+              <Grid container spacing={6}>
                 <Grid item md={6}>
                   <div className="card shadow-sm-dark rounded-lg bg-transparent">
                     <div className="card-img-wrapper">
@@ -67,25 +71,10 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <p className="text-white font-weight-bold font-size-xxl pt-3 mb-3">
-                    General
+                    Gráficos decisivos
                   </p>
                 </Grid>
-                <Grid item md={6}>
-                  <a
-                    href="https://demo.uifort.com/bamburgh-react-crypto-application-material-ui-pro-demo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="card modal-content card-box-hover-rise rounded-lg bg-transparent">
-                    <img
-                      src={crypto}
-                      className="rounded-lg img-fluid"
-                      alt="..."
-                    />
-                  </a>
-                  <p className="text-white font-weight-bold font-size-xxl pt-3 mb-3">
-                    Crypto
-                  </p>
-                </Grid>
+                
                 <Grid item md={6}>
                   <a
                     href="https://demo.uifort.com/bamburgh-react-messenger-application-material-ui-pro-demo"
@@ -97,26 +86,10 @@ export default function LivePreviewExample() {
                     />
                   </a>
                   <p className="text-white font-weight-bold font-size-xxl pt-3 mb-3">
-                    Messenger
+                    Tecnologia de ponta
                   </p>
                 </Grid>
-                <Grid item md={6}>
-                  <a
-                    href="https://demo.uifort.com/bamburgh-react-commerce-application-material-ui-pro-demo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="card modal-content card-box-hover-rise rounded-lg bg-transparent">
-                    <img
-                      src={commerce}
-                      className="rounded-lg img-fluid"
-                      alt="..."
-                    />
-                  </a>
-                  <p className="text-white font-weight-bold font-size-xxl pt-3 mb-3">
-                    Commerce
-                  </p>
-                </Grid>
-                  </Grid>*/}
+              </Grid>
 
               <div className="py-4 mb-4 buttonvideo">
                 <Button
@@ -193,7 +166,7 @@ export default function LivePreviewExample() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item md={8} xl={12} className="d-flex align-items-center">
+            <Grid item md={8} xl={4} className="d-flex align-items-center">
               <Card className="bg-second shadow-xxl card-box card-box-hover-rise card-box-hover rounded-lg text-center p-3 p-xl-4 mb-4 mb-md-0 d-block">
                 <div className="d-100 object-skew hover-scale-sm icon-blob btn-icon text-warning mx-auto">
                   <svg
@@ -240,24 +213,25 @@ export default function LivePreviewExample() {
             
             {/* tentativa de add small chart + responsivo */}
 
-            <Grid item md={4} xl={5} className="d-flex">
-              <div className="card-box w-100 p-4 d-flex align-items-center card-box-hover-rise">
-                <div className="d-flex flex-column flex-grow-1 justify-content-center w-100">
-                  <div className="feature-box card-header-alt d-flex justify-content-between align-items-center">
-                  <div class="font-weight-bold font-size-lg mb-0 text-black"></div>
-                  <GaugeChart
-                  id="chartsGauges4B"
-                  arcPadding={0.1}
-                  cornerRadius={3}
-                  textColor="rgba(0,0,0,.5"
-                  colors={[
-                    'rgba(244,119,46,0.1)',
-                    'rgba(244,119,46,0.5)',
-                    'rgba(244,119,46,0.99)'
-                  ]}
-                 animDelay={0}
-                />
-                </div>
+            <h5 className="font-weight-bold font-size-lg text-white mb-2">
+                Avaliação geral da marca
+            </h5>
+              <p className="mb-4 text-white-50">
+                  Este é um dos indicadores da nossa plataforma que te possibilatará entender o quão bem ou mal estão falando sobre sua marca ou tema de interesse.
+                </p>
+            <Grid item md={4} xl={3} className="d-flex align-items-center">
+              <div className="py-2 py-xl-4">
+                <div className="d-flex align-items-end flex-column">
+                  <div className="feature-box icon-blob btn-icon text-warning">
+                  <GaugeChart id="gauge-chart4" 
+                  nrOfLevels={5}
+                  percent={0.86} 
+                  arcWidth={0.9}
+                  colors={["#FF5F6D", "#FFC371", "#09407e"]} 
+
+
+                  />
+
                    {/*  <h3 className="font-size-lg font-weight-bold my-3">
                       <div className="display-4 text-primary font-weight-bold">
                         Quer entender mais sobre como podemos te ajudar?
@@ -266,7 +240,7 @@ export default function LivePreviewExample() {
                     <p className="text-black-50 font-size-lg mb-0">
                       Cadastre-se agora ou solicite uma visita guiada pela nossa plataforma.
                     </p>*/}
-                  
+                  </div>
                 </div>
               </div>
             </Grid>
@@ -274,5 +248,5 @@ export default function LivePreviewExample() {
         </Container>
       </div>
     </>
-  );
+  )
 }
