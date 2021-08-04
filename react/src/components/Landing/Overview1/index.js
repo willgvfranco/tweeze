@@ -60,7 +60,7 @@ export default function LivePreviewExample() {
                       <FontAwesomeIcon icon={['fas', 'arrow-right']} />
                     </span>
                     <span className="btn-wrapper--label">
-                      Quero experimentar agora!
+                      Solicite uma DEMO!
                     </span>
                   </Button>
                   <Button
@@ -69,7 +69,7 @@ export default function LivePreviewExample() {
                     target="_blank"
                     size="large"
                     className="bg-white-10 text-white shadow-second-sm btn-pill ml-3">
-                    <span>Planos de Serviços</span>
+                    <span> Planos e Serviços</span>
                   </Button>
                 </div>
               </Grid>

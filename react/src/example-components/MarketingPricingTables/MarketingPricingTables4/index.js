@@ -14,7 +14,7 @@ import svgImage1 from '../../../assets/images/illustrations/pack4/business_plan.
 import svgImage13 from '../../../assets/images/illustrations/pack4/businesswoman.svg';
 import svgImage14 from '../../../assets/images/illustrations/pack4/powerful.svg';
 
-export default function LivePreviewExample() {
+export default function PricingTables4() {
   return (
     <>
       <div className="bg-royal py-3 py-xl-5">
@@ -23,11 +23,11 @@ export default function LivePreviewExample() {
             <div className="card-header bg-light d-flex justify-content-center">
               <div className="text-center my-4">
                 <h1 className="display-4 text-black mb-2 font-weight-bold">
-                  Plans & pricing
+                  Planos e preços
                 </h1>
                 <p className="font-size-lg mb-1 text-black-50">
-                  Indignation and dislike men who are so beguiled and
-                  demoralized.
+                <strong>Clipping jornalístico</strong>
+                 <p>Tudo que precisa saber sobre o seu tema de interesse</p> 
                 </p>
               </div>
             </div>
@@ -36,11 +36,11 @@ export default function LivePreviewExample() {
                 component="div"
                 className="nav-line mb-4 nav-tabs-primary d-flex align-items-center justify-content-center">
                 <ListItem button disableRipple selected>
-                  <span>Monthly plans</span>
+                  <span>Planos mensais</span>
                   <div className="divider" />
                 </ListItem>
                 <ListItem button disableRipple>
-                  <span>Yearly payments</span>
+                  <span>Planos anuais</span>
                   <div className="divider" />
                 </ListItem>
               </List>
@@ -56,10 +56,12 @@ export default function LivePreviewExample() {
                           alt="..."
                         />
                         <h3 className="font-size-xxl font-weight-bold mt-4">
-                          Standard
+                          Básico
                         </h3>
                         <p className="text-black-50 mb-4">
-                          But I must explain to you how all this mistaken.
+                          Cientistas,
+                          curiosos e
+                          profissionais interessados no mercado financeiro
                         </p>
                         <Button
                           href="#/"
@@ -67,34 +69,34 @@ export default function LivePreviewExample() {
                           variant="text"
                           className="btn-outline-first"
                           title="Learn more">
-                          <span>Purchase now</span>
+                          <span>R$ 49</span>
                         </Button>
                       </div>
                       <div className="divider my-4" />
                       <ul className="list-unstyled text-left font-weight-bold font-size-sm">
-                        <li className="px-4 py-2">
-                          <div className="badge badge-success badge-circle-inner mr-2">
-                            Success
-                          </div>
-                          Unlimited Tasks
+                      <li className="px-4 py-2">
+                      <div className="badge badge-success badge-circle-inner mr-2">
+                      Success
+                      </div>
+                      Acesso à 2 grupos de palavras chaves ILIMITADAS
+                      </li>
+                      <li className="px-4 py-2">
+                        <div className="badge badge-success badge-circle-inner mr-2">
+                          Danger
+                        </div>
+                        Support
+                      </li>
+                      <li className="px-4 py-2">
+                      <div className="badge badge-success badge-circle-inner mr-2">
+                      Sucess
+                      </div>
+                      Sem Ads
                         </li>
                         <li className="px-4 py-2">
-                          <div className="badge badge-success badge-circle-inner mr-2">
-                            Success
-                          </div>
-                          Unlimited Teams
-                        </li>
-                        <li className="px-4 py-2">
-                          <div className="badge badge-success badge-circle-inner mr-2">
-                            Success
-                          </div>
-                          All Integrations
-                        </li>
-                        <li className="px-4 py-2 text-black-50">
                           <div className="badge badge-danger badge-circle-inner mr-2">
                             Danger
                           </div>
-                          Premium support
+                          Envio automatizado por e-mail
                         </li>
                       </ul>
                     </div>
@@ -109,17 +111,17 @@ export default function LivePreviewExample() {
                           alt="..."
                         />
                         <h3 className="font-size-xxl font-weight-bold mt-4">
-                          Business
+                          Marcas
                         </h3>
                         <p className="text-black-50 mb-4">
-                          But I must explain to you how all this mistaken.
+                          Produto destinado a pequenas e médias empresas
                         </p>
                         <Button
                           href="#/"
                           onClick={(e) => e.preventDefault()}
                           className="btn-first"
                           title="Learn more">
-                          <span>Purchase now</span>
+                          <span>R$ 590</span>
                         </Button>
                       </div>
                       <div className="divider my-4" />
@@ -128,26 +130,32 @@ export default function LivePreviewExample() {
                           <div className="badge badge-success badge-circle-inner mr-2">
                             Success
                           </div>
-                          Unlimited Tasks
+                          Acesso à 5 grupos de palavras chaves ILIMITADAS
                         </li>
                         <li className="px-4 py-2">
                           <div className="badge badge-success badge-circle-inner mr-2">
                             Success
                           </div>
-                          Unlimited Teams
+                          Relatório de Clipping com business intelligence
                         </li>
                         <li className="px-4 py-2">
                           <div className="badge badge-success badge-circle-inner mr-2">
                             Success
                           </div>
-                          All Integrations
+                          Sem Ads
                         </li>
-                        <li className="px-4 py-2 text-black-50">
-                          <div className="badge badge-danger badge-circle-inner mr-2">
-                            Danger
+                        <li className="px-4 py-2">
+                          <div className="badge badge-success badge-circle-inner mr-2">
+                            Success
                           </div>
-                          Premium support
+                          Suport Premium
                         </li>
+                        <li className="px-4 py-2">
+                          <div className="badge badge-success badge-circle-inner mr-2">
+                        Success
+                        </div>
+                        Envio de e-mail automatizado
+                      </li>
                       </ul>
                     </div>
                   </Grid>
@@ -160,10 +168,10 @@ export default function LivePreviewExample() {
                           alt="..."
                         />
                         <h3 className="font-size-xxl font-weight-bold mt-4">
-                          Enterprise
+                          Ilimitado
                         </h3>
                         <p className="text-black-50 mb-4">
-                          But I must explain to you how all this mistaken.
+                          Destinado a assessoria de imprensa, agências que adminitrem várias contas e grandes marcas
                         </p>
                         <Button
                           href="#/"
@@ -171,7 +179,7 @@ export default function LivePreviewExample() {
                           variant="text"
                           className="btn-outline-first"
                           title="Learn more">
-                          <span>Purchase now</span>
+                          <span>Sob Consulta</span>
                         </Button>
                       </div>
                       <div className="divider my-4" />
@@ -180,25 +188,31 @@ export default function LivePreviewExample() {
                           <div className="badge badge-success badge-circle-inner mr-2">
                             Success
                           </div>
-                          Unlimited Tasks
+                          Mídias sociais
                         </li>
                         <li className="px-4 py-2">
                           <div className="badge badge-success badge-circle-inner mr-2">
                             Success
                           </div>
-                          Unlimited Teams
+                          Grupos ilimitados de palavras chaves
                         </li>
                         <li className="px-4 py-2">
                           <div className="badge badge-success badge-circle-inner mr-2">
                             Success
                           </div>
-                          All Integrations
+                          Automatização por e-mail
                         </li>
-                        <li className="px-4 py-2 text-black-50">
-                          <div className="badge badge-danger badge-circle-inner mr-2">
-                            Danger
+                        <li className="px-4 py-2">
+                          <div className="badge badge-success badge-circle-inner mr-2">
+                            Success
                           </div>
-                          Premium support
+                          Inteligência artificial - alerta de gerênciamento de crise 
+                        </li>
+                        <li className="px-4 py-2">
+                          <div className="badge badge-success badge-circle-inner mr-2">
+                            Success
+                          </div>
+                          API de integração do nosso sistema
                         </li>
                       </ul>
                     </div>
