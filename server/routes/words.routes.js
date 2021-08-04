@@ -73,10 +73,15 @@ const updateWords = (req, res, next) => {
 const removeWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
 
-  Words.findByIdAndRemove(wordsId).save((err) => {
-    if (err) {
-      console.log("error", err);
+  Words.findByIdAndDelete(wordsId).then((res) => {
+    if (res) {
+      console.log("Deleted", res);
+      // res.sendStatus(400);
+      // return;
     }
+    // Words.save((err) => {
+    // if (err) {
+
     console.log("removed 'grupo' from Words collection");
     next();
   });
@@ -114,7 +119,7 @@ const listWordsByUser = (req, res) => {
         return;
       }
       if (!user || !user.words) {
-        res.status(422).send({ message: "Erro s" });
+        res.status(422).send({ message: "Erro, faltou mandar o userId" });
         //  teste
         return;
       }
