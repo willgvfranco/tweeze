@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import LogoSimbolo from '../../../assets/images/logo/logo_twz_branco.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -49,24 +50,11 @@ export default function LivePreviewExample() {
   return (
     <>
       <div className="header-nav-wrapper header-nav-wrapper-lg navbar-dark">
-        <div className="app-nav-logo">
-          <NavLink
-            to="/Overview"
-            title="Bamburgh React Admin Dashboard with Material-UI PRO"
-            className="app-nav-logo app-nav-logo--light">
-            <div className="app-nav-logo--icon rounded-lg shadow-second-sm bg-secondary border-0">
-              <img
-                alt="Bamburgh React Admin Dashboard with Material-UI PRO"
-                src={projectLogo}
-              />
-            </div>
-            <div className="app-nav-logo--text">
-              <span>General</span>
-
-              <b>bamburgh</b>
-            </div>
-          </NavLink>
-        </div>
+       <div>
+          <img className="tamanhoLogoInicial"
+          src={LogoSimbolo}
+           />
+         </div>
         <div className="header-nav-menu d-none d-lg-block">
           <ul className="d-flex nav nav-neutral-first justify-content-center">
             <li>
@@ -74,7 +62,7 @@ export default function LivePreviewExample() {
                 href="#/"
                 onClick={(e) => e.preventDefault()}
                 className="font-weight-bold rounded-lg text-white px-3">
-                Apps
+                Home
                 <span className="opacity-5 dropdown-arrow">
                   <FontAwesomeIcon icon={['fas', 'angle-down']} />
                 </span>
@@ -302,7 +290,7 @@ export default function LivePreviewExample() {
                 href="#/"
                 onClick={(e) => e.preventDefault()}
                 className="font-weight-bold rounded-lg text-white px-3">
-                Blocks
+                Serviços
                 <span className="opacity-5 dropdown-arrow">
                   <FontAwesomeIcon icon={['fas', 'angle-down']} />
                 </span>
@@ -794,7 +782,7 @@ export default function LivePreviewExample() {
                 href="#/"
                 onClick={(e) => e.preventDefault()}
                 className="font-weight-bold rounded-lg text-white px-3">
-                Others
+                Planos
                 <span className="opacity-5 dropdown-arrow">
                   <FontAwesomeIcon icon={['fas', 'angle-down']} />
                 </span>
@@ -1357,7 +1345,7 @@ export default function LivePreviewExample() {
                 href="#/"
                 onClick={(e) => e.preventDefault()}
                 className="font-weight-bold rounded-lg text-white px-3">
-                Forms
+                Contato
                 <span className="opacity-5 dropdown-arrow">
                   <FontAwesomeIcon icon={['fas', 'angle-down']} />
                 </span>
