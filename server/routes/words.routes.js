@@ -55,8 +55,8 @@ const addWords = (req, res, next) => {
 const updateWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
   //   const words = req.body.words;
-  const pos = req.body.pos || [];
-  const neg = req.body.neg || [];
+  const pos = req.body.pos || "";
+  const neg = req.body.neg || "";
   const name = req.body.name;
   const filter = { _id: wordsId };
   const update = { $set: { pos: pos, neg: neg, name: name } };
