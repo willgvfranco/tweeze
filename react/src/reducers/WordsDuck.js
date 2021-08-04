@@ -55,7 +55,7 @@ export const createWord = (word) => async (dispatch) => {
 
     dispatch({
       type: Types.CREATE,
-      data: handleWords(handleWords(result.data.grupo_palavras))
+      data: handleWords(result.data.grupo_palavras)
     });
   } catch (error) {
     console.log('createWord error', error);
@@ -66,22 +66,65 @@ export const createWord = (word) => async (dispatch) => {
   }
 };
 
-export const editWord = () => {
-  // edit word logic
-  // BACKEND.updateWord
+export const editWord = (word) => async (dispatch) => {
+  // const { id: userId } = getState().auth;
+  // Implementar: auth
+  const { _id: wordsId, name, pos, neg } = word;
 
-  return {
-    type: Types.EDIT
-  };
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.updateWord,
+      data: {
+        userId: '6103516ba2043a52609dfcf3',
+        wordsId,
+        name,
+        pos,
+        neg
+      }
+    });
+
+    dispatch({
+      type: Types.EDIT,
+      data: handleWords(result.data.grupo_palavras)
+    });
+  } catch (error) {
+    console.log('editWord error', error);
+    dispatch({
+      type: Types.ERROR,
+      data: 'editWord'
+    });
+  }
 };
 
-export const deleteWord = () => {
-  // delete word logic
-  // BACKEND.deleteWord
+export const deleteWord = (wordsId) => async (dispatch, getState) => {
+  const { words: prevWords } = getState().words;
 
-  return {
-    type: Types.DELETE
-  };
+  try {
+    await axios({
+      method: 'post',
+      url: BACKEND.deleteWord,
+      data: {
+        userId: '6103516ba2043a52609dfcf3',
+        wordsId
+      }
+    });
+
+    const words = Object.values(prevWords).filter(
+      (word) => word._id !== wordsId
+    );
+
+    dispatch({
+      type: Types.DELETE,
+      data: handleWords(words)
+    });
+  } catch (error) {
+    console.log('deleteWord error', error);
+    dispatch({
+      type: Types.ERROR,
+      data: 'deleteWord'
+    });
+  }
 };
 
 const initialState = {
@@ -98,15 +141,18 @@ export default function reducer(state = initialState, action) {
       };
     case Types.CREATE:
       return {
-        ...state
+        ...state,
+        words: action.data
       };
     case Types.EDIT:
       return {
-        ...state
+        ...state,
+        words: action.data
       };
     case Types.DELETE:
       return {
-        ...state
+        ...state,
+        words: action.data
       };
     case Types.ERROR:
       return {
