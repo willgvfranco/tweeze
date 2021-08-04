@@ -97,11 +97,9 @@ export const editWord = (word) => async (dispatch) => {
   }
 };
 
-export const deleteWord = (wordsId) => async (dispatch, getState) => {
-  const { words: prevWords } = getState().words;
-
+export const deleteWord = (wordsId) => async (dispatch) => {
   try {
-    await axios({
+    const result = await axios({
       method: 'post',
       url: BACKEND.deleteWord,
       data: {
@@ -110,13 +108,9 @@ export const deleteWord = (wordsId) => async (dispatch, getState) => {
       }
     });
 
-    const words = Object.values(prevWords).filter(
-      (word) => word._id !== wordsId
-    );
-
     dispatch({
       type: Types.DELETE,
-      data: handleWords(words)
+      data: handleWords(result.data.grupo_palavras)
     });
   } catch (error) {
     console.log('deleteWord error', error);
