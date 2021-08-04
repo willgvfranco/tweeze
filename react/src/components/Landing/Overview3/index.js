@@ -46,59 +46,18 @@ export default function LivePreviewExample() {
               </div>
 
               <div className="videoWrapper">
-              <iframe src="https://youtube.com/embed/WZRxRf0DPfY" frameBorder="0" allowfullscreen></iframe>
+              <iframe src="https://youtube.com/embed/WZRxRf0DPfY" frameBorder="0" allowFullScreen></iframe>
             </div>
-
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              
-              <Grid container spacing={6}>
-                <Grid item md={6}>
-                  <div className="card shadow-sm-dark rounded-lg bg-transparent">
-                    <div className="card-img-wrapper">
-                      <div className="card-badges card-badges-bottom">
-                        <div className="badge badge-pill h-auto py-1 px-3 badge-success shadow-xxl">
-                          Active
-                        </div>
-                      </div>
-                      <img
-                        src={general}
-                        className="rounded-lg img-fluid"
-                        alt="..."
-                      />
-                    </div>
-                  </div>
-                  <p className="text-white font-weight-bold font-size-xxl pt-3 mb-3">
-                    Gráficos decisivos
-                  </p>
-                </Grid>
+       
                 
-                <Grid item md={6}>
-                  <a
-                    href="https://demo.uifort.com/bamburgh-react-messenger-application-material-ui-pro-demo"
-                    className="card modal-content card-box-hover-rise rounded-lg bg-transparent">
-                    <img
-                      src={messenger}
-                      className="rounded-lg img-fluid"
-                      alt="..."
-                    />
-                  </a>
-                  <p className="text-white font-weight-bold font-size-xxl pt-3 mb-3">
-                    Tecnologia de ponta
-                  </p>
-                </Grid>
-              </Grid>
-
-              <div className="py-4 mb-4 buttonvideo">
+             <div className="py-4 mb-4 buttonvideo">
                 <Button
                   href="https://uifort.com/template/bamburgh-react-admin-dashboard-material-ui-pro"
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="btn-pill shadow-second-sm btn-first"
+                  className="btn-pill shadow-second-sm btn-first "
                   size="large">
-                  <span>Veja detalhes de nossas soluções</span>
+                  <span>Planos e serviços</span>
                 </Button>
               </div>
             </Container>
@@ -121,10 +80,15 @@ export default function LivePreviewExample() {
               </p>
             </Grid>
           </div>
-          <Grid container spacing={6} className="mt-5">
-            <Grid item xl={4} className="d-flex align-items-center">
-              <Grid container spacing={0} className="w-100 mb-3 mb-xl-0">
-                <Grid item lg={4} xl={12}>
+          <Grid container spacing={4} className="mt-5">
+
+
+
+
+            <Grid item className="d-flex align-items-center">
+              <Grid container spacing={4} className="w-100 mb-3 mb-xl-0 text-center">
+
+                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Captação 
@@ -134,17 +98,19 @@ export default function LivePreviewExample() {
                     </p>
                   </div>
                 </Grid>
-                <Grid item lg={4} xl={12}>
+
+                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Análise
                     </h3>
                     <p className="text-black-50 mb-3">
-                      Todas essas notícias são organizadas imediatamente para serem facilmente encontradas por quem precisa. Nos próximos milissegundos a esse momento, nossa inteligência artifial - Jull.IA, precesso o texto, identificando nele aspectos positivos ou negativos. 
+                    O monitoramento das informações é 24 horas por dia, 7 dias por semana e 365 dias do ano. O monitoramento se extende de veículos de imprensa à mídias sociais. Dentre em breve mais novidades! 
                     </p>
                   </div>
                 </Grid>
-                <Grid item lg={4} xl={12}>
+
+                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Monitoramento
@@ -154,7 +120,9 @@ export default function LivePreviewExample() {
                     </p>  
                   </div>
                 </Grid>
-                <Grid item lg={4} xl={12}>
+                
+
+                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Distribuição
@@ -163,90 +131,41 @@ export default function LivePreviewExample() {
                       Nossos clientes são nosssa prioridade! Somos uma empresa que presa por clientes satisfeitos e tecnologia de ponta. Construímos a mais rápida plataforma e distribuimos dados em tempo real. 
                     </p>
                   </div>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item md={8} xl={4} className="d-flex align-items-center">
-              <Card className="bg-second shadow-xxl card-box card-box-hover-rise card-box-hover rounded-lg text-center p-3 p-xl-4 mb-4 mb-md-0 d-block">
-                <div className="d-100 object-skew hover-scale-sm icon-blob btn-icon text-warning mx-auto">
-                  <svg
-                    className="blob-wrapper opacity-2"
-                    viewBox="0 0 600 600"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <g transform="translate(300,300)">
-                      <path
-                        d="M155,-128.8C192.2,-77,207.7,-13,197.7,50.9C187.7,114.8,152.2,178.6,96.7,208.2C41.1,237.9,-34.6,233.4,-102.6,204C-170.6,174.7,-231.1,120.6,-246.7,55.4C-262.4,-9.9,-233.2,-86.3,-184.6,-140.7C-136,-195.2,-68,-227.6,-4.6,-223.9C58.9,-220.3,117.8,-180.6,155,-128.8Z"
-                        fill="currentColor"
+
+                  <div>
+                  
+                  
+                  </div>
+                  </Grid>
+                  </Grid>
+                  </Grid>
+                 
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <a 
+                      spacing={0}
+                      className="card modal-content card-box-hover-rise rounded-lg bg-transparent">
+                      <img
+                        src={messenger}
+                        className="rounded-lg img-fluid btn-pill badge-primary"
+                        alt="..."
                       />
-                    </g>
-                  </svg>
-                  <div className="blob-icon-wrapper">
-                    <NotificationsActiveTwoToneIcon />
-                  </div>
-                </div>
-                <h5 className="font-weight-bold font-size-lg text-white mb-2">
-                  Avaliação geral da marca
-                </h5>
-                <p className="mb-4 text-white-50">
-                  Este é um dos indicadores da nossa plataforma que te possibilatará entender o quão bem ou mal estão falando sobre sua marca ou tema de interesse.
-                </p>
-                <GaugeChart
-                  id="chartsGauges1B"
-                  nrOfLevels={24}
-                  colors={['rgba(0,2,255,0.6)', 'rgba(255,11,244,0.8)']}
-                  arcWidth={0.3}
-                  percent={0.82}
-                />
-                <Button
-                  component={NavLink}
-                  to="/DashboardMonitoring"
-                  className="btn-first badge-wrapper transition-base rounded-pill py-2 px-4 text-capitalize font-size-sm mt-3 d-inline-flex">
-                  <span>View Dashboard</span>
-                  <div
-                    className="badge badge-warning badge-position badge-position--top-right shadow-none badge-circle"
-                    id="NewNotificationsTooltip1">
-                    New notifications
-                  </div>
-                </Button>
-              </Card>
-            </Grid>
-            
-            {/* tentativa de add small chart + responsivo */}
-
-            <h5 className="font-weight-bold font-size-lg text-white mb-2">
-                Avaliação geral da marca
-            </h5>
-              <p className="mb-4 text-white-50">
-                  Este é um dos indicadores da nossa plataforma que te possibilatará entender o quão bem ou mal estão falando sobre sua marca ou tema de interesse.
-                </p>
-            <Grid item md={4} xl={3} className="d-flex align-items-center">
-              <div className="py-2 py-xl-4">
-                <div className="d-flex align-items-end flex-column">
-                  <div className="feature-box icon-blob btn-icon text-warning">
-                  <GaugeChart id="gauge-chart4" 
-                  nrOfLevels={5}
-                  percent={0.86} 
-                  arcWidth={0.9}
-                  colors={["#FF5F6D", "#FFC371", "#09407e"]} 
-
-
-                  />
-
-                   {/*  <h3 className="font-size-lg font-weight-bold my-3">
-                      <div className="display-4 text-primary font-weight-bold">
-                        Quer entender mais sobre como podemos te ajudar?
-                      </div>
-                    </h3>
-                    <p className="text-black-50 font-size-lg mb-0">
-                      Cadastre-se agora ou solicite uma visita guiada pela nossa plataforma.
-                    </p>*/}
-                  </div>
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-        </Container>
-      </div>
+                    </a>
+                    </Grid> 
+                    <br></br>
+                    <br></br> 
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="text-center mb-4">
+                    
+                    <button className="MuiButtonBase-root MuiButton-root MuiButton-text btn-pill shadow-second-sm btn-danger MuiButton-textSizeLarge MuiButton-sizeLarge">
+                      
+                      <p className="margintop"> Acesse Agora!</p>
+                    
+                    </button>
+                    
+                    </Grid>
+                    
+                    </Grid>                  
+                    </Container>
+                    </div>
     </>
-  )
+ )
 }

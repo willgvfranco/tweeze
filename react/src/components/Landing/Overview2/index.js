@@ -131,7 +131,7 @@ export default function LivePreviewExample() {
                     Tweeter
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Integrados completamente com o Tweeter analisamos milhões de informações sobre temas de interesse.
+                    Integrados completamente com o Tweeter analisamos milhões de informações relevantes para você
                   </p>
                 </Card>
               </Grid>
@@ -183,7 +183,7 @@ export default function LivePreviewExample() {
                    Intuitivo
                   </h5>
                   <p className="mb-4 text-black-50">
-                  Plataforma fácil de utilizar e intuitiva. Design moderno com suporte com horário extendido.
+                  Plataforma fácil de utilizar e intuitiva. Design moderno com suporte com horário extendido
                   </p>
                 </Card>
               </Grid>
