@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   FormControlLabel,
@@ -16,30 +18,78 @@ import 'date-fns';
 import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
 import TabelaNoticias from '../components/TabelaNoticias';
+import Loader from '../components/Loader';
 
-const Noticias = () => {
-  const [group, setGroup] = useState('');
+import { getAllWords } from '../reducers/WordsDuck';
+import { search } from '../reducers/NewsDuck';
+
+const Noticias = ({ words, getAllWords, search, news }) => {
+  const [selectedWord, setSelectedWord] = useState('');
   const [days, setDays] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date('2020-08-18'));
   const [automatic, setAutomatic] = useState(false);
+  const [loadingNews, setLoadingNews] = useState(false);
+  const [loadingWords, setLoadingWords] = useState(false);
 
-  const handleDateChange = (date) => setSelectedDate(date);
+  useEffect(() => {
+    if (Object.keys(words).length === 0) {
+      setLoadingWords(true);
+      getAllWords();
+      return;
+    }
+
+    if (loadingWords) {
+      setLoadingWords(false);
+    }
+  }, [words]);
+
+  useEffect(() => {
+    if (loadingNews) {
+      setLoadingNews(false);
+    }
+  }, [news]);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+
+    if (!selectedWord) {
+      console.log('SELECIONE UM GRUPO');
+      return;
+    }
+
+    setLoadingNews(true);
+    search({
+      word: words[selectedWord],
+      date: date
+    });
+  };
 
   const handleChange = (event, handler) => handler(event.target.value);
 
-  return (
+  const handleSelectedWord = (event) => {
+    setSelectedWord(event.target.value);
+    setLoadingNews(true);
+    search({
+      word: words[event.target.value],
+      date: selectedDate
+    });
+  };
+
+  return loadingWords ? (
+    <Loader isLoading={loadingWords} />
+  ) : (
     <>
       <PageTitle
         titleHeading="Relatórios"
         titleDescription="Consulta de clippings e geração de relatórios">
         <Select
           style={{ width: '20rem' }}
-          id="clipping-group-select"
-          labelId="clipping-group"
+          id="clipping-word-select"
+          labelId="clipping-word"
           label="Selecione o grupo para o clipping"
-          value={group}
-          onChange={(e) => handleChange(e, setGroup)}
-          items={['grupo 1', 'grupo 2', 'grupo 3']}
+          value={selectedWord}
+          onChange={(e) => handleSelectedWord(e)}
+          items={Object.values(words).map((word) => word)}
         />
 
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -61,7 +111,7 @@ const Noticias = () => {
         </MuiPickersUtilsProvider>
       </PageTitle>
 
-      <TabelaNoticias />
+      <TabelaNoticias isLoading={loadingNews} />
 
       <Card
         style={{ display: 'flex', alignItems: 'center' }}
@@ -103,4 +153,13 @@ const Noticias = () => {
   );
 };
 
-export default Noticias;
+const mapStateToProps = ({ words, news }) => ({
+  words: words.words,
+  wordsError: words.error,
+  news: news.news
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ getAllWords, search }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Noticias);

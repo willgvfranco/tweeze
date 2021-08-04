@@ -21,14 +21,22 @@ const SelectForm = ({
       value={value}
       onChange={onChange}
       label={label}>
-      {items?.map((item, index) => (
-        <MenuItem key={`${index}-${item}`} value={item}>
-          {item}
-        </MenuItem>
-      )) || (
-        <MenuItem value="">
-          <em>Nenhum</em>
-        </MenuItem>
+      {items?.map((item, index) =>
+        item?._id ? (
+          <MenuItem key={item._id} value={item._id}>
+            {item.name}
+          </MenuItem>
+        ) : (
+          (
+            <MenuItem key={`${index}-${item}`} value={item}>
+              {item}
+            </MenuItem>
+          ) || (
+            <MenuItem value="">
+              <em>Nenhum</em>
+            </MenuItem>
+          )
+        )
       )}
     </Select>
   </FormControl>

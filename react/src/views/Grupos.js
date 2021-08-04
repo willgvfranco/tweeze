@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { SyncLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Card,
@@ -20,8 +19,7 @@ import {
 } from '@material-ui/core';
 
 import PageTitle from '../components/PageTitle';
-import Select from '../components/Select';
-import SearchBar from '../components/SearchBar';
+import Loader from '../components/Loader';
 import notFound from '../assets/images/illustrations/pack4/500.svg';
 
 import {
@@ -39,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     border: '#7a7b97 solid 1px',
     borderRadius: '0.2rem',
     margin: '5px auto 15px auto',
+    minWidth: '21rem',
     [theme.breakpoints.down('md')]: {
       width: '100%'
     },
@@ -60,11 +59,31 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center'
   },
+  wordHeader: {
+    '& span': {
+      textOverflow: 'ellipsis',
+      overflowX: 'hidden',
+      whiteSpace: 'nowrap',
+      maxWidth: '15rem',
+      [theme.breakpoints.down('sm')]: {
+        maxWidth: '35vw'
+      },
+      [theme.breakpoints.up('sm')]: {
+        maxWidth: '20vw'
+      },
+      [theme.breakpoints.up('md')]: {
+        maxWidth: '10vw'
+      }
+    }
+  },
   select: { padding: '11.5px 14px' },
   editDialog: {
     maxWidth: '50vw',
     [theme.breakpoints.down('lg')]: {
       maxWidth: '80vw'
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '90vw'
     },
     minHeight: '30rem'
   },
@@ -81,7 +100,8 @@ const useStyles = makeStyles((theme) => ({
       margin: '1rem',
       width: '45%',
       [theme.breakpoints.down('md')]: {
-        width: '80%'
+        width: '95%',
+        margin: '0.5rem 0'
       }
     }
   },
@@ -130,9 +150,13 @@ const Word = ({ array, classes, type }) => {
   );
 };
 
-const Header = ({ grupo, handleEdit, handleDelete }) => (
+const Header = ({ grupo, classes, handleEdit, handleDelete }) => (
   <div style={{ display: 'flex' }}>
-    <CardHeader title={grupo.name} style={{ marginRight: 'auto' }} />
+    <CardHeader
+      title={grupo.name}
+      classes={{ root: classes.wordHeader }}
+      style={{ marginRight: 'auto' }}
+    />
     <Button
       className="btn-outline-dark border-1 m-2 px-3 py-1"
       variant="outlined"
@@ -276,10 +300,14 @@ const ActionDialog = ({
         <Button
           onClick={onClose}
           variant="outlined"
-          className="btn-secondary btn-pill mx-1">
+          className="btn-secondary btn-pill mx-1"
+          style={{ minWidth: 'fit-content' }}>
           <span className="btn-wrapper--label">Cancelar</span>
         </Button>
-        <Button onClick={handleAction} className="btn-primary btn-pill mx-1">
+        <Button
+          onClick={handleAction}
+          className="btn-primary btn-pill mx-1"
+          style={{ minWidth: 'fit-content' }}>
           <span className="btn-wrapper--label">Salvar</span>
         </Button>
       </div>
@@ -287,41 +315,46 @@ const ActionDialog = ({
   );
 };
 
-const DeleteDialog = ({ open, onClose, selectedGroup, words, onAction }) => (
-  <Dialog
-    open={open}
-    onClose={onClose}
-    classes={{ paper: 'shadow-lg rounded' }}>
-    <div className="text-center p-5">
-      <div className="avatar-icon-wrapper rounded-circle m-0">
-        <div className="d-inline-flex justify-content-center p-0 rounded-circle btn-icon avatar-icon-wrapper bg-neutral-danger text-danger m-0 d-80">
-          <FontAwesomeIcon
-            icon={['fas', 'times']}
-            className="d-flex align-self-center display-3"
-          />
+const DeleteDialog = ({ open, onClose, selectedGroup, words, onAction }) => {
+  const handleAction = () => {
+    onAction(selectedGroup);
+    onClose();
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      classes={{ paper: 'shadow-lg rounded' }}>
+      <div className="text-center p-5">
+        <div className="avatar-icon-wrapper rounded-circle m-0">
+          <div className="d-inline-flex justify-content-center p-0 rounded-circle btn-icon avatar-icon-wrapper bg-neutral-danger text-danger m-0 d-80">
+            <FontAwesomeIcon
+              icon={['fas', 'times']}
+              className="d-flex align-self-center display-3"
+            />
+          </div>
+        </div>
+        <h4 className="font-weight-bold mt-4">
+          Tem certeza que deseja deletar o grupo '{words[selectedGroup]?.name}'?
+        </h4>
+        <p className="mb-0 font-size-lg text-muted">
+          Você não poderá desfazer essa ação.
+        </p>
+        <div className="pt-4">
+          <Button
+            onClick={onClose}
+            className="btn-neutral-secondary btn-pill mx-1">
+            <span className="btn-wrapper--label">Cancelar</span>
+          </Button>
+          <Button onClick={handleAction} className="btn-danger btn-pill mx-1">
+            <span className="btn-wrapper--label">Deletar</span>
+          </Button>
         </div>
       </div>
-      <h4 className="font-weight-bold mt-4">
-        Tem certeza que deseja deletar o grupo '{words[selectedGroup]?.name}'?
-      </h4>
-      <p className="mb-0 font-size-lg text-muted">
-        Você não poderá desfazer essa ação.
-      </p>
-      <div className="pt-4">
-        <Button
-          onClick={onClose}
-          className="btn-neutral-secondary btn-pill mx-1">
-          <span className="btn-wrapper--label">Cancelar</span>
-        </Button>
-        <Button
-          onClick={() => onAction(selectedGroup)}
-          className="btn-danger btn-pill mx-1">
-          <span className="btn-wrapper--label">Deletar</span>
-        </Button>
-      </div>
-    </div>
-  </Dialog>
-);
+    </Dialog>
+  );
+};
 
 const FallBack = ({ isLoading, hasError }) =>
   hasError ? (
@@ -338,11 +371,7 @@ const FallBack = ({ isLoading, hasError }) =>
       </h1>
     </div>
   ) : (
-    <div
-      className="mx-auto my-5"
-      style={{ display: `${isLoading ? '' : 'none'}` }}>
-      <SyncLoader color={'var(--primary)'} loading={isLoading} />
-    </div>
+    <Loader isLoading={isLoading} />
   );
 
 const Grupos = ({
@@ -353,7 +382,6 @@ const Grupos = ({
   editWord,
   deleteWord
 }) => {
-  const [type, setType] = useState('Todos os termos');
   const [createDialog, setCreateDialog] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -365,8 +393,6 @@ const Grupos = ({
   }, [words]);
 
   const isLoading = Object.keys(words).length === 0;
-
-  const handleChange = (event, handler) => handler(event.target.value);
 
   const handleDialogOpen = (groupId, handler) => {
     setSelectedGroup(groupId);
@@ -383,6 +409,7 @@ const Grupos = ({
       <div key={`${index}-${grupo.name}`} className={classes.groups}>
         <Header
           grupo={grupo}
+          classes={classes}
           handleEdit={() => handleDialogOpen(grupo._id, setEditDialog)}
           handleDelete={() => handleDialogOpen(grupo._id, setDeleteDialog)}
         />
@@ -399,19 +426,6 @@ const Grupos = ({
       <PageTitle
         titleHeading="Meus Termos e Grupos"
         titleDescription="Administrar seus grupos e termos">
-        <Select
-          className="m-2"
-          classes={{ select: classes.select }}
-          style={{ width: '15rem' }}
-          id="filter-by-select"
-          labelId="filter-by"
-          label="Filtrar por"
-          value={type}
-          onChange={(e) => handleChange(e, setType)}
-          items={['Somente negativos', 'Somente positivos', 'Todos os termos']}
-          size="small"
-        />
-        <SearchBar style={{ width: '15rem' }} label="Encontre o termo aqui" />
         <Tooltip
           title="Criar novo grupo"
           arrow
@@ -429,7 +443,9 @@ const Grupos = ({
         </Tooltip>
       </PageTitle>
 
-      <Card className="rounded w-100 bg-white p-3">
+      <Card
+        className="rounded w-100 bg-white p-3"
+        style={{ minWidth: '22rem' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <FallBack
             isLoading={isLoading}
