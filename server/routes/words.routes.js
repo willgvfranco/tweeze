@@ -120,7 +120,6 @@ const listWordsByUser = (req, res) => {
       }
       if (!user || !user.words) {
         res.status(422).send({ message: "Erro, faltou mandar o userId" });
-        //  teste
         return;
       }
       console.log(user);
