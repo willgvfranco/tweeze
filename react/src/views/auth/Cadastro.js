@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import SocialButton from './SocialButton';
 import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
 import { ROOT_URL } from '../../config/env';
@@ -51,6 +52,13 @@ export default function PageRegister() {
       });
   };
 
+  const handleSocialLogin = (user) => {
+    console.log(user);
+  };
+
+  const handleSocialLoginFailure = (err) => {
+    console.error(err);
+  };
   return (
     <>
       <div className="app-wrapper min-vh-100 bg-white">
@@ -85,7 +93,11 @@ export default function PageRegister() {
                           </p>
                         </div>
                         <div className="text-center mb-3 cadastro-button-loginmidiassociais">
-                          <Button
+                          <SocialButton
+                            provider="google"
+                            appId="68730314092-s87t32e8cs2ka2tfqv9kt6quur02kjih.apps.googleusercontent.com"
+                            onLoginSuccess={handleSocialLogin}
+                            onLoginFailure={handleSocialLoginFailure}
                             className="m-2 btn-pill px-4 font-weight-bold btn-google"
                             size="small">
                             <span className="btn-wrapper--icon">
@@ -94,8 +106,12 @@ export default function PageRegister() {
                             <span className="btn-wrapper--label">
                               Login com Google
                             </span>
-                          </Button>
-                          <Button
+                          </SocialButton>
+                          <SocialButton
+                            provider="facebook"
+                            appId="361023348884041"
+                            onLoginSuccess={handleSocialLogin}
+                            onLoginFailure={handleSocialLoginFailure}
                             className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
                             size="small">
                             <span className="btn-wrapper--icon">
@@ -104,7 +120,7 @@ export default function PageRegister() {
                             <span className="btn-wrapper--label">
                               Login com Facebook
                             </span>
-                          </Button>
+                          </SocialButton>
                         </div>
                         <div className="px-5 py-4">
                           <div className="mb-3">
