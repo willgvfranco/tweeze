@@ -14,7 +14,7 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [
                        s.strip() for s in v.split(',')])
 
-
+SITE_ID = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -42,22 +42,10 @@ TEMPLATES = [
         },
     },
 ]
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
 
-SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LANGUAGE_CODE = 'pt-br'
@@ -95,21 +83,14 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 INSTALLED_APPS += ('admin_honeypot', 'bootstrap4', 'frontend', 'dashboard', 'perfil',
-                   'axes',  'crispy_forms', 'django.contrib.humanize',   'django.contrib.sites', 'rest_framework',  'rest_registration',  'corsheaders','allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',)
+                   'axes',  'crispy_forms', 'django.contrib.humanize',   'django.contrib.sites', )
 
 MIDDLEWARE += ('axes.middleware.AxesMiddleware','corsheaders.middleware.CorsMiddleware',)
 
 CORS_ORIGIN_ALLOW_ALL = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_REGISTRATION = {
-    'REGISTER_VERIFICATION_ENABLED': False,
-    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
-    'RESET_PASSWORD_VERIFICATION_ENABLED': False,
-}
+
 # VIEW.PY => messages.success(self.request, 'Success!') // from django.contrib import messages
 # Template.html => {% include "partials/_messages.html" %}
 MESSAGE_TAGS = {
@@ -123,7 +104,6 @@ MESSAGE_TAGS = {
 AUTHENTICATION_BACKENDS = [
     'axes.backends.AxesBackend',
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 

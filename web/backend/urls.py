@@ -18,11 +18,6 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
-api_urlpatterns = [
-    path('accounts/', include('rest_registration.api.urls')),
-    path('social/', include('allauth.urls')),
-]
-
 
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
@@ -30,7 +25,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('perfil/', include('perfil.urls')),
     path('legacy/', include('frontend.urls')),
-    path('api/v1/', include(api_urlpatterns)),
 
 ]
 
