@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, Container, List, ListItem } from '@material-ui/core';
 
 import projectLogo from '../../../assets/images/react.svg';
-
+import LogoBranca from '../../../assets/images/logo/logo_twz_branco.png';
 export default function LivePreviewExample() {
   return (
     <>
@@ -14,11 +14,11 @@ export default function LivePreviewExample() {
             href="#/"
             onClick={(e) => e.preventDefault()}
             title="Bamburgh React Admin Dashboard with Material-UI PRO"
-            className="d-70 d-block mx-auto bg-white rounded-circle">
+            className="d-70 d-block mx-auto tamanholog ">
             <img
               alt="Bamburgh React Admin Dashboard with Material-UI PRO"
               className="img-fluid p-2"
-              src={projectLogo}
+              src={LogoBranca}
             />
           </a>
         </div>
@@ -27,7 +27,7 @@ export default function LivePreviewExample() {
             <Grid item md={6} xl={3}>
               <div className="my-4 my-xl-0">
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
-                  Services
+                  Serviços
                 </h6>
                 <List
                   component="div"
@@ -38,7 +38,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Products
+                    Aquisição
                   </ListItem>
                   <ListItem
                     component="a"
@@ -46,7 +46,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Services
+                    Produtos
                   </ListItem>
                   <ListItem
                     component="a"
@@ -54,7 +54,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    About us
+                    Quem somos
                   </ListItem>
                 </List>
               </div>
@@ -62,7 +62,7 @@ export default function LivePreviewExample() {
             <Grid item md={6} xl={3}>
               <div className="my-4 my-xl-0">
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
-                  Support
+                  Suporte
                 </h6>
                 <List
                   component="div"
@@ -73,7 +73,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Support center
+                    FAQ
                   </ListItem>
                   <ListItem
                     component="a"
@@ -81,7 +81,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Affiliates
+                    Recuperação de senha
                   </ListItem>
                   <ListItem
                     component="a"
@@ -89,7 +89,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Contact us
+                    àrea do cliente
                   </ListItem>
                 </List>
               </div>
@@ -97,7 +97,7 @@ export default function LivePreviewExample() {
             <Grid item md={6} xl={3}>
               <div className="my-4 my-xl-0">
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
-                  Applications
+                  Plataforma
                 </h6>
                 <List
                   component="div"
@@ -108,7 +108,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Exchange
+                    Suporte
                   </ListItem>
                   <ListItem
                     component="a"
@@ -116,7 +116,7 @@ export default function LivePreviewExample() {
                     href="#/"
                     onClick={(e) => e.preventDefault()}
                     className="px-0 py-1 text-white-50">
-                    Generic
+                    Area do investidor
                   </ListItem>
                   <ListItem
                     component="a"
@@ -132,10 +132,10 @@ export default function LivePreviewExample() {
             <Grid item md={6} xl={3}>
               <div className="my-4 my-xl-0">
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
-                  Social Connections
+                  Mídias Sociais
                 </h6>
                 <p className="text-white-50">
-                  Stay up to date with our latest updates and releases!
+                  Fique por dentro das nossas atualizações!
                 </p>
                 <List
                   component="div"
@@ -188,7 +188,7 @@ export default function LivePreviewExample() {
           <div className="divider mb-4 bg-white opacity-2" />
           <div className="py-3 d-block d-lg-flex align-items-center justify-content-between">
             <div className="text-center d-block mb-3 mb-md-0 text-white">
-              Copyright &copy; 2020 - UiFort.com
+              Copyright &copy; 2021 - Tweeze
             </div>
             <List
               component="div"
@@ -216,7 +216,7 @@ export default function LivePreviewExample() {
                 className="text-white-50"
                 href="#/"
                 onClick={(e) => e.preventDefault()}>
-                My Account
+                Minha conta
               </ListItem>
             </List>
           </div>
