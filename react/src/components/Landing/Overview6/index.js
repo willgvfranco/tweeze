@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Grid, Container, List, ListItem } from '@material-ui/core';
+import { Grid, Container, List, ListItem, Popover } from '@material-ui/core';
 
-import projectLogo from '../../../assets/images/react.svg';
 import LogoBranca from '../../../assets/images/logo/logo_twz_branco.png';
-import dropDownButton from '../../../example-components/ElementsDropdowns/Dropdowns4'
 
+const WarningPopover = ({ open, anchorEl, handleClosePopover, text }) => (
+  <Popover
+    open={open}
+    anchorEl={anchorEl}
+    classes={{ paper: 'rounded font-size-md' }}
+    onClose={handleClosePopover}
+    anchorOrigin={{
+      vertical: 'center',
+      horizontal: 'center'
+    }}
+    transformOrigin={{
+      vertical: 'center',
+      horizontal: 'center'
+    }}>
+    <div className="rounded-top p-3 font-weight-bold bg-secondary">{text}</div>
+  </Popover>
+);
 
 export default function LivePreviewExample() {
+  const [anchorEl1, setAnchorEl1] = useState(null);
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const open = Boolean(anchorEl1);
+  const open2 = Boolean(anchorEl2);
+
+  const handleClosePopover1 = () => setAnchorEl1(null);
+  const handleClosePopover2 = () => setAnchorEl2(null);
+
+  const handleClickPopover1 = (event) => setAnchorEl1(event.currentTarget);
+  const handleClickPopover2 = (event) => setAnchorEl2(event.currentTarget);
+
   return (
     <>
       <div className="bg-second font-size-sm py-5">
@@ -106,22 +132,31 @@ export default function LivePreviewExample() {
                   component="div"
                   className="nav-transparent-alt flex-column">
                   <ListItem
-                                        component="a"
+                    component="a"
                     button
-                    onClick={(e) => e.preventDefault()}
+                    onClick={handleClickPopover1}
                     className="px-0 py-1 text-white-50">
-                    
                     Suporte
-
                   </ListItem>
+                  <WarningPopover
+                    open={open}
+                    anchorEl={anchorEl1}
+                    handleClosePopover={handleClosePopover1}
+                    text="tweeze.suporte@gmail.com"
+                  />
                   <ListItem
                     component="a"
                     button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={handleClickPopover2}
                     className="px-0 py-1 text-white-50">
                     Area do investidor
                   </ListItem>
+                  <WarningPopover
+                    open={open2}
+                    anchorEl={anchorEl2}
+                    handleClosePopover={handleClosePopover2}
+                    text="asdaasdasasds"
+                  />
                   <ListItem
                     component="a"
                     button
