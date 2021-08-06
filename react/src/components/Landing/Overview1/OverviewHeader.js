@@ -1477,7 +1477,7 @@ export default function LivePreviewExample() {
         <div className="header-nav-actions flex-grow-0 flex-lg-grow-1">
           <span className="d-none d-lg-block">
             <Button
-              href="https://uifort.com/template/bamburgh-react-admin-dashboard-material-ui-pro"
+              href="https://beta.tweeze.com.br/login"
               rel="noopener noreferrer"
               target="_blank"
               className="rounded-lg text-nowrap font-size-xs text-uppercase shadow-second-sm btn-danger font-weight-bold">
