@@ -18,6 +18,7 @@ import Error505 from './views/errors/505';
 const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing'));
 const Blank = lazy(() => import('./views/BlankView'));
+const Faq = lazy(() => import('./views/Faq'));
 const Noticias = lazy(() => import('./views/Noticias'));
 const MinhaConta = lazy(() => import('./views/MinhaConta'));
 const Grupos = lazy(() => import('./views/Grupos'));
@@ -109,6 +110,7 @@ const Routes = () => {
               path={[
                 '/home',
                 '/blank',
+                '/faq',
                 '/noticias',
                 '/minha-conta',
                 '/grupos'
@@ -126,6 +128,7 @@ const Routes = () => {
                     <Route path="/minha-conta" component={MinhaConta} />
                     <Route path="/grupos" component={Grupos} />
                     <Route path="/blank" component={Blank} />
+                    <Route path="/faq" component={Faq} />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
