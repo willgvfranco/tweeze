@@ -1,8 +1,6 @@
 import React from 'react';
-
-import { Grid, Container, Card, Button } from '@material-ui/core';
-
 import { NavLink } from 'react-router-dom';
+import { Grid, Container, Card, Button } from '@material-ui/core';
 
 export default function LivePreviewExample() {
   return (

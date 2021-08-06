@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -9,8 +9,6 @@ import {
   List,
   ListItem
 } from '@material-ui/core';
-
-import { NavLink } from 'react-router-dom';
 
 import logo1 from '../../../assets/images/stock-logos/discord-icon.svg';
 import logo2 from '../../../assets/images/stock-logos/google-icon.svg';

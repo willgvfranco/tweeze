@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { Grid, Container, Card } from '@material-ui/core';
-
 import CheckIcon from '@material-ui/icons/Check';
 
 export default function LivePreviewExample() {
@@ -14,14 +12,13 @@ export default function LivePreviewExample() {
               Overview
             </div>*/}
             <h4 className="font-weight-bold text-second display-3">
-            Descubra o que falam da sua marca:
+              Descubra o que falam da sua marca:
             </h4>
-            <h2>
-            é fácil, simples e instantâneo.
-            </h2>
+            <h2>é fácil, simples e instantâneo.</h2>
             <Grid item md={8} lg={6} className="mx-auto">
               <p className="text-second opacity-6 mt-3 mb-5 font-size-xxl">
-                Você terá acesso gratuitamente a milhares de notícias sobre o seu tema de interesse.
+                Você terá acesso gratuitamente a milhares de notícias sobre o
+                seu tema de interesse.
               </p>
               <button className=" buttonregister badge badge-primary mb-4 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
                 Registre-se!
@@ -53,7 +50,8 @@ export default function LivePreviewExample() {
                     Clipping jornalístico
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Nossa plataforma em questões de poucos segundos realiza o serviço de clipping jornalístico
+                    Nossa plataforma em questões de poucos segundos realiza o
+                    serviço de clipping jornalístico
                   </p>
                 </Card>
               </Grid>
@@ -79,7 +77,8 @@ export default function LivePreviewExample() {
                     E-mail automatizado
                   </h5>
                   <p className="mb-4 text-black-50">
-                   Configure a frequência desejada para receber um relatório de clipping personalizado
+                    Configure a frequência desejada para receber um relatório de
+                    clipping personalizado
                   </p>
                 </Card>
               </Grid>
@@ -102,10 +101,11 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                  Notícias
+                    Notícias
                   </h5>
                   <p className="mb-4 text-black-50">
-                  Analisamos milhares de noticias diariamente. Tecnologia para manter você bem informado
+                    Analisamos milhares de noticias diariamente. Tecnologia para
+                    manter você bem informado
                   </p>
                 </Card>
               </Grid>
@@ -131,7 +131,8 @@ export default function LivePreviewExample() {
                     Tweeter
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Integrados completamente com o Tweeter analisamos milhões de informações relevantes para você
+                    Integrados completamente com o Tweeter analisamos milhões de
+                    informações relevantes para você
                   </p>
                 </Card>
               </Grid>
@@ -157,7 +158,8 @@ export default function LivePreviewExample() {
                     Responsível
                   </h5>
                   <p className="mb-4 text-black-50">
-                    Acesse de qualquer lugar e em qualquer dispositivo, seja computador, tablet ou Smartphone
+                    Acesse de qualquer lugar e em qualquer dispositivo, seja
+                    computador, tablet ou Smartphone
                   </p>
                 </Card>
               </Grid>
@@ -180,10 +182,11 @@ export default function LivePreviewExample() {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                   Intuitivo
+                    Intuitivo
                   </h5>
                   <p className="mb-4 text-black-50">
-                  Plataforma fácil de utilizar e intuitiva. Design moderno com suporte com horário extendido
+                    Plataforma fácil de utilizar e intuitiva. Design moderno com
+                    suporte com horário extendido
                   </p>
                 </Card>
               </Grid>

@@ -1,18 +1,15 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, Container, Button } from '@material-ui/core';
-
-import { NavLink } from 'react-router-dom';
-
-import bannerInicial from '../../../assets/images/Tweeze-apreseentação.webp';
-import hero1 from '../../../assets/images/hero-bg/hero-9.jpg';
 import EmojiEventsTwoToneIcon from '@material-ui/icons/EmojiEventsTwoTone';
 import ListAltTwoToneIcon from '@material-ui/icons/ListAltTwoTone';
 import TuneTwoToneIcon from '@material-ui/icons/TuneTwoTone';
-import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
-
 import TrendingUpTwoToneIcon from '@material-ui/icons/TrendingUpTwoTone';
+
+import bannerInicial from '../../../assets/images/Tweeze-apreseentação.webp';
+import hero1 from '../../../assets/images/hero-bg/hero-9.jpg';
+import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
 
 import OverviewHeader from './OverviewHeader.js';
 
@@ -35,8 +32,11 @@ export default function LivePreviewExample() {
             style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
           />
           <div className="bg-composed-wrapper--content">
-          <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
-          <img className="ajustelogoinicial espaçamentoInicial" src={LogoBranca} />
+            <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
+              <img
+                className="ajustelogoinicial espaçamentoInicial"
+                src={LogoBranca}
+              />
               <Grid
                 item
                 md={11}
@@ -44,12 +44,16 @@ export default function LivePreviewExample() {
                 xl={8}
                 className="mx-auto">
                 <div>
-                <p className="font-size-xxl py-3">
-                Transformando dados em inteligência
-                </p>
-                <h3 className="font-size-xl">
-                Plataforma de clipping com inteligência artificial (I.A.) para captação, análise, monitoramento e distribuição de informações úteis a respeito de marcas e temas de interesse. Diariamente são tratadas aproximadamente 50 mil notícias do Brasil e do mundo.
-                </h3>
+                  <p className="font-size-xxl py-3">
+                    Transformando dados em inteligência
+                  </p>
+                  <h3 className="font-size-xl">
+                    Plataforma de clipping com inteligência artificial (I.A.)
+                    para captação, análise, monitoramento e distribuição de
+                    informações úteis a respeito de marcas e temas de interesse.
+                    Diariamente são tratadas aproximadamente 50 mil notícias do
+                    Brasil e do mundo.
+                  </h3>
                 </div>
                 <div className="py-4 mb-4">
                   <Button
