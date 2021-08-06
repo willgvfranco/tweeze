@@ -49,11 +49,10 @@ export default function LivePreviewExample() {
       <Container className="py-5 mb-spacing-6-x2">
         <div className="text-center">
           <h1 className="display-3 text-black mb-2 font-weight-bold">
-            Our customer stories
+            Nossos Clientes
           </h1>
           <p className="font-size-xl mb-0 mb-lg-5 text-black-50">
-            Read how customers around the world use our services to build their
-            projects
+            Entenda como nossos consumidores usam a Tweeze para gerenciar suas marcas
           </p>
         </div>
         <Slider
@@ -88,14 +87,13 @@ export default function LivePreviewExample() {
                       <FontAwesomeIcon icon={['fas', 'star']} />
                       <FontAwesomeIcon icon={['fas', 'star']} />
                       <FontAwesomeIcon icon={['fas', 'star']} />
-                      <FontAwesomeIcon icon={['fas', 'star-half-alt']} />
+                      <FontAwesomeIcon icon={['fas', 'star']} />
                     </div>
                     <blockquote className="my-3 text-black-50">
-                      I will give you a complete account of the system, and
-                      expound the actual teachings.
+                      Melhor custo benefício do mercado. Tweeze possibilitou melhor alocação de pessoal em minha equipe.
                     </blockquote>
                     <div className="font-size-lg font-weight-bold">
-                      John Doe
+                      Helvio Monteiro
                       <small className="text-black-50 pl-2">ACME Company</small>
                     </div>
                   </div>
@@ -135,13 +133,12 @@ export default function LivePreviewExample() {
                       <FontAwesomeIcon icon={['fas', 'star']} />
                     </div>
                     <blockquote className="my-3 text-black-50">
-                      But who has any right to find fault with a man who chooses
-                      to enjoy a pleasure that has.
+                     80% do meu tempo era dedicado a confecção de clipping. Agora, o clipping está sempre pronto! É Incrível! 
                     </blockquote>
                     <div className="font-size-lg font-weight-bold">
-                      Alexandros Hebert
+                      Jhon Macário
                       <small className="text-black-50 pl-2">
-                        Bailey Company
+                        Expresso & CO
                       </small>
                     </div>
                   </div>
@@ -181,65 +178,18 @@ export default function LivePreviewExample() {
                       <FontAwesomeIcon icon={['fas', 'star-half-alt']} />
                     </div>
                     <blockquote className="my-3 text-black-50">
-                      Nor again is there anyone who loves or pursues or desires
-                      to obtain pain of itself.
+                      Tecnologia move o mundo da Effy. Sempre bom encontrar empresas que colocam a tecnologia em nosso favor. 
                     </blockquote>
                     <div className="font-size-lg font-weight-bold">
-                      Jimi Tomlinson
-                      <small className="text-black-50 pl-2">Wood Company</small>
+                      Effy Tecnologia
+                      <small className="text-black-50 pl-2">Effy Tecnologia</small>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-          <div>
-            <Card className="m-4">
-              <CardContent>
-                <div className="align-box-row align-items-start">
-                  <div>
-                    <Card className="card-transparent">
-                      <a
-                        href="#/"
-                        onClick={(e) => e.preventDefault()}
-                        className="card-img-wrapper rounded">
-                        <img
-                          src={people1}
-                          className="card-img-top rounded-circle"
-                          style={{ width: 80 }}
-                          alt="..."
-                        />
-                      </a>
-                    </Card>
-                  </div>
-                  <div className="pl-4">
-                    <FontAwesomeIcon
-                      icon={['fas', 'quote-right']}
-                      className="text-primary font-size-xxl"
-                    />
-                    <div className="my-3 text-warning font-size-lg">
-                      <FontAwesomeIcon icon={['fas', 'star']} />
-                      <FontAwesomeIcon icon={['fas', 'star']} />
-                      <FontAwesomeIcon icon={['fas', 'star']} />
-                      <FontAwesomeIcon icon={['fas', 'star']} />
-                      <FontAwesomeIcon icon={['fas', 'star']} />
-                    </div>
-                    <blockquote className="my-3 text-black-50">
-                      I will give you a complete account of the system, and
-                      expound the actual teachings.
-                    </blockquote>
-                    <div className="font-size-lg font-weight-bold">
-                      Kaylee Magana
-                      <small className="text-black-50 pl-2">
-                        Espinosa Company
-                      </small>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Slider>
+         </Slider>
       </Container>
     </>
   );

@@ -27,7 +27,7 @@ export default function LivePreviewExample() {
               <div className="py-5 py-sm-0">
                 <div>
                   <h4 className="font-weight-bold text-white display-4">
-                    Monthly Subscription
+                    Incrissão mensal
                   </h4>
                   <Grid item md={8} lg={6} className="mx-auto">
                     <p className="text-white opacity-8 mt-3 mb-5 font-size-xl">
