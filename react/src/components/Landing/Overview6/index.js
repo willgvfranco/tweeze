@@ -155,7 +155,7 @@ export default function LivePreviewExample() {
                     open={open2}
                     anchorEl={anchorEl2}
                     handleClosePopover={handleClosePopover2}
-                    text="asdaasdasasds"
+                    text="área exclusiva"
                   />
                   <ListItem
                     component="a"

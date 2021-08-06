@@ -54,8 +54,8 @@ export default function LivePreviewExample() {
           <img className="tamanhoLogoInicial"
           src={LogoSimbolo}
            />
-         </div>
-        <div className="header-nav-menu d-none d-lg-block">
+        </div>
+      <div className="header-nav-menu d-none d-lg-block">
           <ul className="d-flex nav nav-neutral-first justify-content-center">
             <li>
               <a

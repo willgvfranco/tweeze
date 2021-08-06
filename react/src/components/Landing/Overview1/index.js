@@ -42,7 +42,7 @@ export default function LivePreviewExample() {
                 md={11}
                 lg={10}
                 xl={8}
-                className="mx-auto py-3 py-lg-5">
+                className="mx-auto">
                 <div>
                 <p className="font-size-xxl py-3">
                 Transformando dados em inteligência
