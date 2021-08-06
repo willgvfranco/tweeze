@@ -19,6 +19,7 @@ const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing'));
 const Blank = lazy(() => import('./views/BlankView'));
 const Faq = lazy(() => import('./views/Faq'));
+const QuemSomos = lazy(() => import('./views/QuemSomos'));
 const Noticias = lazy(() => import('./views/Noticias'));
 const MinhaConta = lazy(() => import('./views/MinhaConta'));
 const Grupos = lazy(() => import('./views/Grupos'));
@@ -90,8 +91,7 @@ const Routes = () => {
       <AnimatePresence>
         <Suspense fallback={<SuspenseLoading />}>
           <Switch>
-            <Redirect exact from="/" to="/landing" />
-            <Route path={['/landing']}>
+            <Route exact path={['/']}>
               <PresentationLayout>
                 <Switch location={location} key={location.pathname}>
                   <motion.div
@@ -100,7 +100,7 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
-                    <Route path="/landing" component={Landing} />
+                    <Route path="/" component={Landing} />
                   </motion.div>
                 </Switch>
               </PresentationLayout>
@@ -114,6 +114,7 @@ const Routes = () => {
                 '/noticias',
                 '/minha-conta',
                 '/grupos'
+
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -129,6 +130,7 @@ const Routes = () => {
                     <Route path="/grupos" component={Grupos} />
                     <Route path="/blank" component={Blank} />
                     <Route path="/faq" component={Faq} />
+
                   </motion.div>
                 </Switch>
               </LeftSidebar>
@@ -141,7 +143,9 @@ const Routes = () => {
                 '/recuperar-senha',
                 '/error-404',
                 '/error-500',
-                '/error-505'
+                '/error-505',
+                '/quem-somos'
+
               ]}>
               <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
@@ -157,6 +161,8 @@ const Routes = () => {
                     <Route path="/error-404" component={Error404} />
                     <Route path="/error-500" component={Error500} />
                     <Route path="/error-505" component={Error505} />
+                    <Route path="/quem-somos" component={QuemSomos} />
+
                   </motion.div>
                 </Switch>
               </MinimalLayout>
