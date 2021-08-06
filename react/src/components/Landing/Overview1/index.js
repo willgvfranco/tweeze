@@ -5,7 +5,7 @@ import { Grid, Container, Button } from '@material-ui/core';
 
 import { NavLink } from 'react-router-dom';
 
-import bannerInicial from '../../../assets/images/banner.jpg';
+import bannerInicial from '../../../assets/images/Tweeze-apreseentação.webp';
 import hero1 from '../../../assets/images/hero-bg/hero-9.jpg';
 import EmojiEventsTwoToneIcon from '@material-ui/icons/EmojiEventsTwoTone';
 import ListAltTwoToneIcon from '@material-ui/icons/ListAltTwoTone';
