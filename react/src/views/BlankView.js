@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { PageTitle } from '../layout-components';
-
-import { ExampleWrapperSeamless } from '../layout-components';
-import { ExampleWrapperSimple } from '../layout-components';
+import PageTitle from '../components/PageTitle';
 
 export default function Blank() {
   return (
@@ -12,13 +9,6 @@ export default function Blank() {
         titleHeading="Titulo"
         titleDescription="Exemplo de descrição"
       />
-
-      {/* <ExampleWrapperSeamless>
-        <div>Exemplo 1</div>
-      </ExampleWrapperSeamless>
-      <ExampleWrapperSimple>
-        <div>Exemplo 2</div>
-      </ExampleWrapperSimple> */}
     </>
   );
 }

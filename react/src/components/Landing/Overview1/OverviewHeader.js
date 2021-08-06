@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import LogoSimbolo from '../../../assets/images/logo/logo_twz_branco.png';
-
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Collapse,
@@ -15,8 +14,7 @@ import {
   ListItem
 } from '@material-ui/core';
 
-import projectLogo from '../../../assets/images/react.svg';
-import { NavLink } from 'react-router-dom';
+import LogoSimbolo from '../../../assets/images/logo/logo_twz_branco.png';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,11 +48,9 @@ export default function LivePreviewExample() {
   return (
     <>
       <div className="header-nav-wrapper header-nav-wrapper-lg navbar-dark">
-       <div>
-          <img className="tamanhoLogoInicial"
-          src={LogoSimbolo}
-           />
-         </div>
+        <div>
+          <img className="tamanhoLogoInicial" src={LogoSimbolo} />
+        </div>
         <div className="header-nav-menu d-none d-lg-block">
           <ul className="d-flex nav nav-neutral-first justify-content-center">
             <li>
