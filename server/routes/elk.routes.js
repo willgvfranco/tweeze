@@ -26,6 +26,13 @@ const elkSearch = async (req, res) => {
             },
             must: { match: { title: req.body.pos } },
           },
+          // range: {
+          //   timestamp: {
+          //     time_zone: "-03:00",
+          //     gte: "2020-01-01T00:00:00",
+          //     lte: "now",
+          //   },
+          // },
         },
       },
     })

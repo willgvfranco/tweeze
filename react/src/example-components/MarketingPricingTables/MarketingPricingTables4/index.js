@@ -26,9 +26,9 @@ export default function PricingTables4() {
                   Planos e preços
                 </h1>
                 <p className="font-size-lg mb-1 text-black-50">
-                <strong>Clipping jornalístico</strong>
-                 <p>Tudo que precisa saber sobre o seu tema de interesse</p> 
-                </p>
+                <strong>Clipping jornalístico</strong></p>
+              <p>Tudo que precisa saber sobre o seu tema de interesse</p> 
+              
               </div>
             </div>
             <CardContent className="p-3">

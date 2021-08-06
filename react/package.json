@@ -2,7 +2,7 @@
   "name": "bamburgh-react-admin-dashboard-material-ui-pro",
   "version": "1.0.0",
   "title": "Bamburgh React Admin Dashboard with Material-UI PRO",
-  "homepage": "https://demo.uifort.com/bamburgh-react-admin-dashboard-material-ui-pro",
+  "homepage": "https://beta.tweeze.com.br",
   "description": "Premium admin template powered by the most popular UI components framework available for React: Material-UI. Features hundreds of examples making web development fast and easy. Start from one of the individual apps included or from the general dashboard and build beautiful scalable applications and presentation websites.",
   "author": {
     "name": "UiFort.com",
@@ -69,6 +69,7 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
     "react-slick": "0.26.0",
+    "react-social-login": "^3.4.14",
     "react-sparklines": "1.7.0",
     "react-spinners": "0.8.3",
     "react-text-mask": "5.4.3",

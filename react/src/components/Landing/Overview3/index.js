@@ -144,26 +144,13 @@ export default function LivePreviewExample() {
                     <a 
                       spacing={0}
                       className="card modal-content card-box-hover-rise rounded-lg bg-transparent">
-                      <img
-                        src={messenger}
-                        className="rounded-lg img-fluid btn-pill badge-primary"
-                        alt="..."
-                      />
+                      
                     </a>
                     </Grid> 
-                    <br></br>
-                    <br></br> 
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="text-center mb-4">
-                    
-                    <button className="MuiButtonBase-root MuiButton-root MuiButton-text btn-pill shadow-second-sm btn-danger MuiButton-textSizeLarge MuiButton-sizeLarge">
-                      
-                      <p className="margintop"> Acesse Agora!</p>
-                    
-                    </button>
-                    
+                                   
+                                    
                     </Grid>
-                    
-                    </Grid>                  
+                 
                     </Container>
                     </div>
     </>

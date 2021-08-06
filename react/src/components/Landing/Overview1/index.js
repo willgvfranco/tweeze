@@ -10,6 +10,7 @@ import hero1 from '../../../assets/images/hero-bg/hero-9.jpg';
 import EmojiEventsTwoToneIcon from '@material-ui/icons/EmojiEventsTwoTone';
 import ListAltTwoToneIcon from '@material-ui/icons/ListAltTwoTone';
 import TuneTwoToneIcon from '@material-ui/icons/TuneTwoTone';
+import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
 
 import TrendingUpTwoToneIcon from '@material-ui/icons/TrendingUpTwoTone';
 
@@ -34,22 +35,22 @@ export default function LivePreviewExample() {
             style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
           />
           <div className="bg-composed-wrapper--content">
-            <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
+          <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
+          <img className="ajustelogoinicial espaçamentoInicial" src={LogoBranca} />
               <Grid
                 item
                 md={11}
                 lg={10}
                 xl={8}
                 className="mx-auto py-3 py-lg-5">
-                <h1 className="display-3 font-weight-bold">
-                  Tweeze 
-                </h1>
-                <p className="font-size-xl py-3">
-                Transformando dados em inteligência.
+                <div>
+                <p className="font-size-xxl py-3">
+                Transformando dados em inteligência
                 </p>
-                <p className="font-size-xs">
-                Plataforma de clipping com inteligência artificial (I.A.) para captação, análise, monitoramento e distribuição de informações úteis a respeito de marcas e temas de interesse. Diariamente são tratadas aproximadamente 50 mil notícias do Brasil e do mundo. Somente nos ultimos 3 mesês captamos 1.5 milhões de notícias.
-                </p>
+                <h3 className="font-size-xl">
+                Plataforma de clipping com inteligência artificial (I.A.) para captação, análise, monitoramento e distribuição de informações úteis a respeito de marcas e temas de interesse. Diariamente são tratadas aproximadamente 50 mil notícias do Brasil e do mundo.
+                </h3>
+                </div>
                 <div className="py-4 mb-4">
                   <Button
                     component={NavLink}
@@ -84,7 +85,7 @@ export default function LivePreviewExample() {
                           <TrendingUpTwoToneIcon className="d-30 text-danger" />
                         </div>
                         <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">1.500.000+</b>
+                          <b className="font-size-xxl pb-2">1.789.470+</b>
                           <span className="text-white-50 font-size-lg d-block">
                             Notícias
                           </span>
