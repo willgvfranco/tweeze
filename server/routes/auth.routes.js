@@ -16,7 +16,8 @@ export default function (app) {
       middlewares.verifySignUp.checkDuplicateUsernameOrEmail,
       middlewares.verifySignUp.checkRolesExisted,
     ],
-    signup
+    signup,
+    signin
   );
 
   app.post("/api/auth/signin", signin);

@@ -5,7 +5,7 @@ import User from "../models/user.model.js";
 import { sign } from "jsonwebtoken";
 import { hashSync, compareSync } from "bcryptjs";
 
-export function signup(req, res) {
+export function signup(req, res, next) {
   const body = req.body;
   const user = new User({
     email: body.email,
@@ -39,8 +39,9 @@ export function signup(req, res) {
               res.status(500).send({ message: err });
               return;
             }
+            next();
 
-            res.send({ message: "User was registered successfully!" });
+            // res.send({ message: "User was registered successfully!" });
           });
         }
       );
@@ -59,7 +60,8 @@ export function signup(req, res) {
           }
           // TODO: Enviar dados para login do cidadão
 
-          res.send({ message: "User was registered successfully!" });
+          next();
+          // res.send({ message: "User was registered successfully!" });
         });
       });
     }

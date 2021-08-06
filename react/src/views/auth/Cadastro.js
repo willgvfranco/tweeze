@@ -3,7 +3,8 @@ import axios from 'axios';
 import SocialButton from './SocialButton';
 import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
-import { ROOT_URL } from '../../config/env';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -14,10 +15,13 @@ import {
   ListItem,
   TextField
 } from '@material-ui/core';
+import { login } from '../../reducers/AuthDuck';
 
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
-export default function PageRegister() {
+
+function PageRegister() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     password: '',
@@ -44,6 +48,8 @@ export default function PageRegister() {
       .post(BACKEND.cadastro, form)
       .then((response) => {
         console.log(response);
+        dispatch(login(response.data));
+        history.replace({ pathname: '/home' });
         // dispatch(login(response.data));
         // TODO: logar o cidadão
       })
@@ -339,3 +345,11 @@ export default function PageRegister() {
     </>
   );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: (action) => dispatch(action)
+});
+
+const ConnectedPageRegister = connect()(PageRegister);
+
+export default ConnectedPageRegister;

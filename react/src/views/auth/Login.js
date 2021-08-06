@@ -35,7 +35,7 @@ import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 //     checked: true
 //   }
 function LoginForm() {
-  let history = useHistory();
+  const history = useHistory();
   const [form, setForm] = useState({
     password: '',
     email: ''
