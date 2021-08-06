@@ -1,7 +1,6 @@
 import React from 'react';
 
 import PageTitle from '../components/PageTitle';
-import TabelaNoticias from '../components/TabelaNoticias';
 
 export default function Home() {
   return (
@@ -10,7 +9,6 @@ export default function Home() {
         titleHeading="Tweeze Dashboard"
         titleDescription="Painel de controle de inteligência da Tweeze"
       />
-      <TabelaNoticias />
     </>
   );
 }
