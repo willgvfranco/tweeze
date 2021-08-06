@@ -15,7 +15,7 @@ export default function Home() {
         titleHeading="Tweeze Dashboard"
         titleDescription="Painel de controle de inteligência da Tweeze"
       />
-      <TabelaNoticias />
+      {/* <TabelaNoticias /> */}
       <DashboardMonitoring1 />
       <DashboardMonitoring2 />
       <DashboardMonitoring3 />

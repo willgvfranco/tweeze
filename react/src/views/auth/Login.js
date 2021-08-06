@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
@@ -33,6 +35,7 @@ import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 //     checked: true
 //   }
 function LoginForm() {
+  let history = useHistory();
   const [form, setForm] = useState({
     password: '',
     email: ''
@@ -49,12 +52,13 @@ function LoginForm() {
 
   const headers = { 'Content-Type': 'application/json' };
 
-  const sendRegister = async (e) => {
+  const sendLogin = async (e) => {
     axios
       .post(BACKEND.login, form)
       .then((response) => {
         console.log(response);
         dispatch(login(response.data));
+        history.replace({ pathname: '/home' });
       })
       .catch((err) => {
         console.log(err);
@@ -183,7 +187,7 @@ function LoginForm() {
                             <div className="text-center py-4">
                               <Button
                                 onClick={() => {
-                                  sendRegister();
+                                  sendLogin();
                                 }}
                                 className="btn-second font-weight-bold w-50 my-2">
                                 Logar!
