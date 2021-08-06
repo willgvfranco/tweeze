@@ -49,6 +49,22 @@ const SidebarMenu = (props) => {
                 </span>
               </NavLink>
             </li>
+
+            <li>
+              <NavLink
+                activeClassName="active"
+                onClick={toggleSidebarMobile}
+                className="nav-link-simple"
+                to="/faq">
+                <span className="sidebar-icon">
+                  <DevicesOtherTwoToneIcon />
+                </span>
+                Faq
+                <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
+                  <ChevronRightTwoToneIcon />
+                </span>
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 activeClassName="active"
