@@ -30,6 +30,8 @@ const Noticias = ({ words, getAllWords, search, news }) => {
   const [automatic, setAutomatic] = useState(false);
   const [loadingNews, setLoadingNews] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
+  const [selectedNews, setSelectedNews] = useState([]);
+  console.log('selectedNews', selectedNews);
 
   useEffect(() => {
     if (Object.keys(words).length === 0) {
@@ -53,7 +55,6 @@ const Noticias = ({ words, getAllWords, search, news }) => {
     setSelectedDate(date);
 
     if (!selectedWord) {
-      console.log('SELECIONE UM GRUPO');
       return;
     }
 
@@ -111,7 +112,11 @@ const Noticias = ({ words, getAllWords, search, news }) => {
         </MuiPickersUtilsProvider>
       </PageTitle>
 
-      <TabelaNoticias isLoading={loadingNews} />
+      <TabelaNoticias
+        isLoading={loadingNews}
+        selectedNews={selectedNews}
+        setSelectedNews={setSelectedNews}
+      />
 
       <Card
         style={{ display: 'flex', alignItems: 'center' }}
@@ -132,6 +137,7 @@ const Noticias = ({ words, getAllWords, search, news }) => {
           id="email"
           label="Digite seu e-mail"
           variant="outlined"
+          disabled={!automatic}
         />
 
         <Select
@@ -143,6 +149,7 @@ const Noticias = ({ words, getAllWords, search, news }) => {
           value={days}
           onChange={(e) => handleChange(e, setDays)}
           items={['7 dias', '15 dias', '30 dias']}
+          disabled={!automatic}
         />
 
         <Button variant="contained" className="btn-primary m-2 ml-auto">

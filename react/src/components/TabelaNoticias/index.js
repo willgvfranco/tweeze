@@ -12,15 +12,12 @@ import {
   TableHead,
   TableRow,
   Toolbar,
-  IconButton,
   Paper,
   Typography,
   Checkbox,
-  Tooltip,
   TablePagination,
   TableSortLabel
 } from '@material-ui/core';
-import { Delete as DeleteIcon } from '@material-ui/icons';
 
 import placeholder from '../../assets/images/illustrations/pack1/wireframe.svg';
 import Loader from '../Loader';
@@ -171,15 +168,8 @@ const EnhancedTableToolbar = (props) => {
           color="inherit"
           variant="subtitle1"
           component="div">
-          {numSelected} selected
+          {numSelected} notícia(s) selecionada(s)
         </Typography>
-      )}
-      {numSelected > 0 && (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
       )}
     </Toolbar>
   );
@@ -210,11 +200,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TabelaNoticias = ({ news, isLoading }) => {
+const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -227,30 +216,30 @@ const TabelaNoticias = ({ news, isLoading }) => {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = news.map((n) => n._id);
-      setSelected(newSelecteds);
+      setSelectedNews(newSelecteds);
       return;
     }
-    setSelected([]);
+    setSelectedNews([]);
   };
 
   const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
+    const selectedIndex = selectedNews.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selectedNews, id);
     } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelected = newSelected.concat(selectedNews.slice(1));
+    } else if (selectedIndex === selectedNews.length - 1) {
+      newSelected = newSelected.concat(selectedNews.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
+        selectedNews.slice(0, selectedIndex),
+        selectedNews.slice(selectedIndex + 1)
       );
     }
 
-    setSelected(newSelected);
+    setSelectedNews(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -262,7 +251,7 @@ const TabelaNoticias = ({ news, isLoading }) => {
     setPage(0);
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  const isSelected = (id) => selectedNews.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, news.length - page * rowsPerPage);
@@ -270,7 +259,7 @@ const TabelaNoticias = ({ news, isLoading }) => {
   return (
     <>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selectedNews.length} />
         <TableContainer>
           {news.length !== 0 && !isLoading ? (
             <>
@@ -281,7 +270,7 @@ const TabelaNoticias = ({ news, isLoading }) => {
                 aria-label="enhanced table">
                 <EnhancedTableHead
                   classes={classes}
-                  numSelected={selected.length}
+                  numSelected={selectedNews.length}
                   order={order}
                   orderBy={orderBy}
                   onSelectAllClick={handleSelectAllClick}

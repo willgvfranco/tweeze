@@ -4,23 +4,21 @@ import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 const SelectForm = ({
   className,
   labelId,
-  id,
   value,
   onChange,
   label,
   style,
   items,
-  classes
+  ...props
 }) => (
   <FormControl className={className} variant="outlined" style={style}>
     <InputLabel id={labelId}>{label}</InputLabel>
     <Select
-      classes={classes}
       labelId={labelId}
-      id={id}
       value={value}
       onChange={onChange}
-      label={label}>
+      label={label}
+      {...props}>
       {items?.map((item, index) =>
         item?._id ? (
           <MenuItem key={item._id} value={item._id}>
