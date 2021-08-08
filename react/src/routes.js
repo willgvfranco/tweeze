@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
 
@@ -114,7 +114,6 @@ const Routes = () => {
                 '/noticias',
                 '/minha-conta',
                 '/grupos'
-
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -130,7 +129,6 @@ const Routes = () => {
                     <Route path="/grupos" component={Grupos} />
                     <Route path="/blank" component={Blank} />
                     <Route path="/faq" component={Faq} />
-
                   </motion.div>
                 </Switch>
               </LeftSidebar>
@@ -145,7 +143,6 @@ const Routes = () => {
                 '/error-500',
                 '/error-505',
                 '/quem-somos'
-
               ]}>
               <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
@@ -162,7 +159,6 @@ const Routes = () => {
                     <Route path="/error-500" component={Error500} />
                     <Route path="/error-505" component={Error505} />
                     <Route path="/quem-somos" component={QuemSomos} />
-
                   </motion.div>
                 </Switch>
               </MinimalLayout>

@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
-import BACKEND from '../../config/env';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-
+import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
+import { useHistory } from 'react-router-dom';
 import {
   Grid,
   Container,
@@ -19,52 +16,43 @@ import {
   ListItem,
   TextField
 } from '@material-ui/core';
-
 import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
-import { login } from '../../reducers/AuthDuck';
+import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
+import {
+  login,
+  loginWithState,
+  getPersistedState
+} from '../../reducers/AuthDuck';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-// export class LoginForm extends React.Component {
-//   state = {
-//     form: {
-//       password: '',
-//       login: ''
-//     },
-//     checked: true
-//   }
-function LoginForm() {
-  const history = useHistory();
+const LoginForm = ({ login, loginWithState, isLogged }) => {
   const [form, setForm] = useState({
     password: '',
     email: ''
   });
-
   const [checked1, setChecked] = useState(true);
-  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    const auth = getPersistedState();
+    if (auth?.token) {
+      loginWithState(auth);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      history.push('/home');
+    }
+  }, [isLogged]);
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
     const field = event.target.name;
     const value = event.target.value;
     setForm({ ...form, [field]: value });
-  };
-
-  const headers = { 'Content-Type': 'application/json' };
-
-  const sendLogin = async (e) => {
-    axios
-      .post(BACKEND.login, form)
-      .then((response) => {
-        console.log(response);
-        dispatch(login(response.data));
-        history.replace({ pathname: '/home' });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // console.log(response);
   };
 
   return (
@@ -90,7 +78,9 @@ function LoginForm() {
                         <div className="text-center mt-5">
                           <img
                             className="logo-tweeze-css"
-                            src={logoTweeze}></img>
+                            src={logoTweeze}
+                            alt="Tweeze logo"
+                          />
 
                           <p className="mb-0 text-black-50">
                             Acesso ao Painel de Controle
@@ -186,21 +176,18 @@ function LoginForm() {
                             </div>
                             <div className="text-center py-4">
                               <Button
-                                onClick={() => {
-                                  sendLogin();
-                                }}
+                                onClick={() => login(form)}
                                 className="btn-second font-weight-bold w-50 my-2">
                                 Logar!
                               </Button>
                             </div>
                             <div className="text-center text-black-50 mt-3">
                               Não tem uma conta?{' '}
-                              <a
-                                className="text-first"
-                                href="#/"
-                                onClick={(e) => e.preventDefault()}>
+                              <NavLink
+                                className="nav-link-simple"
+                                to="/cadastro">
                                 Crie aqui.
-                              </a>
+                              </NavLink>
                             </div>
                           </div>
                         </div>
@@ -314,12 +301,13 @@ function LoginForm() {
       </div>
     </>
   );
-}
+};
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (action) => dispatch(action)
+const mapStateToProps = ({ auth }) => ({
+  isLogged: auth.isLogged
 });
 
-const ConnectedLoginForm = connect()(LoginForm);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ login, loginWithState }, dispatch);
 
-export default ConnectedLoginForm;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

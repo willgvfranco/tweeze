@@ -129,7 +129,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const handleSplit = (string) => (string !== '' ? string.split(' ') : []);
+const handleSplit = (string) =>
+  typeof string === 'string' && string !== '' ? string.split(' ') : [];
 
 const Word = ({ array, classes, type }) => {
   const label = type === POS ? 'Positivas' : 'Negativas';
@@ -356,8 +357,24 @@ const DeleteDialog = ({ open, onClose, selectedGroup, words, onAction }) => {
   );
 };
 
-const FallBack = ({ isLoading, hasError }) =>
-  hasError ? (
+const FallBack = ({ isLoading, hasError, emptyWords }) => {
+  if (hasError) {
+    return (
+      <div
+        className="mx-auto my-5"
+        style={{ display: `${isLoading ? '' : 'none'}` }}>
+        <img
+          src={notFound}
+          className="w-50 mx-auto d-block mb-5 img-fluid"
+          alt="..."
+        />
+        <h1 className="display-1 mb-3 px-4 font-weight-bold">
+          Erro ao buscar os grupos
+        </h1>
+      </div>
+    );
+  }
+  return emptyWords ? (
     <div
       className="mx-auto my-5"
       style={{ display: `${isLoading ? '' : 'none'}` }}>
@@ -367,17 +384,19 @@ const FallBack = ({ isLoading, hasError }) =>
         alt="..."
       />
       <h1 className="display-1 mb-3 px-4 font-weight-bold">
-        Erro ao buscar os grupos
+        Nenhum grupo de palavras cadastrado
       </h1>
     </div>
   ) : (
     <Loader isLoading={isLoading} />
   );
+};
 
 const Grupos = ({
   words,
   getAllWords,
   wordsError,
+  firstFetch,
   createWord,
   editWord,
   deleteWord
@@ -389,10 +408,13 @@ const Grupos = ({
   const classes = useStyles();
 
   useEffect(() => {
-    Object.keys(words).length === 0 && getAllWords();
+    if (!firstFetch) {
+      getAllWords();
+    }
   }, [words]);
 
   const isLoading = Object.keys(words).length === 0;
+  const emptyWords = firstFetch && Object.keys(words).length === 0;
 
   const handleDialogOpen = (groupId, handler) => {
     setSelectedGroup(groupId);
@@ -450,6 +472,7 @@ const Grupos = ({
           <FallBack
             isLoading={isLoading}
             hasError={wordsError === 'getAllWords'}
+            emptyWords={emptyWords}
           />
           <WordsList />
         </div>
@@ -491,7 +514,8 @@ const Grupos = ({
 
 const mapStateToProps = ({ words }) => ({
   words: words.words,
-  wordsError: words.error
+  wordsError: words.error,
+  firstFetch: words.firstFetch
 });
 
 const mapDispatchToProps = (dispatch) =>
