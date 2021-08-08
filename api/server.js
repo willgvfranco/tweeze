@@ -32,7 +32,13 @@ var corsOptions = {
 };
 
 app.use(cors());
-
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
 app.use(
   express.urlencoded({
     extended: true,
@@ -47,15 +53,16 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Tweeze Accounts application." });
 });
 // routes
-import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/user.routes.js";
-import elkRoutes from "./routes/elk.routes.js";
-import wordsRoutes from "./routes/words.routes.js";
+// import authRoutes from "./routes/auth.routes.js";
+// import userRoutes from "./routes/user.routes.js";
+// import elkRoutes from "./routes/elk.routes.js";
+// import wordsRoutes from "./routes/words.routes.js";
+import routes from "./routes";
 
-authRoutes(app);
-userRoutes(app);
-elkRoutes(app);
-wordsRoutes(app);
+// authRoutes(app);
+// userRoutes(app);
+// elkRoutes(app);
+routes(app);
 
 const PORT = process.env.PORT || 7777;
 app.listen(PORT, () => {

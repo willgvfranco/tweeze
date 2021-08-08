@@ -1,71 +1,67 @@
 version: "3.2"
 
 services:
-    redis:
-        build:
-            dockerfile: ./docker/redis.dockerfile
-            context: .
-        ports:
-            - "6379:6379"
-        restart: always
-        networks: 
-            - tweeze_network
-        container_name: redis
-        deploy:
-            restart_policy:
-                condition: on-failure
+  redis:
+    build:
+      dockerfile: ./database/redis/redis.dockerfile
+      context: .
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - tweeze_network
+    container_name: redis
+    deploy:
+      restart_policy:
+        condition: on-failure
 
+#   postgres:
+#     build:
+#       dockerfile: ./docker/postgres.dockerfile
+#       context: .
+#     container_name: postgres
+#     restart: always
+#     #environment:
+#     #POSTGRES_HOST_AUTH_METHOD: trust
+#     ports:
+#       - "5432:5432"
+#     networks:
+#       - tweeze_network
+#     volumes:
+#       - ./database/postgres:/var/lib/postgresql/data/
 
-    postgres:
-        build:
-            dockerfile: ./docker/postgres.dockerfile
-            context: .
-        container_name: postgres
-        restart: always
-        #environment:
-            #POSTGRES_HOST_AUTH_METHOD: trust
-        ports:
-            - "5432:5432"
-        networks: 
-            - tweeze_network
-        volumes:
-            - ./postgresql:/var/lib/postgresql/data/
+# worker:
+#     build:
+#         dockerfile: ./docker/worker.dockerfile
+#         context: .
+#     container_name: worker
+#     environment:
+#         CACHE_HOST: 'redis'
+#         DB_HOST: 'postgres'
+#     ports:
+#         - "7777:7777"
+#     networks:
+#         - tweeze_network
+#     depends_on:
+#         - redis
+#         - postgres
 
-
-    # worker:
-    #     build:
-    #         dockerfile: ./docker/worker.dockerfile
-    #         context: .
-    #     container_name: worker
-    #     environment:
-    #         CACHE_HOST: 'redis'
-    #         DB_HOST: 'postgres'
-    #     ports:
-    #         - "7777:7777"
-    #     networks: 
-    #         - tweeze_network
-    #     depends_on:
-    #         - redis
-    #         - postgres
-
-
-    # backend:
-    #     build:
-    #         dockerfile: ./docker/backend.dockerfile
-    #         context: .
-    #     container_name: backend
-    #     environment:
-    #         CACHE_HOST: 'redis'
-    #         DB_HOST: 'postgres'
-    #     ports:
-    #         - "8000:8000"
-    #     networks: 
-    #         - tweeze_network
-    #     depends_on:
-    #         - redis
-    #         - postgres
+# backend:
+#     build:
+#         dockerfile: ./docker/backend.dockerfile
+#         context: .
+#     container_name: backend
+#     environment:
+#         CACHE_HOST: 'redis'
+#         DB_HOST: 'postgres'
+#     ports:
+#         - "8000:8000"
+#     networks:
+#         - tweeze_network
+#     depends_on:
+#         - redis
+#         - postgres
 
 networks:
-    tweeze_network:
-        driver: bridge
-
+  tweeze_network:
+    driver: bridge

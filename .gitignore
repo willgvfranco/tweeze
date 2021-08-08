@@ -8,6 +8,7 @@ neusdoc
 # C extensions
 *.so
 db/
+db-dev/
 node_modules/
 # Distribution / packaging
 .Python

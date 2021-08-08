@@ -7,7 +7,7 @@ var client = new elasticsearch.Client({
   httpAuth: "elastic:PiLFSnE1MlS1ySmv9czF",
 });
 
-const elkSearch = async (req, res) => {
+export const elkSearch = async (req, res) => {
   if (!req.body.pos) {
     res.send({ message: "Faltou o termo" });
     return;
@@ -41,6 +41,3 @@ const elkSearch = async (req, res) => {
       res.send(results.hits.hits);
     });
 };
-export default function (app) {
-  app.post("/api/search", elkSearch);
-}

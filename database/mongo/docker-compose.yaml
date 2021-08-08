@@ -1,0 +1,64 @@
+# Use root/example as user/password credentials
+version: "3.2"
+
+services:
+  mongo:
+    image: mongo
+    container_name: tweeze-mongo
+    restart: always
+    ports:
+      - "27037:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=tweezeauth
+      - MONGODB_USERNAME=tweezeauth
+      - MONGO_INITDB_ROOT_PASSWORD=admin777
+      - MONGODB_PASSWORD=admin777
+    volumes:
+      - ./db/docker/Volumes/MongoDB:/data/db
+
+  mongo-dev:
+    image: mongo
+    container_name: tweeze-mongo-dev
+    restart: always
+    ports:
+      - "27077:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=tweezeauth
+      - MONGODB_USERNAME=tweezeauth
+      - MONGO_INITDB_ROOT_PASSWORD=admin777
+      - MONGODB_PASSWORD=admin777
+    volumes:
+      - ./db-dev/docker/Volumes/MongoDB:/data/db
+
+  # accounts:
+  #   build:
+  #     dockerfile: ./config/node.dockerfile
+  #     context: .
+  #   container_name: tweeze-accounts
+  #   restart: always
+  #   ports:
+  #     - "7777:7777"
+  #   networks:
+  #     - tweeze
+  #   depends_on:
+  #     - mongo
+  #   environment:
+  #     DB_HOST: mongo
+  #     DB_PORT: 27017
+  #     ELK_HOST: 10.108.0.3
+  #     ELK_PORT: 9200
+# networks:
+#   tweeze:
+#     driver: bridge
+# mongo-express:
+#   image: mongo-express
+#   container_name: tweeze-mongo-express
+#   restart: always
+#   ports:
+#     - 27031:8081
+#   environment:
+#     - ME_CONFIG_MONGODB_ADMINUSERNAME=tweezeauth
+#     - ME_CONFIG_MONGODB_ADMINPASSWORD=admin777
+#     - ME_CONFIG_MONGODB_PORT=27037
+#     - ME_CONFIG_BASICAUTH_USERNAME=tweezeauth
+#     - ME_CONFIG_BASICAUTH_PASSWORD=admin777

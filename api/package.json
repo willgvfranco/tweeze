@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-node": "babel-node --presets=latest",
+    "babel-node": "babel-node",
     "start": "nodemon --exec npm run babel-node -- ./server.js",
     "build": "babel src -d dist",
     "prod": "babel ./server.js --out-dir ./build --presets=@babel/env",
@@ -28,15 +28,15 @@
     "mongoose": "^5.13.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.8",
-    "@babel/preset-env": "^7.14.8",
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
     "babel-preset-latest": "^6.24.1",
     "nodemon": "^2.0.12"
   },
   "babel": {
     "presets": [
-      "latest"
+      "@babel/preset-env"
     ]
   }
 }
