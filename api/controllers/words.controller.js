@@ -1,7 +1,7 @@
 import Words from "../models/words.model.js";
 import User from "../models/user.model.js";
 
-const addWords = (req, res, next) => {
+export const addWords = (req, res, next) => {
   const pos = req.body.pos || "";
   const neg = req.body.neg || "";
   const name = req.body.name || "";
@@ -52,7 +52,7 @@ const addWords = (req, res, next) => {
 //   });
 // };
 
-const updateWords = (req, res, next) => {
+export const updateWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
   //   const words = req.body.words;
   const pos = req.body.pos || "";
@@ -70,7 +70,7 @@ const updateWords = (req, res, next) => {
   });
 };
 
-const removeWords = (req, res, next) => {
+export const removeWords = (req, res, next) => {
   const wordsId = req.body.wordsId;
 
   Words.findByIdAndDelete(wordsId).then((res) => {
@@ -105,7 +105,7 @@ const removeWords = (req, res, next) => {
 //     });
 //   };
 
-const listWordsByUser = (req, res) => {
+export const listWordsByUser = (req, res) => {
   const userId = req.body.userId;
   console.log(req.body);
   User.findOne({
@@ -136,13 +136,3 @@ const listWordsByUser = (req, res) => {
       });
     });
 };
-
-export default function (app) {
-  app.post("/api/words/add", addWords, listWordsByUser);
-  app.post("/api/words/delete", removeWords, listWordsByUser);
-  app.post("/api/words/update", updateWords, listWordsByUser);
-  app.post("/api/words/list", listWordsByUser);
-  // app.post("/api/user/words/update", updateUserWords);
-}
-
-// [ 61022e333fa1b24f11f9c665, 61022e363fa1b24f11f9c668 ]
