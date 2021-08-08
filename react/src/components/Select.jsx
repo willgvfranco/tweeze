@@ -19,10 +19,19 @@ const SelectForm = ({
       onChange={onChange}
       label={label}
       {...props}>
-      {items?.map((item, index) =>
-        item?._id ? (
-          <MenuItem key={item._id} value={item._id}>
-            {item.name}
+      {items?.map((item, index) => {
+        let disabled = false;
+        if (item.pos === '' && item.neg === '') disabled = true;
+
+        return item?._id ? (
+          <MenuItem key={item._id} value={item._id} disabled={disabled}>
+            {disabled ? (
+              <>
+                {item.name} <i>&nbsp;(Nenhum termo cadastrado)</i>
+              </>
+            ) : (
+              item.name
+            )}
           </MenuItem>
         ) : (
           (
@@ -34,8 +43,8 @@ const SelectForm = ({
               <em>Nenhum</em>
             </MenuItem>
           )
-        )
-      )}
+        );
+      })}
     </Select>
   </FormControl>
 );
