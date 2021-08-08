@@ -8,6 +8,9 @@ import MarketingTestimonial from '../components/MarketingTestimonials';
 import MarketingCta from '../components/MarketingCta';
 import PricingTables from '../components/PricingTables';
 
+import FormsSteppers from '../../src/components/candidates/FormsSteppers/FormsSteppers1/index'
+
+
 export default function Overview() {
   return (
     <>
@@ -17,6 +20,7 @@ export default function Overview() {
       <PricingTables />
       <MarketingTestimonial />
       <MarketingCta />
+      <FormsSteppers />
       <Overview6 />
     </>
   );
