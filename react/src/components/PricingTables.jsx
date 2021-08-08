@@ -21,7 +21,7 @@ export default function PricingTables4() {
         <Container className="py-3 py-xl-5">
           <Card className="modal-content">
             <div className="card-header bg-light d-flex justify-content-center">
-              <div className="text-center my-4">
+              <div id="planos" className="text-center my-4">
                 <h1 className="display-4 text-black mb-2 font-weight-bold">
                   Planos e preços
                 </h1>

@@ -31,7 +31,7 @@ export default function LivePreviewExample() {
             className="bg-composed-wrapper--image opacity-9"
             style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
           />
-          <div className="bg-composed-wrapper--content">
+          <div id="home" className="bg-composed-wrapper--content">
             <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
               <img
                 className="ajustelogoinicial espaçamentoInicial"
