@@ -5,15 +5,11 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Collapse,
-  Grid,
   Typography,
-  Tabs,
-  Tab,
   Button,
   List,
   ListItem
 } from '@material-ui/core';
-
 
 import LogoSimbolo from '../../../assets/images/logo/logo_twz_branco.png';
 
@@ -38,61 +34,69 @@ TabPanel.propTypes = {
 };
 
 export default function LivePreviewExample() {
-  const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const [collapse, setCollapse] = useState(false);
   const toggle = () => setCollapse(!collapse);
 
   return (
     <>
       <div className="header-nav-wrapper header-nav-wrapper-lg navbar-dark">
-       <div>
-          <img className="tamanhoLogoInicial"
-          src={LogoSimbolo}
-           />
+        <div>
+          <img
+            className="tamanhoLogoInicial"
+            src={LogoSimbolo}
+            alt="Tweeze Logo"
+          />
         </div>
-      <div className="header-nav-menu d-none d-lg-block">
+        <div className="header-nav-menu d-none d-lg-block">
           <ul className="d-flex nav nav-neutral-first justify-content-center">
             <li>
-              <a href="#home" className="font-weight-bold rounded-lg text-white px-3">Home</a>
-                  
-              <span className="opacity-5">
-              </span>
-              </li>
-            <li>
-              <a href="#servicos" className="font-weight-bold rounded-lg text-white px-3">Serviços</a>
-                
-                <span className="opacity-5">
-                </span>
-              
+              <a
+                href="#home"
+                className="font-weight-bold rounded-lg text-white px-3">
+                Home
+              </a>
+
+              <span className="opacity-5"></span>
             </li>
             <li>
-            <a href="#planos" className="font-weight-bold rounded-lg text-white px-3">Planos</a>
-                
-            <span className="opacity-5">
-            </span>
+              <a
+                href="#servicos"
+                className="font-weight-bold rounded-lg text-white px-3">
+                Serviços
+              </a>
+
+              <span className="opacity-5"></span>
             </li>
             <li>
-            <a href="#contato" className="font-weight-bold rounded-lg text-white px-3">Contato</a>
-                
-            <span className="opacity-5">
-            </span>
-              
+              <a
+                href="#planos"
+                className="font-weight-bold rounded-lg text-white px-3">
+                Planos
+              </a>
+
+              <span className="opacity-5"></span>
+            </li>
+            <li>
+              <a
+                href="#contato"
+                className="font-weight-bold rounded-lg text-white px-3">
+                Contato
+              </a>
+
+              <span className="opacity-5"></span>
             </li>
           </ul>
         </div>
         <div className="header-nav-actions flex-grow-0 flex-lg-grow-1">
           <span className="d-none d-lg-block">
-            <Button
-              href="https://beta.tweeze.com.br/login"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="rounded-lg text-nowrap font-size-xs text-uppercase shadow-second-sm btn-danger font-weight-bold">
-              Login
-            </Button>
+            <NavLink className="nav-link-simple" to="/login">
+              <Button
+                rel="noopener noreferrer"
+                target="_blank"
+                className="rounded-lg text-nowrap font-size-xs text-uppercase shadow-second-sm btn-danger font-weight-bold">
+                Login
+              </Button>
+            </NavLink>
           </span>
           <span className="d-block d-lg-none">
             <button
@@ -246,7 +250,6 @@ export default function LivePreviewExample() {
                       component="a"
                       button
                       href="#/"
-                      
                       selected
                       className="px-4 text-white-50 d-flex align-items-center">
                       <span>General</span>
