@@ -1,6 +1,8 @@
 echo "Loading production deploy install"
 echo "==================="
 echo "Installing dependencies of Node Server"
+cd ~/projects/tweeze
+cd ~/dev/tweeze
 cd server && npm install
 # echo "==================="
 echo "Node dependencies installed with success"

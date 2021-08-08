@@ -90,7 +90,7 @@ const Noticias = ({ words, getAllWords, search, news }) => {
           label="Selecione o grupo para o clipping"
           value={selectedWord}
           onChange={(e) => handleSelectedWord(e)}
-          items={Object.values(words).map((word) => word)}
+          items={Object.values(words)?.map((word) => word)}
         />
 
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -162,7 +162,6 @@ const Noticias = ({ words, getAllWords, search, news }) => {
 
 const mapStateToProps = ({ words, news }) => ({
   words: words.words,
-  wordsError: words.error,
   news: news.news
 });
 
