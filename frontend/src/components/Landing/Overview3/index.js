@@ -70,14 +70,14 @@ export default function LivePreviewExample() {
               </p>
             </Grid>
           </div>
-          <Grid container spacing={4} className="mb-4 text-center py-5 py-4 feature-box">
-            <Grid item className="py-4">
+          <Grid container spacing={4} className="">
+            <Grid item className="">
               <Grid
                 container
                 spacing={4}
-                className="w-100 mb-3 mb-xl-0 text-center">
-                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="feature-box pr-4">
+                className="text-center">
+                <Grid className="" item xs={12} sm={12} md={12} lg={6} xl={6}>
+                  <div className="">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Captação
                     </h3>
@@ -90,8 +90,8 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="feature-box pr-4">
+                <Grid className="text-center" item xs={12} sm={12} md={12} lg={6} xl={6}>
+                  <div className="feature-box pr-4 ">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Análise
                     </h3>
@@ -104,7 +104,7 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
+                <Grid className="text-center" item xs={12} sm={12} md={12} lg={6} xl={6}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Monitoramento
@@ -118,7 +118,7 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
+                <Grid className="text-center" item xs={12} sm={12} md={12} lg={6} xl={6}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Distribuição
@@ -135,7 +135,7 @@ export default function LivePreviewExample() {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            <Grid className="text-center" item xs={12} sm={12} md={12} lg={12} xl={12}>
               <a
                 spacing={0}
                 className="card modal-content card-box-hover-rise rounded-lg bg-transparent"></a>
