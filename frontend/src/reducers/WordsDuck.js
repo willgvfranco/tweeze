@@ -23,6 +23,8 @@ export const getAllWords = () => async (dispatch, getState) => {
   const { token, user } = getState().auth;
   const { firstFetch } = getState().words;
 
+  if (!user) return;
+
   try {
     const result = await axios({
       method: 'post',

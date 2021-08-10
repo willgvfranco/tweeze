@@ -394,6 +394,7 @@ const FallBack = ({ isLoading, hasError, emptyWords }) => {
 
 const Grupos = ({
   words,
+  user,
   getAllWords,
   wordsError,
   firstFetch,
@@ -411,7 +412,7 @@ const Grupos = ({
     if (!firstFetch) {
       getAllWords();
     }
-  }, [words]);
+  }, [words, user]);
 
   const isLoading = Object.keys(words).length === 0;
   const emptyWords = firstFetch && Object.keys(words).length === 0;
@@ -512,10 +513,11 @@ const Grupos = ({
   );
 };
 
-const mapStateToProps = ({ words }) => ({
+const mapStateToProps = ({ words, auth }) => ({
   words: words.words,
   wordsError: words.error,
-  firstFetch: words.firstFetch
+  firstFetch: words.firstFetch,
+  user: auth.user
 });
 
 const mapDispatchToProps = (dispatch) =>
