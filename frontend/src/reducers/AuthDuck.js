@@ -4,6 +4,7 @@ import BACKEND from '../config/env';
 
 export const Types = {
   LOGIN: 'auth/LOGIN',
+  LOGIN_TOKEN: 'auth/LOGIN_TOKEN',
   LOGOUT: 'auth/LOGOUT',
   ERROR: 'auth/ERROR'
 };
@@ -17,10 +18,8 @@ export const login = (data) => async (dispatch) => {
     });
 
     const { id, accessToken } = result.data;
-    persistState({
-      user: id,
-      token: accessToken
-    });
+
+    localStorage.setItem('token', JSON.stringify(accessToken));
 
     dispatch({
       type: Types.LOGIN,
@@ -36,21 +35,38 @@ export const login = (data) => async (dispatch) => {
       data: 'login'
     });
   }
-  return {
-    type: Types.LOGIN,
-    payload: data
-  };
 };
 
-export const loginWithState = (auth) => (dispatch) => {
-  auth &&
+export const loginWithToken = (token) => async (dispatch) => {
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.loginToken,
+      token
+    });
+
+    const { id, accessToken } = result.data;
+    console.log('result.data', result.data);
+
+    localStorage.setItem('token', JSON.stringify(accessToken));
+
     dispatch({
-      type: Types.LOGIN,
+      type: Types.LOGIN_TOKEN,
       data: {
-        user: auth.user,
-        token: auth.token
+        user: id,
+        token: accessToken
       }
     });
+  } catch (error) {
+    console.log('loginWithToken error', error);
+    if (error.response.status === 401) {
+      localStorage.clear('token');
+    }
+    dispatch({
+      type: Types.ERROR,
+      data: 'loginWithToken'
+    });
+  }
 };
 
 export function logout() {
@@ -59,20 +75,7 @@ export function logout() {
   };
 }
 
-const persistState = (auth) => {
-  sessionStorage.setItem('auth', JSON.stringify(auth));
-};
-
-export const getPersistedState = () => {
-  try {
-    return JSON.parse(sessionStorage.getItem('auth'));
-  } catch (e) {
-    console.warn('Unable to get a persist state to sessionStorage:', e);
-    return {};
-  }
-};
-
-const initialState = {
+export const initialState = {
   isLogged: false,
   token: null,
   user: {},
@@ -88,12 +91,24 @@ export default function reducer(state = initialState, action) {
         token: action.data.token,
         isLogged: true
       };
+    case Types.LOGIN_TOKEN:
+      return {
+        ...state,
+        user: action.data.user,
+        token: action.data.token,
+        isLogged: true
+      };
     case Types.LOGOUT:
       return {
         ...state,
         isLogged: false,
         token: null,
         user: {}
+      };
+    case Types.ERROR:
+      return {
+        ...state,
+        error: action.data
       };
     default:
       return state;

@@ -10,6 +10,7 @@ import MuiTheme from './theme';
 import LeftSidebar from './components/LeftSidebar';
 import MinimalLayout from './components/MinimalLayout';
 import PresentationLayout from './components/PresentationLayout';
+import RequireAuth from './components/RequireAuth';
 
 import Error404 from './views/errors/404';
 import Error500 from './views/errors/500';
@@ -123,12 +124,54 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
-                    <Route path="/home" component={Home} />
-                    <Route path="/noticias" component={Noticias} />
-                    <Route path="/minha-conta" component={MinhaConta} />
-                    <Route path="/grupos" component={Grupos} />
-                    <Route path="/blank" component={Blank} />
-                    <Route path="/faq" component={Faq} />
+                    <Route
+                      path="/home"
+                      render={() => (
+                        <RequireAuth>
+                          <Home />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/noticias"
+                      render={() => (
+                        <RequireAuth>
+                          <Noticias />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/minha-conta"
+                      render={() => (
+                        <RequireAuth>
+                          <MinhaConta />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/grupos"
+                      render={() => (
+                        <RequireAuth>
+                          <Grupos />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/blank"
+                      render={() => (
+                        <RequireAuth>
+                          <Blank />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/faq"
+                      render={() => (
+                        <RequireAuth>
+                          <Faq />
+                        </RequireAuth>
+                      )}
+                    />
                   </motion.div>
                 </Switch>
               </LeftSidebar>

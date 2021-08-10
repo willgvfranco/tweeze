@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
   Container,
@@ -20,27 +20,18 @@ import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
-import {
-  login,
-  loginWithState,
-  getPersistedState
-} from '../../reducers/AuthDuck';
+import { login } from '../../reducers/AuthDuck';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-const LoginForm = ({ login, loginWithState, isLogged }) => {
+const LoginForm = ({ login }) => {
   const [form, setForm] = useState({
     password: '',
     email: ''
   });
   const [checked1, setChecked] = useState(true);
-  const history = useHistory();
 
-  useEffect(() => {
-    const auth = getPersistedState();
-    if (auth?.token) {
-      loginWithState(auth);
-    }
-  }, []);
+  const history = useHistory();
+  const isLogged = useSelector(({ auth }) => auth.isLogged);
 
   useEffect(() => {
     if (isLogged) {
@@ -303,11 +294,7 @@ const LoginForm = ({ login, loginWithState, isLogged }) => {
   );
 };
 
-const mapStateToProps = ({ auth }) => ({
-  isLogged: auth.isLogged
-});
-
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ login, loginWithState }, dispatch);
+  bindActionCreators({ login }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(null, mapDispatchToProps)(LoginForm);
