@@ -30,7 +30,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 const Step1 = () => {
   return (
     <>
-      <Container>
+      <Container id="contato">
         <div className="p-4">
           <h5 className="font-size-xl mb-1 font-weight-bold">
             Dúvidas ainda sobre clipping?

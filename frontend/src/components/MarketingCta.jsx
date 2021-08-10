@@ -18,7 +18,7 @@ export default function MarketingCta() {
                 <div className="bg-warning btn-icon mx-auto mx-lg-0 text-white font-size-xl d-50 rounded mb-4">
                   <FontAwesomeIcon icon={['far', 'lightbulb']} />
                 </div>
-                <h4 className="display-4 font-weight-bold mb-3">
+                <h4 id="contato" className="display-4 font-weight-bold mb-3 ">
                   Está em dúvida?
                 </h4>
                 <p className="text-warning mb-4 font-size-lg line-height-2">

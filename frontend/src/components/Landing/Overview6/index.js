@@ -25,14 +25,31 @@ const WarningPopover = ({ open, anchorEl, handleClosePopover, text }) => (
 export default function LivePreviewExample() {
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [anchorEl3, setAnchorEl3] = useState(null);
+ 
+
+
   const open = Boolean(anchorEl1);
   const open2 = Boolean(anchorEl2);
+  
+  
+  
 
   const handleClosePopover1 = () => setAnchorEl1(null);
   const handleClosePopover2 = () => setAnchorEl2(null);
+  const handleClosePopover3 = () => setAnchorEl3(null);
+
+  
+
+
+ 
 
   const handleClickPopover1 = (event) => setAnchorEl1(event.currentTarget);
   const handleClickPopover2 = (event) => setAnchorEl2(event.currentTarget);
+  const handleClickPopover3 = (event) => setAnchorEl3(event.currentTarget);
+  
+  
+
 
   return (
     <>
@@ -63,26 +80,26 @@ export default function LivePreviewExample() {
                   <ListItem
                     component="a"
                     button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
-                    className="px-0 py-1 text-white-50">
-                    Aquisição
-                  </ListItem>
-                  <ListItem
-                    component="a"
-                    button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
-                    className="px-0 py-1 text-white-50">
-                    Produtos
-                  </ListItem>
-                  <ListItem
-                    component="a"
-                    button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
+                    href="#servicos"
+                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     Quem somos
+                  </ListItem>
+                  <ListItem
+                  component="a"
+                  button
+                  href="#planos"
+                  onClick={handleClickPopover3}
+                  className="px-0 py-1 text-white-50">
+                  Produtos
+                  </ListItem>
+                  <ListItem
+                    component="a"
+                    button
+                    href="#contato"
+                    onClick={handleClickPopover3}
+                    className="px-0 py-1 text-white-50">
+                    Aquisição
                   </ListItem>
                 </List>
               </div>
@@ -98,26 +115,26 @@ export default function LivePreviewExample() {
                   <ListItem
                     component="a"
                     button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
+                    href="/faq"
+                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     FAQ
                   </ListItem>
                   <ListItem
                     component="a"
                     button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
+                    href="/recuperar-senha"
+                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
-                    Recuperação de senha
+                    Recuração de senha
                   </ListItem>
                   <ListItem
                     component="a"
                     button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
+                    href="/login"
+                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
-                    àrea do cliente
+                    Area do cliente
                   </ListItem>
                 </List>
               </div>
@@ -154,16 +171,21 @@ export default function LivePreviewExample() {
                     open={open2}
                     anchorEl={anchorEl2}
                     handleClosePopover={handleClosePopover2}
-                    text="área exclusiva"
+                    text="Área exclusiva"
                   />
                   <ListItem
                     component="a"
                     button
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={handleClickPopover2}
                     className="px-0 py-1 text-white-50">
                     Helpdesk
                   </ListItem>
+                  <WarningPopover
+                    open={open2}
+                    anchorEl={anchorEl2}
+                    handleClosePopover={handleClosePopover2}
+                    text="Em construção"
+                  />
                 </List>
               </div>
             </Grid>
@@ -186,6 +208,7 @@ export default function LivePreviewExample() {
                     <FontAwesomeIcon
                       icon={['fab', 'facebook']}
                       className="font-size-lg"
+                      href=""
                     />
                   </ListItem>
                   <ListItem
@@ -209,13 +232,15 @@ export default function LivePreviewExample() {
                     />
                   </ListItem>
                   <ListItem
-                    button
-                    className="px-0 mr-3 text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    <FontAwesomeIcon
+                  button
+                  className="px-0 mr-3 text-white-50"
+                  href="https://www.instagram.com/tweezebrasil/"
+                  onClick={(e) => e.preventDefault()}>
+                  <FontAwesomeIcon
+                    
                       icon={['fab', 'instagram']}
                       className="font-size-lg"
+                      
                     />
                   </ListItem>
                 </List>
@@ -250,12 +275,13 @@ export default function LivePreviewExample() {
               component="div"
               className="nav-transparent text-nowrap d-flex justify-content-center">
               <ListItem
-                button
-                className="text-white-50"
-                href="#/"
-                onClick={(e) => e.preventDefault()}>
-                Minha conta
-              </ListItem>
+                    component="a"
+                    button
+                    href="/login"
+                    onClick={handleClickPopover3}
+                    className="px-0 py-1 text-white-50">
+                    Minha Conta
+                  </ListItem>
             </List>
           </div>
         </Container>

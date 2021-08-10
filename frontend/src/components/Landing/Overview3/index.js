@@ -70,13 +70,13 @@ export default function LivePreviewExample() {
               </p>
             </Grid>
           </div>
-          <Grid container spacing={4} className="mt-5">
-            <Grid item className="d-flex align-items-center">
+          <Grid container spacing={4} className="mb-4 text-center py-5 py-4 feature-box">
+            <Grid item className="py-4">
               <Grid
                 container
                 spacing={4}
                 className="w-100 mb-3 mb-xl-0 text-center">
-                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Captação
@@ -90,7 +90,7 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Análise
@@ -104,7 +104,7 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Monitoramento
@@ -118,7 +118,7 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+                <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
                   <div className="feature-box pr-4">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Distribuição
@@ -131,7 +131,6 @@ export default function LivePreviewExample() {
                     </p>
                   </div>
 
-                  <div></div>
                 </Grid>
               </Grid>
             </Grid>
