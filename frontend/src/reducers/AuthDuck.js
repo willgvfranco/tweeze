@@ -40,13 +40,15 @@ export const login = (data) => async (dispatch) => {
 export const loginWithToken = (token) => async (dispatch) => {
   try {
     const result = await axios({
-      method: 'post',
+      method: 'get',
       url: BACKEND.loginToken,
-      token
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
     });
 
     const { id, accessToken } = result.data;
-    console.log('result.data', result.data);
 
     localStorage.setItem('token', JSON.stringify(accessToken));
 
@@ -78,7 +80,7 @@ export function logout() {
 export const initialState = {
   isLogged: false,
   token: null,
-  user: {},
+  user: '',
   error: ''
 };
 
