@@ -5,6 +5,7 @@ import BACKEND from '../config/env';
 export const Types = {
   LOGIN: 'auth/LOGIN',
   LOGIN_TOKEN: 'auth/LOGIN_TOKEN',
+  LOGIN_SOCIAL: 'auth/LOGIN_SOCIAL',
   LOGOUT: 'auth/LOGOUT',
   ERROR: 'auth/ERROR'
 };
@@ -72,35 +73,37 @@ export const loginWithToken = (token) => async (dispatch) => {
 };
 
 export const loginWithSocialMedia = (user) => async (dispatch) => {
-  console.log('user', user.profile);
-  console.log('user', user._profile);
-  console.log('user', user.provider);
-  console.log('user', user._provider);
-  // try {
-  //   const result = await axios({
-  //     method: 'post',
-  //     url: BACKEND.loginToken,
-  //     data: {
-  //       email: user.profile.email,
-  //       first_name: user.profile.firstName,
-  //       last_name: user.profile.lastName,
-  //       provider: user.provider
-  //     }
-  //   });
+  console.log('user', user);
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.loginToken,
+      data: {
+        email: user.profile.email,
+        first_name: user.profile.firstName,
+        last_name: user.profile.lastName,
+        provider: user.provider
+      }
+    });
 
-  //   console.log('result', result);
+    const { id, accessToken } = result.data;
 
-  //   dispatch({
-  //     type: Types.LOGIN_SOCIAL,
-  //     data: {}
-  //   });
-  // } catch (error) {
-  //   console.log('loginWithSocialMedia error', error);
-  //   dispatch({
-  //     type: Types.ERROR,
-  //     data: 'loginWithSocialMedia'
-  //   });
-  // }
+    localStorage.setItem('token', JSON.stringify(accessToken));
+
+    dispatch({
+      type: Types.LOGIN_SOCIAL,
+      data: {
+        user: id,
+        token: accessToken
+      }
+    });
+  } catch (error) {
+    console.log('loginWithSocialMedia error', error);
+    dispatch({
+      type: Types.ERROR,
+      data: 'loginWithSocialMedia'
+    });
+  }
 };
 
 export function logout() {
@@ -126,6 +129,13 @@ export default function reducer(state = initialState, action) {
         isLogged: true
       };
     case Types.LOGIN_TOKEN:
+      return {
+        ...state,
+        user: action.data.user,
+        token: action.data.token,
+        isLogged: true
+      };
+    case Types.LOGIN_SOCIAL:
       return {
         ...state,
         user: action.data.user,
