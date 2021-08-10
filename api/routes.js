@@ -1,12 +1,11 @@
 import { elkSearch } from "./controllers/elk.controller";
-import authJwt from "./middlewares/authJwt";
 import {
   allAccess,
   userBoard,
   moderatorBoard,
   adminBoard,
   tokenTest,
-} from "./controllers/user.controller";
+} from "./controllers/test.controller";
 import {
   addWords,
   removeWords,
@@ -14,8 +13,9 @@ import {
   listWordsByUser,
 } from "./controllers/words.controller";
 
-import middlewares from "./middlewares";
-import { signup, signin } from "./controllers/auth.controller";
+import authJwt from "./middlewares/authJwt";
+import verifySignUp from "./middlewares/verifySignUp";
+import { signup, signin, signinByToken } from "./controllers/auth.controller";
 
 export default function (app) {
   // ELK
@@ -29,7 +29,6 @@ export default function (app) {
     [authJwt.verifyToken, authJwt.isModerator],
     moderatorBoard
   );
-  app.get("/api/test/token", [authJwt.verifyToken], tokenTest);
   app.get(
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
@@ -41,12 +40,13 @@ export default function (app) {
   app.post(
     "/api/auth/signup",
     [
-      middlewares.verifySignUp.checkDuplicateUsernameOrEmail,
-      middlewares.verifySignUp.checkRolesExisted,
+      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkRolesExisted,
     ],
     signup,
     signin
   );
+  app.get("/api/auth/token", [authJwt.verifyToken], signinByToken);
 
   // WORDS
   app.post("/api/words/add", addWords, listWordsByUser);

@@ -123,3 +123,50 @@ export function signin(req, res) {
       });
     });
 }
+
+export function signinByToken(req, res) {
+  User.findOne({
+    id: req.id,
+  })
+    .populate("roles", "-__v")
+    .populate("words", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (!user) {
+        return res.status(400).send({ message: "User Not found." });
+        // return res.status(404).send({ message: "User Not found." });
+      }
+
+      var token = sign({ id: user.id }, secret, {
+        expiresIn: 86400, // 24 hours
+      });
+
+      var authorities = [];
+
+      for (let i = 0; i < user.roles.length; i++) {
+        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+      }
+      var words_group = [];
+
+      for (let i = 0; i < user.words.length; i++) {
+        // const wordId = user.words[i]
+
+        words_group.push(user.words[i]);
+      }
+      res.status(200).send({
+        id: user._id,
+        email: user.email,
+        data_nascimento: user.nascimento,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        cpf: user.cpf,
+        roles: authorities,
+        accessToken: token,
+        grupo_palavras: words_group,
+      });
+    });
+}
