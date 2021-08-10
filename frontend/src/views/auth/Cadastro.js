@@ -21,7 +21,7 @@ import { login, loginWithSocialMedia } from '../../reducers/AuthDuck';
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
-function PageRegister() {
+const PageRegister = ({ login, loginWithSocialMedia }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -39,7 +39,7 @@ function PageRegister() {
     setForm({ ...form, [field]: value });
   };
 
-  const sendRegister = async (e) => {
+  const sendRegister = async () => {
     const body = form;
     if (body.password !== body.password_confirm) {
       return;
@@ -343,7 +343,7 @@ function PageRegister() {
       </div>
     </>
   );
-}
+};
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ login, loginWithSocialMedia }, dispatch);
