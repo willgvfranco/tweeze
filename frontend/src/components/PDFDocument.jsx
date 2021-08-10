@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   },
   headerText: { fontSize: '28px', marginRight: '100px' },
   content: { padding: '20px' },
-  NewsContent: { padding: '10px' },
+  newsWrapper: { display: 'flex', flexDirection: 'column' },
+  newsContent: { padding: '10px' },
   newsTitle: { fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' },
   newsSource: { fontSize: '16px', fontWeight: 'bold' },
   newsUrl: { fontStyle: 'italic', textDecoration: 'underline' },
@@ -43,12 +44,12 @@ const PDFDocument = ({ selectedNews, news }) => (
         <Image src={LogoTwz} style={styles.logo}></Image>
         <Text style={styles.headerText}>Relatório de Notícias</Text>
       </View>
-      <View style={{ display: 'flex', flexDirection: 'column' }}>
+      <View style={styles.newsWrapper}>
         {selectedNews?.map((el) => (
           <View key={el} style={styles.content}>
             <Text style={styles.newsTitle}>{news[el]._source.title}</Text>
             <Text style={styles.newsSource}>{news[el]._source.source}</Text>
-            <View style={styles.NewsContent}>
+            <View style={styles.newsContent}>
               <Text>{news[el]._source.description}</Text>
 
               <Link src={news[el]._source.url} style={styles.newsUrl}>
