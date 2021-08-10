@@ -71,6 +71,38 @@ export const loginWithToken = (token) => async (dispatch) => {
   }
 };
 
+export const loginWithSocialMedia = (user) => async (dispatch) => {
+  console.log('user', user.profile);
+  console.log('user', user._profile);
+  console.log('user', user.provider);
+  console.log('user', user._provider);
+  // try {
+  //   const result = await axios({
+  //     method: 'post',
+  //     url: BACKEND.loginToken,
+  //     data: {
+  //       email: user.profile.email,
+  //       first_name: user.profile.firstName,
+  //       last_name: user.profile.lastName,
+  //       provider: user.provider
+  //     }
+  //   });
+
+  //   console.log('result', result);
+
+  //   dispatch({
+  //     type: Types.LOGIN_SOCIAL,
+  //     data: {}
+  //   });
+  // } catch (error) {
+  //   console.log('loginWithSocialMedia error', error);
+  //   dispatch({
+  //     type: Types.ERROR,
+  //     data: 'loginWithSocialMedia'
+  //   });
+  // }
+};
+
 export function logout() {
   return {
     type: Types.LOGOUT

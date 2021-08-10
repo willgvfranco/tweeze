@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   FormControlLabel,
@@ -19,9 +20,19 @@ import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
 import TabelaNoticias from '../components/TabelaNoticias';
 import Loader from '../components/Loader';
+import PDFDocument from '../components/PDFDocument';
 
 import { getAllWords } from '../reducers/WordsDuck';
 import { search } from '../reducers/NewsDuck';
+
+const handleNews = (news) => {
+  const newsObj = {};
+  for (const key in Object(news)) {
+    newsObj[news[key]._id] = news[key];
+  }
+
+  return newsObj;
+};
 
 const Noticias = ({ words, getAllWords, search, news }) => {
   const [selectedWord, setSelectedWord] = useState('');
@@ -31,7 +42,6 @@ const Noticias = ({ words, getAllWords, search, news }) => {
   const [loadingNews, setLoadingNews] = useState(false);
   const [loadingWords, setLoadingWords] = useState(false);
   const [selectedNews, setSelectedNews] = useState([]);
-  console.log('selectedNews', selectedNews);
 
   useEffect(() => {
     if (Object.keys(words).length === 0) {
@@ -152,9 +162,22 @@ const Noticias = ({ words, getAllWords, search, news }) => {
           disabled={!automatic}
         />
 
-        <Button variant="contained" className="btn-primary m-2 ml-auto">
-          Gerar relatório
-        </Button>
+        <PDFDownloadLink
+          document={
+            <PDFDocument selectedNews={selectedNews} news={handleNews(news)} />
+          }
+          fileName="relatorio_tweeze.pdf"
+          className="m-2 ml-auto">
+          {({ loading }) =>
+            loading ? (
+              <Loader isLoading={loading} />
+            ) : (
+              <Button variant="contained" className="btn-primary">
+                Gerar relatório
+              </Button>
+            )
+          }
+        </PDFDownloadLink>
       </Card>
     </>
   );

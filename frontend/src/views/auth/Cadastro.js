@@ -5,6 +5,7 @@ import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -15,7 +16,7 @@ import {
   ListItem,
   TextField
 } from '@material-ui/core';
-import { login } from '../../reducers/AuthDuck';
+import { login, loginWithSocialMedia } from '../../reducers/AuthDuck';
 
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
@@ -38,7 +39,6 @@ function PageRegister() {
     setForm({ ...form, [field]: value });
   };
 
-  const headers = { 'Content-Type': 'application/json' };
   const sendRegister = async (e) => {
     const body = form;
     if (body.password !== body.password_confirm) {
@@ -58,9 +58,7 @@ function PageRegister() {
       });
   };
 
-  const handleSocialLogin = (user) => {
-    console.log(user);
-  };
+  const handleSocialLogin = (user) => loginWithSocialMedia(user);
 
   const handleSocialLoginFailure = (err) => {
     console.error(err);
@@ -89,7 +87,8 @@ function PageRegister() {
                         <div className="text-center mt-5">
                           <img
                             className="logo-tweeze-css"
-                            src={logoTweeze}></img>
+                            src={logoTweeze}
+                            alt="Logo Tweeze"></img>
                           <h1 className="font-size-xxl mb-1 font-weight-bold landingcadastro-acerto-header">
                             Criação de conta
                           </h1>
@@ -346,10 +345,7 @@ function PageRegister() {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatch: (action) => dispatch(action)
-});
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ login, loginWithSocialMedia }, dispatch);
 
-const ConnectedPageRegister = connect()(PageRegister);
-
-export default ConnectedPageRegister;
+export default connect(null, mapDispatchToProps)(PageRegister);
