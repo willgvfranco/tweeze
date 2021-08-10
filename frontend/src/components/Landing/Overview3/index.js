@@ -95,7 +95,7 @@ export default function LivePreviewExample() {
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Análise
                     </h3>
-                    <p className="text-black-50 mb-3">
+                    <p className="text-black-50 mb-3 ">
                       O monitoramento das informações é 24 horas por dia, 7 dias
                       por semana e 365 dias do ano. O monitoramento se extende
                       de veículos de imprensa à mídias sociais. Dentre em breve

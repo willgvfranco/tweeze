@@ -87,7 +87,7 @@ export default function LivePreviewExample() {
             </li>
           </ul>
         </div>
-        <div className="header-nav-actions flex-grow-0 flex-lg-grow-1">
+        <div className="header-nav-actions flex-grow-0 flex-lg-grow-1 ajusteiconeheader">
           <span className="d-none d-lg-block">
             <NavLink className="nav-link-simple" to="/login">
               <Button

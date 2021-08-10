@@ -38,40 +38,50 @@ const Step1 = () => {
           <p className="text-black-50 mb-4">
           Gostaria de entender mais sobre nossos serviços? 
           </p>
-          <form container spacing={3}>
-            <label item md={6} lg={12} xl={12}>
-              <TextField
-                fullWidth
-                label="Nome"
-                type="Nome"
-                variant="outlined"
-              />
-            </label>
-            <label item md={6} lg={12} xl={12}>
-              <TextField
-                fullWidth
-                label="Telefone"
-                type="Telefone"
-                variant="outlined"
-              />
-            </label>
-            <label item md={6} lg={12} xl={12}>
-              <TextField
-                fullWidth
-                label="E-mail"
-                type="E-mail"
-                variant="outlined"
-              />
-            </label>
-            <label item md={6} lg={12} xl={12}>
-              <TextField
-                fullWidth
-                label="Assunto"
-                multiline
-                rows={4}
-                variant="outlined"
-              />
-            </label>
+          <form container spacing={4}>
+          <div>
+          <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+            <TextField
+              fullWidth
+              label="Nome"
+              type="Nome"
+              variant="outlined"
+            />
+          </label>
+          </div>
+          <div>
+          <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+            <TextField
+              fullWidth
+              label="Telefone"
+              type="Telefone"
+              variant="outlined"
+            />
+          </label>
+          </div>
+          <div>
+          <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+            <TextField
+              fullWidth
+              label="E-mail"
+              type="E-mail"
+              variant="outlined"
+            />
+          </label>
+          </div>
+          <div>
+          <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+          <TextField
+            className="ajusteformulario"  
+            fullWidth
+            label="Assunto"
+            multiline
+            rows={8}
+            variant="outlined"
+          />
+        </label>
+          </div>
+          <button className="badge badge-primary mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">Enviar</button>
           </form>
         </div>
       </Container>

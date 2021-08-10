@@ -170,3 +170,13 @@ export function signinByToken(req, res) {
       });
     });
 }
+
+// export function socialLogin(req, res, next) {
+//   const email = req.body.email;
+//   const first_name = req.body.first_name;
+//   const last_name = req.body.last_name;
+//   const provider = req.body.provider;
+//   if (!provider) {
+//     res.send(666);
+//   }
+// }
