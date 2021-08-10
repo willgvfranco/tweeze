@@ -46,7 +46,7 @@ export default function (app) {
     signin
   );
   app.get("/api/auth/token", [authJwt.verifyToken], signinByToken);
-  app.get("/api/auth/social", socialLogin);
+  // app.get("/api/auth/social", socialLogin);
 
   // WORDS
   app.post("/api/words/add", addWords, listWordsByUser);
