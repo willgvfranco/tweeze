@@ -19,20 +19,39 @@ const handleWords = (words) => {
   return newWords;
 };
 
-export const getAllWords = () => async (dispatch) => {
+export const getAllWords = () => async (dispatch, getState) => {
+  const { token, user } = getState().auth;
+  const { firstFetch } = getState().words;
+
+  if (!user) return;
+
   try {
     const result = await axios({
       method: 'post',
       url: BACKEND.getWords,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
       data: {
-        userId: '6103516ba2043a52609dfcf3'
+        userId: user
       }
     });
 
-    dispatch({
-      type: Types.GET,
-      data: handleWords(result.data.grupo_palavras)
-    });
+    firstFetch
+      ? dispatch({
+          type: Types.GET,
+          data: {
+            words: handleWords(result.data.grupo_palavras)
+          }
+        })
+      : dispatch({
+          type: Types.GET,
+          data: {
+            words: handleWords(result.data.grupo_palavras),
+            firstFetch: true
+          }
+        });
   } catch (error) {
     console.log('getAllWords error', error);
     dispatch({
@@ -42,13 +61,19 @@ export const getAllWords = () => async (dispatch) => {
   }
 };
 
-export const createWord = (word) => async (dispatch) => {
+export const createWord = (word) => async (dispatch, getState) => {
+  const { token, user } = getState().auth;
+
   try {
     const result = await axios({
       method: 'post',
       url: BACKEND.addWord,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
       data: {
-        userId: '6103516ba2043a52609dfcf3',
+        userId: user,
         ...word
       }
     });
@@ -66,17 +91,20 @@ export const createWord = (word) => async (dispatch) => {
   }
 };
 
-export const editWord = (word) => async (dispatch) => {
-  // const { id: userId } = getState().auth;
-  // Implementar: auth
+export const editWord = (word) => async (dispatch, getState) => {
+  const { token, user } = getState().auth;
   const { _id: wordsId, name, pos, neg } = word;
 
   try {
     const result = await axios({
       method: 'post',
       url: BACKEND.updateWord,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
       data: {
-        userId: '6103516ba2043a52609dfcf3',
+        userId: user,
         wordsId,
         name,
         pos,
@@ -97,13 +125,19 @@ export const editWord = (word) => async (dispatch) => {
   }
 };
 
-export const deleteWord = (wordsId) => async (dispatch) => {
+export const deleteWord = (wordsId) => async (dispatch, getState) => {
+  const { token, user } = getState().auth;
+
   try {
     const result = await axios({
       method: 'post',
       url: BACKEND.deleteWord,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
       data: {
-        userId: '6103516ba2043a52609dfcf3',
+        userId: user,
         wordsId
       }
     });
@@ -123,6 +157,7 @@ export const deleteWord = (wordsId) => async (dispatch) => {
 
 const initialState = {
   words: {},
+  firstFetch: false,
   error: ''
 };
 
@@ -131,7 +166,8 @@ export default function reducer(state = initialState, action) {
     case Types.GET:
       return {
         ...state,
-        words: action.data
+        words: action.data.words,
+        firstFetch: action.data?.firstFetch
       };
     case Types.CREATE:
       return {

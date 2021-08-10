@@ -2,10 +2,10 @@ import { verify } from "jsonwebtoken";
 import { secret } from "../config/auth.config.js";
 import Role from "../models/role.model.js";
 import User from "../models/user.model.js";
-
+import { sign } from "jsonwebtoken";
 const verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
-
+  let token = req.headers["authorization"];
+  console.log(token);
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
@@ -16,6 +16,17 @@ const verifyToken = (req, res, next) => {
     }
     req.userId = decoded.id;
     next();
+  });
+};
+
+const renewToken = (req, res, next) => {
+  const userId = req.id;
+  sign({ id: userId }, secret, {
+    expiresIn: 86400, // 24 hours
+  });
+  res.status(200).send({
+    accessToken: token,
+    id: userId,
   });
 };
 

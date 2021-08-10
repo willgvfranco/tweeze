@@ -1,19 +1,75 @@
 import axios from 'axios';
-// Action Types
+
+import BACKEND from '../config/env';
 
 export const Types = {
   LOGIN: 'auth/LOGIN',
-  LOGOUT: 'auth/LOGOUT'
+  LOGIN_TOKEN: 'auth/LOGIN_TOKEN',
+  LOGOUT: 'auth/LOGOUT',
+  ERROR: 'auth/ERROR'
 };
 
-// Action Creators
+export const login = (data) => async (dispatch) => {
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.login,
+      data
+    });
 
-export function login(data) {
-  return {
-    type: Types.LOGIN,
-    payload: data
-  };
-}
+    const { id, accessToken } = result.data;
+
+    localStorage.setItem('token', JSON.stringify(accessToken));
+
+    dispatch({
+      type: Types.LOGIN,
+      data: {
+        user: id,
+        token: accessToken
+      }
+    });
+  } catch (error) {
+    console.log('login error', error);
+    dispatch({
+      type: Types.ERROR,
+      data: 'login'
+    });
+  }
+};
+
+export const loginWithToken = (token) => async (dispatch) => {
+  try {
+    const result = await axios({
+      method: 'get',
+      url: BACKEND.loginToken,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
+    });
+
+    const { id, accessToken } = result.data;
+
+    localStorage.setItem('token', JSON.stringify(accessToken));
+
+    dispatch({
+      type: Types.LOGIN_TOKEN,
+      data: {
+        user: id,
+        token: accessToken
+      }
+    });
+  } catch (error) {
+    console.log('loginWithToken error', error);
+    if (error.response.status === 401) {
+      localStorage.clear('token');
+    }
+    dispatch({
+      type: Types.ERROR,
+      data: 'loginWithToken'
+    });
+  }
+};
 
 export function logout() {
   return {
@@ -21,12 +77,11 @@ export function logout() {
   };
 }
 
-// Reducer
-
-const initialState = {
+export const initialState = {
   isLogged: false,
   token: null,
-  user: {}
+  user: '',
+  error: ''
 };
 
 export default function reducer(state = initialState, action) {
@@ -34,14 +89,28 @@ export default function reducer(state = initialState, action) {
     case Types.LOGIN:
       return {
         ...state,
-        user: action.payload,
-        token: action.payload.accessToken,
+        user: action.data.user,
+        token: action.data.token,
+        isLogged: true
+      };
+    case Types.LOGIN_TOKEN:
+      return {
+        ...state,
+        user: action.data.user,
+        token: action.data.token,
         isLogged: true
       };
     case Types.LOGOUT:
       return {
         ...state,
-        auth: action.payload
+        isLogged: false,
+        token: null,
+        user: {}
+      };
+    case Types.ERROR:
+      return {
+        ...state,
+        error: action.data
       };
     default:
       return state;

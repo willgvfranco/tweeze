@@ -1,18 +1,16 @@
 module.exports = {
   apps: [
     {
-      name: "React",
+      name: "frontend",
       cwd: "./frontend",
       script: "frontend/node_modules/.bin/react-scripts",
       args: "start",
-      watch: true,
     },
     {
-      name: "Node",
+      name: "api",
       cwd: "./api",
       script: "api/node_modules/.bin/babel-node",
       args: " ./server.js",
-      watch: true,
     },
   ],
   // deploy: {

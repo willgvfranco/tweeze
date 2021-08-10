@@ -4,6 +4,7 @@ require('dotenv').config();
 const ROOT_URL = 'https://api.tweeze.com.br';
 const BACKEND = {
   login: `${ROOT_URL}/api/auth/signin`,
+  loginToken: `${ROOT_URL}/api/auth/token`,
   cadastro: `${ROOT_URL}/api/auth/signup`,
   getWords: `${ROOT_URL}/api/words/list`,
   addWord: `${ROOT_URL}/api/words/add`,

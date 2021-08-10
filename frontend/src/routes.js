@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
 
@@ -10,6 +10,7 @@ import MuiTheme from './theme';
 import LeftSidebar from './components/LeftSidebar';
 import MinimalLayout from './components/MinimalLayout';
 import PresentationLayout from './components/PresentationLayout';
+import RequireAuth from './components/RequireAuth';
 
 import Error404 from './views/errors/404';
 import Error500 from './views/errors/500';
@@ -114,7 +115,6 @@ const Routes = () => {
                 '/noticias',
                 '/minha-conta',
                 '/grupos'
-
               ]}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
@@ -124,13 +124,54 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
-                    <Route path="/home" component={Home} />
-                    <Route path="/noticias" component={Noticias} />
-                    <Route path="/minha-conta" component={MinhaConta} />
-                    <Route path="/grupos" component={Grupos} />
-                    <Route path="/blank" component={Blank} />
-                    <Route path="/faq" component={Faq} />
-
+                    <Route
+                      path="/home"
+                      render={() => (
+                        <RequireAuth>
+                          <Home />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/noticias"
+                      render={() => (
+                        <RequireAuth>
+                          <Noticias />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/minha-conta"
+                      render={() => (
+                        <RequireAuth>
+                          <MinhaConta />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/grupos"
+                      render={() => (
+                        <RequireAuth>
+                          <Grupos />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/blank"
+                      render={() => (
+                        <RequireAuth>
+                          <Blank />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/faq"
+                      render={() => (
+                        <RequireAuth>
+                          <Faq />
+                        </RequireAuth>
+                      )}
+                    />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
@@ -145,7 +186,6 @@ const Routes = () => {
                 '/error-500',
                 '/error-505',
                 '/quem-somos'
-
               ]}>
               <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
@@ -162,7 +202,6 @@ const Routes = () => {
                     <Route path="/error-500" component={Error500} />
                     <Route path="/error-505" component={Error505} />
                     <Route path="/quem-somos" component={QuemSomos} />
-
                   </motion.div>
                 </Switch>
               </MinimalLayout>
