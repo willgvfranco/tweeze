@@ -8,7 +8,7 @@ import MarketingTestimonial from '../components/MarketingTestimonials';
 import MarketingCta from '../components/MarketingCta';
 import PricingTables from '../components/PricingTables';
 
-import FormsSteppers from '../../src/components/candidates/FormsSteppers/FormsSteppers1/index'
+import FormsSteppers from '../../src/components/candidates/FormsSteppers/FormsSteppers1/index';
 
 
 export default function Overview() {
