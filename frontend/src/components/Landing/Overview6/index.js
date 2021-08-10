@@ -231,11 +231,12 @@ export default function LivePreviewExample() {
                       className="font-size-lg"
                     />
                   </ListItem>
+                  <a href="https://www.instagram.com/tweezebrasil/">
                   <ListItem
                   button
                   className="px-0 mr-3 text-white-50"
                   href="https://www.instagram.com/tweezebrasil/"
-                  onClick={(e) => e.preventDefault()}>
+                  >
                   <FontAwesomeIcon
                     
                       icon={['fab', 'instagram']}
@@ -243,6 +244,7 @@ export default function LivePreviewExample() {
                       
                     />
                   </ListItem>
+                  </a>
                 </List>
               </div>
             </Grid>
