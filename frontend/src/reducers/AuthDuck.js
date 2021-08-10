@@ -77,7 +77,7 @@ export const loginWithSocialMedia = (user) => async (dispatch) => {
   try {
     const result = await axios({
       method: 'post',
-      url: BACKEND.loginToken,
+      url: BACKEND.loginSocial,
       data: {
         email: user.profile.email,
         first_name: user.profile.firstName,
