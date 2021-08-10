@@ -4,7 +4,6 @@ import {
   userBoard,
   moderatorBoard,
   adminBoard,
-  tokenTest,
 } from "./controllers/test.controller";
 import {
   addWords,
