@@ -19,8 +19,8 @@ import 'date-fns';
 import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
 import TabelaNoticias from '../components/TabelaNoticias';
-import Loader from '../components/Loader';
 import PDFDocument from '../components/PDFDocument';
+import ConditionalRender from '../components/ConditionalRender';
 
 import { getAllWords } from '../reducers/WordsDuck';
 import { search } from '../reducers/NewsDuck';
@@ -34,41 +34,41 @@ const handleNews = (news) => {
   return newsObj;
 };
 
-const Noticias = ({ words, getAllWords, search, news }) => {
+const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
   const [selectedWord, setSelectedWord] = useState('');
   const [days, setDays] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date('2020-08-18'));
   const [automatic, setAutomatic] = useState(false);
-  const [loadingNews, setLoadingNews] = useState(false);
-  const [loadingWords, setLoadingWords] = useState(false);
+  const [loading, setLoading] = useState('');
   const [selectedNews, setSelectedNews] = useState([]);
+  const [newsObj, setNewsObj] = useState({});
+  console.log('selectedNews', selectedNews);
 
   useEffect(() => {
+    if (loading === 'words') {
+      setLoading('');
+    }
     if (Object.keys(words).length === 0) {
-      setLoadingWords(true);
+      setLoading('words');
       getAllWords();
-      return;
     }
-
-    if (loadingWords) {
-      setLoadingWords(false);
-    }
-  }, [words]);
+  }, [words, hasUser]);
 
   useEffect(() => {
-    if (loadingNews) {
-      setLoadingNews(false);
+    if (loading === 'news') {
+      setLoading('');
     }
+
+    setNewsObj(handleNews(news));
   }, [news]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-
     if (!selectedWord) {
       return;
     }
 
-    setLoadingNews(true);
+    setLoading('news');
     search({
       word: words[selectedWord],
       date: date
@@ -79,17 +79,15 @@ const Noticias = ({ words, getAllWords, search, news }) => {
 
   const handleSelectedWord = (event) => {
     setSelectedWord(event.target.value);
-    setLoadingNews(true);
+    setLoading('news');
     search({
       word: words[event.target.value],
       date: selectedDate
     });
   };
 
-  return loadingWords ? (
-    <Loader isLoading={loadingWords} />
-  ) : (
-    <>
+  return (
+    <ConditionalRender conditional={loading === 'words'}>
       <PageTitle
         titleHeading="Relatórios"
         titleDescription="Consulta de clippings e geração de relatórios">
@@ -123,7 +121,7 @@ const Noticias = ({ words, getAllWords, search, news }) => {
       </PageTitle>
 
       <TabelaNoticias
-        isLoading={loadingNews}
+        isLoading={loading === 'news'}
         selectedNews={selectedNews}
         setSelectedNews={setSelectedNews}
       />
@@ -164,28 +162,30 @@ const Noticias = ({ words, getAllWords, search, news }) => {
 
         <PDFDownloadLink
           document={
-            <PDFDocument selectedNews={selectedNews} news={handleNews(news)} />
+            selectedNews.length !== 0 ? (
+              <PDFDocument selectedNews={selectedNews} news={newsObj} />
+            ) : (
+              <></>
+            )
           }
           fileName="relatorio_tweeze.pdf"
           className="m-2 ml-auto">
-          {({ loading }) =>
-            loading ? (
-              <Loader isLoading={loading} />
-            ) : (
-              <Button variant="contained" className="btn-primary">
-                Gerar relatório
-              </Button>
-            )
-          }
+          <Button
+            variant="contained"
+            className="btn-primary"
+            disabled={selectedNews.length === 0}>
+            Gerar relatório
+          </Button>
         </PDFDownloadLink>
       </Card>
-    </>
+    </ConditionalRender>
   );
 };
 
-const mapStateToProps = ({ words, news }) => ({
+const mapStateToProps = ({ words, news, auth }) => ({
   words: words.words,
-  news: news.news
+  news: news.news,
+  hasUser: auth.user !== ''
 });
 
 const mapDispatchToProps = (dispatch) =>
