@@ -171,12 +171,42 @@ export function signinByToken(req, res) {
     });
 }
 
-// export function socialLogin(req, res, next) {
-//   const email = req.body.email;
-//   const first_name = req.body.first_name;
-//   const last_name = req.body.last_name;
-//   const provider = req.body.provider;
-//   if (!provider) {
-//     res.send(666);
-//   }
-// }
+export function socialLogin(req, res, next) {
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const provider = req.body.provider;
+
+  if (!provider) {
+    res.send(401);
+  }
+  const newAcc = false;
+  User.findOne({
+    email: req.body.email,
+  }).exec((err, user) => {
+    if (err) {
+      newAcc = true;
+      const user = new User({
+        email: body.email,
+        first_name: body.first_name,
+        last_name: body.last_name,
+        facebook: provider === "facebook",
+        google: provider === "google",
+      });
+    }
+
+    if (user) {
+      newAcc = false;
+      user.first_name = body.first_name;
+      user.last_name = body.last_name;
+      user.facebook = provider === "facebook";
+      user.google = provider === "google";
+      user.save((err) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+      });
+    }
+  });
+}

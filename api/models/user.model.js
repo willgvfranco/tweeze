@@ -13,10 +13,11 @@ const User = mongoose.model(
     },
     password: {
       type: String,
-      required: true,
     },
     first_name: String,
     last_name: String,
+    facebook: Boolean,
+    google: Boolean,
     data_nascimento: Date,
     _created: { type: Date, default: Date.now },
     _updated: { type: Date, default: Date.now },
