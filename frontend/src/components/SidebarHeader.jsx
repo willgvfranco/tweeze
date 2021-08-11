@@ -1,5 +1,4 @@
 import React from 'react';
-
 import clsx from 'clsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +12,7 @@ import {
   setSidebarToggleMobile
 } from '../reducers/ThemeOptions';
 
-import projectLogo from '../assets/images/react.svg';
+import TweezeLogo from '../assets/images/logo/logo_twz_branco.png';
 
 const SidebarHeader = (props) => {
   const toggleSidebarMobile = () => {
@@ -34,20 +33,13 @@ const SidebarHeader = (props) => {
     <>
       <div className="app-sidebar--header">
         <div className="app-sidebar-logo">
-          <NavLink
-            to="/"
-            title="Bamburgh React Admin Dashboard with Material-UI PRO"
-            className="app-sidebar-logo">
-            <div className="app-sidebar-logo--icon">
-              <img
-                alt="Bamburgh React Admin Dashboard with Material-UI PRO"
-                src={projectLogo}
-              />
+          <NavLink to="/home" title="Tweeze" className="app-sidebar-logo">
+            <div style={{ width: '3.5rem', marginRight: '0.5rem' }}>
+              <img alt="Tweeze" src={TweezeLogo} style={{ width: '100%' }} />
             </div>
             <div className="app-sidebar-logo--text">
-              <span>General</span>
-
-              <b>bamburgh</b>
+              <b style={{ textTransform: 'initial' }}>Tweeze</b>
+              <span style={{ textTransform: 'initial' }}>Beta v0.1</span>
             </div>
           </NavLink>
         </div>

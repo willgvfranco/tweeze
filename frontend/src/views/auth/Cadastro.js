@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import SocialButton from './SocialButton';
-import BACKEND from '../../config/env';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
@@ -16,8 +15,12 @@ import {
   ListItem,
   TextField
 } from '@material-ui/core';
+import { ArrowBack } from '@material-ui/icons';
 import { login, loginWithSocialMedia } from '../../reducers/AuthDuck';
 
+import BACKEND from '../../config/env';
+
+import SocialButton from './SocialButton';
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
@@ -83,6 +86,18 @@ const PageRegister = ({ login, loginWithSocialMedia }) => {
                         item
                         lg={6}
                         className="d-flex align-items-center justify-content-center flex-column">
+                        <NavLink
+                          to="/login"
+                          className="mr-auto ml-1 mt-2"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: '4rem'
+                          }}>
+                          <ArrowBack />
+                          <span style={{ fontSize: '1rem' }}>voltar</span>
+                        </NavLink>
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-5">
                           <img

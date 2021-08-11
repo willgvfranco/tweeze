@@ -1,55 +1,23 @@
 import React, { useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Grid, Container, List, ListItem, Popover } from '@material-ui/core';
+import { Grid, Container, List, ListItem } from '@material-ui/core';
 
-import LogoBranca from '../../../assets/images/logo/logo_twz_branco.png';
+import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
+import WarningPopover from './WarningPopover';
 
-const WarningPopover = ({ open, anchorEl, handleClosePopover, text }) => (
-  <Popover
-    open={open}
-    anchorEl={anchorEl}
-    classes={{ paper: 'rounded font-size-md' }}
-    onClose={handleClosePopover}
-    anchorOrigin={{
-      vertical: 'center',
-      horizontal: 'center'
-    }}
-    transformOrigin={{
-      vertical: 'center',
-      horizontal: 'center'
-    }}>
-    <div className="rounded-top p-3 font-weight-bold bg-secondary">{text}</div>
-  </Popover>
-);
-
-export default function LivePreviewExample() {
+const Footer = () => {
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const [anchorEl3, setAnchorEl3] = useState(null);
- 
-
 
   const open = Boolean(anchorEl1);
   const open2 = Boolean(anchorEl2);
-  
-  
-  
 
   const handleClosePopover1 = () => setAnchorEl1(null);
   const handleClosePopover2 = () => setAnchorEl2(null);
-  const handleClosePopover3 = () => setAnchorEl3(null);
-
-  
-
-
- 
 
   const handleClickPopover1 = (event) => setAnchorEl1(event.currentTarget);
   const handleClickPopover2 = (event) => setAnchorEl2(event.currentTarget);
-  const handleClickPopover3 = (event) => setAnchorEl3(event.currentTarget);
-  
-  
-
 
   return (
     <>
@@ -81,23 +49,20 @@ export default function LivePreviewExample() {
                     component="a"
                     button
                     href="#servicos"
-                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     Quem somos
                   </ListItem>
                   <ListItem
-                  component="a"
-                  button
-                  href="#planos"
-                  onClick={handleClickPopover3}
-                  className="px-0 py-1 text-white-50">
-                  Produtos
+                    component="a"
+                    button
+                    href="#planos"
+                    className="px-0 py-1 text-white-50">
+                    Produtos
                   </ListItem>
                   <ListItem
                     component="a"
                     button
                     href="#contato"
-                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     Aquisição
                   </ListItem>
@@ -116,7 +81,6 @@ export default function LivePreviewExample() {
                     component="a"
                     button
                     href="/faq"
-                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     FAQ
                   </ListItem>
@@ -124,7 +88,6 @@ export default function LivePreviewExample() {
                     component="a"
                     button
                     href="/recuperar-senha"
-                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     Recuração de senha
                   </ListItem>
@@ -132,7 +95,6 @@ export default function LivePreviewExample() {
                     component="a"
                     button
                     href="/login"
-                    onClick={handleClickPopover3}
                     className="px-0 py-1 text-white-50">
                     Area do cliente
                   </ListItem>
@@ -232,18 +194,15 @@ export default function LivePreviewExample() {
                     />
                   </ListItem>
                   <a href="https://www.instagram.com/tweezebrasil/">
-                  <ListItem
-                  button
-                  className="px-0 mr-3 text-white-50"
-                  href="https://www.instagram.com/tweezebrasil/"
-                  >
-                  <FontAwesomeIcon
-                    
-                      icon={['fab', 'instagram']}
-                      className="font-size-lg"
-                      
-                    />
-                  </ListItem>
+                    <ListItem
+                      button
+                      className="px-0 mr-3 text-white-50"
+                      href="https://www.instagram.com/tweezebrasil/">
+                      <FontAwesomeIcon
+                        icon={['fab', 'instagram']}
+                        className="font-size-lg"
+                      />
+                    </ListItem>
                   </a>
                 </List>
               </div>
@@ -277,17 +236,18 @@ export default function LivePreviewExample() {
               component="div"
               className="nav-transparent text-nowrap d-flex justify-content-center">
               <ListItem
-                    component="a"
-                    button
-                    href="/login"
-                    onClick={handleClickPopover3}
-                    className="px-0 py-1 text-white-50">
-                    Minha Conta
-                  </ListItem>
+                component="a"
+                button
+                href="/login"
+                className="px-0 py-1 text-white-50">
+                Minha Conta
+              </ListItem>
             </List>
           </div>
         </Container>
       </div>
     </>
   );
-}
+};
+
+export default Footer;

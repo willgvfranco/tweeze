@@ -2,10 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import ChevronRightTwoToneIcon from '@material-ui/icons/ChevronRightTwoTone';
-import BallotTwoToneIcon from '@material-ui/icons/BallotTwoTone';
-import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
-import DevicesOtherTwoToneIcon from '@material-ui/icons/DevicesOtherTwoTone';
+
+import {
+  ChevronRightTwoTone,
+  BallotTwoTone,
+  SettingsTwoTone,
+  DevicesOtherTwoTone,
+  Home
+} from '@material-ui/icons';
 
 import { setSidebarToggleMobile } from '../reducers/ThemeOptions';
 
@@ -24,13 +28,28 @@ const SidebarMenu = (props) => {
                 activeClassName="active"
                 onClick={toggleSidebarMobile}
                 className="nav-link-simple"
+                to="/home">
+                <span className="sidebar-icon">
+                  <Home />
+                </span>
+                Home
+                <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
+                  <ChevronRightTwoTone />
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                activeClassName="active"
+                onClick={toggleSidebarMobile}
+                className="nav-link-simple"
                 to="/noticias">
                 <span className="sidebar-icon">
-                  <BallotTwoToneIcon />
+                  <BallotTwoTone />
                 </span>
                 Notícias
                 <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
-                  <ChevronRightTwoToneIcon />
+                  <ChevronRightTwoTone />
                 </span>
               </NavLink>
             </li>
@@ -41,27 +60,11 @@ const SidebarMenu = (props) => {
                 className="nav-link-simple"
                 to="/grupos">
                 <span className="sidebar-icon">
-                  <DevicesOtherTwoToneIcon />
+                  <DevicesOtherTwoTone />
                 </span>
                 Grupos
                 <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
-                  <ChevronRightTwoToneIcon />
-                </span>
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                activeClassName="active"
-                onClick={toggleSidebarMobile}
-                className="nav-link-simple"
-                to="/faq">
-                <span className="sidebar-icon">
-                  <DevicesOtherTwoToneIcon />
-                </span>
-                Faq
-                <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
-                  <ChevronRightTwoToneIcon />
+                  <ChevronRightTwoTone />
                 </span>
               </NavLink>
             </li>
@@ -72,11 +75,11 @@ const SidebarMenu = (props) => {
                 className="nav-link-simple"
                 to="/minha-conta">
                 <span className="sidebar-icon">
-                  <SettingsTwoToneIcon />
+                  <SettingsTwoTone />
                 </span>
                 Minha conta
                 <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
-                  <ChevronRightTwoToneIcon />
+                  <ChevronRightTwoTone />
                 </span>
               </NavLink>
             </li>

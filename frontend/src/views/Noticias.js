@@ -42,7 +42,6 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
   const [loading, setLoading] = useState('');
   const [selectedNews, setSelectedNews] = useState([]);
   const [newsObj, setNewsObj] = useState({});
-  console.log('selectedNews', selectedNews);
 
   useEffect(() => {
     if (loading === 'words') {

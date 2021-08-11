@@ -17,7 +17,7 @@ import Error500 from './views/errors/500';
 import Error505 from './views/errors/505';
 
 const Home = lazy(() => import('./views/Home'));
-const Landing = lazy(() => import('./views/Landing'));
+const Landing = lazy(() => import('./views/Landing/index'));
 const Blank = lazy(() => import('./views/BlankView'));
 const Faq = lazy(() => import('./views/Faq'));
 const QuemSomos = lazy(() => import('./views/QuemSomos'));
@@ -111,7 +111,6 @@ const Routes = () => {
               path={[
                 '/home',
                 '/blank',
-                '/faq',
                 '/noticias',
                 '/minha-conta',
                 '/grupos'
@@ -164,14 +163,6 @@ const Routes = () => {
                         </RequireAuth>
                       )}
                     />
-                    <Route
-                      path="/faq"
-                      render={() => (
-                        <RequireAuth>
-                          <Faq />
-                        </RequireAuth>
-                      )}
-                    />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
@@ -185,7 +176,8 @@ const Routes = () => {
                 '/error-404',
                 '/error-500',
                 '/error-505',
-                '/quem-somos'
+                '/quem-somos',
+                '/faq'
               ]}>
               <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
@@ -202,6 +194,7 @@ const Routes = () => {
                     <Route path="/error-500" component={Error500} />
                     <Route path="/error-505" component={Error505} />
                     <Route path="/quem-somos" component={QuemSomos} />
+                    <Route path="/faq" component={Faq} />
                   </motion.div>
                 </Switch>
               </MinimalLayout>

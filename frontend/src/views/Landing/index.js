@@ -1,24 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Container, Card, TextField, Button } from '@material-ui/core';
+import {
+  Card,
+  Container,
+  Button,
+  Typography,
+  TextField
+} from '@material-ui/core';
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Features from './components/Features';
+import Info from './components/Info';
+import Pricing from './components/Pricing';
+import MarketingTestimonial from '../../components/MarketingTestimonials';
+import MarketingCta from '../../components/MarketingCta';
 
 const Step1 = () => {
   return (
     <>
       <Container id="contato">
-        <form
-          className="p-4"
-          id="form_contato"
-          onSubmit={(e) => e.preventDefault()}>
+        <div className="p-4">
           <h5 className="font-size-xl mb-1 font-weight-bold">
             Dúvidas ainda sobre clipping?
           </h5>
           <p className="text-black-50 mb-4">
             Gostaria de entender mais sobre nossos serviços?
           </p>
-          <form container spacing={4}>
+          <form id="form_contato" onSubmit={(e) => e.preventDefault()}>
             <div>
-              <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+              <label className="ajusteformulario" md={12} lg={12} xl={12}>
                 <TextField
                   fullWidth
                   label="Nome"
@@ -28,7 +40,7 @@ const Step1 = () => {
               </label>
             </div>
             <div>
-              <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+              <label className="ajusteformulario" md={12} lg={12} xl={12}>
                 <TextField
                   fullWidth
                   label="Telefone"
@@ -38,7 +50,7 @@ const Step1 = () => {
               </label>
             </div>
             <div>
-              <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+              <label className="ajusteformulario" md={12} lg={12} xl={12}>
                 <TextField
                   fullWidth
                   label="E-mail"
@@ -48,7 +60,7 @@ const Step1 = () => {
               </label>
             </div>
             <div>
-              <label className="ajusteformulario" item md={12} lg={12} xl={12}>
+              <label className="ajusteformulario" md={12} lg={12} xl={12}>
                 <TextField
                   className="ajusteformulario"
                   fullWidth
@@ -70,13 +82,13 @@ const Step1 = () => {
               Enviar
             </Button>
           </form>
-        </form>
+        </div>
       </Container>
     </>
   );
 };
 
-export default function LivePreviewExample() {
+function FormsSteppers() {
   return (
     <Card className="card-box">
       <div className="r">
@@ -92,5 +104,40 @@ export default function LivePreviewExample() {
         </div>
       </div>
     </Card>
+  );
+}
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      {...other}>
+      {value === index && <div>{children}</div>}
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
+};
+
+export default function Overview() {
+  return (
+    <>
+      <Header />
+      <Features />
+      <Info />
+      <Pricing />
+      <MarketingTestimonial />
+      <MarketingCta />
+      <FormsSteppers />
+      <Footer />
+    </>
   );
 }

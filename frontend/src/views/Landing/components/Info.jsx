@@ -1,9 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 import { Grid, Container, Button } from '@material-ui/core';
 
-import hero1 from '../../../assets/images/hero-bg/hero-5.jpg';
+import hero1 from '../../../assets/images/hero-bg/hero-9.jpg';
 
-export default function LivePreviewExample() {
+const Info = () => {
   return (
     <>
       <div className="hero-wrapper bg-deep-blue bg-composed-wrapper">
@@ -16,10 +18,9 @@ export default function LivePreviewExample() {
           <div className="bg-composed-wrapper--content align-self-center p-4 p-xl-5">
             <Container className="pb-5 py-lg-5 text-center">
               <div className="mb-4">
-                <div className="badge badge-primary mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
-                  Tweeze
-                </div>
-                <h4 id="servicos" className="font-weight-bold text-white display-3">
+                <h4
+                  id="servicos"
+                  className="font-weight-bold text-white display-3">
                   Entenda como podemos te ajudar
                 </h4>
                 <Grid item md={11} lg={10} className="mx-auto">
@@ -34,20 +35,10 @@ export default function LivePreviewExample() {
 
               <div className="videoWrapper">
                 <iframe
+                  title="Tweeze video"
                   src="https://youtube.com/embed/WZRxRf0DPfY"
                   frameBorder="0"
                   allowFullScreen></iframe>
-              </div>
-
-              <div className="py-4 mb-4 buttonvideo">
-                <Button
-                  href="https://uifort.com/template/bamburgh-react-admin-dashboard-material-ui-pro"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="btn-pill shadow-second-sm btn-first "
-                  size="large">
-                  <span>Planos e serviços</span>
-                </Button>
               </div>
             </Container>
           </div>
@@ -55,11 +46,10 @@ export default function LivePreviewExample() {
       </div>
 
       <div className="py-4 feature-box">
-        <Container className="py-5">
+        <Container
+          className="py-5"
+          style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="mb-4 text-center">
-            <div className="badge badge-primary text mb-3 h-auto py-2 px-4 font-size-xs badge-pill font-weight-normal">
-              OPÇÕES ILIMITADAS
-            </div>
             <h4 className="font-weight-bold text-second display-3">
               Tenha a informação que você precisar
             </h4>
@@ -72,12 +62,9 @@ export default function LivePreviewExample() {
           </div>
           <Grid container spacing={4} className="">
             <Grid item className="">
-              <Grid
-                container
-                spacing={4}
-                className="text-center">
+              <Grid container spacing={4} className="text-center">
                 <Grid className="" item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="">
+                  <div className="feature-box">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Captação
                     </h3>
@@ -90,12 +77,19 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid className="text-center" item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="feature-box pr-4 ">
+                <Grid
+                  className="text-center"
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}>
+                  <div className="feature-box">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Análise
                     </h3>
-                    <p className="text-black-50 mb-3 ">
+                    <p className="text-black-50 mb-3">
                       O monitoramento das informações é 24 horas por dia, 7 dias
                       por semana e 365 dias do ano. O monitoramento se extende
                       de veículos de imprensa à mídias sociais. Dentre em breve
@@ -104,8 +98,15 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid className="text-center" item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="feature-box pr-4">
+                <Grid
+                  className="text-center"
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}>
+                  <div className="feature-box">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Monitoramento
                     </h3>
@@ -118,8 +119,15 @@ export default function LivePreviewExample() {
                   </div>
                 </Grid>
 
-                <Grid className="text-center" item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="feature-box pr-4">
+                <Grid
+                  className="text-center"
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}>
+                  <div className="feature-box">
                     <h3 className="font-size-xl font-weight-bold my-3 text-primary">
                       Distribuição
                     </h3>
@@ -130,19 +138,22 @@ export default function LivePreviewExample() {
                       em tempo real.
                     </p>
                   </div>
-
                 </Grid>
               </Grid>
             </Grid>
-
-            <Grid className="text-center" item xs={12} sm={12} md={12} lg={12} xl={12}>
-              <a
-                spacing={0}
-                className="card modal-content card-box-hover-rise rounded-lg bg-transparent"></a>
-            </Grid>
           </Grid>
+
+          <NavLink to="/cadastro" className="mx-auto my-3">
+            <Button
+              style={{ fontSize: '1.4rem', borderRadius: '8px' }}
+              className="btn-warning py-2 px-4">
+              Acesse agora! É grátis!!
+            </Button>
+          </NavLink>
         </Container>
       </div>
     </>
   );
-}
+};
+
+export default Info;

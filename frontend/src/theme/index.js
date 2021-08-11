@@ -4,7 +4,7 @@ import shadows from './shadows';
 const MuiTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#3c44b1'
+      main: '#09407e'
     },
     grey: {
       300: '#fefefe',
@@ -26,7 +26,7 @@ const MuiTheme = createMuiTheme({
       main: '#f4772e'
     },
     helpers: {
-      primary: '#3c44b1',
+      primary: '#09407e',
       main: 'rgba(25, 46, 91, .035)'
     },
     contrastThreshold: 3,

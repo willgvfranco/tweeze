@@ -1,13 +1,15 @@
 import React from 'react';
 import SocialLogin from 'react-social-login';
 
+import { Button } from '@material-ui/core';
+
 class SocialButton extends React.Component {
   render() {
     const { children, triggerLogin, ...props } = this.props;
     return (
-      <button onClick={triggerLogin} {...props}>
+      <Button onClick={triggerLogin} {...props}>
         {children}
-      </button>
+      </Button>
     );
   }
 }

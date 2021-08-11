@@ -16,8 +16,7 @@ import {
   ListItem,
   TextField
 } from '@material-ui/core';
-import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
-import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
+import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
 
 import ConditionalRender from 'components/ConditionalRender';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
@@ -75,6 +74,18 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                         item
                         lg={6}
                         className="d-flex align-items-center justify-content-center flex-column">
+                        <NavLink
+                          to="/"
+                          className="mr-auto ml-1 mt-2"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: '4rem'
+                          }}>
+                          <ArrowBack />
+                          <span style={{ fontSize: '1rem' }}>voltar</span>
+                        </NavLink>
                         <div className="divider-v divider-v-lg d-none d-lg-block" />
                         <div className="text-center mt-5">
                           <img
@@ -127,7 +138,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
-                                      <MailOutlineTwoToneIcon />
+                                      <MailOutlineTwoTone />
                                     </InputAdornment>
                                   )
                                 }}
@@ -147,7 +158,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
-                                      <LockTwoToneIcon />
+                                      <LockTwoTone />
                                     </InputAdornment>
                                   )
                                 }}
@@ -167,12 +178,11 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                                 label="Lembrar acesso"
                               />
                               <div>
-                                <a
+                                <NavLink
                                   className="text-first"
-                                  href="#/"
-                                  onClick={(e) => e.preventDefault()}>
+                                  to="/recuperar-senha">
                                   Recupere a sua senha
-                                </a>
+                                </NavLink>
                               </div>
                             </div>
                             <div className="text-center py-4">

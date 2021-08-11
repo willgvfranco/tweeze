@@ -1,8 +1,9 @@
 import React from 'react';
-import { Grid, Container, Card } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
 
-export default function LivePreviewExample() {
+import CheckIcon from '@material-ui/icons/Check';
+import { Card, Grid, Container } from '@material-ui/core';
+
+const Features = () => {
   return (
     <>
       <div className="bg-light z-over" style={{ marginTop: '-30px' }}>
@@ -196,4 +197,6 @@ export default function LivePreviewExample() {
       </div>
     </>
   );
-}
+};
+
+export default Features;
