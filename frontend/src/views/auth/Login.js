@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,25 +19,35 @@ import {
 import MailOutlineTwoToneIcon from '@material-ui/icons/MailOutlineTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
+import ConditionalRender from 'components/ConditionalRender';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
-import { login } from '../../reducers/AuthDuck';
+import { login, loginWithToken } from '../../reducers/AuthDuck';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-const LoginForm = ({ login }) => {
+const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
   const [form, setForm] = useState({
     password: '',
     email: ''
   });
   const [checked1, setChecked] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const isLogged = useSelector(({ auth }) => auth.isLogged);
 
   useEffect(() => {
     if (isLogged) {
       history.push('/home');
     }
+    if (token !== null && !isLogged) {
+      setLoading(true);
+      loginWithToken(token);
+    }
   }, [isLogged]);
+
+  useEffect(() => {
+    if (loginError === 'loginWithToken') {
+      setLoading(false);
+    }
+  }, [loginError]);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -47,8 +57,8 @@ const LoginForm = ({ login }) => {
   };
 
   return (
-    <>
-      <div className="app-wrapper min-vh-100 bg-white">
+    <div className="app-wrapper min-vh-100 bg-white">
+      <ConditionalRender conditional={loading}>
         <div className="hero-wrapper w-100 bg-composed-wrapper bg-midnight-bloom min-vh-100">
           <div className="flex-grow-1 w-100 d-flex align-items-center">
             <div
@@ -289,12 +299,18 @@ const LoginForm = ({ login }) => {
             </Container>
           </div>
         </div>
-      </div>
-    </>
+      </ConditionalRender>
+    </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ login }, dispatch);
+const mapStateToProps = ({ auth }) => ({
+  isLogged: auth.isLogged,
+  token: auth.token,
+  loginError: auth.error
+});
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ login, loginWithToken }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
