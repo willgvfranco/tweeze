@@ -5,7 +5,7 @@ import SocialButton from './SocialButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { loginWithSocialMedia } from '../../reducers/AuthDuck';
 
-const SocialButtons = () => {
+const SocialButtons = ({ loginWithSocialMedia }) => {
   const handleSocialLogin = (user) => loginWithSocialMedia(user);
 
   const handleSocialLoginFailure = (err) => {
