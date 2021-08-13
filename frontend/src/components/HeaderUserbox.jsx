@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 // import { withStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,8 +9,12 @@ import {
   Menu,
   Button,
   List,
-  ListItem
+  ListItem,
+  Backdrop,
+  CircularProgress
 } from '@material-ui/core';
+
+import { logout } from '../reducers/AuthDuck';
 
 // import avatar7 from '../assets/images/avatars/avatar7.jpg';
 
@@ -40,8 +47,22 @@ import {
 //   }
 // })(Badge);
 
-const HeaderUserbox = () => {
+const PageLoader = ({ open }) => (
+  <div style={{ zIndex: '2000' }}>
+    <Backdrop
+      open={open}
+      style={{ display: 'flex', flexDirection: 'column', zIndex: '2000' }}>
+      <CircularProgress style={{ color: 'white' }} />
+      <span style={{ color: 'white', fontSize: '22px', marginTop: '20px' }}>
+        Saindo...
+      </span>
+    </Backdrop>
+  </div>
+);
+
+const HeaderUserbox = ({ logout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [displayLoader, setDisplayLoader] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,6 +71,14 @@ const HeaderUserbox = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    setDisplayLoader(true);
+    setTimeout(logout, 1000);
+  };
+
+  const Loader = () =>
+    displayLoader ? <PageLoader open={displayLoader} /> : null;
 
   return (
     <>
@@ -103,14 +132,21 @@ const HeaderUserbox = () => {
             <ListItem button className="d-block text-left">
               Minha conta
             </ListItem>
-            <ListItem button className="d-block text-left">
+            <ListItem
+              button
+              className="d-block text-left"
+              onClick={handleLogout}>
               Logout
             </ListItem>
           </List>
         </div>
+        <Loader />
       </Menu>
     </>
   );
 };
 
-export default HeaderUserbox;
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ logout }, dispatch);
+
+export default connect(null, mapDispatchToProps)(HeaderUserbox);

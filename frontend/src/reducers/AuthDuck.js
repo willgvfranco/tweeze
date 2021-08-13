@@ -106,11 +106,13 @@ export const loginWithSocialMedia = (user) => async (dispatch) => {
   }
 };
 
-export function logout() {
-  return {
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('token');
+
+  dispatch({
     type: Types.LOGOUT
-  };
-}
+  });
+};
 
 export const initialState = {
   isLogged: false,

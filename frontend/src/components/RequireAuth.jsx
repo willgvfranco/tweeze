@@ -16,7 +16,7 @@ const RequireAuth = ({
 
   useEffect(() => {
     shouldNavigateAway();
-  }, []);
+  }, [isLogged]);
 
   const shouldNavigateAway = () => {
     if (token !== null && !isLogged) {
