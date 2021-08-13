@@ -85,15 +85,16 @@ export function signin(req, res) {
         // return res.status(404).send({ message: "User Not found." });
       }
 
-      var passwordIsValid = compareSync(req.body.password, user.password);
+      if (!req.body.bypass) {
+        var passwordIsValid = compareSync(req.body.password, user.password);
 
-      if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!",
-        });
+        if (!passwordIsValid) {
+          return res.status(401).send({
+            accessToken: null,
+            message: "Invalid Password!",
+          });
+        }
       }
-
       var token = sign({ id: user.id }, secret, {
         expiresIn: 86400, // 24 hours
       });
@@ -173,39 +174,45 @@ export function signinByToken(req, res) {
 
 export function socialLogin(req, res, next) {
   const email = req.body.email;
-  const first_name = req.body.first_name;
-  const last_name = req.body.last_name;
-  const provider = req.body.provider;
+  if (!email) {
+    res.sendStatus(422);
+    return;
+  }
+  const provider = req.body.provider || "";
 
   if (!provider) {
-    res.send(401);
+    res.sendStatus(401);
+    return;
   }
-  const newAcc = false;
+
   User.findOne({
     email: req.body.email,
   }).exec((err, user) => {
-    if (err) {
-      newAcc = true;
-      const user = new User({
-        email: body.email,
-        first_name: body.first_name,
-        last_name: body.last_name,
-        facebook: provider === "facebook",
-        google: provider === "google",
+    if (!user) {
+      user = new User({
+        email: req.body.email,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
       });
-    }
-
-    if (user) {
-      newAcc = false;
-      user.first_name = body.first_name;
-      user.last_name = body.last_name;
-      user.facebook = provider === "facebook";
-      user.google = provider === "google";
+      user.save((err, user) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        console.log("user criado");
+        req.body.bypass = true;
+        next();
+      });
+    } else {
+      user.first_name = req.body.first_name;
+      user.last_name = req.body.last_name;
       user.save((err) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
         }
+        req.body.bypass = true;
+        next();
       });
     }
   });

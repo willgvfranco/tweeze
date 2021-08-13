@@ -14,7 +14,12 @@ import {
 
 import authJwt from "./middlewares/authJwt";
 import verifySignUp from "./middlewares/verifySignUp";
-import { signup, signin, signinByToken } from "./controllers/auth.controller";
+import {
+  signup,
+  signin,
+  signinByToken,
+  socialLogin,
+} from "./controllers/auth.controller";
 
 export default function (app) {
   // ELK
@@ -46,7 +51,7 @@ export default function (app) {
     signin
   );
   app.get("/api/auth/token", [authJwt.verifyToken], signinByToken);
-  // app.get("/api/auth/social", socialLogin);
+  app.post("/api/auth/social", socialLogin, signin);
 
   // WORDS
   app.post("/api/words/add", addWords, listWordsByUser);
