@@ -14,7 +14,8 @@ import {
   Button,
   List,
   ListItem,
-  TextField
+  TextField,
+  CircularProgress
 } from '@material-ui/core';
 import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
 
@@ -29,7 +30,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
     email: ''
   });
   const [checked1, setChecked] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -37,14 +38,14 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
       history.push('/home');
     }
     if (token !== null && !isLogged) {
-      setLoading(true);
+      setLoading('token');
       loginWithToken(token);
     }
   }, [isLogged]);
 
   useEffect(() => {
-    if (loginError === 'loginWithToken') {
-      setLoading(false);
+    if (loginError === 'loginWithToken' || loginError === 'login') {
+      setLoading('');
     }
   }, [loginError]);
 
@@ -55,9 +56,14 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
     setForm({ ...form, [field]: value });
   };
 
+  const handleLogin = () => {
+    setLoading('login');
+    login(form);
+  };
+
   return (
     <div className="app-wrapper min-vh-100 bg-white">
-      <ConditionalRender conditional={loading}>
+      <ConditionalRender conditional={loading === 'token'}>
         <div className="hero-wrapper w-100 bg-composed-wrapper bg-midnight-bloom min-vh-100">
           <div className="flex-grow-1 w-100 d-flex align-items-center">
             <div
@@ -187,9 +193,19 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                             </div>
                             <div className="text-center py-4">
                               <Button
-                                onClick={() => login(form)}
+                                onClick={handleLogin}
                                 className="btn-second font-weight-bold w-50 my-2">
-                                Logar!
+                                {loading === 'login' ? (
+                                  <CircularProgress
+                                    style={{
+                                      width: '18px',
+                                      height: '18px',
+                                      color: 'white'
+                                    }}
+                                  />
+                                ) : (
+                                  'Logar!'
+                                )}
                               </Button>
                             </div>
                             <div className="text-center text-black-50 mt-3">
