@@ -6,6 +6,7 @@ export const Types = {
   LOGIN: 'auth/LOGIN',
   LOGIN_TOKEN: 'auth/LOGIN_TOKEN',
   LOGIN_SOCIAL: 'auth/LOGIN_SOCIAL',
+  SIGNUP: 'auth/SIGNUP',
   LOGOUT: 'auth/LOGOUT',
   ERROR: 'auth/ERROR'
 };
@@ -106,6 +107,34 @@ export const loginWithSocialMedia = (user) => async (dispatch) => {
   }
 };
 
+export const register = (data) => async (dispatch) => {
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.cadastro,
+      data
+    });
+
+    const { id, accessToken } = result.data;
+
+    localStorage.setItem('token', JSON.stringify(accessToken));
+
+    dispatch({
+      type: Types.SIGNUP,
+      data: {
+        user: id,
+        token: accessToken
+      }
+    });
+  } catch (error) {
+    console.log('login error', error);
+    dispatch({
+      type: Types.ERROR,
+      data: 'login'
+    });
+  }
+};
+
 export const logout = () => (dispatch) => {
   localStorage.removeItem('token');
 
@@ -138,6 +167,13 @@ export default function reducer(state = initialState, action) {
         isLogged: true
       };
     case Types.LOGIN_SOCIAL:
+      return {
+        ...state,
+        user: action.data.user,
+        token: action.data.token,
+        isLogged: true
+      };
+    case Types.SIGNUP:
       return {
         ...state,
         user: action.data.user,
