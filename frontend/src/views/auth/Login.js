@@ -29,7 +29,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
     password: '',
     email: ''
   });
-  const [checked1, setChecked] = useState(true);
+  const [checked, setChecked] = useState(true);
   const [loading, setLoading] = useState('');
   const history = useHistory();
 
@@ -50,11 +50,12 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
   }, [loginError]);
 
   const handleChange = (event) => {
-    setChecked(event.target.checked);
     const field = event.target.name;
     const value = event.target.value;
     setForm({ ...form, [field]: value });
   };
+
+  const handleRemeberAccess = (event) => setChecked(event.target.checked);
 
   const handleLogin = () => {
     setLoading('login');
@@ -68,7 +69,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
           <div className="flex-grow-1 w-100 d-flex align-items-center">
             <div
               className="bg-composed-wrapper--image opacity-6"
-              style={{ backgroundImage: 'url(' + hero6 + ')' }}
+              style={{ backgroundImage: `url(${hero6})` }}
             />
             <div className="bg-composed-wrapper--bg bg-second opacity-7" />
             <div className="bg-composed-wrapper--content p-3 p-md-5">
@@ -174,8 +175,8 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                               <FormControlLabel
                                 control={
                                   <Checkbox
-                                    checked={checked1}
-                                    onChange={handleChange}
+                                    checked={checked}
+                                    onChange={handleRemeberAccess}
                                     value="checked"
                                     color="primary"
                                   />
