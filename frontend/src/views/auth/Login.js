@@ -18,6 +18,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
+import SocialButtons from './SocialButtons';
 
 import ConditionalRender from 'components/ConditionalRender';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
@@ -60,7 +61,6 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
     setLoading('login');
     login(form);
   };
-
   return (
     <div className="app-wrapper min-vh-100 bg-white">
       <ConditionalRender conditional={loading === 'token'}>
@@ -105,27 +105,8 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                           </p>
                         </div>
                         <div className="py-4">
-                          <div className="text-center mb-3">
-                            <Button
-                              className="m-2 btn-pill px-4 font-weight-bold btn-google"
-                              size="small">
-                              <span className="btn-wrapper--icon">
-                                <FontAwesomeIcon icon={['fab', 'google']} />
-                              </span>
-                              <span className="btn-wrapper--label">
-                                Login com Google
-                              </span>
-                            </Button>
-                            <Button
-                              className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
-                              size="small">
-                              <span className="btn-wrapper--icon">
-                                <FontAwesomeIcon icon={['fab', 'facebook']} />
-                              </span>
-                              <span className="btn-wrapper--label">
-                                Login com Facebook
-                              </span>
-                            </Button>
+                          <div className="text-center mb-3 cadastro-button-loginmidiassociais">
+                            <SocialButtons></SocialButtons>
                           </div>
                           <div className="text-center text-black-50 py-2 mb-4">
                             ou entre com as suas credenciais
