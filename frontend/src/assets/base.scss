@@ -18,6 +18,10 @@
 
 @import 'scrollbar';
 
+html {
+  scroll-behavior: smooth;
+}
+
 .fade-enter {
   opacity: 0.01;
 }

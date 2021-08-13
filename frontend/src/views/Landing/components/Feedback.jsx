@@ -3,29 +3,29 @@ import Slider from 'react-slick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container, Card, CardContent } from '@material-ui/core';
 
-import people2 from '../assets/images/stock-photos/people-2.jpg';
-import people3 from '../assets/images/stock-photos/people-3.jpg';
-import people1 from '../assets/images/stock-photos/people-1.jpg';
+import people2 from '../../../assets/images/stock-photos/people-2.jpg';
+import people3 from '../../../assets/images/stock-photos/people-3.jpg';
+import people1 from '../../../assets/images/stock-photos/people-1.jpg';
 
-function SliderArrowNext(props) {
+const SliderArrowNext = (props) => {
   const { className, onClick } = props;
   return (
     <div className={className} onClick={onClick}>
       <FontAwesomeIcon icon={['fas', 'chevron-right']} />
     </div>
   );
-}
+};
 
-function SliderArrowPrev(props) {
+const SliderArrowPrev = (props) => {
   const { className, onClick } = props;
   return (
     <div className={className} onClick={onClick}>
       <FontAwesomeIcon icon={['fas', 'chevron-left']} />
     </div>
   );
-}
+};
 
-export default function LivePreviewExample() {
+const Feedback = () => {
   const marketingTestimonials1 = {
     dots: true,
     speed: 500,
@@ -197,4 +197,6 @@ export default function LivePreviewExample() {
       </Container>
     </>
   );
-}
+};
+
+export default Feedback;

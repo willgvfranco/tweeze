@@ -24,8 +24,7 @@ const Footer = () => {
       <div className="bg-second font-size-sm py-5">
         <div className="py-3">
           <a
-            href="#/"
-            onClick={(e) => e.preventDefault()}
+            href="#home"
             title="Bamburgh React Admin Dashboard with Material-UI PRO"
             className="d-70 d-block mx-auto tamanholog ">
             <img
