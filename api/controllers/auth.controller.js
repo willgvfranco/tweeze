@@ -68,6 +68,32 @@ export function signup(req, res, next) {
   });
 }
 
+export function recuperarSenha(req, res, next) {
+  User.findOne({
+    email: req.body.email,
+  }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (!user) {
+      return res.status(400).send({ message: "User Not found." });
+      // return res.status(404).send({ message: "User Not found." });
+    }
+    var token = sign({ id: user.id }, secret, {
+      expiresIn: 86400, // 24 hours
+    });
+    req.body.to = req.body.email;
+    req.body.subject = "Recuperação de Senha";
+    var url = `https://beta.tweeze.com.br/recuperar-senha?auth=${token}`;
+    req.body.text = `Clique aqui pra recuperar sua senha <a href='${url}'>aqui</>`;
+    req.body.token = token;
+    // req.body.nome = req.body.first_name + " " + req.body.last_name || "";
+
+    next();
+  });
+}
+
 export function signin(req, res) {
   User.findOne({
     email: req.body.email,

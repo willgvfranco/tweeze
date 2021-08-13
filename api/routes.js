@@ -1,4 +1,5 @@
 import { elkSearch } from "./controllers/elk.controller";
+import { sendMail } from "./controllers/mail.controller";
 import {
   allAccess,
   userBoard,
@@ -19,6 +20,7 @@ import {
   signin,
   signinByToken,
   socialLogin,
+  recuperarSenha,
 } from "./controllers/auth.controller";
 
 export default function (app) {
@@ -52,10 +54,14 @@ export default function (app) {
   );
   app.get("/api/auth/token", [authJwt.verifyToken], signinByToken);
   app.post("/api/auth/social", socialLogin, signin);
+  app.post("/api/auth/password", recuperarSenha, sendMail);
 
   // WORDS
   app.post("/api/words/add", addWords, listWordsByUser);
   app.post("/api/words/delete", removeWords, listWordsByUser);
   app.post("/api/words/update", updateWords, listWordsByUser);
   app.post("/api/words/list", listWordsByUser);
+
+  // EMAIL
+  app.post("/api/mail/send", sendMail);
 }
