@@ -25,13 +25,9 @@ const Footer = () => {
         <div className="py-3">
           <a
             href="#home"
-            title="Bamburgh React Admin Dashboard with Material-UI PRO"
+            title="Tweeze"
             className="d-70 d-block mx-auto tamanholog ">
-            <img
-              alt="Bamburgh React Admin Dashboard with Material-UI PRO"
-              className="img-fluid p-2"
-              src={LogoBranca}
-            />
+            <img alt="Tweeze" className="img-fluid p-2" src={LogoBranca} />
           </a>
         </div>
         <Container className="pt-5">
