@@ -16,15 +16,15 @@ import {
   TextField
 } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
-import { login, loginWithSocialMedia } from '../../reducers/AuthDuck';
+import { login } from '../../reducers/AuthDuck';
 
 import BACKEND from '../../config/env';
+import SocialButtons from './SocialButtons';
 
-import SocialButton from './SocialButton';
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
-const PageRegister = ({ login, loginWithSocialMedia }) => {
+const PageRegister = ({ login }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -61,11 +61,6 @@ const PageRegister = ({ login, loginWithSocialMedia }) => {
       });
   };
 
-  const handleSocialLogin = (user) => loginWithSocialMedia(user);
-
-  const handleSocialLoginFailure = (err) => {
-    console.error(err);
-  };
   return (
     <>
       <div className="app-wrapper min-vh-100 bg-white">
@@ -113,34 +108,7 @@ const PageRegister = ({ login, loginWithSocialMedia }) => {
                           </p>
                         </div>
                         <div className="text-center mb-3 cadastro-button-loginmidiassociais">
-                          <SocialButton
-                            provider="google"
-                            appId="68730314092-s87t32e8cs2ka2tfqv9kt6quur02kjih.apps.googleusercontent.com"
-                            onLoginSuccess={handleSocialLogin}
-                            onLoginFailure={handleSocialLoginFailure}
-                            className="m-2 btn-pill px-4 font-weight-bold btn-google"
-                            size="small">
-                            <span className="btn-wrapper--icon">
-                              <FontAwesomeIcon icon={['fab', 'google']} />
-                            </span>
-                            <span className="btn-wrapper--label">
-                              Login com Google
-                            </span>
-                          </SocialButton>
-                          <SocialButton
-                            provider="facebook"
-                            appId="361023348884041"
-                            onLoginSuccess={handleSocialLogin}
-                            onLoginFailure={handleSocialLoginFailure}
-                            className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
-                            size="small">
-                            <span className="btn-wrapper--icon">
-                              <FontAwesomeIcon icon={['fab', 'facebook']} />
-                            </span>
-                            <span className="btn-wrapper--label">
-                              Login com Facebook
-                            </span>
-                          </SocialButton>
+                          <SocialButtons></SocialButtons>
                         </div>
                         <div className="px-5 py-4">
                           <div className="mb-3">
@@ -361,6 +329,6 @@ const PageRegister = ({ login, loginWithSocialMedia }) => {
 };
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ login, loginWithSocialMedia }, dispatch);
+  bindActionCreators({ login }, dispatch);
 
 export default connect(null, mapDispatchToProps)(PageRegister);
