@@ -7,6 +7,8 @@ const BACKEND = {
   loginToken: `${ROOT_URL}/api/auth/token`,
   loginSocial: `${ROOT_URL}/api/auth/social`,
   cadastro: `${ROOT_URL}/api/auth/signup`,
+  password: `${ROOT_URL}/api/auth/password`,
+  passwordChange: `${ROOT_URL}/api/auth/password/new`,
   getWords: `${ROOT_URL}/api/words/list`,
   addWord: `${ROOT_URL}/api/words/add`,
   updateWord: `${ROOT_URL}/api/words/update`,

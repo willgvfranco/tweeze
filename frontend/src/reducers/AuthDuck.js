@@ -6,6 +6,7 @@ export const Types = {
   LOGIN: 'auth/LOGIN',
   LOGIN_TOKEN: 'auth/LOGIN_TOKEN',
   LOGIN_SOCIAL: 'auth/LOGIN_SOCIAL',
+  PASSWORD: 'auth/PASSWORD',
   SIGNUP: 'auth/SIGNUP',
   LOGOUT: 'auth/LOGOUT',
   ERROR: 'auth/ERROR'
@@ -143,11 +144,86 @@ export const logout = () => (dispatch) => {
   });
 };
 
+export const passwordEmailSend = (email) => async (dispatch) => {
+  dispatch({
+    type: Types.PASSWORD,
+    data: ''
+  });
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.password,
+      data: {
+        email
+      }
+    });
+
+    if (result.status === 200) {
+      dispatch({
+        type: Types.PASSWORD,
+        data: 'ok'
+      });
+    }
+  } catch (error) {
+    console.log('passwordEmailSend error', error);
+    if (error.response.status === 400) {
+      dispatch({
+        type: Types.PASSWORD,
+        data: 'email'
+      });
+    }
+    dispatch({
+      type: Types.ERROR,
+      data: 'passwordEmailSend'
+    });
+  }
+};
+
+export const passwordChange = ({ password, token }) => async (dispatch) => {
+  dispatch({
+    type: Types.PASSWORD,
+    data: ''
+  });
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.passwordChange,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
+      data: {
+        password
+      }
+    });
+
+    if (result.status === 200) {
+      dispatch({
+        type: Types.PASSWORD,
+        data: 'password'
+      });
+    }
+  } catch (error) {
+    console.log('passwordChange error', error);
+    if (error.response.status === 401) {
+      dispatch({
+        type: Types.PASSWORD,
+        data: 'passwordError'
+      });
+    }
+    dispatch({
+      type: Types.ERROR,
+      data: 'passwordChange'
+    });
+  }
+};
+
 export const initialState = {
   isLogged: false,
   token: null,
   user: '',
-  error: ''
+  error: '',
+  status: ''
 };
 
 export default function reducer(state = initialState, action) {
@@ -186,6 +262,11 @@ export default function reducer(state = initialState, action) {
         isLogged: false,
         token: null,
         user: {}
+      };
+    case Types.PASSWORD:
+      return {
+        ...state,
+        status: action.data
       };
     case Types.ERROR:
       return {
