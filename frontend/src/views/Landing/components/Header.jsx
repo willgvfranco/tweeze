@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MenuBar = () => {
+export const MenuBar = () => {
   const [collapse, setCollapse] = useState(false);
   const toggle = () => setCollapse(!collapse);
 
