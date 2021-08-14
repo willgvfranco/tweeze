@@ -145,6 +145,10 @@ export const logout = () => (dispatch) => {
 };
 
 export const passwordEmailSend = (email) => async (dispatch) => {
+  dispatch({
+    type: Types.PASSWORD,
+    data: ''
+  });
   try {
     const result = await axios({
       method: 'post',
@@ -171,6 +175,45 @@ export const passwordEmailSend = (email) => async (dispatch) => {
     dispatch({
       type: Types.ERROR,
       data: 'passwordEmailSend'
+    });
+  }
+};
+
+export const passwordChange = ({ password, token }) => async (dispatch) => {
+  dispatch({
+    type: Types.PASSWORD,
+    data: ''
+  });
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.passwordChange,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
+      data: {
+        password
+      }
+    });
+
+    if (result.status === 200) {
+      dispatch({
+        type: Types.PASSWORD,
+        data: 'password'
+      });
+    }
+  } catch (error) {
+    console.log('passwordChange error', error);
+    if (error.response.status === 401) {
+      dispatch({
+        type: Types.PASSWORD,
+        data: 'passwordError'
+      });
+    }
+    dispatch({
+      type: Types.ERROR,
+      data: 'passwordChange'
     });
   }
 };

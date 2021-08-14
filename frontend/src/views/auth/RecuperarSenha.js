@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -13,23 +13,36 @@ import {
   TextField,
   CircularProgress
 } from '@material-ui/core';
-import { ArrowBack, MailOutlineTwoTone } from '@material-ui/icons';
+import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
 
 import particles3 from '../../assets/images/hero-bg/particles-3.svg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
-import { passwordEmailSend } from '../../reducers/AuthDuck';
+import { passwordEmailSend, passwordChange } from '../../reducers/AuthDuck';
 
-const PageRecover = ({ passwordEmailSend, status }) => {
+const PageRecover = ({
+  passwordEmailSend,
+  passwordChange,
+  status,
+  authError
+}) => {
   const [email, setEmail] = useState();
   const [loading, setLoading] = useState(false);
-  const { auth } = useParams();
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  console.log('loading', loading);
 
   useEffect(() => {
     if (status !== '') {
       setLoading(false);
     }
-  }, [status]);
+    if (authError) {
+      setLoading(false);
+    }
+  }, [status, authError]);
+
+  const params = new URLSearchParams(window.location.search);
+  const auth = params.get('auth');
 
   // eslint-disable-next-line no-useless-escape
   const regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
@@ -43,6 +56,20 @@ const PageRecover = ({ passwordEmailSend, status }) => {
     if (status === 'email') {
       return 'E-mail não cadastrado!';
     }
+    if (status === 'passwordError') {
+      return 'Token de autorização inválido';
+    }
+    if (status === 'password') {
+      return 'Senha alterada com sucesso!';
+    }
+    if (authError === 'passwordChange') {
+      return 'Erro ao enviar a solicitação.. Tente novamente mais tarde';
+    }
+  };
+
+  const passwordStatus = () => {
+    if (authError || status === 'passwordError') return true;
+    if (status === 'password') return false;
   };
 
   const sendEmailHandler = () => {
@@ -51,7 +78,125 @@ const PageRecover = ({ passwordEmailSend, status }) => {
     passwordEmailSend(email);
   };
 
-  console.log('auth', auth);
+  const changePasswordHandler = () => {
+    if (password !== passwordConfirm) return;
+    setLoading(true);
+    passwordChange({ password, token: auth });
+  };
+
+  const handleInputRender = () => {
+    if (!auth) {
+      return (
+        <TextField
+          fullWidth
+          variant="outlined"
+          id="textfield-email"
+          label="Email"
+          onChange={(e) => setEmail(e.target.value)}
+          error={!emailValidation()}
+          helperText={helperTextHandler()}
+          FormHelperTextProps={
+            status === 'email'
+              ? { style: { color: 'red' } }
+              : { style: { color: 'green' } }
+          }
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <MailOutlineTwoTone />
+              </InputAdornment>
+            )
+          }}
+        />
+      );
+    }
+    return (
+      <>
+        <TextField
+          onChange={(e) => setPassword(e.target.value)}
+          style={{ marginBottom: '20px' }}
+          variant="outlined"
+          fullWidth
+          placeholder="Entre com a sua senha"
+          type="password"
+          name="password"
+          label="Senha"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockTwoTone />
+              </InputAdornment>
+            )
+          }}
+          error={password !== passwordConfirm}
+        />
+        <TextField
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+          variant="outlined"
+          fullWidth
+          placeholder="Entre com a sua senha"
+          type="password"
+          name="password_confirm"
+          label="Confirmar senha"
+          helperText={helperTextHandler()}
+          FormHelperTextProps={
+            passwordStatus()
+              ? { style: { color: 'red' } }
+              : { style: { color: 'green' } }
+          }
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockTwoTone />
+              </InputAdornment>
+            )
+          }}
+          error={password !== passwordConfirm}
+        />
+      </>
+    );
+  };
+
+  const handleButtonRender = () => {
+    if (!auth) {
+      return (
+        <Button
+          fullWidth
+          className="text-uppercase font-weight-bold font-size-sm mt-4 btn-primary"
+          onClick={sendEmailHandler}>
+          {loading ? (
+            <CircularProgress
+              style={{
+                width: '18px',
+                height: '18px',
+                color: 'white'
+              }}
+            />
+          ) : (
+            'Enviar senha!'
+          )}
+        </Button>
+      );
+    }
+    return (
+      <Button
+        fullWidth
+        className="text-uppercase font-weight-bold font-size-sm mt-4 btn-primary"
+        onClick={changePasswordHandler}>
+        {loading ? (
+          <CircularProgress
+            style={{
+              width: '18px',
+              height: '18px',
+              color: 'white'
+            }}
+          />
+        ) : (
+          'Enviar senha!'
+        )}
+      </Button>
+    );
+  };
 
   return (
     <div className="app-wrapper min-vh-100 bg-white">
@@ -97,47 +242,9 @@ const PageRecover = ({ passwordEmailSend, status }) => {
                         </p>
                       </div>
                       <div className="p-5 w-100">
-                        <div>
-                          <TextField
-                            fullWidth
-                            variant="outlined"
-                            id="textfield-email"
-                            label="Email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            error={!emailValidation()}
-                            helperText={helperTextHandler()}
-                            FormHelperTextProps={
-                              status === 'email'
-                                ? { style: { color: 'red' } }
-                                : { style: { color: 'green' } }
-                            }
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <MailOutlineTwoTone />
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        </div>
+                        <div>{handleInputRender()}</div>
                         <div className="text-center mb-4">
-                          <Button
-                            fullWidth
-                            className="text-uppercase font-weight-bold font-size-sm mt-4 btn-primary"
-                            onClick={sendEmailHandler}>
-                            {loading ? (
-                              <CircularProgress
-                                style={{
-                                  width: '18px',
-                                  height: '18px',
-                                  color: 'white'
-                                }}
-                              />
-                            ) : (
-                              'Enviar senha!'
-                            )}
-                          </Button>
+                          {handleButtonRender()}
                         </div>
                       </div>
                     </Grid>
@@ -233,10 +340,11 @@ const PageRecover = ({ passwordEmailSend, status }) => {
 };
 
 const mapStateToProps = ({ auth }) => ({
-  status: auth.status
+  status: auth.status,
+  authError: auth.error
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ passwordEmailSend }, dispatch);
+  bindActionCreators({ passwordEmailSend, passwordChange }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageRecover);
