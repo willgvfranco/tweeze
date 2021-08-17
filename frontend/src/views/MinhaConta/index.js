@@ -34,13 +34,9 @@ const MinhaConta = () => (
               </Grid>
               <Grid item md={9} className="d-flex align-items-center">
                 <div>
-                  <div className="font-size-lg font-weight-bold mb-1">
+                  <div className="font-size-lg font-weight-bold mb-1 ml-3">
                     Informações da Conta
                   </div>
-                  <p className="opacity-7 font-size-md mb-0">
-                    Acccess this page in order to manage and customize all
-                    aspects of your profile data and accounts.
-                  </p>
                 </div>
               </Grid>
             </Grid>
@@ -68,13 +64,9 @@ const MinhaConta = () => (
               </Grid>
               <Grid item md={9} className="d-flex align-items-center">
                 <div>
-                  <div className="font-size-lg font-weight-bold mb-1">
+                  <div className="font-size-lg font-weight-bold mb-1 ml-3">
                     Segurança
                   </div>
-                  <p className="opacity-7 font-size-md mb-0">
-                    Acccess this page in order to manage and customize all
-                    aspects of your profile data and accounts.
-                  </p>
                 </div>
               </Grid>
             </Grid>
@@ -105,13 +97,9 @@ const MinhaConta = () => (
               </Grid>
               <Grid item md={9} className="d-flex align-items-center">
                 <div>
-                  <div className="font-size-lg font-weight-bold mb-1">
+                  <div className="font-size-lg font-weight-bold mb-1 ml-3">
                     Dados Financeiros
                   </div>
-                  <p className="opacity-7 font-size-md mb-0">
-                    Control everything related to your profile and trading
-                    accounts as shown in this page.
-                  </p>
                 </div>
               </Grid>
             </Grid>
