@@ -29,18 +29,26 @@ import { passwordChange, setStatus } from '../../reducers/AuthDuck';
 const Informacoes = ({ passwordChange, token, status, setStatus }) => {
   const history = useHistory();
 
-  useEffect(() => {
-    if (status !== '') {
-      setLoading(false);
-    }
-    // if (status === 'password') {}
-  }, [status]);
-
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
+  useEffect(() => {
+    if (status !== '') {
+      setLoading(false);
+    }
+    if (status === 'password') {
+      setPassword('');
+      setPasswordConfirm('');
+    }
+    return () => {
+      if (status === 'password') {
+        setStatus('');
+      }
+    };
+  }, [status]);
 
   const handleShowPassword = () => setShowPassword(!showPassword);
   const handleShowPasswordConfirm = () =>
