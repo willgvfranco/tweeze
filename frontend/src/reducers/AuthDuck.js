@@ -218,6 +218,13 @@ export const passwordChange = ({ password, token }) => async (dispatch) => {
   }
 };
 
+export const setStatus = (status) => (dispatch) => {
+  dispatch({
+    type: Types.PASSWORD,
+    data: status
+  });
+};
+
 export const initialState = {
   isLogged: false,
   token: null,

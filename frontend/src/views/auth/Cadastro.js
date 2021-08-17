@@ -18,6 +18,7 @@ import { ArrowBack } from '@material-ui/icons';
 import SocialButtons from './SocialButtons';
 
 import { register } from '../../reducers/AuthDuck';
+import { emailValidation } from '../../utils/validations';
 
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
@@ -35,11 +36,6 @@ const PageRegister = ({ register }) => {
   const handleChange = (event) =>
     setForm({ ...form, [event.target.name]: event.target.value });
 
-  // eslint-disable-next-line no-useless-escape
-  const regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-
-  const emailValidation = () => regex.test(form.email);
-
   const sendRegister = async () => {
     setHasError('');
     if (form.password !== form.password_confirm) {
@@ -56,7 +52,7 @@ const PageRegister = ({ register }) => {
       setHasError('hasError');
       return;
     }
-    if (!emailValidation()) {
+    if (!emailValidation(form.email)) {
       return;
     }
     register(form);
@@ -127,7 +123,7 @@ const PageRegister = ({ register }) => {
                             name="email"
                             error={
                               (hasError === 'hasError' && form.email === '') ||
-                              !emailValidation()
+                              !emailValidation(form.email)
                             }
                           />
                         </div>

@@ -12,6 +12,8 @@ const PageTitle = (props) => {
     pageTitleDescription,
     titleHeading,
     titleDescription,
+    action,
+    icon,
     children
   } = props;
 
@@ -26,7 +28,11 @@ const PageTitle = (props) => {
             {pageTitleIconBox && (
               <div className="app-page-title--iconbox d-70">
                 <div className="d-70 d-flex align-items-center justify-content-center display-1">
-                  <HomeWorkTwoToneIcon className="text-primary" />
+                  {icon ? (
+                    icon
+                  ) : (
+                    <HomeWorkTwoToneIcon className="text-primary" />
+                  )}
                 </div>
               </div>
             )}
@@ -35,6 +41,17 @@ const PageTitle = (props) => {
               {pageTitleDescription && (
                 <div className="app-page-title--description">
                   {titleDescription}
+                </div>
+              )}
+              {action && (
+                <div
+                  style={{
+                    margin: '0.5rem 0 0',
+                    fontSize: '1.1rem',
+                    opacity: 0.6,
+                    fontWeight: 'normal'
+                  }}>
+                  {action}
                 </div>
               )}
             </div>

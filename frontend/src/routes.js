@@ -22,7 +22,10 @@ const Blank = lazy(() => import('./views/BlankView'));
 const Faq = lazy(() => import('./views/Faq'));
 const QuemSomos = lazy(() => import('./views/QuemSomos'));
 const Noticias = lazy(() => import('./views/Noticias'));
-const MinhaConta = lazy(() => import('./views/MinhaConta'));
+const MinhaConta = lazy(() => import('./views/MinhaConta/index'));
+const Informacoes = lazy(() => import('./views/MinhaConta/Informacoes'));
+const Seguranca = lazy(() => import('./views/MinhaConta/Seguranca'));
+const Financeiro = lazy(() => import('./views/MinhaConta/Financeiro'));
 const Grupos = lazy(() => import('./views/Grupos'));
 
 const Login = lazy(() => import('./views/auth/Login'));
@@ -106,6 +109,9 @@ const Routes = () => {
                 '/blank',
                 '/noticias',
                 '/minha-conta',
+                '/minha-conta/informacoes',
+                '/minha-conta/seguranca',
+                '/minha-conta/financeiro',
                 '/grupos'
               ]}>
               <LeftSidebar>
@@ -134,9 +140,37 @@ const Routes = () => {
                     />
                     <Route
                       path="/minha-conta"
+                      exact
                       render={() => (
                         <RequireAuth>
                           <MinhaConta />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/minha-conta/informacoes"
+                      exact
+                      render={() => (
+                        <RequireAuth>
+                          <Informacoes />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/minha-conta/seguranca"
+                      exact
+                      render={() => (
+                        <RequireAuth>
+                          <Seguranca />
+                        </RequireAuth>
+                      )}
+                    />
+                    <Route
+                      path="/minha-conta/financeiro"
+                      exact
+                      render={() => (
+                        <RequireAuth>
+                          <Financeiro />
                         </RequireAuth>
                       )}
                     />

@@ -19,6 +19,7 @@ import particles3 from '../../assets/images/hero-bg/particles-3.svg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
 import { passwordEmailSend, passwordChange } from '../../reducers/AuthDuck';
+import { emailValidation } from '../../utils/validations';
 
 const PageRecover = ({
   passwordEmailSend,
@@ -30,7 +31,7 @@ const PageRecover = ({
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  console.log('loading', loading);
+  const [hasError, setHasError] = useState('');
 
   useEffect(() => {
     if (status !== '') {
@@ -43,11 +44,6 @@ const PageRecover = ({
 
   const params = new URLSearchParams(window.location.search);
   const auth = params.get('auth');
-
-  // eslint-disable-next-line no-useless-escape
-  const regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-
-  const emailValidation = () => regex.test(email);
 
   const helperTextHandler = () => {
     if (status === 'ok') {
@@ -73,13 +69,21 @@ const PageRecover = ({
   };
 
   const sendEmailHandler = () => {
-    if (!emailValidation()) return;
+    setHasError('');
+    if (!emailValidation(email)) {
+      setHasError('email');
+      return;
+    }
     setLoading(true);
     passwordEmailSend(email);
   };
 
   const changePasswordHandler = () => {
-    if (password !== passwordConfirm) return;
+    setHasError('');
+    if (!password || !passwordConfirm || password !== passwordConfirm) {
+      setHasError('password');
+      return;
+    }
     setLoading(true);
     passwordChange({ password, token: auth });
   };
@@ -93,7 +97,7 @@ const PageRecover = ({
           id="textfield-email"
           label="Email"
           onChange={(e) => setEmail(e.target.value)}
-          error={!emailValidation()}
+          error={hasError === 'email'}
           helperText={helperTextHandler()}
           FormHelperTextProps={
             status === 'email'
@@ -128,7 +132,7 @@ const PageRecover = ({
               </InputAdornment>
             )
           }}
-          error={password !== passwordConfirm}
+          error={password !== passwordConfirm || hasError === 'password'}
         />
         <TextField
           onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -151,7 +155,7 @@ const PageRecover = ({
               </InputAdornment>
             )
           }}
-          error={password !== passwordConfirm}
+          error={password !== passwordConfirm || hasError === 'password'}
         />
       </>
     );

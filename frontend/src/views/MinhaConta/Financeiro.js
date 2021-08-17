@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import {
   TextField,
   Card,
   CardHeader,
   Grid,
   Table,
-  FormControlLabel,
-  Checkbox,
   Button
 } from '@material-ui/core';
+import { ArrowBack, CreditCard } from '@material-ui/icons';
 
-import PageTitle from '../components/PageTitle';
-import Select from '../components/Select';
+import PageTitle from '../../components/PageTitle';
+import Select from '../../components/Select';
 
 const mockData = [
   ['Março', 'dd/mm/aa', 'R$45,56', 'Pago'],
@@ -53,105 +54,30 @@ const PaymentTable = () => (
   </div>
 );
 
-const MinhaConta = () => {
-  const [personalType, setPersonalType] = useState(false);
-  const [companyType, setCompanyType] = useState(false);
+const Informacoes = () => {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const history = useHistory();
 
   const handleChange = (event, handler) => handler(event.target.value);
 
   return (
     <>
       <PageTitle
-        titleHeading="Minha Conta"
-        titleDescription="Alterar informações pessoais e/ou financeiras"
-      />
-
-      <Card className="rounded w-100 bg-white p-3">
-        <CardHeader title="Dados Pessoais" />
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              className="m-2"
-              id="cnpj-cpf"
-              label="CNPJ/CPF"
-              variant="outlined"
-              style={{ width: '45%' }}
-            />
-            <TextField
-              className="m-2"
-              id="full-name"
-              label="Nome Completo"
-              variant="outlined"
-              style={{ width: '45%' }}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              className="m-2"
-              id="password"
-              label="Alterar senha"
-              variant="outlined"
-              style={{ width: '45%' }}
-            />
-            <TextField
-              className="m-2"
-              id="password-confirm"
-              label="Confirmar nova senha"
-              variant="outlined"
-              style={{ width: '45%' }}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={personalType}
-                  onChange={() => setPersonalType(!personalType)}
-                  value="personalType"
-                />
-              }
-              label="Pessoal"
-              className="m-2"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={companyType}
-                  onChange={() => setCompanyType(!companyType)}
-                  value="companyType"
-                />
-              }
-              label="Empresarial"
-              className="m-2"
-            />
-          </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              className="m-2"
-              id="adress"
-              label="Endereço"
-              variant="outlined"
-              style={{ width: '45%' }}
-            />
-            <TextField
-              className="m-2"
-              id="complement"
-              label="Complemento"
-              variant="outlined"
-              style={{ width: '45%' }}
-            />
-          </Grid>
-
-          <Button variant="contained" className="btn-primary m-2 ml-auto">
-            Salvar alterações
-          </Button>
-        </Grid>
-      </Card>
+        titleHeading="Dados Financeiros"
+        titleDescription="Cadastro de novas formas de pagamento e status de pagamentos"
+        icon={<CreditCard />}
+        action={
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              history.goBack();
+            }}>
+            <ArrowBack style={{ marginRight: '0.5rem' }} />
+            Voltar
+          </a>
+        }></PageTitle>
 
       <Card
         style={{ displa: 'flex' }}
@@ -230,4 +156,4 @@ const MinhaConta = () => {
   );
 };
 
-export default MinhaConta;
+export default Informacoes;
