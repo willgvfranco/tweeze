@@ -182,12 +182,19 @@ export function changeUser(req, res, next) {
     user.endereco = body.endereco;
   }
 
+  if (body.complemento) {
+    user.complemento = body.complemento;
+  }
+
   if (body.cep) {
     user.cep = body.cep;
   }
 
   if (body.data_nascimento) {
     user.data_nascimento = body.data_nascimento;
+  }
+  if (body.telefone) {
+    user.telefone = body.telefone;
   }
   next();
 }
