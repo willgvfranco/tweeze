@@ -151,6 +151,47 @@ export function signin(req, res) {
     });
 }
 
+export function changeUser(req, res, next) {
+  const user = User.findOne({
+    id: req.id,
+  });
+  const body = req.body;
+  if (body.first_name) {
+    user.first_name = body.first_name;
+  }
+  if (body.last_name) {
+    user.last_name = body.last_name;
+  }
+
+  if (body.cpf) {
+    user.cpf = body.cpf;
+  }
+  if (body.inscricao_estadual) {
+    user.inscricao_estadual = body.inscricao_estadual;
+  }
+
+  if (body.cnpj) {
+    user.cnpj = body.cnpj;
+  }
+
+  if (body.password) {
+    user.password = hashSync(body.password, 8);
+  }
+
+  if (body.endereco) {
+    user.endereco = body.endereco;
+  }
+
+  if (body.cep) {
+    user.cep = body.cep;
+  }
+
+  if (body.data_nascimento) {
+    user.data_nascimento = body.data_nascimento;
+  }
+  next();
+}
+
 export function signinByToken(req, res) {
   User.findOne({
     id: req.id,
@@ -166,6 +207,11 @@ export function signinByToken(req, res) {
       if (!user) {
         return res.status(400).send({ message: "User Not found." });
         // return res.status(404).send({ message: "User Not found." });
+      }
+
+      if (req.body.password) {
+        user.password = hashSync(req.body.password, 8);
+        user.save();
       }
 
       var token = sign({ id: user.id }, secret, {
