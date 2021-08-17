@@ -17,7 +17,9 @@ const User = mongoose.model(
     first_name: String,
     last_name: String,
     endereco: String,
-    facebook: Boolean,
+    complemento: String,
+    facebook: String,
+    telefone: String,
     cpf: String,
     cnpj: String,
     cep: String,
@@ -26,7 +28,6 @@ const User = mongoose.model(
     data_nascimento: Date,
     _created: { type: Date, default: Date.now },
     _updated: { type: Date, default: Date.now },
-    cpf: String,
     words: [
       {
         type: mongoose.Schema.Types.ObjectId,
