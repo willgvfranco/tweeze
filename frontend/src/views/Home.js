@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from '@material-ui/core';
 
 import PageTitle from '../components/PageTitle';
+import Checkout from '../components/Checkout/Checkout';
 import placeholder from '../assets/images/illustrations/pack1/time.svg';
 
 export default function Home() {
@@ -12,6 +13,8 @@ export default function Home() {
         titleHeading="Tweeze Dashboard"
         titleDescription="Painel de controle de inteligência da Tweeze"
       />
+
+      <Checkout></Checkout>
 
       <Card
         style={{
