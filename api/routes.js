@@ -23,6 +23,7 @@ import {
   recuperarSenha,
   changeUser,
 } from "./controllers/auth.controller";
+import { newPayment } from "./controllers/payment.controller";
 
 export default function (app) {
   // ELK
@@ -62,4 +63,7 @@ export default function (app) {
 
   // EMAIL
   app.post("/api/mail/send", sendMail);
+
+  // PAYMENT
+  app.post("/api/payment/mercadopago", newPayment);
 }

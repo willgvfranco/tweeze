@@ -7,7 +7,7 @@ const Checkout = ({ ...props }) => {
   const mercadopago = useMercadopago.v2(
     'TEST-c831723f-9ade-4270-b3e6-588d5337553a',
     {
-      locale: 'en-US'
+      locale: 'pt-BR'
     }
   );
 
@@ -15,7 +15,9 @@ const Checkout = ({ ...props }) => {
     if (mercadopago) {
       mercadopago.checkout({
         preference: {
-          id: 'TEST-c831723f-9ade-4270-b3e6-588d5337553a'
+          title: 'Tweeze',
+          unit_price: 49.9,
+          quantity: 1
         },
         render: {
           container: '.checkout-mpg',
