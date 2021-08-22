@@ -7,7 +7,7 @@ export const Types = {
   ERROR: 'news/ERROR'
 };
 
-export const search = ({ word, date, qnt = '25' }) => async (dispatch) => {
+export const search = ({ word, date, qnt = '500' }) => async (dispatch) => {
   try {
     const result = await axios({
       method: 'post',
