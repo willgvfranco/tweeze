@@ -41,6 +41,15 @@ export const elkSearch = async (req, res) => {
           //   },
           // },
         },
+        sort: [
+          {
+            criado: {
+              order: "desc",
+              format: "strict_date_optional_time_nanos",
+            },
+          },
+          "_score",
+        ],
       },
     })
     .then((results) => {
