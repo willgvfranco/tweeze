@@ -30,9 +30,7 @@ export default function ControlledExpansionPanels(props) {
   };
 
   return (
-    <div style={props.style} className={classes.root}>
-    <h1>Perguntas frequentemente respondidas</h1>
-    <h2>Para ajuda personalizada acesse sua conta </h2>
+    <div style={props.style} className={classes.root} >
       <ExpansionPanel expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}

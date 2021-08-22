@@ -1,15 +1,16 @@
 import React from 'react';
 
-
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Container
 } from '@material-ui/core';
 
+
 import ControlledExpansionPanels from '../../src/views/Landing/components/acordeaocontrolado';
 import {MenuBar} from '../../src/views/Landing/components/Header';
 import ContactForm from '../../src/views/Landing/components/ContactForm';
 
+import Bannerfaq from './Landing/components/Bannerfaq';
 import Footer from '../../src/views/Landing/components/Footer';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,15 +44,17 @@ export default function Faq() {
     <>
     <div className="hero-wrapper">
     <Container className={classes.menuBar}>
-      <MenuBar />
+    <MenuBar />
     </Container> 
+    <Bannerfaq />
+    
     <div>
-      <ControlledExpansionPanels 
-      style={{padding: "50px", margin: "8px"}}
-      />
+    <ControlledExpansionPanels 
+    style={{padding: "50px", margin: "8px"}}
+    />
     </div>
-    <ContactForm />
-    <Footer />
+      <ContactForm />
+      <Footer />
     </div>
 
     </>
