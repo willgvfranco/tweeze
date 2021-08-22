@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DateFnsUtils from '@date-io/date-fns';
+import 'date-fns';
+
 import {
   FormControlLabel,
   Button,
@@ -14,7 +16,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
-import 'date-fns';
+import { Ballot } from '@material-ui/icons';
 
 import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
@@ -89,7 +91,8 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
     <ConditionalRender conditional={loading === 'words'}>
       <PageTitle
         titleHeading="Relatórios"
-        titleDescription="Consulta de clippings e geração de relatórios">
+        titleDescription="Consulta de clippings e geração de relatórios"
+        icon={<Ballot />}>
         <Select
           style={{ width: '20rem' }}
           id="clipping-word-select"

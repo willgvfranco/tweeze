@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DevicesOther } from '@material-ui/icons';
 import {
   Card,
   Button,
@@ -448,7 +450,8 @@ const Grupos = ({
     <>
       <PageTitle
         titleHeading="Meus Termos e Grupos"
-        titleDescription="Administrar seus grupos e termos">
+        titleDescription="Administrar seus grupos e termos"
+        icon={<DevicesOther />}>
         <Tooltip
           title="Criar novo grupo"
           arrow

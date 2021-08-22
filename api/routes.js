@@ -21,7 +21,9 @@ import {
   signinByToken,
   socialLogin,
   recuperarSenha,
+  changeUser,
 } from "./controllers/auth.controller";
+import { newPayment } from "./controllers/payment.controller";
 
 export default function (app) {
   // ELK
@@ -32,29 +34,26 @@ export default function (app) {
   app.get("/api/test/user", [authJwt.verifyToken], userBoard);
   app.get(
     "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
+    authJwt.verifyToken,
+    authJwt.isModerator,
     moderatorBoard
   );
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    adminBoard
-  );
+  app.get("/api/test/admin", authJwt.verifyToken, authJwt.isAdmin, adminBoard);
 
   // AUTH
   app.post("/api/auth/signin", signin);
   app.post(
     "/api/auth/signup",
-    [
-      verifySignUp.checkDuplicateUsernameOrEmail,
-      verifySignUp.checkRolesExisted,
-    ],
+    verifySignUp.checkDuplicateUsernameOrEmail,
+    verifySignUp.checkRolesExisted,
     signup,
     signin
   );
   app.get("/api/auth/token", [authJwt.verifyToken], signinByToken);
   app.post("/api/auth/social", socialLogin, signin);
+  app.post("/api/auth/dados", [authJwt.verifyToken], changeUser, signinByToken);
   app.post("/api/auth/password", recuperarSenha, sendMail);
+  app.post("/api/auth/password/new", [authJwt.verifyToken], signinByToken);
 
   // WORDS
   app.post("/api/words/add", addWords, listWordsByUser);
@@ -64,4 +63,7 @@ export default function (app) {
 
   // EMAIL
   app.post("/api/mail/send", sendMail);
+
+  // PAYMENT
+  app.post("/api/payment/mercadopago", newPayment);
 }
