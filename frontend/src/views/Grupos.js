@@ -131,8 +131,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const handleSplit = (string) =>
-  typeof string === 'string' && string !== '' ? string.split(' ') : [];
+const handleSplit = (string) => {
+  let splittedStrings = string.split('OR');
+  const array = splittedStrings.map((str) =>
+    str.trim().replace('(', '').replace(')', '')
+  );
+
+  return typeof string === 'string' && string !== '' ? array : [];
+};
 
 const Word = ({ array, classes, type }) => {
   const label = type === POS ? 'Positivas' : 'Negativas';
@@ -205,6 +211,16 @@ const ActionDialog = ({
     };
   }, [open]);
 
+  const handleJoin = (array) => {
+    if (array.length > 1) {
+      return `(${array.join(') OR (')})`;
+    }
+    if (array.length === 1) {
+      return `(${array})`;
+    }
+    return '';
+  };
+
   const handleAction = () => {
     if (!name.trim()) {
       setEmptyName(true);
@@ -214,10 +230,14 @@ const ActionDialog = ({
       ? onAction({
           _id: selectedGroup,
           name,
-          pos: pos.join(' '),
-          neg: neg.join(' ')
+          pos: handleJoin(pos),
+          neg: handleJoin(neg)
         })
-      : onAction({ name, pos: pos.join(' '), neg: neg.join(' ') });
+      : onAction({
+          name,
+          pos: handleJoin(pos),
+          neg: handleJoin(neg)
+        });
     onClose();
   };
 
@@ -251,7 +271,6 @@ const ActionDialog = ({
         label={`'Enter' para adicionar termos ${labelType}`}
         variant="outlined"
         onKeyDown={(e) => {
-          if (e.key === ' ') e.preventDefault();
           if (e.key === 'Enter') {
             action([...prevState, e.target.value]);
             e.target.value = '';
