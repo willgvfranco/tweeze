@@ -15,7 +15,7 @@ import { ArrowBack, CreditCard } from '@material-ui/icons';
 import PageTitle from '../../components/PageTitle';
 import Select from '../../components/Select';
 
-import { creditCardValidation } from 'utils/validations';
+import { creditCardValidation, CpfValidation } from 'utils/validations';
 
 const mockPaymentData = [
   ['Março', 'dd/mm/aa', 'R$45,56', 'Pago'],
@@ -130,6 +130,17 @@ const Informacoes = () => {
         setCreditCardForm({
           ...creditCardForm,
           [event.target.id]: number
+        });
+      }
+      return;
+    }
+
+    if (event.target.id === 'cpf') {
+      const cpf = CpfValidation(event);
+      if (cpf || cpf === '') {
+        setCreditCardForm({
+          ...creditCardForm,
+          [event.target.id]: cpf
         });
       }
       return;
