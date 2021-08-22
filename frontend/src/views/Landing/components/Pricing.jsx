@@ -110,7 +110,7 @@ const Pricing = () => {
                           alt="..."
                         />
                         <h3 className="font-size-xxl font-weight-bold mt-4">
-                          Marcas
+                          Padrão
                         </h3>
                         <p className="text-black-50 mb-4">
                           Produto destinado a pequenas e médias empresas
