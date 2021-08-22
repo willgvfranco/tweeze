@@ -56,7 +56,27 @@ const headCells = [
     label: 'Título',
     width: '35%'
   },
-  { id: 'url', numeric: false, disablePadding: false, label: 'URL' }
+  {
+    id: 'url',
+    numeric: false,
+    disablePadding: false,
+    label: 'URL',
+    width: '25%'
+  },
+  {
+    id: 'source',
+    numeric: false,
+    disablePadding: false,
+    label: 'Fonte',
+    width: '15%'
+  },
+  {
+    id: 'criado',
+    numeric: false,
+    disablePadding: false,
+    label: 'Data',
+    width: '20%'
+  }
 ];
 
 const PlaceHolder = ({ isLoading }) =>
@@ -76,11 +96,11 @@ const PlaceHolder = ({ isLoading }) =>
 function EnhancedTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
+    // onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
+    // numSelected,
+    // rowCount,
     onRequestSort
   } = props;
   const createSortHandler = (property) => (event) => {
@@ -91,12 +111,12 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -104,7 +124,7 @@ function EnhancedTableHead(props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={headCell?.width && { width: '35%' }}>
+            style={headCell?.width && { width: headCell?.width }}>
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
@@ -127,7 +147,7 @@ EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
+  // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired
@@ -205,7 +225,7 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -213,14 +233,14 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = news.map((n) => n._id);
-      setSelectedNews(newSelecteds);
-      return;
-    }
-    setSelectedNews([]);
-  };
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = news.map((n) => n._id);
+  //     setSelectedNews(newSelecteds);
+  //     return;
+  //   }
+  //   setSelectedNews([]);
+  // };
 
   const handleClick = (event, id) => {
     const selectedIndex = selectedNews.indexOf(id);
@@ -273,7 +293,7 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
                   numSelected={selectedNews.length}
                   order={order}
                   orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
+                  // onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
                   rowCount={news.length}
                 />
@@ -286,14 +306,16 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
                       return (
                         <TableRow
                           hover
-                          onClick={(event) => handleClick(event, news._id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
                           key={news._id}
                           selected={isItemSelected}>
                           <TableCell padding="checkbox">
-                            <Checkbox checked={isItemSelected} />
+                            <Checkbox
+                              checked={isItemSelected}
+                              onClick={(event) => handleClick(event, news._id)}
+                            />
                           </TableCell>
                           <TableCell
                             component="th"
@@ -301,7 +323,17 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
                             padding="default">
                             {news._source.title}
                           </TableCell>
-                          <TableCell align="left">{news._source.url}</TableCell>
+                          <TableCell align="left">
+                            <a href={news._source.url} target="_blank">
+                              {news._source.url.slice(0, 50) + '...'}
+                            </a>
+                          </TableCell>
+                          <TableCell align="left">
+                            {news._source.source}
+                          </TableCell>
+                          <TableCell align="left">
+                            {new Date(news._source.criado).toLocaleDateString()}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -313,7 +345,7 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
                 </TableBody>
               </Table>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[20, 50, 100]}
                 component="div"
                 count={news.length}
                 rowsPerPage={rowsPerPage}

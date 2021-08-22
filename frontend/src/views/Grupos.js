@@ -131,7 +131,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const handleSplit = (string) => {
+const handleNegSplit = (string) => {
+  let splittedStrings = string.split('NOT');
+  const array = splittedStrings.map((str) =>
+    str.trim().replace('(', '').replace(')', '')
+  );
+
+  return typeof string === 'string' && string !== '' ? array : [];
+};
+
+const handlePosSplit = (string) => {
   let splittedStrings = string.split('OR');
   const array = splittedStrings.map((str) =>
     str.trim().replace('(', '').replace(')', '')
@@ -144,10 +153,12 @@ const Word = ({ array, classes, type }) => {
   const label = type === POS ? 'Positivas' : 'Negativas';
   const badge = type === POS ? 'badge-success' : 'badge-danger';
 
+  const split = type === POS ? handlePosSplit(array) : handleNegSplit(array);
+
   return (
     <List className={classes.groupsList}>
       <div className={`badge ${badge} text-uppercase`}>{label}</div>
-      {handleSplit(array)?.map((el, index) => (
+      {split?.map((el, index) => (
         <ListItem key={`${index}-${el}`} style={{ margin: '0' }}>
           <ListItemText
             primary={el}
@@ -198,8 +209,8 @@ const ActionDialog = ({
   useEffect(() => {
     if (editing && selectedGroup) {
       setName(words[selectedGroup]?.name);
-      setPos(handleSplit(words[selectedGroup]?.pos));
-      setNeg(handleSplit(words[selectedGroup]?.neg));
+      setPos(handlePosSplit(words[selectedGroup]?.pos));
+      setNeg(handleNegSplit(words[selectedGroup]?.neg));
     }
   }, [selectedGroup]);
 
@@ -211,9 +222,19 @@ const ActionDialog = ({
     };
   }, [open]);
 
-  const handleJoin = (array) => {
+  const handlePosJoin = (array) => {
     if (array.length > 1) {
       return `(${array.join(') OR (')})`;
+    }
+    if (array.length === 1) {
+      return `(${array})`;
+    }
+    return '';
+  };
+
+  const handleNegJoin = (array) => {
+    if (array.length > 1) {
+      return `(${array.join(') NOT (')})`;
     }
     if (array.length === 1) {
       return `(${array})`;
@@ -230,13 +251,13 @@ const ActionDialog = ({
       ? onAction({
           _id: selectedGroup,
           name,
-          pos: handleJoin(pos),
-          neg: handleJoin(neg)
+          pos: handlePosJoin(pos),
+          neg: handleNegJoin(neg)
         })
       : onAction({
           name,
-          pos: handleJoin(pos),
-          neg: handleJoin(neg)
+          pos: handlePosJoin(pos),
+          neg: handleNegJoin(neg)
         });
     onClose();
   };
