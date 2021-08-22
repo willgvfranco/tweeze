@@ -21,6 +21,8 @@ import {
 
 import PageTitle from '../../components/PageTitle';
 
+import { CpfValidation } from 'utils/validations';
+
 const TextMaskPhone = (props) => {
   const { inputRef, ...other } = props;
 
@@ -81,6 +83,16 @@ const Informacoes = () => {
   const handleDateChange = (date) => setSelectedDate(date);
 
   const handlePhysicalFormChange = (event) => {
+    if (event.target.id === 'cpf') {
+      const cpf = CpfValidation(event);
+      if (cpf || cpf === '') {
+        setPhysicalForm({
+          ...physicalForm,
+          [event.target.id]: cpf
+        });
+      }
+      return;
+    }
     setPhysicalForm({
       ...physicalForm,
       [event.target.id]: event.target.value
@@ -126,6 +138,7 @@ const Informacoes = () => {
                   className="m-2"
                   id="firstName"
                   label="Primeiro Nome"
+                  value={physicalForm.firstName}
                   onChange={handlePhysicalFormChange}
                   variant="outlined"
                   style={{ width: '45%' }}
@@ -133,6 +146,7 @@ const Informacoes = () => {
                 <TextField
                   className="m-2"
                   id="lastName"
+                  value={physicalForm.lastName}
                   onChange={handlePhysicalFormChange}
                   label="Sobrenome"
                   variant="outlined"
@@ -144,6 +158,7 @@ const Informacoes = () => {
                 <TextField
                   className="m-2"
                   id="cpf"
+                  value={physicalForm.cpf}
                   onChange={handlePhysicalFormChange}
                   label="CPF"
                   variant="outlined"
@@ -176,6 +191,7 @@ const Informacoes = () => {
                 <OutlinedInput
                   className="m-2"
                   style={{ width: '45%' }}
+                  value={physicalForm.phone}
                   onChange={handlePhysicalFormChange}
                   name="phone"
                   id="phone"
@@ -187,6 +203,7 @@ const Informacoes = () => {
                 <TextField
                   className="m-2"
                   id="address"
+                  value={physicalForm.address}
                   onChange={handlePhysicalFormChange}
                   label="Endereço"
                   variant="outlined"
@@ -198,6 +215,7 @@ const Informacoes = () => {
                 <TextField
                   className="m-2"
                   id="complement"
+                  value={physicalForm.complement}
                   onChange={handlePhysicalFormChange}
                   label="Complemento"
                   variant="outlined"
@@ -207,6 +225,7 @@ const Informacoes = () => {
                   className="m-2"
                   id="cep"
                   label="CEP"
+                  value={physicalForm.cep}
                   onChange={handlePhysicalFormChange}
                   variant="outlined"
                   style={{ width: '45%' }}
