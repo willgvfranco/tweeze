@@ -12,19 +12,26 @@ export const elkSearch = async (req, res) => {
     res.send({ message: "Faltou o termo" });
     return;
   }
+  const pos = req.body.pos || "";
   const neg = req.body.neg || "";
   const size = req.body.qnt || 10;
+
+  const queryString = neg ? pos + " NOT " + neg : pos;
   client
     .search({
       index: "noticias",
       size: size,
       body: {
         query: {
-          bool: {
-            must_not: {
-              match: { title: neg },
-            },
-            must: { match: { title: req.body.pos } },
+          // bool: {
+          //   must_not: {
+          //     match: { title: neg },
+          //   },
+          //   must: { match: { title: req.body.pos } },
+          // },
+          query_string: {
+            query: queryString,
+            fields: ["title", "description"],
           },
           // range: {
           //   timestamp: {
