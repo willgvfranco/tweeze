@@ -19,8 +19,8 @@ export const elkSearch = async (req, res) => {
 
   const queryString = neg ? pos + " NOT " + neg : pos;
 
-  // const beginDate = req.body.beginDate;
-  // const endDate = req.body.endDate;
+  const beginDate = req.body.beginDate;
+  const endDate = req.body.endDate;
 
   const query = {
     index: "noticias",
@@ -28,24 +28,31 @@ export const elkSearch = async (req, res) => {
     from: from,
     body: {
       query: {
-        query_string: {
-          query: queryString,
-          fields: ["title", "description"],
+        bool: {
+          must: [
+            {
+              query_string: {
+                query: queryString,
+                fields: ["title", "description"],
+              },
+            },
+            {
+              range: {
+                criado: {
+                  gte: beginDate || "now-90d",
+                  lte: endDate || "now",
+                },
+              },
+            },
+          ],
         },
-        // range: {
-        //   criado: {
-        //     time_zone: "-03:00",
-        //     gte: beginDate,
-        //     lte: endDate,
-        //   },
-        // },
       },
-      time_zone: "America/Sao_Paulo",
       sort: [
         {
           criado: {
             order: "desc",
             format: "strict_date_optional_time_nanos",
+            unmapped_type: "date",
           },
         },
         "_score",
