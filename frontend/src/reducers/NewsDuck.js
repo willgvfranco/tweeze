@@ -12,7 +12,7 @@ export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
   getState
 ) => {
   const { news } = getState().news;
-  console.log('from', from);
+
   try {
     const result = await axios({
       method: 'post',
@@ -26,7 +26,6 @@ export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
       }
     });
 
-    console.log('result.data', result.data);
     if (from !== 0) {
       dispatch({
         type: Types.GET,
