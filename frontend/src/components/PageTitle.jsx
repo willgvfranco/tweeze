@@ -14,7 +14,8 @@ const PageTitle = (props) => {
     titleDescription,
     action,
     icon,
-    children
+    children,
+    wrapperClass
   } = props;
 
   return (
@@ -57,7 +58,9 @@ const PageTitle = (props) => {
             </div>
           </div>
         </div>
-        <div className="d-flex align-items-center">{children}</div>
+        <div className={`d-flex align-items-center ${wrapperClass}`}>
+          {children}
+        </div>
       </div>
     </>
   );
