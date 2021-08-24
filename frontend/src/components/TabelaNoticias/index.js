@@ -337,7 +337,7 @@ const TabelaNoticias = ({
                     </TableCell>
                     <TableCell align="left">{news._source.source}</TableCell>
                     <TableCell align="left">
-                      {new Date(news._source.criado).toLocaleDateString()}
+                      {new Date(news._source.criado).toLocaleString()}
                     </TableCell>
                   </TableRow>
                 );
