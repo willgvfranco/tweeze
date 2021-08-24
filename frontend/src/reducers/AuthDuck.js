@@ -278,7 +278,8 @@ export default function reducer(state = initialState, action) {
     case Types.ERROR:
       return {
         ...state,
-        error: action.data
+        error: action.data,
+        isLogged: false
       };
     default:
       return state;
