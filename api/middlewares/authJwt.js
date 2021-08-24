@@ -22,6 +22,7 @@ const verifyToken = (req, res, next) => {
 const renewToken = (req, res, next) => {
   const userId = req.id;
   sign({ id: userId }, secret, {
+    // expiresIn: 15, // 24 hours
     expiresIn: 86400, // 24 hours
   });
   res.status(200).send({
