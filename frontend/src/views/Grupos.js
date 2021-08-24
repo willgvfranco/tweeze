@@ -78,6 +78,11 @@ const useStyles = makeStyles((theme) => ({
       }
     }
   },
+  title: {
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'row'
+    }
+  },
   select: { padding: '11.5px 14px' },
   editDialog: {
     maxWidth: '50vw',
@@ -491,6 +496,7 @@ const Grupos = ({
       <PageTitle
         titleHeading="Meus Termos e Grupos"
         titleDescription="Administrar seus grupos e termos"
+        titleClass={classes.title}
         icon={<DevicesOther />}>
         <Tooltip
           title="Criar novo grupo"

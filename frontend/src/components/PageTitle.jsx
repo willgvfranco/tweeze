@@ -15,15 +15,22 @@ const PageTitle = (props) => {
     action,
     icon,
     children,
-    wrapperClass
+    wrapperClass,
+    titleClass
   } = props;
 
   return (
     <>
       <div
-        className={clsx('app-page-title', pageTitleStyle, pageTitleBackground, {
-          'app-page-title--shadow': pageTitleShadow
-        })}>
+        className={clsx(
+          'app-page-title',
+          titleClass,
+          pageTitleStyle,
+          pageTitleBackground,
+          {
+            'app-page-title--shadow': pageTitleShadow
+          }
+        )}>
         <div>
           <div className="app-page-title--first">
             {pageTitleIconBox && (

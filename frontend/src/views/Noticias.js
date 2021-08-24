@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       width: '100%'
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: '2rem'
     }
   },
   dropdown: {
