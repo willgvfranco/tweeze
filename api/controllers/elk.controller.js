@@ -18,44 +18,43 @@ export const elkSearch = async (req, res) => {
   const size = req.body.qnt || 100;
 
   const queryString = neg ? pos + " NOT " + neg : pos;
-  client
-    .search({
-      index: "noticias",
-      size: size,
-      from: from,
-      body: {
-        query: {
-          // bool: {
-          //   must_not: {
-          //     match: { title: neg },
-          //   },
-          //   must: { match: { title: req.body.pos } },
-          // },
-          query_string: {
-            query: queryString,
-            fields: ["title", "description"],
-          },
-          // range: {
-          //   timestamp: {
-          //     time_zone: "-03:00",
-          //     gte: "2020-01-01T00:00:00",
-          //     lte: "now",
-          //   },
-          // },
+
+  // const beginDate = req.body.beginDate;
+  // const endDate = req.body.endDate;
+
+  const query = {
+    index: "noticias",
+    size: size,
+    from: from,
+    body: {
+      query: {
+        query_string: {
+          query: queryString,
+          fields: ["title", "description"],
         },
-        sort: [
-          {
-            criado: {
-              order: "desc",
-              format: "strict_date_optional_time_nanos",
-            },
-          },
-          "_score",
-        ],
+        // range: {
+        //   criado: {
+        //     time_zone: "-03:00",
+        //     gte: beginDate,
+        //     lte: endDate,
+        //   },
+        // },
       },
-    })
-    .then((results) => {
-      //   console.log(results.hits.hits.lenght);
-      res.send(results);
-    });
+      time_zone: "America/Sao_Paulo",
+      sort: [
+        {
+          criado: {
+            order: "desc",
+            format: "strict_date_optional_time_nanos",
+          },
+        },
+        "_score",
+      ],
+    },
+  };
+
+  client.search(query).then((results) => {
+    //   console.log(results.hits.hits.lenght);
+    res.send(results);
+  });
 };
