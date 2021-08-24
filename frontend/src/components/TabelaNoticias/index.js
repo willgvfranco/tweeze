@@ -99,7 +99,7 @@ const PlaceHolder = ({ isLoading }) =>
       <div
         className="display-3 font-weight-bold"
         style={{ textAlign: 'center', fontSize: '2rem' }}>
-        Nenhuma notícia encontrada..
+        Selecione um grupo de notícias
       </div>
       <img alt="..." className="w-100 img-fluid" src={placeholder} />
     </div>
@@ -287,9 +287,6 @@ const TabelaNoticias = ({
 
   const isSelected = (id) => selectedNews.indexOf(id) !== -1;
 
-  const emptyRows =
-    ROWS_PER_PAGE - Math.min(ROWS_PER_PAGE, news.length - page * ROWS_PER_PAGE);
-
   const renderTable = news.length !== 0 && !isLoading && !loadingMore;
 
   return renderTable ? (
@@ -307,7 +304,6 @@ const TabelaNoticias = ({
             numSelected={selectedNews.length}
             order={order}
             orderBy={orderBy}
-            // onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={news.length}
           />
@@ -346,11 +342,6 @@ const TabelaNoticias = ({
                   </TableRow>
                 );
               })}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 40 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </TableContainer>
