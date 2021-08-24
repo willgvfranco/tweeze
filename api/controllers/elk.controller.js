@@ -13,14 +13,16 @@ export const elkSearch = async (req, res) => {
     return;
   }
   const pos = req.body.pos || "";
+  const from = req.body.from || 0;
   const neg = req.body.neg || "";
-  const size = req.body.qnt || 10;
+  const size = req.body.qnt || 100;
 
   const queryString = neg ? pos + " NOT " + neg : pos;
   client
     .search({
       index: "noticias",
       size: size,
+      from: from,
       body: {
         query: {
           // bool: {
