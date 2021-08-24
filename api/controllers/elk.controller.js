@@ -18,44 +18,50 @@ export const elkSearch = async (req, res) => {
   const size = req.body.qnt || 100;
 
   const queryString = neg ? pos + " NOT " + neg : pos;
-  client
-    .search({
-      index: "noticias",
-      size: size,
-      from: from,
-      body: {
-        query: {
-          // bool: {
-          //   must_not: {
-          //     match: { title: neg },
-          //   },
-          //   must: { match: { title: req.body.pos } },
-          // },
-          query_string: {
-            query: queryString,
-            fields: ["title", "description"],
-          },
-          // range: {
-          //   timestamp: {
-          //     time_zone: "-03:00",
-          //     gte: "2020-01-01T00:00:00",
-          //     lte: "now",
-          //   },
-          // },
-        },
-        sort: [
-          {
-            criado: {
-              order: "desc",
-              format: "strict_date_optional_time_nanos",
+
+  const beginDate = req.body.beginDate;
+  const endDate = req.body.endDate;
+
+  const query = {
+    index: "noticias",
+    size: size,
+    from: from,
+    body: {
+      query: {
+        bool: {
+          must: [
+            {
+              query_string: {
+                query: queryString,
+                fields: ["title", "description"],
+              },
             },
-          },
-          "_score",
-        ],
+            {
+              range: {
+                criado: {
+                  gte: beginDate || "now-90d",
+                  lte: endDate || "now",
+                },
+              },
+            },
+          ],
+        },
       },
-    })
-    .then((results) => {
-      //   console.log(results.hits.hits.lenght);
-      res.send(results);
-    });
+      sort: [
+        {
+          criado: {
+            order: "desc",
+            format: "strict_date_optional_time_nanos",
+            unmapped_type: "date",
+          },
+        },
+        "_score",
+      ],
+    },
+  };
+
+  client.search(query).then((results) => {
+    //   console.log(results.hits.hits.lenght);
+    res.send(results);
+  });
 };
