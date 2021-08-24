@@ -139,7 +139,7 @@ const useStyles = makeStyles((theme) => ({
 const handleNegSplit = (string) => {
   let splittedStrings = string.split('NOT');
   const array = splittedStrings.map((str) =>
-    str.trim().replace('(', '').replace(')', '')
+    str.trim().replace('("', '').replace('")', '')
   );
 
   return typeof string === 'string' && string !== '' ? array : [];
@@ -148,7 +148,7 @@ const handleNegSplit = (string) => {
 const handlePosSplit = (string) => {
   let splittedStrings = string.split('OR');
   const array = splittedStrings.map((str) =>
-    str.trim().replace('(', '').replace(')', '')
+    str.trim().replace('("', '').replace('")', '')
   );
 
   return typeof string === 'string' && string !== '' ? array : [];
@@ -229,20 +229,20 @@ const ActionDialog = ({
 
   const handlePosJoin = (array) => {
     if (array.length > 1) {
-      return `(${array.join(') OR (')})`;
+      return `("${array.join('") OR ("')}")`;
     }
     if (array.length === 1) {
-      return `(${array})`;
+      return `("${array}")`;
     }
     return '';
   };
 
   const handleNegJoin = (array) => {
     if (array.length > 1) {
-      return `(${array.join(') NOT (')})`;
+      return `("${array.join('") NOT ("')}")`;
     }
     if (array.length === 1) {
-      return `(${array})`;
+      return `("${array}")`;
     }
     return '';
   };
