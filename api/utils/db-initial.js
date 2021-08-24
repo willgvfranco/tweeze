@@ -22,6 +22,16 @@ export default function initial(Role) {
       });
 
       new Role({
+        name: "vip",
+      }).save((err) => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'vip' to roles collection");
+      });
+
+      new Role({
         name: "admin",
       }).save((err) => {
         if (err) {
@@ -31,7 +41,7 @@ export default function initial(Role) {
         console.log("added 'admin' to roles collection");
       });
     } else {
-      console.log("MongoDB já contém Admin, User e Moderator");
+      console.log("MongoDB já contém Admin, Vip, User e Moderator");
     }
   });
 }
