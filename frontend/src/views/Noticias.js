@@ -77,11 +77,15 @@ const handleNews = (news) => {
 };
 
 const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
+  const beginDateDefault = () => {
+    if (new Date().getDate() === 1) {
+      return new Date(new Date().setDate(0));
+    }
+    return new Date().setDate(new Date().getDate() - 1);
+  };
   const [selectedWord, setSelectedWord] = useState('');
   const [days, setDays] = useState('');
-  const [beginDate, setBeginDate] = useState(
-    new Date().setMonth(new Date().getMonth() - 1)
-  );
+  const [beginDate, setBeginDate] = useState(beginDateDefault());
   const [endDate, setEndDate] = useState(new Date());
   const [automatic, setAutomatic] = useState(false);
   const [loading, setLoading] = useState('');
