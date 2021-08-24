@@ -56,6 +56,6 @@ export const elkSearch = async (req, res) => {
     })
     .then((results) => {
       //   console.log(results.hits.hits.lenght);
-      res.send(results.hits.hits);
+      res.send(results);
     });
 };
