@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -21,6 +22,8 @@ import {
 
 import placeholder from '../../assets/images/illustrations/pack1/wireframe.svg';
 import Loader from '../Loader';
+
+import { search } from '../../reducers/NewsDuck';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -94,15 +97,7 @@ const PlaceHolder = ({ isLoading }) =>
   );
 
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    // onSelectAllClick,
-    order,
-    orderBy,
-    // numSelected,
-    // rowCount,
-    onRequestSort
-  } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -110,14 +105,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          {/* <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          /> */}
-        </TableCell>
+        <TableCell padding="checkbox" />
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -147,7 +135,6 @@ EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired
@@ -220,27 +207,35 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
+const ROWS_PER_PAGE = 100;
+
+const TabelaNoticias = ({
+  news,
+  isLoading,
+  selectedNews,
+  setSelectedNews,
+  selectedWord,
+  beginDate,
+  endDate,
+  search
+}) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  useEffect(() => {
+    if (news.length) {
+      setLoadingMore(false);
+    }
+  }, [news.length]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  // const handleSelectAllClick = (event) => {
-  //   if (event.target.checked) {
-  //     const newSelecteds = news.map((n) => n._id);
-  //     setSelectedNews(newSelecteds);
-  //     return;
-  //   }
-  //   setSelectedNews([]);
-  // };
 
   const handleClick = (event, id) => {
     const selectedIndex = selectedNews.indexOf(id);
@@ -263,25 +258,30 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    if (newPage > page && news.length < (newPage + 1) * ROWS_PER_PAGE) {
+      setLoadingMore(true);
+      search({
+        word: selectedWord,
+        beginDate,
+        endDate,
+        from: (page + 1) * ROWS_PER_PAGE
+      });
+    }
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setPage(newPage);
   };
 
   const isSelected = (id) => selectedNews.indexOf(id) !== -1;
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, news.length - page * rowsPerPage);
+    ROWS_PER_PAGE - Math.min(ROWS_PER_PAGE, news.length - page * ROWS_PER_PAGE);
 
   return (
     <>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selectedNews.length} />
         <TableContainer>
-          {news.length !== 0 && !isLoading ? (
+          {news.length !== 0 && !isLoading && !loadingMore ? (
             <>
               <Table
                 className={classes.table}
@@ -299,7 +299,10 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
                 />
                 <TableBody>
                   {stableSort(news, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(
+                      page * ROWS_PER_PAGE,
+                      page * ROWS_PER_PAGE + ROWS_PER_PAGE
+                    )
                     .map((news) => {
                       const isItemSelected = isSelected(news._id);
 
@@ -345,18 +348,18 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
                 </TableBody>
               </Table>
               <TablePagination
-                rowsPerPageOptions={[20, 50, 100]}
                 component="div"
-                count={news.length}
-                rowsPerPage={rowsPerPage}
+                count={-1}
+                rowsPerPage={ROWS_PER_PAGE}
                 page={page}
                 onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                labelRowsPerPage="Notícias por página:"
+                nextIconButtonText="Buscar mais"
+                backIconButtonText="Voltar"
+                rowsPerPageOptions={[]}
               />
             </>
           ) : (
-            <PlaceHolder isLoading={isLoading} />
+            <PlaceHolder isLoading={isLoading || loadingMore} />
           )}
         </TableContainer>
       </Paper>
@@ -366,4 +369,7 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
 
 const mapStateToProps = ({ news }) => ({ news: news.news });
 
-export default connect(mapStateToProps)(TabelaNoticias);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ search }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabelaNoticias);
