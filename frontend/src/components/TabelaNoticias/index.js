@@ -84,9 +84,18 @@ const headCells = [
 
 const PlaceHolder = ({ isLoading }) =>
   isLoading ? (
-    <Loader isLoading={isLoading} />
+    <div
+      style={{
+        width: '30%',
+        height: '45vh',
+        margin: '0 auto',
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+      <Loader isLoading={isLoading} />
+    </div>
   ) : (
-    <div style={{ width: '45%', margin: '0 auto' }}>
+    <div style={{ width: '30%', margin: '0 auto' }}>
       <div
         className="display-3 font-weight-bold"
         style={{ textAlign: 'center', fontSize: '2rem' }}>
@@ -194,6 +203,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750
   },
+  tableContainer: {
+    maxHeight: '45vh'
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -258,6 +270,8 @@ const TabelaNoticias = ({
   };
 
   const handleChangePage = (event, newPage) => {
+    if (!renderTable) return;
+
     if (newPage > page && news.length < (newPage + 1) * ROWS_PER_PAGE) {
       setLoadingMore(true);
       search({
@@ -276,94 +290,88 @@ const TabelaNoticias = ({
   const emptyRows =
     ROWS_PER_PAGE - Math.min(ROWS_PER_PAGE, news.length - page * ROWS_PER_PAGE);
 
-  return (
-    <>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selectedNews.length} />
-        <TableContainer>
-          {news.length !== 0 && !isLoading && !loadingMore ? (
-            <>
-              <Table
-                className={classes.table}
-                aria-labelledby="tableTitle"
-                size="small"
-                aria-label="enhanced table">
-                <EnhancedTableHead
-                  classes={classes}
-                  numSelected={selectedNews.length}
-                  order={order}
-                  orderBy={orderBy}
-                  // onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={news.length}
-                />
-                <TableBody>
-                  {stableSort(news, getComparator(order, orderBy))
-                    .slice(
-                      page * ROWS_PER_PAGE,
-                      page * ROWS_PER_PAGE + ROWS_PER_PAGE
-                    )
-                    .map((news) => {
-                      const isItemSelected = isSelected(news._id);
+  const renderTable = news.length !== 0 && !isLoading && !loadingMore;
 
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={news._id}
-                          selected={isItemSelected}>
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onClick={(event) => handleClick(event, news._id)}
-                            />
-                          </TableCell>
-                          <TableCell
-                            component="th"
-                            scope="rows"
-                            padding="default">
-                            {news._source.title}
-                          </TableCell>
-                          <TableCell align="left">
-                            <a href={news._source.url} target="_blank">
-                              {news._source.url.slice(0, 50) + '...'}
-                            </a>
-                          </TableCell>
-                          <TableCell align="left">
-                            {news._source.source}
-                          </TableCell>
-                          <TableCell align="left">
-                            {new Date(news._source.criado).toLocaleDateString()}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 40 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-              <TablePagination
-                component="div"
-                count={-1}
-                rowsPerPage={ROWS_PER_PAGE}
-                page={page}
-                onChangePage={handleChangePage}
-                nextIconButtonText="Buscar mais"
-                backIconButtonText="Voltar"
-                rowsPerPageOptions={[]}
-              />
-            </>
-          ) : (
-            <PlaceHolder isLoading={isLoading || loadingMore} />
-          )}
-        </TableContainer>
-      </Paper>
-    </>
+  return renderTable ? (
+    <Paper className={classes.paper}>
+      <EnhancedTableToolbar numSelected={selectedNews.length} />
+      <TableContainer className={`tweeze-scrollbar ${classes.tableContainer}`}>
+        <Table
+          className={classes.table}
+          aria-labelledby="tableTitle"
+          stickyHeader
+          size="small"
+          aria-label="enhanced table">
+          <EnhancedTableHead
+            classes={classes}
+            numSelected={selectedNews.length}
+            order={order}
+            orderBy={orderBy}
+            // onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={news.length}
+          />
+          <TableBody>
+            {stableSort(news, getComparator(order, orderBy))
+              .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + ROWS_PER_PAGE)
+              .map((news) => {
+                const isItemSelected = isSelected(news._id);
+
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={news._id}
+                    selected={isItemSelected}>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isItemSelected}
+                        onClick={(event) => handleClick(event, news._id)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="rows" padding="default">
+                      {news._source.title}
+                    </TableCell>
+                    <TableCell align="left">
+                      <a href={news._source.url} target="_blank">
+                        {news._source.url.slice(0, 50) + '...'}
+                      </a>
+                    </TableCell>
+                    <TableCell align="left">{news._source.source}</TableCell>
+                    <TableCell align="left">
+                      {new Date(news._source.criado).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 40 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        count={-1}
+        rowsPerPage={ROWS_PER_PAGE}
+        page={page}
+        onChangePage={handleChangePage}
+        nextIconButtonText="Buscar mais"
+        backIconButtonText="Voltar"
+        rowsPerPageOptions={[]}
+      />
+    </Paper>
+  ) : (
+    <Paper className={classes.paper}>
+      <EnhancedTableToolbar numSelected={selectedNews.length} />
+      <TableContainer className={`tweeze-scrollbar ${classes.tableContainer}`}>
+        <PlaceHolder isLoading={isLoading || loadingMore} />
+      </TableContainer>
+    </Paper>
   );
 };
 
