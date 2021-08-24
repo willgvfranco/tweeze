@@ -196,7 +196,15 @@ export function changeUser(req, res, next) {
   if (body.telefone) {
     user.telefone = body.telefone;
   }
-  next();
+  user.save((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log("user atualizado");
+    req.body.bypass = true;
+    next();
+  });
 }
 
 export function signinByToken(req, res) {
