@@ -240,40 +240,46 @@ export default function reducer(state = initialState, action) {
         ...state,
         user: action.data.user,
         token: action.data.token,
-        isLogged: true
+        isLogged: true,
+        error: ''
       };
     case Types.LOGIN_TOKEN:
       return {
         ...state,
         user: action.data.user,
         token: action.data.token,
-        isLogged: true
+        isLogged: true,
+        error: ''
       };
     case Types.LOGIN_SOCIAL:
       return {
         ...state,
         user: action.data.user,
         token: action.data.token,
-        isLogged: true
+        isLogged: true,
+        error: ''
       };
     case Types.SIGNUP:
       return {
         ...state,
         user: action.data.user,
         token: action.data.token,
-        isLogged: true
+        isLogged: true,
+        error: ''
       };
     case Types.LOGOUT:
       return {
         ...state,
         isLogged: false,
         token: null,
-        user: {}
+        user: {},
+        error: ''
       };
     case Types.PASSWORD:
       return {
         ...state,
-        status: action.data
+        status: action.data,
+        error: ''
       };
     case Types.ERROR:
       return {
