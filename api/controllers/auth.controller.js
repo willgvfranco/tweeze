@@ -81,7 +81,7 @@ export function recuperarSenha(req, res, next) {
       // return res.status(404).send({ message: "User Not found." });
     }
     var token = sign({ id: user.id }, secret, {
-      expiresIn: 86400, // 24 hours
+      expiresIn: 15, // 24 hours
     });
     req.body.to = req.body.email;
     req.body.subject = "Recuperação de Senha";
@@ -122,7 +122,7 @@ export function signin(req, res) {
         }
       }
       var token = sign({ id: user.id }, secret, {
-        expiresIn: 86400, // 24 hours
+        expiresIn: 15, // 24 hours
       });
 
       var authorities = [];
@@ -230,7 +230,7 @@ export function signinByToken(req, res) {
       }
 
       var token = sign({ id: user.id }, secret, {
-        expiresIn: 86400, // 24 hours
+        expiresIn: 15, // 24 hours
       });
 
       var authorities = [];

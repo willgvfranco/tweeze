@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
-import { loginWithToken } from '../reducers/AuthDuck';
+import { loginWithToken, logout } from '../reducers/AuthDuck';
 
 const RequireAuth = ({
   isLogged,
