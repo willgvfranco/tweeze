@@ -65,5 +65,5 @@ export default function (app) {
   app.post("/api/mail/send", sendMail);
 
   // PAYMENT
-  app.post("/api/payment/mercadopago", newPayment);
+  app.post("/api/payment", newPayment);
 }

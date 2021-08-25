@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DateFnsUtils from '@date-io/date-fns';
+import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
 
 import {
@@ -17,6 +18,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import { Ballot } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 
 import PageTitle from '../components/PageTitle';
 import Select from '../components/Select';
@@ -26,6 +28,47 @@ import ConditionalRender from '../components/ConditionalRender';
 
 import { getAllWords } from '../reducers/WordsDuck';
 import { search } from '../reducers/NewsDuck';
+
+const useStyles = makeStyles((theme) => ({
+  headerActions: {
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      width: '100%'
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: '2rem'
+    }
+  },
+  dropdown: {
+    width: '20rem',
+    marginLeft: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '17.5rem',
+      marginLeft: 0,
+      marginBottom: '0.5rem'
+    },
+    '& > label': {
+      width: '80%'
+    }
+  },
+  datePicker: {
+    marginTop: '8px',
+    [theme.breakpoints.down('xl')]: {
+      marginLeft: '1rem'
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+      width: 'unset',
+      marginBottom: '0.5rem'
+    },
+    [theme.breakpoints.up('xl')]: {
+      marginLeft: '2rem',
+      width: '25%'
+    }
+  }
+}));
+
+const QUANTITY = 100;
 
 const handleNews = (news) => {
   const newsObj = {};
@@ -37,13 +80,21 @@ const handleNews = (news) => {
 };
 
 const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
+  const beginDateDefault = () => {
+    if (new Date().getDate() === 1) {
+      return new Date(new Date().setDate(0));
+    }
+    return new Date().setDate(new Date().getDate() - 1);
+  };
   const [selectedWord, setSelectedWord] = useState('');
   const [days, setDays] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date('2020-08-18'));
+  const [beginDate, setBeginDate] = useState(beginDateDefault());
+  const [endDate, setEndDate] = useState(new Date());
   const [automatic, setAutomatic] = useState(false);
   const [loading, setLoading] = useState('');
   const [selectedNews, setSelectedNews] = useState([]);
   const [newsObj, setNewsObj] = useState({});
+  const classes = useStyles();
 
   useEffect(() => {
     if (loading === 'words') {
@@ -63,8 +114,8 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
     setNewsObj(handleNews(news));
   }, [news]);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleBeginDateChange = (date) => {
+    setBeginDate(date);
     if (!selectedWord) {
       return;
     }
@@ -72,7 +123,24 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
     setLoading('news');
     search({
       word: words[selectedWord],
-      date: date
+      beginDate: date,
+      endDate,
+      qnt: QUANTITY
+    });
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+    if (!selectedWord) {
+      return;
+    }
+
+    setLoading('news');
+    search({
+      word: words[selectedWord],
+      beginDate,
+      endDate: date,
+      qnt: QUANTITY
     });
   };
 
@@ -83,7 +151,9 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
     setLoading('news');
     search({
       word: words[event.target.value],
-      date: selectedDate
+      beginDate,
+      endDate,
+      qnt: QUANTITY
     });
   };
 
@@ -92,9 +162,10 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
       <PageTitle
         titleHeading="Relatórios"
         titleDescription="Consulta de clippings e geração de relatórios"
+        wrapperClass={classes.headerActions}
         icon={<Ballot />}>
         <Select
-          style={{ width: '20rem' }}
+          className={classes.dropdown}
           id="clipping-word-select"
           labelId="clipping-word"
           label="Selecione o grupo para o clipping"
@@ -103,22 +174,44 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
           items={Object.values(words)?.map((word) => word)}
         />
 
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+          <KeyboardDatePicker
+            className={classes.datePicker}
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="begin-date"
+            label="Selecione o período"
+            value={beginDate}
+            maxDate={endDate}
+            disableFuture
+            inputVariant="outlined"
+            onChange={handleBeginDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date'
+            }}
+          />
+        </MuiPickersUtilsProvider>
+
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <div className="ml-5 mr-3">
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="dd/MM/yyyy"
-              margin="normal"
-              id="date-picker"
-              label="Selecione o período"
-              value={selectedDate}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date'
-              }}
-            />
-          </div>
+          <KeyboardDatePicker
+            className={classes.datePicker}
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="end-date"
+            label="Selecione o período"
+            value={endDate}
+            minDate={beginDate}
+            disableFuture
+            inputVariant="outlined"
+            onChange={handleEndDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date'
+            }}
+          />
         </MuiPickersUtilsProvider>
       </PageTitle>
 
@@ -126,6 +219,9 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
         isLoading={loading === 'news'}
         selectedNews={selectedNews}
         setSelectedNews={setSelectedNews}
+        selectedWord={words[selectedWord]}
+        beginDate={beginDate}
+        endDate={endDate}
       />
 
       <Card

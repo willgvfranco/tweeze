@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -18,9 +19,12 @@ import {
   TablePagination,
   TableSortLabel
 } from '@material-ui/core';
+import { Launch } from '@material-ui/icons';
 
 import placeholder from '../../assets/images/illustrations/pack1/wireframe.svg';
 import Loader from '../Loader';
+
+import { search } from '../../reducers/NewsDuck';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -54,35 +58,58 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Título',
-    width: '35%'
+    width: '45%'
   },
-  { id: 'url', numeric: false, disablePadding: false, label: 'URL' }
+  {
+    id: 'url',
+    numeric: false,
+    disablePadding: false,
+    label: 'URL',
+    width: '20%'
+  },
+  {
+    id: 'source',
+    numeric: false,
+    disablePadding: false,
+    label: 'Fonte',
+    width: '15%'
+  },
+  {
+    id: 'criado',
+    numeric: false,
+    disablePadding: false,
+    label: 'Data',
+    width: '15%'
+  }
 ];
 
-const PlaceHolder = ({ isLoading }) =>
+const PlaceHolder = ({ isLoading, selectedWord }) =>
   isLoading ? (
-    <Loader isLoading={isLoading} />
+    <div
+      style={{
+        width: '30%',
+        height: '45vh',
+        margin: '0 auto',
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+      <Loader isLoading={isLoading} />
+    </div>
   ) : (
-    <div style={{ width: '45%', margin: '0 auto' }}>
+    <div style={{ width: '30%', margin: '0 auto' }}>
       <div
         className="display-3 font-weight-bold"
         style={{ textAlign: 'center', fontSize: '2rem' }}>
-        Nenhuma notícia encontrada..
+        {selectedWord?._id
+          ? 'Nenhuma notícia encontrada..'
+          : 'Selecione um grupo de notícias'}
       </div>
       <img alt="..." className="w-100 img-fluid" src={placeholder} />
     </div>
   );
 
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort
-  } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -90,21 +117,14 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
+        <TableCell padding="checkbox" />
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={headCell?.width && { width: '35%' }}>
+            style={headCell?.width && { width: headCell?.width }}>
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
@@ -127,7 +147,6 @@ EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired
@@ -187,6 +206,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750
   },
+  tableContainer: {
+    maxHeight: '45vh'
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -200,26 +222,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
+const ROWS_PER_PAGE = 100;
+
+const TabelaNoticias = ({
+  news,
+  isLoading,
+  selectedNews,
+  setSelectedNews,
+  selectedWord,
+  beginDate,
+  endDate,
+  search
+}) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  useEffect(() => {
+    if (news.length) {
+      setLoadingMore(false);
+    }
+  }, [news.length]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = news.map((n) => n._id);
-      setSelectedNews(newSelecteds);
-      return;
-    }
-    setSelectedNews([]);
   };
 
   const handleClick = (event, id) => {
@@ -243,95 +273,121 @@ const TabelaNoticias = ({ news, isLoading, selectedNews, setSelectedNews }) => {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    if (!renderTable) return;
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    if (newPage > page && news.length < (newPage + 1) * ROWS_PER_PAGE) {
+      setLoadingMore(true);
+      search({
+        word: selectedWord,
+        beginDate,
+        endDate,
+        from: (page + 1) * ROWS_PER_PAGE
+      });
+    }
+
+    setPage(newPage);
   };
 
   const isSelected = (id) => selectedNews.indexOf(id) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, news.length - page * rowsPerPage);
+  const renderTable = news.length !== 0 && !isLoading && !loadingMore;
 
-  return (
-    <>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selectedNews.length} />
-        <TableContainer>
-          {news.length !== 0 && !isLoading ? (
-            <>
-              <Table
-                className={classes.table}
-                aria-labelledby="tableTitle"
-                size="small"
-                aria-label="enhanced table">
-                <EnhancedTableHead
-                  classes={classes}
-                  numSelected={selectedNews.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={news.length}
-                />
-                <TableBody>
-                  {stableSort(news, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((news) => {
-                      const isItemSelected = isSelected(news._id);
+  return renderTable ? (
+    <Paper className={classes.paper}>
+      <EnhancedTableToolbar numSelected={selectedNews.length} />
+      <TableContainer
+        className={`tweeze-scrollbar ${classes.tableContainer}`}
+        style={{ overflowX: 'hidden' }}>
+        <Table
+          className={classes.table}
+          aria-labelledby="tableTitle"
+          stickyHeader
+          size="small"
+          aria-label="enhanced table">
+          <EnhancedTableHead
+            classes={classes}
+            numSelected={selectedNews.length}
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            rowCount={news.length}
+          />
+          <TableBody>
+            {stableSort(news, getComparator(order, orderBy))
+              .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + ROWS_PER_PAGE)
+              .map((news) => {
+                const isItemSelected = isSelected(news._id);
 
-                      return (
-                        <TableRow
-                          hover
-                          onClick={(event) => handleClick(event, news._id)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={news._id}
-                          selected={isItemSelected}>
-                          <TableCell padding="checkbox">
-                            <Checkbox checked={isItemSelected} />
-                          </TableCell>
-                          <TableCell
-                            component="th"
-                            scope="rows"
-                            padding="default">
-                            {news._source.title}
-                          </TableCell>
-                          <TableCell align="left">{news._source.url}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 40 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={news.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                labelRowsPerPage="Notícias por página:"
-              />
-            </>
-          ) : (
-            <PlaceHolder isLoading={isLoading} />
-          )}
-        </TableContainer>
-      </Paper>
-    </>
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={news._id}
+                    selected={isItemSelected}>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isItemSelected}
+                        onClick={(event) => handleClick(event, news._id)}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="rows" padding="default">
+                      {news._source.title}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{
+                        whiteSpace: 'nowrap',
+                        maxWidth: '220px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>
+                      <a href={news._source.url} target="_blank">
+                        <Launch style={{ marginRight: '10px' }} />
+                        {news._source.url}
+                      </a>
+                    </TableCell>
+                    <TableCell align="left">{news._source.source}</TableCell>
+                    <TableCell align="left">
+                      {new Date(news._source.criado).toLocaleString()}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        count={-1}
+        rowsPerPage={ROWS_PER_PAGE}
+        page={page}
+        onChangePage={handleChangePage}
+        labelDisplayedRows={({ from, to, count }) =>
+          `${from}-${to} de ${count !== -1 ? count : `mais de ${to}`}`
+        }
+        nextIconButtonText="Buscar mais"
+        backIconButtonText="Voltar"
+        rowsPerPageOptions={[]}
+      />
+    </Paper>
+  ) : (
+    <Paper className={classes.paper}>
+      <EnhancedTableToolbar numSelected={selectedNews.length} />
+      <TableContainer className={`tweeze-scrollbar ${classes.tableContainer}`}>
+        <PlaceHolder
+          isLoading={isLoading || loadingMore}
+          selectedWord={selectedWord}
+        />
+      </TableContainer>
+    </Paper>
   );
 };
 
 const mapStateToProps = ({ news }) => ({ news: news.news });
 
-export default connect(mapStateToProps)(TabelaNoticias);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ search }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabelaNoticias);

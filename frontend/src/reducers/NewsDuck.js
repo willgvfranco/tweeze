@@ -7,7 +7,12 @@ export const Types = {
   ERROR: 'news/ERROR'
 };
 
-export const search = ({ word, date, qnt = '25' }) => async (dispatch) => {
+export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
+  dispatch,
+  getState
+) => {
+  const { news } = getState().news;
+
   try {
     const result = await axios({
       method: 'post',
@@ -15,13 +20,22 @@ export const search = ({ word, date, qnt = '25' }) => async (dispatch) => {
       data: {
         ...word,
         qnt,
-        date: date.toISOString()
+        from,
+        beginDate: new Date(beginDate).toISOString(),
+        endDate: new Date(endDate).toISOString()
       }
     });
 
+    if (from !== 0) {
+      dispatch({
+        type: Types.GET,
+        data: news.concat(result.data.hits.hits)
+      });
+      return;
+    }
     dispatch({
       type: Types.GET,
-      data: result.data
+      data: result.data.hits.hits
     });
   } catch (error) {
     console.log('search error', error);

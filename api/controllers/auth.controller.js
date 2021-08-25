@@ -140,10 +140,18 @@ export function signin(req, res) {
       res.status(200).send({
         id: user._id,
         email: user.email,
-        data_nascimento: user.nascimento,
+        data_nascimento: user.data_nascimento,
         first_name: user.first_name,
         last_name: user.last_name,
         cpf: user.cpf,
+        telefone: user.telefone,
+        endereco: user.endereco,
+        complemento: user.complemento,
+        cep: user.cep,
+        nome_empresarial: user.nome_empresarial,
+        nome_fantasia: user.nome_fantasia,
+        cnpj: user.cnpj,
+        inscricao_estadual: user.inscricao_estadual,
         roles: authorities,
         accessToken: token,
         grupo_palavras: words_group,
@@ -152,51 +160,70 @@ export function signin(req, res) {
 }
 
 export function changeUser(req, res, next) {
-  const user = User.findOne({
+  User.findOne({
     id: req.id,
+  }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    const body = req.body;
+    if (body.first_name) {
+      user.first_name = body.first_name;
+    }
+    if (body.last_name) {
+      user.last_name = body.last_name;
+    }
+
+    if (body.cpf) {
+      user.cpf = body.cpf;
+    }
+    if (body.inscricao_estadual) {
+      user.inscricao_estadual = body.inscricao_estadual;
+    }
+    if (body.nome_empresarial) {
+      user.nome_empresarial = body.nome_empresarial;
+    }
+    if (body.nome_fantasia) {
+      user.nome_fantasia = body.nome_fantasia;
+    }
+
+    if (body.cnpj) {
+      user.cnpj = body.cnpj;
+    }
+
+    if (body.password) {
+      user.password = hashSync(body.password, 8);
+    }
+
+    if (body.endereco) {
+      user.endereco = body.endereco;
+    }
+
+    if (body.complemento) {
+      user.complemento = body.complemento;
+    }
+
+    if (body.cep) {
+      user.cep = body.cep;
+    }
+
+    if (body.data_nascimento) {
+      user.data_nascimento = body.data_nascimento;
+    }
+    if (body.telefone) {
+      user.telefone = body.telefone;
+    }
+    user.save((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      console.log("user atualizado");
+      req.body.bypass = true;
+      next();
+    });
   });
-  const body = req.body;
-  if (body.first_name) {
-    user.first_name = body.first_name;
-  }
-  if (body.last_name) {
-    user.last_name = body.last_name;
-  }
-
-  if (body.cpf) {
-    user.cpf = body.cpf;
-  }
-  if (body.inscricao_estadual) {
-    user.inscricao_estadual = body.inscricao_estadual;
-  }
-
-  if (body.cnpj) {
-    user.cnpj = body.cnpj;
-  }
-
-  if (body.password) {
-    user.password = hashSync(body.password, 8);
-  }
-
-  if (body.endereco) {
-    user.endereco = body.endereco;
-  }
-
-  if (body.complemento) {
-    user.complemento = body.complemento;
-  }
-
-  if (body.cep) {
-    user.cep = body.cep;
-  }
-
-  if (body.data_nascimento) {
-    user.data_nascimento = body.data_nascimento;
-  }
-  if (body.telefone) {
-    user.telefone = body.telefone;
-  }
-  next();
 }
 
 export function signinByToken(req, res) {
@@ -240,10 +267,18 @@ export function signinByToken(req, res) {
       res.status(200).send({
         id: user._id,
         email: user.email,
-        data_nascimento: user.nascimento,
+        data_nascimento: user.data_nascimento,
         first_name: user.first_name,
         last_name: user.last_name,
         cpf: user.cpf,
+        telefone: user.telefone,
+        endereco: user.endereco,
+        complemento: user.complemento,
+        cep: user.cep,
+        nome_empresarial: user.nome_empresarial,
+        nome_fantasia: user.nome_fantasia,
+        cnpj: user.cnpj,
+        inscricao_estadual: user.inscricao_estadual,
         roles: authorities,
         accessToken: token,
         grupo_palavras: words_group,
