@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import MaskedInput from 'react-text-mask';
 import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
 
-import {
-  TextField,
-  Card,
-  CardHeader,
-  Grid,
-  Button,
-  OutlinedInput
-} from '@material-ui/core';
+import { TextField, Card, CardHeader, Grid, Button } from '@material-ui/core';
 import { ArrowBack, AccountCircle } from '@material-ui/icons';
 import {
   MuiPickersUtilsProvider,
@@ -21,49 +13,12 @@ import {
 
 import PageTitle from '../../components/PageTitle';
 
-import { CpfValidation } from 'utils/validations';
-
-const TextMaskPhone = (props) => {
-  const { inputRef, ...other } = props;
-
-  return (
-    <MaskedInput
-      {...other}
-      ref={(ref) => {
-        inputRef(ref ? ref.inputElement : null);
-      }}
-      mask={[
-        '+',
-        '5',
-        '5',
-        ' ',
-        '(',
-        /[1-9]/,
-        /\d/,
-        ')',
-        ' ',
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/,
-        '-',
-        /\d/,
-        /\d/,
-        /\d/,
-        /\d/
-      ]}
-      placeholderChar={'\u2000'}
-      showMask
-      guide={true}
-    />
-  );
-};
+import { CpfValidation, PhoneValidation } from 'utils/validations';
 
 const Informacoes = () => {
   const history = useHistory();
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [physicalForm, setPhysicalForm] = useState({
     firstName: '',
     lastName: '',
@@ -89,6 +44,16 @@ const Informacoes = () => {
         setPhysicalForm({
           ...physicalForm,
           [event.target.id]: cpf
+        });
+      }
+      return;
+    }
+    if (event.target.id === 'phone') {
+      const phone = PhoneValidation(event);
+      if (phone || phone === '') {
+        setPhysicalForm({
+          ...physicalForm,
+          [event.target.id]: phone
         });
       }
       return;
@@ -188,14 +153,14 @@ const Informacoes = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <OutlinedInput
+                <TextField
                   className="m-2"
-                  style={{ width: '45%' }}
+                  id="phone"
                   value={physicalForm.phone}
                   onChange={handlePhysicalFormChange}
-                  name="phone"
-                  id="phone"
-                  inputComponent={TextMaskPhone}
+                  label="Telefone"
+                  variant="outlined"
+                  style={{ width: '45%' }}
                 />
               </Grid>
 
