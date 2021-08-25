@@ -140,7 +140,7 @@ export function signin(req, res) {
       res.status(200).send({
         id: user._id,
         email: user.email,
-        data_nascimento: user.nascimento,
+        data_nascimento: user.data_nascimento,
         first_name: user.first_name,
         last_name: user.last_name,
         cpf: user.cpf,
@@ -248,7 +248,7 @@ export function signinByToken(req, res) {
       res.status(200).send({
         id: user._id,
         email: user.email,
-        data_nascimento: user.nascimento,
+        data_nascimento: user.data_nascimento,
         first_name: user.first_name,
         last_name: user.last_name,
         cpf: user.cpf,
