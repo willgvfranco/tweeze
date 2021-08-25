@@ -144,6 +144,14 @@ export function signin(req, res) {
         first_name: user.first_name,
         last_name: user.last_name,
         cpf: user.cpf,
+        telefone: user.telefone,
+        endereco: user.endereco,
+        complemento: user.complemento,
+        cep: user.cep,
+        nome_empresarial: user.nome_empresarial,
+        nome_fantasia: user.nome_fantasia,
+        cnpj: user.cnpj,
+        inscricao_estadual: user.inscricao_estadual,
         roles: authorities,
         accessToken: token,
         grupo_palavras: words_group,
@@ -172,6 +180,12 @@ export function changeUser(req, res, next) {
     }
     if (body.inscricao_estadual) {
       user.inscricao_estadual = body.inscricao_estadual;
+    }
+    if (body.nome_empresarial) {
+      user.nome_empresarial = body.nome_empresarial;
+    }
+    if (body.nome_fantasia) {
+      user.nome_fantasia = body.nome_fantasia;
     }
 
     if (body.cnpj) {
@@ -257,6 +271,14 @@ export function signinByToken(req, res) {
         first_name: user.first_name,
         last_name: user.last_name,
         cpf: user.cpf,
+        telefone: user.telefone,
+        endereco: user.endereco,
+        complemento: user.complemento,
+        cep: user.cep,
+        nome_empresarial: user.nome_empresarial,
+        nome_fantasia: user.nome_fantasia,
+        cnpj: user.cnpj,
+        inscricao_estadual: user.inscricao_estadual,
         roles: authorities,
         accessToken: token,
         grupo_palavras: words_group,
