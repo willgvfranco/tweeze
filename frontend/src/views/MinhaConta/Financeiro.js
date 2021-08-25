@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  TextField,
+  // TextField,
   Card,
   CardHeader,
-  Grid,
-  Table,
-  Button,
-  Radio
+  // Grid,
+  Table
+  // Button
+  // Radio
 } from '@material-ui/core';
 import { ArrowBack, CreditCard } from '@material-ui/icons';
 
 import PageTitle from '../../components/PageTitle';
-import Select from '../../components/Select';
+// import Select from '../../components/Select';
 
-import { creditCardValidation, CpfValidation } from 'utils/validations';
+// import { creditCardValidation, CpfValidation } from 'utils/validations';
 
 const mockPaymentData = [
   ['Março', 'dd/mm/aa', 'R$45,56', 'Pago'],
@@ -25,12 +26,12 @@ const mockPaymentData = [
   ['Novembro', 'dd/mm/aa', 'R$45,57', 'Pago']
 ];
 
-const mockCreditCardData = [
-  ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome'],
-  ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome'],
-  ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome'],
-  ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome']
-];
+// const mockCreditCardData = [
+//   ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome'],
+//   ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome'],
+//   ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome'],
+//   ['(Crédito) Mastercard', '12/2028', 'Nome Sobrenome']
+// ];
 
 const PaymentTable = () => (
   <div className="table-responsive-md">
@@ -64,92 +65,92 @@ const PaymentTable = () => (
   </div>
 );
 
-const CreditCardsTable = () => {
-  const [selectedCard, setSelectedCard] = useState(0);
+// const CreditCardsTable = () => {
+//   const [selectedCard, setSelectedCard] = useState(0);
 
-  return (
-    <div
-      className="table-responsive-md tweeze-scrollbar"
-      style={{ maxHeight: '20rem', overflowY: 'auto' }}>
-      <Table className="table table-borderless text-nowrap mb-0">
-        <thead>
-          <tr>
-            <th className="text-uppercase bg-secondary">Cartão</th>
-            <th className="text-uppercase bg-secondary">Expira em</th>
-            <th className="text-uppercase bg-secondary">Nome no Cartão</th>
-            <th className="text-uppercase bg-secondary"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {mockCreditCardData.map((el, index) => (
-            <tr key={index}>
-              <td>{el[0]}</td>
-              <td>{el[1]}</td>
-              <td>{el[2]}</td>
-              <td>
-                <Radio
-                  checked={selectedCard === index}
-                  onChange={(e) => setSelectedCard(Number(e.target.value))}
-                  value={index}
-                  style={{ margin: '0 auto' }}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
-  );
-};
+//   return (
+//     <div
+//       className="table-responsive-md tweeze-scrollbar"
+//       style={{ maxHeight: '20rem', overflowY: 'auto' }}>
+//       <Table className="table table-borderless text-nowrap mb-0">
+//         <thead>
+//           <tr>
+//             <th className="text-uppercase bg-secondary">Cartão</th>
+//             <th className="text-uppercase bg-secondary">Expira em</th>
+//             <th className="text-uppercase bg-secondary">Nome no Cartão</th>
+//             <th className="text-uppercase bg-secondary"></th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {mockCreditCardData.map((el, index) => (
+//             <tr key={index}>
+//               <td>{el[0]}</td>
+//               <td>{el[1]}</td>
+//               <td>{el[2]}</td>
+//               <td>
+//                 <Radio
+//                   checked={selectedCard === index}
+//                   onChange={(e) => setSelectedCard(Number(e.target.value))}
+//                   value={index}
+//                   style={{ margin: '0 auto' }}
+//                 />
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </Table>
+//     </div>
+//   );
+// };
 
 const Informacoes = () => {
-  const [creditCardForm, setCreditCardForm] = useState({
-    number: '',
-    name: '',
-    code: '',
-    month: '',
-    year: '',
-    cpf: ''
-  });
+  // const [creditCardForm, setCreditCardForm] = useState({
+  //   number: '',
+  //   name: '',
+  //   code: '',
+  //   month: '',
+  //   year: '',
+  //   cpf: ''
+  // });
   const history = useHistory();
 
-  const handleCardFormChange = (event) => {
-    if (event.target.id === 'code') {
-      if (event.target.value.length <= 3 && !isNaN(event.target.value)) {
-        setCreditCardForm({
-          ...creditCardForm,
-          [event.target.id]: event.target.value
-        });
-      }
-      return;
-    }
+  // const handleCardFormChange = (event) => {
+  //   if (event.target.id === 'code') {
+  //     if (event.target.value.length <= 3 && !isNaN(event.target.value)) {
+  //       setCreditCardForm({
+  //         ...creditCardForm,
+  //         [event.target.id]: event.target.value
+  //       });
+  //     }
+  //     return;
+  //   }
 
-    if (event.target.id === 'number') {
-      const number = creditCardValidation(event);
-      if (number || number === '') {
-        setCreditCardForm({
-          ...creditCardForm,
-          [event.target.id]: number
-        });
-      }
-      return;
-    }
+  //   if (event.target.id === 'number') {
+  //     const number = creditCardValidation(event);
+  //     if (number || number === '') {
+  //       setCreditCardForm({
+  //         ...creditCardForm,
+  //         [event.target.id]: number
+  //       });
+  //     }
+  //     return;
+  //   }
 
-    if (event.target.id === 'cpf') {
-      const cpf = CpfValidation(event);
-      if (cpf || cpf === '') {
-        setCreditCardForm({
-          ...creditCardForm,
-          [event.target.id]: cpf
-        });
-      }
-      return;
-    }
-    setCreditCardForm({
-      ...creditCardForm,
-      [event.target.id || event.target.name]: event.target.value
-    });
-  };
+  //   if (event.target.id === 'cpf') {
+  //     const cpf = CpfValidation(event);
+  //     if (cpf || cpf === '') {
+  //       setCreditCardForm({
+  //         ...creditCardForm,
+  //         [event.target.id]: cpf
+  //       });
+  //     }
+  //     return;
+  //   }
+  //   setCreditCardForm({
+  //     ...creditCardForm,
+  //     [event.target.id || event.target.name]: event.target.value
+  //   });
+  // };
 
   return (
     <>
@@ -170,7 +171,7 @@ const Informacoes = () => {
         }
       />
 
-      <Card
+      {/* <Card
         style={{ displa: 'flex' }}
         className="rounded w-100 bg-white mt-3 p-3">
         <CardHeader title="Dados Financeiros" />
@@ -259,7 +260,7 @@ const Informacoes = () => {
             <CreditCardsTable />
           </Grid>
         </Grid>
-      </Card>
+      </Card> */}
 
       <Card
         style={{ displa: 'flex' }}
