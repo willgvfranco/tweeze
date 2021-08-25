@@ -20,10 +20,10 @@ const handleWords = (words) => {
 };
 
 export const getAllWords = () => async (dispatch, getState) => {
-  const { token, user } = getState().auth;
+  const { accessToken, id } = getState().auth;
   const { firstFetch } = getState().words;
 
-  if (!user) return;
+  if (!id) return;
 
   try {
     const result = await axios({
@@ -31,10 +31,10 @@ export const getAllWords = () => async (dispatch, getState) => {
       url: BACKEND.getWords,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: accessToken
       },
       data: {
-        userId: user
+        userId: id
       }
     });
 
@@ -62,7 +62,7 @@ export const getAllWords = () => async (dispatch, getState) => {
 };
 
 export const createWord = (word) => async (dispatch, getState) => {
-  const { token, user } = getState().auth;
+  const { accessToken, id } = getState().auth;
 
   try {
     const result = await axios({
@@ -70,10 +70,10 @@ export const createWord = (word) => async (dispatch, getState) => {
       url: BACKEND.addWord,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: accessToken
       },
       data: {
-        userId: user,
+        userId: id,
         ...word
       }
     });
@@ -92,7 +92,7 @@ export const createWord = (word) => async (dispatch, getState) => {
 };
 
 export const editWord = (word) => async (dispatch, getState) => {
-  const { token, user } = getState().auth;
+  const { accessToken, id } = getState().auth;
   const { _id: wordsId, name, pos, neg } = word;
 
   try {
@@ -101,10 +101,10 @@ export const editWord = (word) => async (dispatch, getState) => {
       url: BACKEND.updateWord,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: accessToken
       },
       data: {
-        userId: user,
+        userId: id,
         wordsId,
         name,
         pos,
@@ -126,7 +126,7 @@ export const editWord = (word) => async (dispatch, getState) => {
 };
 
 export const deleteWord = (wordsId) => async (dispatch, getState) => {
-  const { token, user } = getState().auth;
+  const { accessToken, id } = getState().auth;
 
   try {
     const result = await axios({
@@ -134,10 +134,10 @@ export const deleteWord = (wordsId) => async (dispatch, getState) => {
       url: BACKEND.deleteWord,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: accessToken
       },
       data: {
-        userId: user,
+        userId: id,
         wordsId
       }
     });

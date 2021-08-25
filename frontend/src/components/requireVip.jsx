@@ -34,7 +34,7 @@ const RequireAuth = ({
 
 const mapStateToProps = ({ auth }) => ({
   isLogged: auth.isLogged,
-  token: auth.token,
+  token: auth.accessToken,
   authError: auth.error
 });
 
