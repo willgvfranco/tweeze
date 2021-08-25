@@ -152,58 +152,63 @@ export function signin(req, res) {
 }
 
 export function changeUser(req, res, next) {
-  const user = User.findOne({
+  User.findOne({
     id: req.id,
-  });
-  const body = req.body;
-  if (body.first_name) {
-    user.first_name = body.first_name;
-  }
-  if (body.last_name) {
-    user.last_name = body.last_name;
-  }
-
-  if (body.cpf) {
-    user.cpf = body.cpf;
-  }
-  if (body.inscricao_estadual) {
-    user.inscricao_estadual = body.inscricao_estadual;
-  }
-
-  if (body.cnpj) {
-    user.cnpj = body.cnpj;
-  }
-
-  if (body.password) {
-    user.password = hashSync(body.password, 8);
-  }
-
-  if (body.endereco) {
-    user.endereco = body.endereco;
-  }
-
-  if (body.complemento) {
-    user.complemento = body.complemento;
-  }
-
-  if (body.cep) {
-    user.cep = body.cep;
-  }
-
-  if (body.data_nascimento) {
-    user.data_nascimento = body.data_nascimento;
-  }
-  if (body.telefone) {
-    user.telefone = body.telefone;
-  }
-  user.save((err, user) => {
+  }).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    console.log("user atualizado");
-    req.body.bypass = true;
-    next();
+    const body = req.body;
+    if (body.first_name) {
+      user.first_name = body.first_name;
+    }
+    if (body.last_name) {
+      user.last_name = body.last_name;
+    }
+
+    if (body.cpf) {
+      user.cpf = body.cpf;
+    }
+    if (body.inscricao_estadual) {
+      user.inscricao_estadual = body.inscricao_estadual;
+    }
+
+    if (body.cnpj) {
+      user.cnpj = body.cnpj;
+    }
+
+    if (body.password) {
+      user.password = hashSync(body.password, 8);
+    }
+
+    if (body.endereco) {
+      user.endereco = body.endereco;
+    }
+
+    if (body.complemento) {
+      user.complemento = body.complemento;
+    }
+
+    if (body.cep) {
+      user.cep = body.cep;
+    }
+
+    if (body.data_nascimento) {
+      user.data_nascimento = body.data_nascimento;
+    }
+    if (body.telefone) {
+      user.telefone = body.telefone;
+    }
+    user.save((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      console.log("user atualizado");
+      req.body.bypass = true;
+      next();
+    });
   });
 }
 
