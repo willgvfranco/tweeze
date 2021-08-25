@@ -43,13 +43,13 @@ export default function ControlledExpansionPanels(props) {
         <ExpansionPanelDetails>
           <Typography>
           A Tweeze é uma startup 100% brasileira. Possuímos uma base presencial em Brasília, no Setor Comercial Sul, mas nos vemos como uma empresa sem fronteiras! Naturalmente nossa primeira notícia captada foi do Brasil, mas hoje já somos líderes no monitoramento de dados no Brasil! O nosso espírito é de crescimento! 
-          <br></br><br></br>
+          <br></br>
           “Para a Tweeze existem dois pilares - cliente e tecnologia” - Cristiano da Matta (co-fundador da Tweeze). 
-          <br></br><br></br>
+          <br></br>
           Aos nossos clientes, contem com a gente como parceiros estratégicos. Nosso compromisso é crescer sem encarecer! Oferecer suporte! Hoje nossa solução, ainda em fase de entrada no mercado, conhecida como Beta. Nesse momento já oferecemos o serviço de clipping jornalístico, em média 70% mais barato que outras soluções de mercado. Economia para você é sinal de alavancagem para a gente.  
-          <br></br><br></br>
+          <br></br>
           Somos apaixonados por tecnologia. Dentro das nossas soluções, estão funcionalidades extremamente interessantes. Inteligência artificial, processamento de linguagem natural, redes neurais, aprendizado profundo (deep learning) - tudo que parece complicado, para garantir a você em tempo real, o que realmente importa para a sua organização – dados, notícias e métricas a respeito do que falam sobre sua marca em tempo real. 
-          <br></br><br></br>
+          <br></br>
           Vamos pinçar?
           </Typography>
         </ExpansionPanelDetails>
