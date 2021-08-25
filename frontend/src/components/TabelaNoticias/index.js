@@ -19,6 +19,7 @@ import {
   TablePagination,
   TableSortLabel
 } from '@material-ui/core';
+import { Launch } from '@material-ui/icons';
 
 import placeholder from '../../assets/images/illustrations/pack1/wireframe.svg';
 import Loader from '../Loader';
@@ -57,14 +58,14 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Título',
-    width: '35%'
+    width: '45%'
   },
   {
     id: 'url',
     numeric: false,
     disablePadding: false,
     label: 'URL',
-    width: '25%'
+    width: '20%'
   },
   {
     id: 'source',
@@ -78,11 +79,11 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Data',
-    width: '20%'
+    width: '15%'
   }
 ];
 
-const PlaceHolder = ({ isLoading }) =>
+const PlaceHolder = ({ isLoading, selectedWord }) =>
   isLoading ? (
     <div
       style={{
@@ -99,7 +100,9 @@ const PlaceHolder = ({ isLoading }) =>
       <div
         className="display-3 font-weight-bold"
         style={{ textAlign: 'center', fontSize: '2rem' }}>
-        Selecione um grupo de notícias
+        {selectedWord?._id
+          ? 'Nenhuma notícia encontrada..'
+          : 'Selecione um grupo de notícias'}
       </div>
       <img alt="..." className="w-100 img-fluid" src={placeholder} />
     </div>
@@ -292,7 +295,9 @@ const TabelaNoticias = ({
   return renderTable ? (
     <Paper className={classes.paper}>
       <EnhancedTableToolbar numSelected={selectedNews.length} />
-      <TableContainer className={`tweeze-scrollbar ${classes.tableContainer}`}>
+      <TableContainer
+        className={`tweeze-scrollbar ${classes.tableContainer}`}
+        style={{ overflowX: 'hidden' }}>
         <Table
           className={classes.table}
           aria-labelledby="tableTitle"
@@ -330,9 +335,17 @@ const TabelaNoticias = ({
                     <TableCell component="th" scope="rows" padding="default">
                       {news._source.title}
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell
+                      align="left"
+                      style={{
+                        whiteSpace: 'nowrap',
+                        maxWidth: '220px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>
                       <a href={news._source.url} target="_blank">
-                        {news._source.url.slice(0, 50) + '...'}
+                        <Launch style={{ marginRight: '10px' }} />
+                        {news._source.url}
                       </a>
                     </TableCell>
                     <TableCell align="left">{news._source.source}</TableCell>
@@ -351,6 +364,9 @@ const TabelaNoticias = ({
         rowsPerPage={ROWS_PER_PAGE}
         page={page}
         onChangePage={handleChangePage}
+        labelDisplayedRows={({ from, to, count }) =>
+          `${from}-${to} de ${count !== -1 ? count : `mais de ${to}`}`
+        }
         nextIconButtonText="Buscar mais"
         backIconButtonText="Voltar"
         rowsPerPageOptions={[]}
@@ -360,7 +376,10 @@ const TabelaNoticias = ({
     <Paper className={classes.paper}>
       <EnhancedTableToolbar numSelected={selectedNews.length} />
       <TableContainer className={`tweeze-scrollbar ${classes.tableContainer}`}>
-        <PlaceHolder isLoading={isLoading || loadingMore} />
+        <PlaceHolder
+          isLoading={isLoading || loadingMore}
+          selectedWord={selectedWord}
+        />
       </TableContainer>
     </Paper>
   );
