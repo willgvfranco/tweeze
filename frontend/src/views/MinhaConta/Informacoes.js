@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
@@ -13,31 +15,53 @@ import {
 
 import PageTitle from '../../components/PageTitle';
 
+import { changePersonalInfo } from '../../reducers/AuthDuck';
 import {
   CpfValidation,
   PhoneValidation,
   CepValidation
 } from 'utils/validations';
 
-const Informacoes = () => {
+const Informacoes = ({ changePersonalInfo, user }) => {
   const history = useHistory();
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [physicalForm, setPhysicalForm] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     cpf: '',
-    phone: '',
-    address: '',
-    complement: '',
+    telefone: '',
+    endereco: '',
+    complemento: '',
     cep: ''
   });
   const [legalForm, setLegalForm] = useState({
-    enterpriseName: '',
-    fantasyName: '',
+    nome_empresarial: '',
+    nome_fantasia: '',
     cnpj: '',
-    stateRegistration: ''
+    inscricao_estadual: ''
   });
+
+  useEffect(() => {
+    if (user?.id) {
+      setSelectedDate(user?.data_nascimento || null);
+      setPhysicalForm({
+        first_name: user?.first_name || '',
+        last_name: user?.last_name || '',
+        cpf: user?.cpf || '',
+        telefone: user?.telefone || '',
+        endereco: user?.endereco || '',
+        complemento: user?.complemento || '',
+        cep: user?.cep || ''
+      });
+      setLegalForm({
+        nome_empresarial: user?.nome_empresarial || '',
+        nome_fantasia: user?.nome_fantasia || '',
+        cnpj: user?.cnpj || '',
+        inscricao_estadual: user?.inscricao_estadual || ''
+      });
+    }
+  }, [user]);
 
   const handleDateChange = (date) => setSelectedDate(date);
 
@@ -52,12 +76,12 @@ const Informacoes = () => {
       }
       return;
     }
-    if (event.target.id === 'phone') {
-      const phone = PhoneValidation(event);
-      if (phone || phone === '') {
+    if (event.target.id === 'telefone') {
+      const telefone = PhoneValidation(event);
+      if (telefone || telefone === '') {
         setPhysicalForm({
           ...physicalForm,
-          [event.target.id]: phone
+          [event.target.id]: telefone
         });
       }
       return;
@@ -83,6 +107,14 @@ const Informacoes = () => {
       ...legalForm,
       [event.target.id]: event.target.value
     });
+  };
+
+  const handlePhysicalFormSend = () => {
+    if (selectedDate) {
+      changePersonalInfo({ ...physicalForm, data_nascimento: selectedDate });
+      return;
+    }
+    changePersonalInfo(physicalForm);
   };
 
   return (
@@ -115,17 +147,17 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="firstName"
+                  id="first_name"
                   label="Primeiro Nome"
-                  value={physicalForm.firstName}
+                  value={physicalForm.first_name}
                   onChange={handlePhysicalFormChange}
                   variant="outlined"
                   style={{ width: '45%' }}
                 />
                 <TextField
                   className="m-2"
-                  id="lastName"
-                  value={physicalForm.lastName}
+                  id="last_name"
+                  value={physicalForm.last_name}
                   onChange={handlePhysicalFormChange}
                   label="Sobrenome"
                   variant="outlined"
@@ -169,8 +201,8 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="phone"
-                  value={physicalForm.phone}
+                  id="telefone"
+                  value={physicalForm.telefone}
                   onChange={handlePhysicalFormChange}
                   label="Telefone"
                   variant="outlined"
@@ -181,8 +213,8 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="address"
-                  value={physicalForm.address}
+                  id="endereco"
+                  value={physicalForm.endereco}
                   onChange={handlePhysicalFormChange}
                   label="Endereço"
                   variant="outlined"
@@ -193,8 +225,8 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="complement"
-                  value={physicalForm.complement}
+                  id="complemento"
+                  value={physicalForm.complemento}
                   onChange={handlePhysicalFormChange}
                   label="Complemento"
                   variant="outlined"
@@ -213,7 +245,8 @@ const Informacoes = () => {
             </Grid>
             <Button
               variant="contained"
-              className="btn-primary m-2 ml-auto mt-auto">
+              className="btn-primary m-2 ml-auto mt-auto"
+              onClick={handlePhysicalFormSend}>
               Salvar alterações
             </Button>
           </Card>
@@ -229,7 +262,7 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="enterpriseName"
+                  id="nome_empresarial"
                   onChange={handleLegalFormChange}
                   label="Nome Empresarial"
                   variant="outlined"
@@ -239,7 +272,7 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="fantasyName"
+                  id="nome_fantasia"
                   onChange={handleLegalFormChange}
                   label="Nome de Fantasia"
                   variant="outlined"
@@ -259,7 +292,7 @@ const Informacoes = () => {
               <Grid item xs={12}>
                 <TextField
                   className="m-2"
-                  id="stateRegistration"
+                  id="inscricao_estadual"
                   onChange={handleLegalFormChange}
                   label="Inscrição Estadual"
                   variant="outlined"
@@ -270,7 +303,8 @@ const Informacoes = () => {
 
             <Button
               variant="contained"
-              className="btn-primary m-2 ml-auto mt-auto">
+              className="btn-primary m-2 ml-auto mt-auto"
+              onClick={() => changePersonalInfo(legalForm)}>
               Salvar alterações
             </Button>
           </Card>
@@ -280,4 +314,9 @@ const Informacoes = () => {
   );
 };
 
-export default Informacoes;
+const mapStateToProps = ({ auth }) => ({ user: auth });
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ changePersonalInfo }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Informacoes);
