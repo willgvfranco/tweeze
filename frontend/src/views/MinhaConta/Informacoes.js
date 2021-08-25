@@ -13,7 +13,11 @@ import {
 
 import PageTitle from '../../components/PageTitle';
 
-import { CpfValidation, PhoneValidation } from 'utils/validations';
+import {
+  CpfValidation,
+  PhoneValidation,
+  CepValidation
+} from 'utils/validations';
 
 const Informacoes = () => {
   const history = useHistory();
@@ -54,6 +58,16 @@ const Informacoes = () => {
         setPhysicalForm({
           ...physicalForm,
           [event.target.id]: phone
+        });
+      }
+      return;
+    }
+    if (event.target.id === 'cep') {
+      const cep = CepValidation(event);
+      if (cep || cep === '') {
+        setPhysicalForm({
+          ...physicalForm,
+          [event.target.id]: cep
         });
       }
       return;

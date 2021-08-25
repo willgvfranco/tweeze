@@ -132,3 +132,28 @@ export const PhoneValidation = (event) => {
 
   return false;
 };
+
+export const CepValidation = (event) => {
+  const len = event.target.value.length;
+  const type = event.nativeEvent.inputType;
+  const char = event.nativeEvent.data;
+  if (isNaN(event.nativeEvent.data) || char === ' ') {
+    return false;
+  }
+
+  if (len <= 9 && !isNaN(char)) {
+    if (len === 5 && type === 'insertText') {
+      return event.target.value + '-';
+    }
+    if (len === 6 && type === 'insertText') {
+      return `${event.target.value.slice(0, 5)}-${event.target.value[len - 1]}`;
+    }
+    if (len === 6 && type === 'deleteContentBackward') {
+      return event.target.value.slice(0, len - 1);
+    }
+
+    return event.target.value;
+  }
+
+  return false;
+};
