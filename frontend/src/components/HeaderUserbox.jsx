@@ -60,7 +60,7 @@ const PageLoader = ({ open }) => (
   </div>
 );
 
-const HeaderUserbox = ({ logout }) => {
+const HeaderUserbox = ({ logout, user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [displayLoader, setDisplayLoader] = useState(false);
 
@@ -104,7 +104,7 @@ const HeaderUserbox = ({ logout }) => {
         </div> */}
 
         <div className="d-none d-xl-block pl-2">
-          <div className="font-weight-bold line-height-1">Nome do Usuário</div>
+          <div className="font-weight-bold line-height-1">{user}</div>
         </div>
         <span className="pl-1 pl-xl-3">
           <FontAwesomeIcon icon={['fas', 'angle-down']} className="opacity-5" />
@@ -146,7 +146,9 @@ const HeaderUserbox = ({ logout }) => {
   );
 };
 
+const mapStateToProps = ({ auth }) => ({ user: auth?.first_name || 'Usuário' });
+
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ logout }, dispatch);
 
-export default connect(null, mapDispatchToProps)(HeaderUserbox);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderUserbox);

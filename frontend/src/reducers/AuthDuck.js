@@ -9,7 +9,8 @@ export const Types = {
   PASSWORD: 'auth/PASSWORD',
   SIGNUP: 'auth/SIGNUP',
   LOGOUT: 'auth/LOGOUT',
-  ERROR: 'auth/ERROR'
+  ERROR: 'auth/ERROR',
+  LOADING: 'auth/LOADING'
 };
 
 export const login = (data) => async (dispatch) => {
@@ -20,16 +21,13 @@ export const login = (data) => async (dispatch) => {
       data
     });
 
-    const { id, accessToken } = result.data;
+    const { accessToken } = result.data;
 
-    localStorage.setItem('token', JSON.stringify(accessToken));
+    localStorage.setItem('accessToken', JSON.stringify(accessToken));
 
     dispatch({
       type: Types.LOGIN,
-      data: {
-        user: id,
-        token: accessToken
-      }
+      data: result.data
     });
   } catch (error) {
     console.log('login error', error);
@@ -40,42 +38,41 @@ export const login = (data) => async (dispatch) => {
   }
 };
 
-export const loginWithToken = (token) => async (dispatch) => {
+export const loginWithToken = (accessToken) => async (dispatch) => {
+  setLoading(true, dispatch);
   try {
     const result = await axios({
       method: 'get',
       url: BACKEND.loginToken,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: accessToken
       }
     });
 
-    const { id, accessToken } = result.data;
+    const { accessToken: newToken } = result.data;
 
-    localStorage.setItem('token', JSON.stringify(accessToken));
+    localStorage.setItem('accessToken', JSON.stringify(newToken));
 
     dispatch({
       type: Types.LOGIN_TOKEN,
-      data: {
-        user: id,
-        token: accessToken
-      }
+      data: result.data
     });
+    setLoading(false, dispatch);
   } catch (error) {
     console.log('loginWithToken error', error);
     if (error.response.status === 401) {
-      localStorage.clear('token');
+      localStorage.clear('accessToken');
     }
     dispatch({
       type: Types.ERROR,
       data: 'loginWithToken'
     });
+    setLoading(false, dispatch);
   }
 };
 
 export const loginWithSocialMedia = (user) => async (dispatch) => {
-  console.log('user', user);
   try {
     const result = await axios({
       method: 'post',
@@ -88,16 +85,13 @@ export const loginWithSocialMedia = (user) => async (dispatch) => {
       }
     });
 
-    const { id, accessToken } = result.data;
+    const { accessToken } = result.data;
 
-    localStorage.setItem('token', JSON.stringify(accessToken));
+    localStorage.setItem('accessToken', JSON.stringify(accessToken));
 
     dispatch({
       type: Types.LOGIN_SOCIAL,
-      data: {
-        user: id,
-        token: accessToken
-      }
+      data: result.data
     });
   } catch (error) {
     console.log('loginWithSocialMedia error', error);
@@ -116,16 +110,13 @@ export const register = (data) => async (dispatch) => {
       data
     });
 
-    const { id, accessToken } = result.data;
+    const { accessToken } = result.data;
 
-    localStorage.setItem('token', JSON.stringify(accessToken));
+    localStorage.setItem('accessToken', JSON.stringify(accessToken));
 
     dispatch({
       type: Types.SIGNUP,
-      data: {
-        user: id,
-        token: accessToken
-      }
+      data: result.data
     });
   } catch (error) {
     console.log('login error', error);
@@ -137,7 +128,7 @@ export const register = (data) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem('token');
+  localStorage.removeItem('accessToken');
 
   dispatch({
     type: Types.LOGOUT
@@ -179,7 +170,9 @@ export const passwordEmailSend = (email) => async (dispatch) => {
   }
 };
 
-export const passwordChange = ({ password, token }) => async (dispatch) => {
+export const passwordChange = ({ password, accessToken }) => async (
+  dispatch
+) => {
   dispatch({
     type: Types.PASSWORD,
     data: ''
@@ -190,7 +183,7 @@ export const passwordChange = ({ password, token }) => async (dispatch) => {
       url: BACKEND.passwordChange,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token
+        Authorization: accessToken
       },
       data: {
         password
@@ -225,12 +218,51 @@ export const setStatus = (status) => (dispatch) => {
   });
 };
 
+const setLoading = (status, dispatch) => {
+  dispatch({
+    type: Types.LOADING,
+    data: status
+  });
+};
+
+export const changePersonalInfo = (info) => async (dispatch, getState) => {
+  const { accessToken } = getState().auth;
+
+  try {
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.dados,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken
+      },
+      data: { ...info }
+    });
+
+    const { accessToken: newToken } = result.data;
+
+    localStorage.setItem('accessToken', JSON.stringify(newToken));
+
+    dispatch({
+      type: Types.LOGIN,
+      data: result.data
+    });
+  } catch (error) {
+    console.log('changePersonalInfo error', error);
+    dispatch({
+      type: Types.ERROR,
+      data: 'changePersonalInfo'
+    });
+  }
+};
+
 export const initialState = {
   isLogged: false,
-  token: null,
-  user: '',
+  accessToken: null,
+  id: '',
   error: '',
-  status: ''
+  status: '',
+  loading: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -238,32 +270,28 @@ export default function reducer(state = initialState, action) {
     case Types.LOGIN:
       return {
         ...state,
-        user: action.data.user,
-        token: action.data.token,
+        ...action.data,
         isLogged: true,
         error: ''
       };
     case Types.LOGIN_TOKEN:
       return {
         ...state,
-        user: action.data.user,
-        token: action.data.token,
+        ...action.data,
         isLogged: true,
         error: ''
       };
     case Types.LOGIN_SOCIAL:
       return {
         ...state,
-        user: action.data.user,
-        token: action.data.token,
+        ...action.data,
         isLogged: true,
         error: ''
       };
     case Types.SIGNUP:
       return {
         ...state,
-        user: action.data.user,
-        token: action.data.token,
+        ...action.data,
         isLogged: true,
         error: ''
       };
@@ -271,8 +299,8 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         isLogged: false,
-        token: null,
-        user: {},
+        accessToken: null,
+        id: {},
         error: ''
       };
     case Types.PASSWORD:
@@ -286,6 +314,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: action.data,
         isLogged: false
+      };
+    case Types.LOADING:
+      return {
+        ...state,
+        loading: action.data
       };
     default:
       return state;

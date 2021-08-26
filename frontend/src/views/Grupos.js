@@ -566,7 +566,7 @@ const mapStateToProps = ({ words, auth }) => ({
   words: words.words,
   wordsError: words.error,
   firstFetch: words.firstFetch,
-  user: auth.user
+  user: auth.id
 });
 
 const mapDispatchToProps = (dispatch) =>

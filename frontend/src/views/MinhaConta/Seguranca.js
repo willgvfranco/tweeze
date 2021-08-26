@@ -61,7 +61,7 @@ const Informacoes = ({ passwordChange, token, status, setStatus }) => {
       return;
     }
     setLoading(true);
-    passwordChange({ password, token });
+    passwordChange({ password, accessToken: token });
   };
 
   const Warning = () => {
@@ -186,7 +186,7 @@ const Informacoes = ({ passwordChange, token, status, setStatus }) => {
 
 const mapStateToProps = ({ auth }) => ({
   status: auth.status,
-  token: auth.token
+  token: auth.accessToken
 });
 
 const mapDispatchToProps = (dispatch) =>

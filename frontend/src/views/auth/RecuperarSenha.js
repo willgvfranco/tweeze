@@ -85,7 +85,7 @@ const PageRecover = ({
       return;
     }
     setLoading(true);
-    passwordChange({ password, token: auth });
+    passwordChange({ password, accessToken: auth });
   };
 
   const handleInputRender = () => {

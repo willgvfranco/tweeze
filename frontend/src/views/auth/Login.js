@@ -314,7 +314,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
 
 const mapStateToProps = ({ auth }) => ({
   isLogged: auth.isLogged,
-  token: auth.token,
+  token: auth.accessToken,
   loginError: auth.error
 });
 

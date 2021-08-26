@@ -283,7 +283,7 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
 const mapStateToProps = ({ words, news, auth }) => ({
   words: words.words,
   news: news.news,
-  hasUser: auth.user !== ''
+  hasUser: auth.id !== ''
 });
 
 const mapDispatchToProps = (dispatch) =>

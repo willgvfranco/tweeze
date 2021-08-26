@@ -10,11 +10,12 @@ import LeftSidebar from './components/LeftSidebar';
 import MinimalLayout from './components/MinimalLayout';
 import PresentationLayout from './components/PresentationLayout';
 import RequireAuth from './components/RequireAuth';
-import Loader from 'components/Loader';
+import Loader from './components/Loader';
 
 import Error404 from './views/errors/404';
 import Error500 from './views/errors/500';
 import Error505 from './views/errors/505';
+import { connect } from 'react-redux';
 
 const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing/index'));
@@ -32,7 +33,7 @@ const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
 const Cadastro = lazy(() => import('./views/auth/Cadastro'));
 
-const Routes = () => {
+const Routes = ({ loading }) => {
   const location = useLocation();
 
   const pageVariants = {
@@ -83,6 +84,17 @@ const Routes = () => {
       </>
     );
   };
+
+  const Conditional = ({ condition, children }) =>
+    condition ? (
+      <Loader
+        isLoading
+        style={{ position: 'absolute', top: '45%', left: '50%' }}
+      />
+    ) : (
+      children
+    );
+
   return (
     <ThemeProvider theme={MuiTheme}>
       <AnimatePresence>
@@ -114,85 +126,87 @@ const Routes = () => {
                 '/minha-conta/financeiro',
                 '/grupos'
               ]}>
-              <LeftSidebar>
-                <Switch location={location} key={location.pathname}>
-                  <motion.div
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}>
-                    <Route
-                      path="/home"
-                      render={() => (
-                        <RequireAuth>
-                          <Home />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/noticias"
-                      render={() => (
-                        <RequireAuth>
-                          <Noticias />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/minha-conta"
-                      exact
-                      render={() => (
-                        <RequireAuth>
-                          <MinhaConta />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/minha-conta/informacoes"
-                      exact
-                      render={() => (
-                        <RequireAuth>
-                          <Informacoes />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/minha-conta/seguranca"
-                      exact
-                      render={() => (
-                        <RequireAuth>
-                          <Seguranca />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/minha-conta/financeiro"
-                      exact
-                      render={() => (
-                        <RequireAuth>
-                          <Financeiro />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/grupos"
-                      render={() => (
-                        <RequireAuth>
-                          <Grupos />
-                        </RequireAuth>
-                      )}
-                    />
-                    <Route
-                      path="/blank"
-                      render={() => (
-                        <RequireAuth>
-                          <Blank />
-                        </RequireAuth>
-                      )}
-                    />
-                  </motion.div>
-                </Switch>
-              </LeftSidebar>
+              <Conditional condition={loading}>
+                <LeftSidebar>
+                  <Switch location={location} key={location.pathname}>
+                    <motion.div
+                      initial="initial"
+                      animate="in"
+                      exit="out"
+                      variants={pageVariants}
+                      transition={pageTransition}>
+                      <Route
+                        path="/home"
+                        render={() => (
+                          <RequireAuth>
+                            <Home />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/noticias"
+                        render={() => (
+                          <RequireAuth>
+                            <Noticias />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/minha-conta"
+                        exact
+                        render={() => (
+                          <RequireAuth>
+                            <MinhaConta />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/minha-conta/informacoes"
+                        exact
+                        render={() => (
+                          <RequireAuth>
+                            <Informacoes />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/minha-conta/seguranca"
+                        exact
+                        render={() => (
+                          <RequireAuth>
+                            <Seguranca />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/minha-conta/financeiro"
+                        exact
+                        render={() => (
+                          <RequireAuth>
+                            <Financeiro />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/grupos"
+                        render={() => (
+                          <RequireAuth>
+                            <Grupos />
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/blank"
+                        render={() => (
+                          <RequireAuth>
+                            <Blank />
+                          </RequireAuth>
+                        )}
+                      />
+                    </motion.div>
+                  </Switch>
+                </LeftSidebar>
+              </Conditional>
             </Route>
 
             <Route
@@ -233,4 +247,6 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+const mapStateToProps = ({ auth }) => ({ loading: auth.loading });
+
+export default connect(mapStateToProps)(Routes);

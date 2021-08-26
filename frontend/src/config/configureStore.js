@@ -7,7 +7,7 @@ import { initialState } from '../reducers/AuthDuck';
 
 const persistedState = () => {
   try {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (token === null) {
       return null;
     }
@@ -23,7 +23,7 @@ export default function configureStore() {
     combineReducers({
       ...reducers
     }),
-    { auth: { ...initialState, token: persistedState() } },
+    { auth: { ...initialState, accessToken: persistedState() } },
     composeWithDevTools(applyMiddleware(ReduxThunk))
   );
 }
