@@ -13,6 +13,14 @@ import {
   listWordsByUser,
 } from "./controllers/words.controller";
 
+import {
+  createSession,
+  signPlan,
+  getCardToken,
+  checkPayment,
+  newPayment,
+} from "./controllers/payment.controller";
+
 import authJwt from "./middlewares/authJwt";
 import verifySignUp from "./middlewares/verifySignUp";
 import {
@@ -23,7 +31,6 @@ import {
   recuperarSenha,
   changeUser,
 } from "./controllers/auth.controller";
-import { newPayment } from "./controllers/payment.controller";
 
 export default function (app) {
   // ELK
@@ -66,4 +73,6 @@ export default function (app) {
 
   // PAYMENT
   app.post("/api/payment", newPayment);
+  app.get("/api/session", createSession);
+  app.post("/api/card-token", createSession, getCardToken);
 }
