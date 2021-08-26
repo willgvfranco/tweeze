@@ -129,7 +129,7 @@ const Features = () => {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Twitter
+                    Tweeter
                   </h5>
                   <p className="mb-4 text-black-50">
                     Integrados completamente com o Tweeter analisamos milhões de
@@ -156,7 +156,7 @@ const Features = () => {
                     </div>
                   </div>
                   <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                    Responsivo
+                    Responsível
                   </h5>
                   <p className="mb-4 text-black-50">
                     Acesse de qualquer lugar e em qualquer dispositivo, seja
