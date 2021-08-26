@@ -74,4 +74,5 @@ export default function (app) {
   // PAYMENT
   app.post("/api/payment", newPayment);
   app.get("/api/session", createSession);
+  app.post("/api/card-token", createSession, getCardToken);
 }
