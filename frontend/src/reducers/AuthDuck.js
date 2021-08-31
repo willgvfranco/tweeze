@@ -267,7 +267,18 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         'Content-Type': 'application/json',
         Authorization: accessToken
       },
-      data: { ...card, ...user }
+      data: {
+        cardName: card.name,
+        cardCpf: card.cpf,
+        number: card.number,
+        userName: user?.name,
+        brand: card.brand,
+        cvv: card.cvv,
+        expire: card.expire,
+        cpf: user?.cpf,
+        birthday: card.birthday,
+        phone: card.phone
+      }
     });
     console.log('result.data', result.data);
     const { accessToken: newToken } = result.data;
