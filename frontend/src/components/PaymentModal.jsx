@@ -191,7 +191,7 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
   const handleDateChange = (date) =>
     setCreditCard({
       ...creditCard,
-      birthday: new Date(date).toISOString()
+      birthday: date
     });
 
   const handleCardFormChange = (event) => {
