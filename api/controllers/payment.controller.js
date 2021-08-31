@@ -76,9 +76,9 @@ export async function getCardToken(req, res) {
 }
 
 export async function signPlan(req, res) {
-  const cpf = request.body.cpf;
-  const cardCpf = request.body.cardCpf;
-  const name = request.body.name;
+  const cpf = req.body.cpf;
+  const cardCpf = req.body.cardCpf;
+  const name = req.body.name;
   console.log(req.body);
   res.status(200).send({ message: req.body });
   return;
