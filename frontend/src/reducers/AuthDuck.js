@@ -256,26 +256,37 @@ export const changePersonalInfo = (info) => async (dispatch, getState) => {
   }
 };
 
-export const sendPayment = (info) => async (dispatch, getState) => {
-  console.log('info', info);
-  // const { accessToken } = getState().auth;
+export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
+  const { accessToken } = getState().auth;
 
   try {
-    // const result = await axios({
-    //   method: 'post',
-    //   url: BACKEND.pagamento,
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: accessToken
-    //   },
-    //   data: { ...info }
-    // });
-    // const { accessToken: newToken } = result.data;
-    // localStorage.setItem('accessToken', JSON.stringify(newToken));
-    // dispatch({
-    //   type: Types.LOGIN,
-    //   data: result.data
-    // });
+    const result = await axios({
+      method: 'post',
+      url: BACKEND.pagamento,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken
+      },
+      data: {
+        cardName: card.name,
+        cardCpf: card.cpf,
+        number: card.number,
+        userName: user?.name,
+        brand: card.brand,
+        cvv: card.cvv,
+        expire: card.expire,
+        cpf: user?.cpf,
+        birthday: card.birthday,
+        phone: card.phone
+      }
+    });
+    console.log('result.data', result.data);
+    const { accessToken: newToken } = result.data;
+    localStorage.setItem('accessToken', JSON.stringify(newToken));
+    dispatch({
+      type: Types.LOGIN,
+      data: result.data
+    });
   } catch (error) {
     console.log('sendPayment error', error);
     dispatch({

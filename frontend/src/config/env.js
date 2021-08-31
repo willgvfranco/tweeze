@@ -10,7 +10,7 @@ const BACKEND = {
   password: `${ROOT_URL}/api/auth/password`,
   passwordChange: `${ROOT_URL}/api/auth/password/new`,
   dados: `${ROOT_URL}/api/auth/dados`,
-  pagamento: `${ROOT_URL}/api/auth/dasdasdasadasdd`,
+  pagamento: `${ROOT_URL}/api/pagamento`,
   getWords: `${ROOT_URL}/api/words/list`,
   addWord: `${ROOT_URL}/api/words/add`,
   updateWord: `${ROOT_URL}/api/words/update`,
