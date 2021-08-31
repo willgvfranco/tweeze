@@ -280,13 +280,13 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         phone: card.phone
       }
     });
-    console.log('result.data', result.data);
-    const { accessToken: newToken } = result.data;
-    localStorage.setItem('accessToken', JSON.stringify(newToken));
-    dispatch({
-      type: Types.LOGIN,
-      data: result.data
-    });
+    console.log('result', result.data);
+    // const { accessToken: newToken } = result.data;
+    // localStorage.setItem('accessToken', JSON.stringify(newToken));
+    // dispatch({
+    //   type: Types.LOGIN,
+    //   data: result.data
+    // });
   } catch (error) {
     console.log('sendPayment error', error);
     dispatch({
