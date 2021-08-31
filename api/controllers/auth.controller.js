@@ -1,9 +1,10 @@
 import { secret } from "../config/auth.config";
 import Role from "../models/role.model.js";
 import User from "../models/user.model.js";
-
+import mongoose from "mongoose";
 import { sign } from "jsonwebtoken";
 import { hashSync, compareSync } from "bcryptjs";
+var ObjectId = mongoose.Types.ObjectId;
 
 export function signup(req, res, next) {
   const body = req.body;
@@ -161,7 +162,7 @@ export function signin(req, res) {
 
 export function changeUser(req, res, next) {
   User.findOne({
-    id: req.id,
+    _id: new ObjectId(req.body.userId),
   }).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -227,8 +228,9 @@ export function changeUser(req, res, next) {
 }
 
 export function signinByToken(req, res) {
+  console.log(req.body);
   User.findOne({
-    id: req.id,
+    _id: new ObjectId(req.body.userId),
   })
     .populate("roles", "-__v")
     .populate("words", "-__v")
@@ -239,7 +241,8 @@ export function signinByToken(req, res) {
       }
 
       if (!user) {
-        return res.status(400).send({ message: "User Not found." });
+        res.status(400).send({ message: "User Not found." });
+        return;
         // return res.status(404).send({ message: "User Not found." });
       }
 
