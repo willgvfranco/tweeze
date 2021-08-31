@@ -116,7 +116,7 @@ const Informacoes = () => {
 
   // const handleCardFormChange = (event) => {
   //   if (event.target.id === 'code') {
-  //     if (event.target.value.length <= 3 && !isNaN(event.target.value)) {
+  //     if (event.target.value.length <= 4 && !isNaN(event.target.value)) {
   //       setCreditCardForm({
   //         ...creditCardForm,
   //         [event.target.id]: event.target.value
