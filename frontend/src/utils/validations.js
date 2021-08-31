@@ -157,3 +157,55 @@ export const CepValidation = (event) => {
 
   return false;
 };
+
+export const GetCardType = (string) => {
+  const number = string.replaceAll(' ', '');
+  if (
+    number.startsWith('636368') ||
+    number.startsWith('438935') ||
+    number.startsWith('504175') ||
+    number.startsWith('451416') ||
+    number.startsWith('509048') ||
+    number.startsWith('509067') ||
+    number.startsWith('509049') ||
+    number.startsWith('509069') ||
+    number.startsWith('509050') ||
+    number.startsWith('509074') ||
+    number.startsWith('509068') ||
+    number.startsWith('509040') ||
+    number.startsWith('509045') ||
+    number.startsWith('509051') ||
+    number.startsWith('509046') ||
+    number.startsWith('509066') ||
+    number.startsWith('509047') ||
+    number.startsWith('509042') ||
+    number.startsWith('509052') ||
+    number.startsWith('509043') ||
+    number.startsWith('509064') ||
+    number.startsWith('36297') ||
+    number.startsWith('5067') ||
+    number.startsWith('4576') ||
+    number.startsWith('4011')
+  ) {
+    return 'Elo';
+  }
+  if (
+    number.startsWith('6011') ||
+    number.startsWith('622') ||
+    number.startsWith('64') ||
+    number.startsWith('65')
+  ) {
+    return 'Discover';
+  }
+  if (number.startsWith('34') || number.startsWith('37')) {
+    return 'Amex';
+  }
+  if (number[0] === '4') {
+    return 'Visa';
+  }
+  if (number[0] === '5') {
+    return 'Mastercard';
+  }
+
+  return;
+};

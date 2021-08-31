@@ -246,6 +246,18 @@ const TabelaNoticias = ({
     }
   }, [news.length]);
 
+  useEffect(() => {
+    if (loadingMore) {
+      setLoadingMore(false);
+    }
+  }, [news]);
+
+  useEffect(() => {
+    if (page > 0) {
+      setPage(0);
+    }
+  }, [selectedWord]);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -281,11 +293,18 @@ const TabelaNoticias = ({
         word: selectedWord,
         beginDate,
         endDate,
-        from: (page + 1) * ROWS_PER_PAGE
+        from:
+          news.length < (newPage + 1) * ROWS_PER_PAGE
+            ? news.length
+            : (newPage + 1) * ROWS_PER_PAGE
       });
     }
 
-    setPage(newPage);
+    const returnedMoreThan100 =
+      (newPage + 1) * ROWS_PER_PAGE - news.length <= ROWS_PER_PAGE;
+    if (returnedMoreThan100) {
+      setPage(newPage);
+    }
   };
 
   const isSelected = (id) => selectedNews.indexOf(id) !== -1;
@@ -361,11 +380,15 @@ const TabelaNoticias = ({
       <TablePagination
         component="div"
         count={-1}
-        rowsPerPage={ROWS_PER_PAGE}
+        rowsPerPage={
+          (page + 1) * ROWS_PER_PAGE - news.length <= ROWS_PER_PAGE
+            ? ROWS_PER_PAGE
+            : news.length
+        }
         page={page}
         onChangePage={handleChangePage}
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} de ${count !== -1 ? count : `mais de ${to}`}`
+        labelDisplayedRows={({ from, count }) =>
+          `${from}-${news.length} de ${count !== -1 ? count : news.length}`
         }
         nextIconButtonText="Buscar mais"
         backIconButtonText="Voltar"
