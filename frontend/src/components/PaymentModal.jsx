@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import MaskedInput from 'react-maskedinput';
 import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
@@ -22,25 +23,17 @@ import {
 } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Select from './Select';
-
 import { sendPayment } from '../reducers/AuthDuck';
 
 import svgImage1 from '../assets/images/illustrations/pack4/business_plan.svg';
 import svgImage2 from '../assets/images/illustrations/pack4/businesswoman.svg';
 import svgImage3 from '../assets/images/illustrations/pack4/powerful.svg';
 
-import {
-  creditCardValidation,
-  CpfValidation,
-  PhoneValidation,
-  emailValidation,
-  GetCardType
-} from '../utils/validations';
+import { GetCardType } from '../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
-    width: '80vw',
+    width: '75vw',
     maxWidth: 'none',
     [theme.breakpoints.down('md')]: {
       width: '95vw',
@@ -86,128 +79,175 @@ const useStyles = makeStyles((theme) => ({
   },
   sameUserClass: {
     opacity: 0.5
+  },
+  paymentWrapper: {
+    display: 'flex',
+    padding: '2rem 6rem 5rem',
+    flexDirection: 'column',
+    [theme.breakpoints.down('sm')]: {
+      padding: '2rem 3rem 5rem'
+    }
+  },
+  mediumInputs: {
+    width: '45%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    }
+  },
+  smallInputs: {
+    width: '28.5%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    }
   }
 }));
+
+const CardNumberMask = (props) => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask="1111 1111 1111 1111"
+      size="19"
+      style={{ width: '100%' }}
+      placeholderChar={'\u2000'}
+    />
+  );
+};
+
+const CpfMask = (props) => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask="111.111.111-11"
+      size="14"
+      style={{ width: '100%' }}
+      placeholderChar={'\u2000'}
+    />
+  );
+};
+
+const ExpireDateMask = (props) => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask="11/1111"
+      size="7"
+      style={{ width: '100%' }}
+      placeholderChar={'\u2000'}
+    />
+  );
+};
+
+const PhoneMask = (props) => {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask="(11) 11111-1111"
+      size="15"
+      style={{ width: '100%' }}
+      placeholderChar={'\u2000'}
+    />
+  );
+};
 
 const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
-  const [cardBirthday, setCardBirthday] = useState(null);
-  const [creditCardForm, setCreditCardForm] = useState({
-    cardNumber: '',
-    cardOwner: '',
-    cardBrand: '',
-    cardCvv: '',
-    cardExpirationMonth: '',
-    cardExpirationYear: '',
-    cardCpf: '',
-    email: '',
-    number: ''
-  });
-  const [userInfoForm, setUserInfoForm] = useState({
+  const [creditCard, setCreditCard] = useState({
+    number: '',
     name: '',
+    brand: '',
+    cvv: '',
+    expire: '',
     cpf: '',
-    address: ''
+    birthday: null,
+    phone: ''
+  });
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    cpf: ''
   });
 
-  const handleDateChange = (date) => setCardBirthday(date);
+  const handleDateChange = (date) =>
+    setCreditCard({
+      ...creditCard,
+      birthday: new Date(date).toISOString()
+    });
 
   const handleCardFormChange = (event) => {
-    if (event.target.id === 'cardCvv') {
+    if (event.target.id === 'cvv') {
       if (event.target.value.length <= 4 && !isNaN(event.target.value)) {
-        setCreditCardForm({
-          ...creditCardForm,
+        setCreditCard({
+          ...creditCard,
           [event.target.id]: event.target.value
         });
       }
       return;
     }
 
-    if (event.target.id === 'cardNumber') {
-      const cardNumber = creditCardValidation(event);
-      if (cardNumber || cardNumber === '') {
-        setCreditCardForm({
-          ...creditCardForm,
-          [event.target.id]: cardNumber,
-          cardBrand: GetCardType(cardNumber) || ''
-        });
-      }
+    if (event.target.id === 'number') {
+      setCreditCard({
+        ...creditCard,
+        [event.target.id]: event.target.value,
+        brand: GetCardType(event.target.value) || ''
+      });
       return;
     }
 
-    if (event.target.id === 'cardCpf') {
-      const cardCpf = CpfValidation(event);
-      if (cardCpf || cardCpf === '') {
-        setCreditCardForm({
-          ...creditCardForm,
-          [event.target.id]: cardCpf
-        });
-      }
-      return;
-    }
-    if (event.target.id === 'number') {
-      const number = PhoneValidation(event);
-      if (number || number === '') {
-        setCreditCardForm({
-          ...creditCardForm,
-          [event.target.id]: number
-        });
-      }
-      return;
-    }
-    setCreditCardForm({
-      ...creditCardForm,
+    setCreditCard({
+      ...creditCard,
       [event.target.id || event.target.name]: event.target.value
     });
   };
 
-  const handleUserFormChange = (event) => {
-    if (event.target.id === 'cpf') {
-      const cpf = CpfValidation(event);
-      if (cpf || cpf === '') {
-        setUserInfoForm({
-          ...userInfoForm,
-          [event.target.id]: cpf
-        });
-      }
-      return;
-    }
-
-    setUserInfoForm({
-      ...userInfoForm,
+  const handleUserFormChange = (event) =>
+    setUserInfo({
+      ...userInfo,
       [event.target.id]: event.target.value
     });
-  };
 
   const isEmpty = (type) => {
-    if (type === 'creditCardForm') {
+    if (type === 'creditCard') {
       return (
-        creditCardForm.cardNumber === '' ||
-        creditCardForm.cardOwner === '' ||
-        creditCardForm.cardExpirationMonth === '' ||
-        creditCardForm.cardExpirationYear === '' ||
-        creditCardForm.cardExpirationYear === '' ||
-        creditCardForm.cardCpf === '' ||
-        creditCardForm.cardCvv === '' ||
-        creditCardForm.email === '' ||
-        creditCardForm.number === '' ||
-        !cardBirthday
+        creditCard.number === '' ||
+        creditCard.name === '' ||
+        creditCard.expire === '' ||
+        creditCard.cpf === '' ||
+        creditCard.cvv === '' ||
+        creditCard.phone === '' ||
+        !creditCard.birthday
       );
     }
-    if (type === 'userInfoForm') {
-      return (
-        userInfoForm.name === '' ||
-        userInfoForm.cpf === '' ||
-        userInfoForm.address === ''
-      );
+    if (type === 'userInfo') {
+      return userInfo.name === '' || userInfo.cpf === '';
     }
   };
 
   const hasEmptyFields = () => {
     if (checked) {
-      return isEmpty('creditCardForm') || isEmpty('userInfoForm');
+      return isEmpty('creditCard') || isEmpty('userInfo');
     }
-    return isEmpty('creditCardForm');
+    return isEmpty('creditCard');
   };
 
   const handleSend = () => {
@@ -217,26 +257,16 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
 
     if (checked) {
       sendPayment({
-        ...creditCardForm,
-        ...cardBirthday,
-        ...userInfoForm
+        card: { ...creditCard },
+        user: { ...userInfo }
       });
     } else {
-      sendPayment({
-        ...creditCardForm,
-        ...cardBirthday
-      });
+      sendPayment({ card: { ...creditCard } });
     }
   };
 
   return (
-    <Card
-      style={{
-        display: 'flex',
-        padding: '2rem 12rem 5rem 12rem',
-        flexDirection: 'column'
-      }}
-      className="rounded w-100 bg-white mt-3">
+    <Card className={`rounded w-100 bg-white mt-3 ${classes.paymentWrapper}`}>
       <CardHeader title={`Plano selecionado: ${selectedPlan}`} />
       <CardHeader
         subheader={<a href="#">Voltar</a>}
@@ -254,81 +284,52 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
         <Grid item xl={12}>
           <CardHeader subheader="Forma de pagamento" />
           <TextField
-            className="m-2"
-            id="cardNumber"
-            value={creditCardForm.cardNumber}
-            onChange={(e) => handleCardFormChange(e)}
+            className={`m-2 ${classes.mediumInputs}`}
+            id="number"
+            value={creditCard.number}
+            onChange={handleCardFormChange}
+            name="number"
+            InputProps={{
+              inputComponent: CardNumberMask
+            }}
             label="Número do cartão"
             variant="outlined"
-            style={{ width: '45%' }}
           />
+
           <TextField
-            className="m-2"
-            id="cardOwner"
-            value={creditCardForm.cardOwner}
+            className={`m-2 ${classes.mediumInputs}`}
+            id="name"
+            value={creditCard.name}
             onChange={handleCardFormChange}
             label="Nome do Titular"
             variant="outlined"
-            style={{ width: '45%' }}
           />
           <TextField
-            className="m-2"
-            id="cardCvv"
-            value={creditCardForm.cardCvv}
+            className={`m-2 ${classes.smallInputs}`}
+            id="cvv"
+            value={creditCard.cvv}
             onChange={handleCardFormChange}
             label="Código de segurança"
             variant="outlined"
-            style={{ width: '45%' }}
-          />
-          <Select
-            className="m-2"
-            style={{ width: '8rem' }}
-            name="cardExpirationMonth"
-            onChange={handleCardFormChange}
-            labelId="cardExpirationMonth"
-            label="Mês"
-            value={creditCardForm.cardExpirationMonth}
-            items={['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-          />
-          <Select
-            className="m-2 ml-auto"
-            style={{ width: '8rem' }}
-            name="cardExpirationYear"
-            onChange={handleCardFormChange}
-            labelId="cardExpirationYear"
-            label="Ano"
-            value={creditCardForm.cardExpirationYear}
-            items={[
-              '',
-              2022,
-              2023,
-              2024,
-              2025,
-              2026,
-              2027,
-              2028,
-              2029,
-              2030,
-              2031,
-              2032
-            ]}
           />
           <TextField
-            className="m-2"
-            id="cardCpf"
-            value={creditCardForm.cardCpf}
+            className={`m-2 ${classes.smallInputs}`}
+            id="expire"
+            value={creditCard.expire}
             onChange={handleCardFormChange}
-            label="CPF"
+            InputProps={{
+              inputComponent: ExpireDateMask
+            }}
+            label="Data de expiração"
             variant="outlined"
-            style={{ width: '45%', marginRight: 'auto' }}
           />
           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
             <KeyboardDatePicker
               style={{
-                width: '45%',
                 marginTop: '8px',
-                marginLeft: '4px'
+                marginLeft: '6px'
               }}
+              className={classes.smallInputs}
               variant="inline"
               disableFuture
               format="dd/MM/yyyy"
@@ -336,7 +337,7 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
               id="birthdate"
               label="Data de Nascimento"
               inputVariant="outlined"
-              value={cardBirthday}
+              value={creditCard.birthday}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date'
@@ -344,26 +345,27 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
             />
           </MuiPickersUtilsProvider>
           <TextField
-            className="m-2"
-            id="email"
-            label="E-mail"
-            value={creditCardForm.email}
+            className={`m-2 ${classes.mediumInputs}`}
+            id="cpf"
+            value={creditCard.cpf}
             onChange={handleCardFormChange}
+            InputProps={{
+              inputComponent: CpfMask
+            }}
+            label="CPF"
             variant="outlined"
-            type="email"
-            error={
-              !!creditCardForm.email && !emailValidation(creditCardForm.email)
-            }
-            style={{ width: '45%' }}
+            style={{ marginRight: 'auto' }}
           />
           <TextField
-            className="m-2"
-            id="number"
-            value={creditCardForm.number}
+            className={`m-2 ${classes.mediumInputs}`}
+            id="phone"
+            value={creditCard.phone}
             onChange={handleCardFormChange}
+            InputProps={{
+              inputComponent: PhoneMask
+            }}
             label="Telefone"
             variant="outlined"
-            style={{ width: '45%' }}
           />
         </Grid>
 
@@ -376,7 +378,7 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
             />
           }
           style={{ marginLeft: '0.5rem' }}
-          label="Mesma titularidade"
+          label="Titularidade diferente"
         />
 
         <Grid item xs={12}>
@@ -384,7 +386,7 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
             className={`m-2 ${!checked && classes.sameUserClass}`}
             id="name"
             label="Nome"
-            value={userInfoForm.name}
+            value={userInfo.name}
             onChange={handleUserFormChange}
             variant="outlined"
             style={{ width: '45%' }}
@@ -394,21 +396,14 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
           <TextField
             className={`m-2 ${!checked && classes.sameUserClass}`}
             id="cpf"
-            value={userInfoForm.cpf}
+            value={userInfo.cpf}
             onChange={handleUserFormChange}
+            InputProps={{
+              inputComponent: CpfMask
+            }}
             label="CPF"
             variant="outlined"
             style={{ width: '45%' }}
-            disabled={!checked}
-          />
-          <TextField
-            className={`m-2 ${!checked && classes.sameUserClass}`}
-            id="address"
-            value={userInfoForm.address}
-            onChange={handleUserFormChange}
-            label="Endereço"
-            variant="outlined"
-            style={{ width: '93%' }}
             disabled={!checked}
           />
         </Grid>
