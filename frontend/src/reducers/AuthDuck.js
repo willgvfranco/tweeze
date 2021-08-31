@@ -258,6 +258,7 @@ export const changePersonalInfo = (info) => async (dispatch, getState) => {
 
 export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
   const { accessToken } = getState().auth;
+  const phone = card.phone.replace('-', '');
 
   try {
     const result = await axios({
@@ -277,7 +278,8 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         expire: card.expire,
         cpf: user?.cpf,
         birthday: card.birthday,
-        phone: card.phone
+        areaCode: card.phone.slice(1, 3),
+        phone: phone.slice(5, 14)
       }
     });
     console.log('result', result.data);
