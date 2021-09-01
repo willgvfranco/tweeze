@@ -15,24 +15,60 @@ import {
   List,
   ListItem,
   TextField,
-  CircularProgress
+  CircularProgress,
+  Snackbar
 } from '@material-ui/core';
 import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
+
 import SocialButtons from './SocialButtons';
 
 import ConditionalRender from 'components/ConditionalRender';
+
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
-import { login, loginWithToken } from '../../reducers/AuthDuck';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
+import {
+  login,
+  loginWithToken,
+  resetErrorState
+} from '../../reducers/AuthDuck';
+import { emailValidation } from '../../utils/validations';
+
+const Message = (props) => {
+  return (
+    <Alert
+      elevation={6}
+      variant="filled"
+      {...props}
+      style={{ color: 'white', fontSize: '16px' }}
+    />
+  );
+};
+
+const LoginForm = ({
+  login,
+  loginWithToken,
+  isLogged,
+  token,
+  loginError,
+  resetErrorState
+}) => {
   const [form, setForm] = useState({
     password: '',
     email: ''
   });
   const [checked, setChecked] = useState(true);
   const [loading, setLoading] = useState('');
+  const [openWarning, setOpenWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    return () => {
+      resetErrorState();
+    };
+  }, []);
 
   useEffect(() => {
     if (isLogged) {
@@ -44,24 +80,43 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
     }
   }, [isLogged]);
 
+  const handleError = (msg) => {
+    setLoading('');
+    setWarningMessage(msg);
+    setOpenWarning(true);
+  };
+
   useEffect(() => {
     if (loginError === 'loginWithToken' || loginError === 'login') {
-      setLoading('');
+      handleError('Erro ao fazer login! Por favor, tente novamente');
+    }
+    if (loginError === 'unauthorized') {
+      handleError('Email e/ou senha incorretos!');
     }
   }, [loginError]);
 
-  const handleChange = (event) => {
-    const field = event.target.name;
-    const value = event.target.value;
-    setForm({ ...form, [field]: value });
-  };
+  const handleChange = (event) =>
+    setForm({ ...form, [event.target.name]: event.target.value });
 
   const handleRemeberAccess = (event) => setChecked(event.target.checked);
 
   const handleLogin = () => {
+    if (!emailValidation(form.email)) {
+      return;
+    }
+
     setLoading('login');
     login(form);
   };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenWarning(false);
+  };
+
   return (
     <div className="app-wrapper min-vh-100 bg-white">
       <ConditionalRender conditional={loading === 'token'}>
@@ -115,14 +170,16 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                           <div>
                             <div className="mb-4">
                               <TextField
-                                onChange={(event) => {
-                                  handleChange(event);
-                                }}
+                                onChange={handleChange}
                                 fullWidth
                                 variant="outlined"
                                 id="textfield-email"
                                 label="Email"
                                 name="email"
+                                error={
+                                  !emailValidation(form.email) &&
+                                  form.email !== ''
+                                }
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
@@ -134,9 +191,7 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
                             </div>
                             <div className="mb-3">
                               <TextField
-                                onChange={(e) => {
-                                  handleChange(e);
-                                }}
+                                onChange={handleChange}
                                 fullWidth
                                 variant="outlined"
                                 id="textfield-password"
@@ -307,6 +362,15 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
             </Container>
           </div>
         </div>
+        <Snackbar
+          open={openWarning}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={handleClose}
+          autoHideDuration={5000}>
+          <Message severity="error" onClose={handleClose}>
+            {warningMessage}
+          </Message>
+        </Snackbar>
       </ConditionalRender>
     </div>
   );
@@ -319,6 +383,6 @@ const mapStateToProps = ({ auth }) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ login, loginWithToken }, dispatch);
+  bindActionCreators({ login, loginWithToken, resetErrorState }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -11,13 +11,15 @@ import {
   Button,
   Checkbox,
   Card,
-  TextField
+  TextField,
+  Snackbar
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import { Ballot } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PageTitle from '../components/PageTitle';
@@ -79,7 +81,18 @@ const handleNews = (news) => {
   return newsObj;
 };
 
-const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
+const Message = (props) => {
+  return (
+    <Alert
+      elevation={6}
+      variant="filled"
+      {...props}
+      style={{ color: 'white', fontSize: '16px' }}
+    />
+  );
+};
+
+const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
   const beginDateDefault = () => {
     if (new Date().getDate() === 1) {
       return new Date(new Date().setDate(0));
@@ -94,6 +107,8 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
   const [loading, setLoading] = useState('');
   const [selectedNews, setSelectedNews] = useState([]);
   const [newsObj, setNewsObj] = useState({});
+  const [openWarning, setOpenWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
   const classes = useStyles();
 
   useEffect(() => {
@@ -113,6 +128,14 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
 
     setNewsObj(handleNews(news));
   }, [news]);
+
+  useEffect(() => {
+    if (newsError === 'search') {
+      setWarningMessage('Erro ao buscar as notícias!');
+    } else if (newsError !== '') {
+      setWarningMessage('Ocorreu algum erro!');
+    }
+  }, [newsError]);
 
   const handleBeginDateChange = (date) => {
     setBeginDate(date);
@@ -155,6 +178,14 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
       endDate,
       qnt: QUANTITY
     });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenWarning(false);
   };
 
   return (
@@ -224,6 +255,16 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
         endDate={endDate}
       />
 
+      <Snackbar
+        open={openWarning}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleClose}
+        autoHideDuration={5000}>
+        <Message severity="error" onClose={handleClose}>
+          {warningMessage}
+        </Message>
+      </Snackbar>
+
       <Card
         style={{ display: 'flex', alignItems: 'center' }}
         className="rounded w-100 bg-white mt-3 p-3">
@@ -283,6 +324,7 @@ const Noticias = ({ words, getAllWords, search, news, hasUser }) => {
 const mapStateToProps = ({ words, news, auth }) => ({
   words: words.words,
   news: news.news,
+  newsError: news.error,
   hasUser: auth.id !== ''
 });
 

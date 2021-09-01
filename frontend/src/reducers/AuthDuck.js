@@ -14,6 +14,11 @@ export const Types = {
 };
 
 export const login = (data) => async (dispatch) => {
+  dispatch({
+    type: Types.ERROR,
+    data: ''
+  });
+
   try {
     const result = await axios({
       method: 'post',
@@ -31,6 +36,15 @@ export const login = (data) => async (dispatch) => {
     });
   } catch (error) {
     console.log('login error', error);
+
+    if (error.response.status === 401) {
+      dispatch({
+        type: Types.ERROR,
+        data: 'unauthorized'
+      });
+      return;
+    }
+
     dispatch({
       type: Types.ERROR,
       data: 'login'
@@ -258,6 +272,7 @@ export const changePersonalInfo = (info) => async (dispatch, getState) => {
 
 export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
   const { accessToken } = getState().auth;
+  const phone = card.phone.replace('-', '');
 
   try {
     const result = await axios({
@@ -277,16 +292,17 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         expire: card.expire,
         cpf: user?.cpf,
         birthday: card.birthday,
-        phone: card.phone
+        areaCode: card.phone.slice(1, 3),
+        phone: phone.slice(5, 14)
       }
     });
-    console.log('result.data', result.data);
-    const { accessToken: newToken } = result.data;
-    localStorage.setItem('accessToken', JSON.stringify(newToken));
-    dispatch({
-      type: Types.LOGIN,
-      data: result.data
-    });
+    console.log('result', result.data);
+    // const { accessToken: newToken } = result.data;
+    // localStorage.setItem('accessToken', JSON.stringify(newToken));
+    // dispatch({
+    //   type: Types.LOGIN,
+    //   data: result.data
+    // });
   } catch (error) {
     console.log('sendPayment error', error);
     dispatch({
@@ -294,6 +310,13 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
       data: 'sendPayment'
     });
   }
+};
+
+export const resetErrorState = () => (dispatch) => {
+  dispatch({
+    type: Types.ERROR,
+    data: ''
+  });
 };
 
 export const initialState = {
