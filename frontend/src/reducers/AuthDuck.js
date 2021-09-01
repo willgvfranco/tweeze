@@ -14,6 +14,11 @@ export const Types = {
 };
 
 export const login = (data) => async (dispatch) => {
+  dispatch({
+    type: Types.ERROR,
+    data: ''
+  });
+
   try {
     const result = await axios({
       method: 'post',
@@ -31,6 +36,15 @@ export const login = (data) => async (dispatch) => {
     });
   } catch (error) {
     console.log('login error', error);
+
+    if (error.response.status === 401) {
+      dispatch({
+        type: Types.ERROR,
+        data: 'unauthorized'
+      });
+      return;
+    }
+
     dispatch({
       type: Types.ERROR,
       data: 'login'
