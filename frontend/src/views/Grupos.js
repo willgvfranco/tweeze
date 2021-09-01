@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   groupsList: {
     margin: '0 auto',
-    padding: '0 10px',
+    padding: '8px 10px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
@@ -190,7 +190,7 @@ const Word = ({ array, classes, type }) => {
       {split?.map((el, index) => (
         <ListItem
           key={`${index}-${el}`}
-          style={{ margin: '0', padding: '8px 0' }}>
+          style={{ margin: '0', padding: '5px 0' }}>
           <ListItemText
             primary={el}
             className={classes.wordItem}
