@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   groupsList: {
     margin: '0 auto',
+    padding: '0 10px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
@@ -98,6 +99,9 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
+    maxHeight: '45vh',
+    overflowY: 'auto',
+    marginBottom: '2rem',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       marginBottim: '4rem'
@@ -111,6 +115,14 @@ const useStyles = makeStyles((theme) => ({
         width: '95%',
         margin: '0.5rem 0'
       }
+    }
+  },
+  wordItem: {
+    '& > span': {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      maxWidth: '175px'
     }
   },
   chipPos: {
@@ -176,9 +188,12 @@ const Word = ({ array, classes, type }) => {
     <List className={classes.groupsList}>
       <div className={`badge ${badge} text-uppercase`}>{label}</div>
       {split?.map((el, index) => (
-        <ListItem key={`${index}-${el}`} style={{ margin: '0' }}>
+        <ListItem
+          key={`${index}-${el}`}
+          style={{ margin: '0', padding: '8px 0' }}>
           <ListItemText
             primary={el}
+            className={classes.wordItem}
             style={{ textAlign: 'center', margin: '0' }}
           />
         </ListItem>
@@ -341,7 +356,7 @@ const ActionDialog = ({
         required
       />
       <Divider />
-      <div className={classes.wrapper}>
+      <div className={`tweeze-scrollbar ${classes.wrapper}`}>
         <div>
           <EnterInput type={POS} action={setPos} prevState={pos} />
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
