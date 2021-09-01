@@ -16,9 +16,10 @@ import {
   Dialog,
   Chip,
   TextField,
-  Tooltip
-  // Snackbar
+  Tooltip,
+  Snackbar
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 import PageTitle from '../components/PageTitle';
 import Loader from '../components/Loader';
@@ -135,6 +136,17 @@ const useStyles = makeStyles((theme) => ({
     width: '30%'
   }
 }));
+
+const Message = (props) => {
+  return (
+    <Alert
+      elevation={6}
+      variant="filled"
+      {...props}
+      style={{ color: 'white', fontSize: '16px' }}
+    />
+  );
+};
 
 const handleNegSplit = (string) => {
   let splittedStrings = string.split('NOT');
@@ -453,13 +465,32 @@ const Grupos = ({
   const [editDialog, setEditDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(undefined);
+  const [openWarning, setOpenWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
   const classes = useStyles();
+
+  const messages = {
+    getAllWords: 'Ocorreu um erro ao buscar os grupos!',
+    createWord: 'Ocorreu um erro ao criar o grupo!',
+    editWord: 'Ocorreu um erro ao criar o grupo!',
+    deleteWord: 'Ocorreu um erro ao deletar o grupo!'
+  };
 
   useEffect(() => {
     if (!firstFetch) {
       getAllWords();
     }
   }, [words, user]);
+
+  useEffect(() => {
+    if (wordsError !== '') {
+      setWarningMessage(
+        messages[wordsError]
+          ? messages[wordsError]
+          : 'Ocorreu um erro desconhecido'
+      );
+    }
+  }, [wordsError]);
 
   const isLoading = Object.keys(words).length === 0;
   const emptyWords = firstFetch && Object.keys(words).length === 0;
@@ -472,6 +503,14 @@ const Grupos = ({
   const handleDialogClose = (handler) => {
     handler(false);
     setSelectedGroup(undefined);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenWarning(false);
   };
 
   const WordsList = () =>
@@ -550,14 +589,16 @@ const Grupos = ({
         onClose={() => handleDialogClose(setDeleteDialog)}
         onAction={deleteWord}
       />
-      {/* <Snackbar
+
+      <Snackbar
+        open={openWarning}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        // key={`${vertical},${horizontal}`}
-        open={open}
-        classes={{ root: toastrStyle }}
         onClose={handleClose}
-        message={message}
-      /> */}
+        autoHideDuration={5000}>
+        <Message severity="error" onClose={handleClose}>
+          {warningMessage}
+        </Message>
+      </Snackbar>
     </>
   );
 };
