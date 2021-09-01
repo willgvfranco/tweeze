@@ -312,6 +312,13 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
   }
 };
 
+export const resetErrorState = () => (dispatch) => {
+  dispatch({
+    type: Types.ERROR,
+    data: ''
+  });
+};
+
 export const initialState = {
   isLogged: false,
   accessToken: null,

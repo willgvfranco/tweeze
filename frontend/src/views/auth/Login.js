@@ -28,7 +28,11 @@ import ConditionalRender from 'components/ConditionalRender';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-import { login, loginWithToken } from '../../reducers/AuthDuck';
+import {
+  login,
+  loginWithToken,
+  resetErrorState
+} from '../../reducers/AuthDuck';
 import { emailValidation } from '../../utils/validations';
 
 const Message = (props) => {
@@ -42,7 +46,14 @@ const Message = (props) => {
   );
 };
 
-const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
+const LoginForm = ({
+  login,
+  loginWithToken,
+  isLogged,
+  token,
+  loginError,
+  resetErrorState
+}) => {
   const [form, setForm] = useState({
     password: '',
     email: ''
@@ -52,6 +63,12 @@ const LoginForm = ({ login, loginWithToken, isLogged, token, loginError }) => {
   const [openWarning, setOpenWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    return () => {
+      resetErrorState();
+    };
+  }, []);
 
   useEffect(() => {
     if (isLogged) {
@@ -366,6 +383,6 @@ const mapStateToProps = ({ auth }) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ login, loginWithToken }, dispatch);
+  bindActionCreators({ login, loginWithToken, resetErrorState }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
