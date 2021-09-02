@@ -67,13 +67,14 @@ export async function getCardToken(req, res) {
     .then(function (response) {
       cardToken = response.data.token;
       console.log("Card Token gerado", cardToken);
-      req.cardToken = response.body.token;
+      req.cardToken = response.data.token;
       res.sendStatus(200);
-      return;
+      next();
+      // return;
     })
     .catch(function (error) {
       console.log(error);
-      res.sendStatus(400);
+      res.status(406).send({ message: "Dados do cartão estão incorretos." });
       return;
     });
 }
@@ -92,7 +93,7 @@ export async function signPlan(req, res) {
   const cpf = req.body.cpf;
   const areaCode = req.body.areaCode;
   const phone = req.body.phone;
-  const cardToken = req.body.cardToken;
+  const cardToken = req.cardToken;
 
   console.log(req.body);
   res.status(200).send({ message: req.body });
