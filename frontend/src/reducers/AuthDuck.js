@@ -276,21 +276,6 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
 
   try {
     const result = await axios({
-      method: 'get',
-      url: 'https://checkip.amazonaws.com/'
-    });
-    console.log('result', result);
-  } catch (error) {
-    console.log('Erro fetching users IP address');
-    dispatch({
-      type: Types.ERROR,
-      data: 'IpFetch'
-    });
-    return;
-  }
-
-  try {
-    const result = await axios({
       method: 'post',
       url: BACKEND.pagamento,
       headers: {
@@ -313,13 +298,7 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         userEmail: email
       }
     });
-    console.log('result', result.data);
-    // const { accessToken: newToken } = result.data;
-    // localStorage.setItem('accessToken', JSON.stringify(newToken));
-    // dispatch({
-    //   type: Types.LOGIN,
-    //   data: result.data
-    // });
+    console.log('result', result);
   } catch (error) {
     console.log('sendPayment error', error);
     dispatch({
