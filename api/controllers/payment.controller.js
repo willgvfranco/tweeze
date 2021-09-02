@@ -44,6 +44,7 @@ export async function getCardToken(req, res) {
   const cardCvv = req.body.cardCvv;
   const cardExpirationMonth = req.body.cardExpirationMonth;
   const cardExpirationYear = req.body.cardExpirationYear;
+
   var data = qs.stringify({
     sessionId: sessionID,
     cardNumber: cardNumber,
@@ -52,6 +53,7 @@ export async function getCardToken(req, res) {
     cardExpirationMonth: cardExpirationMonth,
     cardExpirationYear: cardExpirationYear,
   });
+
   var config = {
     method: "post",
     url: "https://df.uol.com.br/v2/cards",
@@ -60,7 +62,7 @@ export async function getCardToken(req, res) {
     },
     data: data,
   };
-  // console.log("data", config.data);
+
   axios(config)
     .then(function (response) {
       cardToken = response.data.token;
@@ -76,9 +78,25 @@ export async function getCardToken(req, res) {
 }
 
 export async function signPlan(req, res) {
-  const cpf = req.body.cpf;
+  const userId = req.userId;
+
+  const cardName = req.body.cardName;
   const cardCpf = req.body.cardCpf;
-  const name = req.body.name;
+  const number = req.body.number;
+  const brand = req.body.brand;
+  const cvv = req.body.cvv;
+  const cardExpirationMonth = req.body.expire;
+  const cardExpirationYear = req.body.expire;
+  const birthday = req.body.birthday;
+  const ip = req.body.ip;
+  //
+
+  const userName = req.body.userName;
+  const userEmail = req.body.userName;
+  const cpf = req.body.cpf;
+  const areaCode = req.body.areaCode;
+  const phone = req.body.phone;
+
   console.log(req.body);
   res.status(200).send({ message: req.body });
   return;
@@ -86,28 +104,28 @@ export async function signPlan(req, res) {
     plan: "283E610A404050C4448C0F86A13484D4",
     reference: "ID-CND",
     sender: {
-      name: "Will Franco",
-      email: "williamgvfranco@yahoo.com.br",
-      ip: "192.168.0.1",
+      name: userName,
+      email: userEmail,
+      ip: ip,
       hash: "r34fsdfsefw",
       phone: {
-        areaCode: "21",
-        number: "972732940",
+        areaCode: areaCode,
+        number: phone,
       },
       address: {
-        street: "Av. Brigadeira Faria Lima",
-        number: "1384",
-        complement: "3 andar",
-        district: "Jd. Paulistano",
-        city: "São Paulo",
-        state: "SP",
+        street: "Bloco A-N 130",
+        number: "6 floor",
+        complement: "Quadra",
+        district: "Setor Comercial Sul",
+        city: "Brasília",
+        state: "DF",
         country: "BRA",
-        postalCode: "01452002",
+        postalCode: "70306901",
       },
       documents: [
         {
           type: "CPF",
-          value: "12727035764",
+          value: cpf,
         },
       ],
     },
@@ -116,27 +134,27 @@ export async function signPlan(req, res) {
       creditCard: {
         token: cardToken,
         holder: {
-          name: "William G V Franco",
-          birthDate: "05/07/1992",
+          name: cardName,
+          birthDate: birthday,
           documents: [
             {
               type: "CPF",
-              value: "12727035764",
+              value: cardCpf,
             },
           ],
           billingAddress: {
-            street: "Av. Brigadeiro Faria Lima",
-            number: "1384",
-            complement: "3 andar",
-            district: "Jd. Paulistano",
-            city: "São Paulo",
-            state: "SP",
+            street: "Bloco A-N 130",
+            number: "6 floor",
+            complement: "Quadra",
+            district: "Setor Comercial Sul",
+            city: "Brasília",
+            state: "DF",
             country: "BRA",
-            postalCode: "01452002",
+            postalCode: "70306901",
           },
           phone: {
-            areaCode: "21",
-            number: "972732940",
+            areaCode: areaCode,
+            number: phone,
           },
         },
       },

@@ -75,5 +75,11 @@ export default function (app) {
   app.post("/api/payment", newPayment);
   app.get("/api/session", createSession);
   app.post("/api/card-token", createSession, getCardToken);
-  app.post("/api/pagamento", [authJwt.verifyToken], signPlan);
+  app.post(
+    "/api/pagamento",
+    [authJwt.verifyToken],
+    createSession,
+    getCardToken,
+    signPlan
+  );
 }

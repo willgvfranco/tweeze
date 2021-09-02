@@ -3,6 +3,7 @@ import { secret } from "../config/auth.config.js";
 import Role from "../models/role.model.js";
 import User from "../models/user.model.js";
 import { sign } from "jsonwebtoken";
+
 const verifyToken = (req, res, next) => {
   let token = req.headers["authorization"];
   console.log(token);
