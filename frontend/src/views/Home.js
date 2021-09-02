@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-// import { Card, Button } from '@material-ui/core';
-import { Card } from '@material-ui/core';
+import { Card, Button } from '@material-ui/core';
+// import { Card } from '@material-ui/core';
 
 import PageTitle from '../components/PageTitle';
 import PaymentModal from '../components/PaymentModal';
@@ -34,9 +34,9 @@ const Home = () => {
           src={placeholder}
           style={{ width: '50%' }}
         />
-        {/* <Button className="btn-primary m-2" onClick={() => setOpen(true)}>
+        <Button className="btn-primary m-2" onClick={() => setOpen(true)}>
           Payment
-        </Button> */}
+        </Button>
       </Card>
 
       <PaymentModal open={open} onClose={() => setOpen(!open)} />

@@ -271,8 +271,23 @@ export const changePersonalInfo = (info) => async (dispatch, getState) => {
 };
 
 export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
-  const { accessToken } = getState().auth;
+  const { accessToken, email } = getState().auth;
   const phone = card.phone.replace('-', '');
+
+  try {
+    const result = await axios({
+      method: 'get',
+      url: 'https://checkip.amazonaws.com/'
+    });
+    console.log('result', result);
+  } catch (error) {
+    console.log('Erro fetching users IP address');
+    dispatch({
+      type: Types.ERROR,
+      data: 'IpFetch'
+    });
+    return;
+  }
 
   try {
     const result = await axios({
@@ -285,15 +300,17 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
       data: {
         cardName: card.name,
         cardCpf: card.cpf,
-        number: card.number,
-        userName: user?.name,
-        brand: card.brand,
-        cvv: card.cvv,
-        expire: card.expire,
-        cpf: user?.cpf,
-        birthday: card.birthday,
+        cardNumber: card.number,
+        userName: user?.name || card.name,
+        cardBrand: card.brand,
+        cardCvv: card.cvv,
+        cardExpirationMonth: card.expire.slice(0, 2),
+        cardExpirationYear: card.expire.slice(3, 7),
+        cpf: user?.cpf || card.cpf,
+        birthday: new Date(card.birthday).toLocaleDateString(),
         areaCode: card.phone.slice(1, 3),
-        phone: phone.slice(5, 14)
+        phone: phone.slice(5, 14),
+        userEmail: email
       }
     });
     console.log('result', result.data);

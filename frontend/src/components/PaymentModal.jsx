@@ -82,22 +82,21 @@ const useStyles = makeStyles((theme) => ({
   },
   paymentWrapper: {
     display: 'flex',
-    padding: '2rem 6rem 5rem',
+    padding: '2rem 2rem 5rem',
     flexDirection: 'column',
     [theme.breakpoints.down('sm')]: {
       padding: '2rem 3rem 5rem'
     }
   },
-  mediumInputs: {
-    width: '45%',
+  paymentBtn: {
+    margin: '5rem auto 0 auto',
+    width: '20rem',
+    fontSize: '1.2rem',
+    [theme.breakpoints.down('lg')]: {
+      margin: '3rem auto 0 auto'
+    },
     [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    }
-  },
-  smallInputs: {
-    width: '28.5%',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
+      margin: '2rem auto 0 auto'
     }
   }
 }));
@@ -282,9 +281,13 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
       />
       <Grid container spacing={2}>
         <Grid item xl={12}>
-          <CardHeader subheader="Forma de pagamento" />
+          <CardHeader
+            subheader="Informações do titular do cartão"
+            style={{ padding: '0 8px' }}
+          />
+        </Grid>
+        <Grid item xl={4} md={6} xs={12}>
           <TextField
-            className={`m-2 ${classes.mediumInputs}`}
             id="number"
             value={creditCard.number}
             onChange={handleCardFormChange}
@@ -294,26 +297,62 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
             }}
             label="Número do cartão"
             variant="outlined"
+            fullWidth
           />
+        </Grid>
 
+        <Grid item xl={4} md={6} xs={12}>
           <TextField
-            className={`m-2 ${classes.mediumInputs}`}
             id="name"
             value={creditCard.name}
             onChange={handleCardFormChange}
             label="Nome do Titular"
             variant="outlined"
+            fullWidth
           />
+        </Grid>
+
+        <Grid item xl={4} md={6} xs={12}>
           <TextField
-            className={`m-2 ${classes.smallInputs}`}
+            id="cpf"
+            value={creditCard.cpf}
+            onChange={handleCardFormChange}
+            InputProps={{
+              inputComponent: CpfMask
+            }}
+            label="CPF"
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xl={4} md={6} xs={12}>
+          <TextField
+            id="phone"
+            value={creditCard.phone}
+            onChange={handleCardFormChange}
+            InputProps={{
+              inputComponent: PhoneMask
+            }}
+            label="Telefone"
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xl={2} md={4} xs={12}>
+          <TextField
             id="cvv"
             value={creditCard.cvv}
             onChange={handleCardFormChange}
-            label="Código de segurança"
+            label="CVV"
             variant="outlined"
+            fullWidth
           />
+        </Grid>
+
+        <Grid item xl={2} md={4} xs={12}>
           <TextField
-            className={`m-2 ${classes.smallInputs}`}
             id="expire"
             value={creditCard.expire}
             onChange={handleCardFormChange}
@@ -322,14 +361,14 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
             }}
             label="Data de expiração"
             variant="outlined"
+            fullWidth
           />
+        </Grid>
+
+        <Grid item xl={4} md={4} xs={12}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
             <KeyboardDatePicker
-              style={{
-                marginTop: '8px',
-                marginLeft: '6px'
-              }}
-              className={classes.smallInputs}
+              style={{ marginTop: 0 }}
               variant="inline"
               disableFuture
               format="dd/MM/yyyy"
@@ -342,59 +381,41 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
               KeyboardButtonProps={{
                 'aria-label': 'change date'
               }}
+              fullWidth
             />
           </MuiPickersUtilsProvider>
-          <TextField
-            className={`m-2 ${classes.mediumInputs}`}
-            id="cpf"
-            value={creditCard.cpf}
-            onChange={handleCardFormChange}
-            InputProps={{
-              inputComponent: CpfMask
-            }}
-            label="CPF"
-            variant="outlined"
-            style={{ marginRight: 'auto' }}
-          />
-          <TextField
-            className={`m-2 ${classes.mediumInputs}`}
-            id="phone"
-            value={creditCard.phone}
-            onChange={handleCardFormChange}
-            InputProps={{
-              inputComponent: PhoneMask
-            }}
-            label="Telefone"
-            variant="outlined"
-          />
         </Grid>
+      </Grid>
 
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={checked}
-              onChange={(e) => setChecked(e.target.checked)}
-              color="primary"
-            />
-          }
-          style={{ marginLeft: '0.5rem' }}
-          label="Titularidade diferente"
-        />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={checked}
+            onChange={(e) => setChecked(e.target.checked)}
+            color="primary"
+          />
+        }
+        style={{ margin: '1rem 0 1rem 0.5rem' }}
+        label="Titularidade diferente"
+      />
 
-        <Grid item xs={12}>
+      <Grid container spacing={2}>
+        <Grid item xl={4} md={6} xs={12}>
           <TextField
-            className={`m-2 ${!checked && classes.sameUserClass}`}
+            className={!checked && classes.sameUserClass}
             id="name"
             label="Nome"
             value={userInfo.name}
             onChange={handleUserFormChange}
             variant="outlined"
-            style={{ width: '45%' }}
             disabled={!checked}
+            fullWidth
           />
+        </Grid>
 
+        <Grid item xl={4} md={6} xs={12}>
           <TextField
-            className={`m-2 ${!checked && classes.sameUserClass}`}
+            className={!checked && classes.sameUserClass}
             id="cpf"
             value={userInfo.cpf}
             onChange={handleUserFormChange}
@@ -403,21 +424,17 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
             }}
             label="CPF"
             variant="outlined"
-            style={{ width: '45%' }}
             disabled={!checked}
+            fullWidth
           />
         </Grid>
       </Grid>
+
       <Button
         variant="contained"
-        className="btn-primary"
+        className={`btn-primary ${classes.paymentBtn}`}
         onClick={handleSend}
-        disabled={hasEmptyFields()}
-        style={{
-          margin: '5rem auto 0 auto',
-          width: '20rem',
-          fontSize: '1.2rem'
-        }}>
+        disabled={hasEmptyFields()}>
         Enviar pagamento
       </Button>
     </Card>
