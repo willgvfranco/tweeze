@@ -38,7 +38,7 @@ export async function createSession(req, res, next) {
     });
 }
 
-export async function getCardToken(req, res) {
+export async function getCardToken(req, res, next) {
   const cardNumber = req.body.cardNumber;
   const cardBrand = req.body.cardBrand;
   const cardCvv = req.body.cardCvv;
