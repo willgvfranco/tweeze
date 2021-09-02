@@ -88,22 +88,22 @@ export async function signPlan(req, res) {
   //
 
   const userName = req.body.userName;
-  const userEmail = req.body.userName;
+  const userEmail = req.body.userEmail;
   const cpf = req.body.cpf;
   const areaCode = req.body.areaCode;
   const phone = req.body.phone;
   const cardToken = req.cardToken;
 
   console.log(req.body);
-  res.status(200).send({ message: req.body });
-  return;
+  // res.status(200).send({ message: req.body });
+  // return;
   var data = JSON.stringify({
     plan: "283E610A404050C4448C0F86A13484D4",
     reference: "ID-CND",
     sender: {
       name: userName,
       email: userEmail,
-      ip: ip,
+      ip: "192.168.0.1",
       hash: "r34fsdfsefw",
       phone: {
         areaCode: areaCode,
@@ -171,9 +171,14 @@ export async function signPlan(req, res) {
   axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
+      // TODO: make the payments valid
+      //...
+
+      res.status(200).send({ message: response.data });
     })
     .catch(function (error) {
       console.log(error);
+      res.status(401).send({ message: error });
     });
 }
 
