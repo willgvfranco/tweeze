@@ -53,7 +53,7 @@ export async function getCardToken(req, res) {
     cardExpirationMonth: cardExpirationMonth,
     cardExpirationYear: cardExpirationYear,
   });
-
+  console.log("infos do cards", data);
   var config = {
     method: "post",
     url: "https://df.uol.com.br/v2/cards",
@@ -67,6 +67,7 @@ export async function getCardToken(req, res) {
     .then(function (response) {
       cardToken = response.data.token;
       console.log("Card Token gerado", cardToken);
+      req.cardToken = response.body.token;
       res.sendStatus(200);
       return;
     })
@@ -82,11 +83,6 @@ export async function signPlan(req, res) {
 
   const cardName = req.body.cardName;
   const cardCpf = req.body.cardCpf;
-  const number = req.body.number;
-  const brand = req.body.brand;
-  const cvv = req.body.cvv;
-  const cardExpirationMonth = req.body.expire;
-  const cardExpirationYear = req.body.expire;
   const birthday = req.body.birthday;
   const ip = req.body.ip;
   //
@@ -96,6 +92,7 @@ export async function signPlan(req, res) {
   const cpf = req.body.cpf;
   const areaCode = req.body.areaCode;
   const phone = req.body.phone;
+  const cardToken = req.body.cardToken;
 
   console.log(req.body);
   res.status(200).send({ message: req.body });
