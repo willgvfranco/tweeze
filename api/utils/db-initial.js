@@ -22,13 +22,13 @@ export default function initial(Role) {
       });
 
       new Role({
-        name: "vip",
+        name: "VIP",
       }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'vip' to roles collection");
+        console.log("added 'VIP' to roles collection");
       });
 
       new Role({

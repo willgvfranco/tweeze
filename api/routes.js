@@ -19,6 +19,7 @@ import {
   getCardToken,
   checkPayment,
   newPayment,
+  giveUserVipRole,
 } from "./controllers/payment.controller";
 
 import authJwt from "./middlewares/authJwt";
@@ -80,6 +81,9 @@ export default function (app) {
     [authJwt.verifyToken],
     createSession,
     getCardToken,
-    signPlan
+    signPlan,
+    giveUserVipRole
   );
+
+  app.post("/api/vip", giveUserVipRole);
 }
