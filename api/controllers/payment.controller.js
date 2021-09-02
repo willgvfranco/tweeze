@@ -38,7 +38,7 @@ export async function createSession(req, res, next) {
     });
 }
 
-export async function getCardToken(req, res) {
+export async function getCardToken(req, res, next) {
   const cardNumber = req.body.cardNumber;
   const cardBrand = req.body.cardBrand;
   const cardCvv = req.body.cardCvv;
@@ -53,7 +53,7 @@ export async function getCardToken(req, res) {
     cardExpirationMonth: cardExpirationMonth,
     cardExpirationYear: cardExpirationYear,
   });
-
+  console.log("infos do cards", data);
   var config = {
     method: "post",
     url: "https://df.uol.com.br/v2/cards",
@@ -67,12 +67,13 @@ export async function getCardToken(req, res) {
     .then(function (response) {
       cardToken = response.data.token;
       console.log("Card Token gerado", cardToken);
-      res.sendStatus(200);
-      return;
+      req.cardToken = response.data.token;
+      next();
+      // return;
     })
     .catch(function (error) {
       console.log(error);
-      res.sendStatus(400);
+      res.status(406).send({ message: "Dados do cartão estão incorretos." });
       return;
     });
 }
@@ -82,11 +83,6 @@ export async function signPlan(req, res) {
 
   const cardName = req.body.cardName;
   const cardCpf = req.body.cardCpf;
-  const number = req.body.number;
-  const brand = req.body.brand;
-  const cvv = req.body.cvv;
-  const cardExpirationMonth = req.body.expire;
-  const cardExpirationYear = req.body.expire;
   const birthday = req.body.birthday;
   const ip = req.body.ip;
   //
@@ -96,6 +92,7 @@ export async function signPlan(req, res) {
   const cpf = req.body.cpf;
   const areaCode = req.body.areaCode;
   const phone = req.body.phone;
+  const cardToken = req.cardToken;
 
   console.log(req.body);
   res.status(200).send({ message: req.body });
