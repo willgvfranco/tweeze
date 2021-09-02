@@ -10,7 +10,8 @@ export const Types = {
   SIGNUP: 'auth/SIGNUP',
   LOGOUT: 'auth/LOGOUT',
   ERROR: 'auth/ERROR',
-  LOADING: 'auth/LOADING'
+  LOADING: 'auth/LOADING',
+  STATUS: 'auth/STATUS'
 };
 
 export const login = (data) => async (dispatch) => {
@@ -273,9 +274,11 @@ export const changePersonalInfo = (info) => async (dispatch, getState) => {
 export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
   const { accessToken, email } = getState().auth;
   const phone = card.phone.replace('-', '');
+  const cardCpf = card.cpf.replaceAll('.', '').replace('-', '');
+  const userCpf = user?.cpf.replaceAll('.', '').replace('-', '');
 
   try {
-    const result = await axios({
+    await axios({
       method: 'post',
       url: BACKEND.pagamento,
       headers: {
@@ -284,33 +287,50 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
       },
       data: {
         cardName: card.name,
-        cardCpf: card.cpf,
+        cardCpf,
         cardNumber: card.number,
         userName: user?.name || card.name,
         cardBrand: card.brand,
         cardCvv: card.cvv,
         cardExpirationMonth: card.expire.slice(0, 2),
         cardExpirationYear: card.expire.slice(3, 7),
-        cpf: user?.cpf || card.cpf,
+        cpf: userCpf || cardCpf,
         birthday: new Date(card.birthday).toLocaleDateString(),
         areaCode: card.phone.slice(1, 3),
         phone: phone.slice(5, 14),
         userEmail: email
       }
     });
-    console.log('result', result);
+    dispatch({
+      type: Types.STATUS,
+      data: 'paymentSuccess'
+    });
   } catch (error) {
     console.log('sendPayment error', error);
-    dispatch({
-      type: Types.ERROR,
-      data: 'sendPayment'
-    });
+    if (error.response.status === 406) {
+      dispatch({
+        type: Types.ERROR,
+        data: 'wrongCard'
+      });
+    } else {
+      dispatch({
+        type: Types.ERROR,
+        data: 'sendPayment'
+      });
+    }
   }
 };
 
 export const resetErrorState = () => (dispatch) => {
   dispatch({
     type: Types.ERROR,
+    data: ''
+  });
+};
+
+export const resetStatusState = () => (dispatch) => {
+  dispatch({
+    type: Types.STATUS,
     data: ''
   });
 };
@@ -367,6 +387,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: action.data,
         error: ''
+      };
+    case Types.STATUS:
+      return {
+        ...state,
+        status: action.data
       };
     case Types.ERROR:
       return {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MaskedInput from 'react-maskedinput';
@@ -15,15 +15,18 @@ import {
   Button,
   Dialog,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
+  Snackbar,
+  CircularProgress
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { sendPayment } from '../reducers/AuthDuck';
+import { sendPayment, resetErrorState } from '../reducers/AuthDuck';
 
 import svgImage1 from '../assets/images/illustrations/pack4/business_plan.svg';
 import svgImage2 from '../assets/images/illustrations/pack4/businesswoman.svg';
@@ -169,7 +172,24 @@ const PhoneMask = (props) => {
   );
 };
 
-const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
+const Message = (props) => {
+  return (
+    <Alert
+      elevation={6}
+      variant="filled"
+      {...props}
+      style={{ color: 'white', fontSize: '16px' }}
+    />
+  );
+};
+
+const Subscription = ({
+  selectedPlan,
+  goBack,
+  sendPayment,
+  loading,
+  setLoading
+}) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [creditCard, setCreditCard] = useState({
@@ -254,6 +274,7 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
       return;
     }
 
+    setLoading(true);
     if (checked) {
       sendPayment({
         card: { ...creditCard },
@@ -435,15 +456,60 @@ const Subscription = ({ selectedPlan, goBack, sendPayment }) => {
         className={`btn-primary ${classes.paymentBtn}`}
         onClick={handleSend}
         disabled={hasEmptyFields()}>
-        Enviar pagamento
+        {loading ? (
+          <CircularProgress
+            style={{
+              width: '18px',
+              height: '18px',
+              color: 'white'
+            }}
+          />
+        ) : (
+          'Enviar pagamento'
+        )}
       </Button>
     </Card>
   );
 };
 
-const PaymentModal = ({ open, onClose, sendPayment }) => {
+const PaymentModal = ({
+  open,
+  onClose,
+  sendPayment,
+  authError,
+  resetErrorState
+}) => {
   const classes = useStyles();
   const [selectedPlan, setSelectedPlan] = useState('');
+  const [openWarning, setOpenWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      resetErrorState();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (authError === 'wrongCard') {
+      setWarningMessage('Cartão incorreto!');
+      setOpenWarning(true);
+      setLoading(false);
+    } else if (authError !== '') {
+      setWarningMessage('Erro ao enviar o pagamento');
+      setOpenWarning(true);
+      setLoading(false);
+    }
+  }, [authError]);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenWarning(false);
+  };
 
   const Plans = () => (
     <Card className="modal-content tweeze-scrollbar">
@@ -558,15 +624,31 @@ const PaymentModal = ({ open, onClose, sendPayment }) => {
           selectedPlan={selectedPlan}
           goBack={() => setSelectedPlan('')}
           sendPayment={sendPayment}
+          loading={loading}
+          setLoading={setLoading}
         />
       ) : (
         <Plans />
       )}
+
+      <Snackbar
+        open={openWarning}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleClose}
+        autoHideDuration={5000}>
+        <Message severity="error" onClose={handleClose}>
+          {warningMessage}
+        </Message>
+      </Snackbar>
     </Dialog>
   );
 };
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ sendPayment }, dispatch);
+const mapStateToProps = ({ auth }) => ({
+  authError: auth.error
+});
 
-export default connect(null, mapDispatchToProps)(PaymentModal);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ sendPayment, resetErrorState }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentModal);
