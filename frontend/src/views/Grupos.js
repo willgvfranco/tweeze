@@ -504,6 +504,7 @@ const Grupos = ({
           ? messages[wordsError]
           : 'Ocorreu um erro desconhecido'
       );
+      setOpenWarning(true);
     }
   }, [wordsError]);
 

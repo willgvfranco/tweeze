@@ -132,8 +132,10 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
   useEffect(() => {
     if (newsError === 'search') {
       setWarningMessage('Erro ao buscar as notícias!');
+      setOpenWarning(true);
     } else if (newsError !== '') {
       setWarningMessage('Ocorreu algum erro!');
+      setOpenWarning(true);
     }
   }, [newsError]);
 
