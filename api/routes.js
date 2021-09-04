@@ -48,7 +48,12 @@ export default function (app) {
   );
   app.get("/api/test/admin", authJwt.verifyToken, authJwt.isAdmin, adminBoard);
 
-  app.get("/api/test/checkPayment", checkPayment);
+  app.get(
+    "/api/test/checkPayment",
+    authJwt.verifyToken,
+    checkPayment,
+    giveUserVipRole
+  );
   app.get("/api/test/giveUserVipRole", giveUserVipRole);
 
   // AUTH

@@ -5,6 +5,9 @@ import Role from "../models/role.model.js";
 import User from "../models/user.model.js";
 let sessionID = "";
 let cardToken = "";
+import mongoose from "mongoose";
+
+var ObjectId = mongoose.Types.ObjectId;
 
 const email = "williamgvfranco@gmail.com";
 const pvtToken =
@@ -12,9 +15,9 @@ const pvtToken =
 
 const roleVipId = Role.findOne({ name: "VIP" }, (err, role) => {
   if (err) {
-    res.status(500).send({ message: err });
     return;
   }
+  console.log(role);
   return role._id;
 });
 
@@ -207,9 +210,8 @@ export async function signPlan(req, res, next) {
 }
 
 export async function giveUserVipRole(req, res) {
-  const userEmail = req.body.userEmail;
   User.findOne({
-    email: userEmail,
+    _id: new ObjectId(req.body.userId),
   }).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -218,8 +220,9 @@ export async function giveUserVipRole(req, res) {
     if (!user) {
       return res.status(400).send({ message: "User Not found." });
     }
-
-    user.roles = [...roleVipId];
+    console.log(user.roles);
+    // FIXME: TRABALHRA DAQUI
+    // user.roles.push(roleVipId);
     user.save((err) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -231,7 +234,7 @@ export async function giveUserVipRole(req, res) {
 }
 
 export async function checkPayment(req, res, next) {
-  var reference = "";
+  let reference = "";
   User.findOne({
     _id: new ObjectId(req.body.userId),
   })
@@ -241,50 +244,59 @@ export async function checkPayment(req, res, next) {
         res.status(500).send({ message: err });
         return;
       }
-      reference = user.reference || "";
-    });
+      console.log(user);
+      console.log(user.reference);
 
-  var config = {
-    method: "get",
-    url: `https://ws.pagseguro.uol.com.br/pre-approvals/B645A889BFBFCE8334FEBFB2B81A6971?email=${email}&token=${pvtToken}&reference=${reference}`,
-    headers: {
-      Accept: " application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
-    },
-  };
+      reference = user.reference;
+      console.log(reference);
 
-  axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-      const status = response.data.status;
-      console.log(status);
-      if (status !== "ACTIVE") {
-        User.findOne({
-          _id: new ObjectId(req.body.userId),
-        })
-          .populate("roles", "-__v")
-          .exec((err, user) => {
-            if (err) {
-              res.status(500).send({ message: err });
-              return;
+      var config = {
+        method: "get",
+        url: `https://ws.pagseguro.uol.com.br/pre-approvals/${reference}?email=${email}&token=${pvtToken}`,
+        headers: {
+          Accept:
+            " application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+        },
+      };
+
+      console.log(config.url);
+
+      axios(config)
+        .then(function (response) {
+          const status = response.data.status;
+          console.log(status);
+          if (status !== "ACTIVE") {
+            User.findOne({
+              _id: new ObjectId(req.body.userId),
+            })
+              .populate("roles", "-__v")
+              .exec((err, user) => {
+                if (err) {
+                  res.status(500).send({ message: err });
+                  return;
+                }
+
+                roles = user.reference || "";
+              });
+
+            // Tirar o "VIP" dele
+            const index = array.indexOf(roleVipId);
+            if (index > -1) {
+              user.roles.splice(index, 1);
             }
 
-            roles = user.reference || "";
-          });
-
-        // Tirar o "VIP" dele
-        const index = array.indexOf(roleVipId);
-        if (index > -1) {
-          user.roles.splice(index, 1);
-        }
-
-        res.send(403).send({ message: "Assinatura não ativa." });
-        return;
-      } else {
-        next();
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
+            res.status(403).send({ message: "Assinatura não ativa." });
+            return;
+          } else {
+            next();
+            // res.status(200).send({ message: "Assinatura OK" });
+            // return;
+          }
+        })
+        .catch(function (error) {
+          // console.log(error);
+          return res.status(403).send({ message: "Assinatura não ativa." });
+        });
     });
 }
 
