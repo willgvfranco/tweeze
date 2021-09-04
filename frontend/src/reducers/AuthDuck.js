@@ -38,7 +38,7 @@ export const login = (data) => async (dispatch) => {
   } catch (error) {
     console.log('login error', error);
 
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       dispatch({
         type: Types.ERROR,
         data: 'unauthorized'
@@ -76,7 +76,7 @@ export const loginWithToken = (accessToken) => async (dispatch) => {
     setLoading(false, dispatch);
   } catch (error) {
     console.log('loginWithToken error', error);
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       localStorage.clear('accessToken');
     }
     dispatch({
@@ -172,7 +172,7 @@ export const passwordEmailSend = (email) => async (dispatch) => {
     }
   } catch (error) {
     console.log('passwordEmailSend error', error);
-    if (error.response.status === 400) {
+    if (error?.response?.status === 400) {
       dispatch({
         type: Types.PASSWORD,
         data: 'email'
@@ -213,7 +213,7 @@ export const passwordChange = ({ password, accessToken }) => async (
     }
   } catch (error) {
     console.log('passwordChange error', error);
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       dispatch({
         type: Types.PASSWORD,
         data: 'passwordError'
@@ -307,7 +307,7 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
     });
   } catch (error) {
     console.log('sendPayment error', error);
-    if (error.response.status === 406) {
+    if (error?.response?.status === 406) {
       dispatch({
         type: Types.ERROR,
         data: 'wrongCard'
