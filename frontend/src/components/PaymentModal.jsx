@@ -114,7 +114,6 @@ const CardNumberMask = (props) => {
         inputRef(ref ? ref.inputElement : null);
       }}
       mask="1111 1111 1111 1111"
-      size="19"
       style={{ width: '100%' }}
       placeholderChar={'\u2000'}
     />
@@ -131,7 +130,6 @@ const CpfMask = (props) => {
         inputRef(ref ? ref.inputElement : null);
       }}
       mask="111.111.111-11"
-      size="14"
       style={{ width: '100%' }}
       placeholderChar={'\u2000'}
     />
@@ -148,7 +146,6 @@ const ExpireDateMask = (props) => {
         inputRef(ref ? ref.inputElement : null);
       }}
       mask="11/1111"
-      size="7"
       style={{ width: '100%' }}
       placeholderChar={'\u2000'}
     />
@@ -165,7 +162,6 @@ const PhoneMask = (props) => {
         inputRef(ref ? ref.inputElement : null);
       }}
       mask="(11) 11111-1111"
-      size="15"
       style={{ width: '100%' }}
       placeholderChar={'\u2000'}
     />
@@ -267,6 +263,39 @@ const Subscription = ({
       return isEmpty('creditCard') || isEmpty('userInfo');
     }
     return isEmpty('creditCard');
+  };
+
+  const minLength = (checked) => {
+    const creditCardHandled = creditCard.number.replaceAll(' ', '').trim();
+    const cpfHandled = creditCard.cpf
+      .replaceAll('.', '')
+      .replace('-', '')
+      .trim();
+    const userCpfHandled = userInfo.cpf
+      .replaceAll('.', '')
+      .replace('-', '')
+      .trim();
+    const expireDateHandled = creditCard.expire.replace('/', '').trim();
+    const phoneHandled = creditCard.phone
+      .replace('(', '')
+      .replace(')', '')
+      .replace('-', '')
+      .replace(' ', '')
+      .trim();
+
+    const creditCardMin = creditCardHandled.length === 16;
+    const cardCpfMin = cpfHandled.length === 11;
+    const userCpfMin = userCpfHandled.length === 11;
+    const expireDateMin = expireDateHandled.length === 6;
+    const phoneMin = phoneHandled.length === 11;
+
+    if (checked) {
+      return (
+        creditCardMin && cardCpfMin && userCpfMin && expireDateMin && phoneMin
+      );
+    }
+
+    return creditCardMin && cardCpfMin && expireDateMin && phoneMin;
   };
 
   const handleSend = () => {
@@ -455,7 +484,7 @@ const Subscription = ({
         variant="contained"
         className={`btn-primary ${classes.paymentBtn}`}
         onClick={handleSend}
-        disabled={hasEmptyFields()}>
+        disabled={!minLength(checked) || hasEmptyFields()}>
         {loading ? (
           <CircularProgress
             style={{
