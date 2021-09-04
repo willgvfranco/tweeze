@@ -48,6 +48,9 @@ export default function (app) {
   );
   app.get("/api/test/admin", authJwt.verifyToken, authJwt.isAdmin, adminBoard);
 
+  app.get("/api/test/checkPayment", checkPayment);
+  app.get("/api/test/giveUserVipRole", giveUserVipRole);
+
   // AUTH
   app.post("/api/auth/signin", signin);
   app.post(
@@ -73,7 +76,6 @@ export default function (app) {
   app.post("/api/mail/send", sendMail);
 
   // PAYMENT
-  app.post("/api/payment", newPayment);
   app.get("/api/session", createSession);
   app.post("/api/card-token", createSession, getCardToken, signPlan);
   app.post(

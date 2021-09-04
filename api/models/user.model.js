@@ -23,6 +23,7 @@ const User = mongoose.model(
     cpf: String,
     cnpj: String,
     cep: String,
+    reference: String,
     inscricao_estadual: String,
     google: Boolean,
     data_nascimento: Date,

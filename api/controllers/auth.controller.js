@@ -298,7 +298,7 @@ export function socialLogin(req, res, next) {
   const provider = req.body.provider || "";
 
   if (!provider) {
-    res.sendStatus(401);
+    res.sendStatus(522);
     return;
   }
 

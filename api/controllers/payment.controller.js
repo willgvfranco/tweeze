@@ -6,11 +6,19 @@ import User from "../models/user.model.js";
 let sessionID = "";
 let cardToken = "";
 
-export async function createSession(req, res, next) {
-  const email = "williamgvfranco@gmail.com";
-  const pvtToken =
-    "5ed39c32-abba-41e1-a3ad-cf068d63e200f0df0d5541f4b7db605ed8b78bf3472a56b7-76f4-495c-a5a3-e13ca5d0786c";
+const email = "williamgvfranco@gmail.com";
+const pvtToken =
+  "5ed39c32-abba-41e1-a3ad-cf068d63e200f0df0d5541f4b7db605ed8b78bf3472a56b7-76f4-495c-a5a3-e13ca5d0786c";
 
+const roleVipId = Role.findOne({ name: "VIP" }, (err, role) => {
+  if (err) {
+    res.status(500).send({ message: err });
+    return;
+  }
+  return role._id;
+});
+
+export async function createSession(req, res, next) {
   var data = "";
   var config = {
     method: "post",
@@ -172,6 +180,24 @@ export async function signPlan(req, res, next) {
   axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
+      User.findOne({
+        _id: new ObjectId(req.body.userId),
+      }).exec((err, user) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        user.reference = response.data.code;
+        user.save((err, user) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+          console.log("user atualizado");
+          next();
+        });
+      });
+
       next();
     })
     .catch(function (error) {
@@ -191,43 +217,76 @@ export async function giveUserVipRole(req, res) {
     }
     if (!user) {
       return res.status(400).send({ message: "User Not found." });
-      // return res.status(404).send({ message: "User Not found." });
     }
-    Role.findOne({ name: "VIP" }, (err, role) => {
+
+    user.roles = [...roleVipId];
+    user.save((err) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-
-      user.roles = [...role._id];
-      user.save((err) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-        res.status(200).send({ message: "Usuário associado ao VIP" });
-
-        // TODO: Enviar dados para login do cidadão
-
-        // res.send({ message: "User was registered successfully!" });
-      });
+      res.status(200).send({ message: "Pagamento concluído." });
     });
   });
-  // TODO: make the payments valid
-  /*
-
-
-  const card = "VIP"
-  // find by email
-  // promisse: Achar o User
-  // Se ok: role add into user
-  // promisse²: Retorno 200
-  // Se der ruim: return 500
-  */
-  //...
 }
 
-export async function checkPayment(req, res) {}
+export async function checkPayment(req, res, next) {
+  var reference = "";
+  User.findOne({
+    _id: new ObjectId(req.body.userId),
+  })
+    .populate("roles", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      reference = user.reference || "";
+    });
+
+  var config = {
+    method: "get",
+    url: `https://ws.pagseguro.uol.com.br/pre-approvals/B645A889BFBFCE8334FEBFB2B81A6971?email=${email}&token=${pvtToken}&reference=${reference}`,
+    headers: {
+      Accept: " application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+    },
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      const status = response.data.status;
+      console.log(status);
+      if (status !== "ACTIVE") {
+        User.findOne({
+          _id: new ObjectId(req.body.userId),
+        })
+          .populate("roles", "-__v")
+          .exec((err, user) => {
+            if (err) {
+              res.status(500).send({ message: err });
+              return;
+            }
+
+            roles = user.reference || "";
+          });
+
+        // Tirar o "VIP" dele
+        const index = array.indexOf(roleVipId);
+        if (index > -1) {
+          user.roles.splice(index, 1);
+        }
+
+        res.send(403).send({ message: "Assinatura não ativa." });
+        return;
+      } else {
+        next();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 export async function newPayment(req, res) {
   console.log(req.body);
