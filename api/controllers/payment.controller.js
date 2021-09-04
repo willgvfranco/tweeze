@@ -1,7 +1,8 @@
 import axios from "axios";
 import { parseString } from "xml2js";
 import qs from "qs";
-
+import Role from "../models/role.model.js";
+import User from "../models/user.model.js";
 let sessionID = "";
 let cardToken = "";
 
@@ -78,7 +79,7 @@ export async function getCardToken(req, res, next) {
     });
 }
 
-export async function signPlan(req, res) {
+export async function signPlan(req, res, next) {
   const userId = req.userId;
 
   const cardName = req.body.cardName;
@@ -171,15 +172,59 @@ export async function signPlan(req, res) {
   axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
-      // TODO: make the payments valid
-      //...
-
-      res.status(200).send({ message: response.data });
+      next();
     })
     .catch(function (error) {
       console.log(error);
       res.status(401).send({ message: error });
     });
+}
+
+export async function giveUserVipRole(req, res) {
+  const userEmail = req.body.userEmail;
+  User.findOne({
+    email: userEmail,
+  }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (!user) {
+      return res.status(400).send({ message: "User Not found." });
+      // return res.status(404).send({ message: "User Not found." });
+    }
+    Role.findOne({ name: "VIP" }, (err, role) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      user.roles = [...role._id];
+      user.save((err) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        res.status(200).send({ message: "Usuário associado ao VIP" });
+
+        // TODO: Enviar dados para login do cidadão
+
+        // res.send({ message: "User was registered successfully!" });
+      });
+    });
+  });
+  // TODO: make the payments valid
+  /*
+
+
+  const card = "VIP"
+  // find by email
+  // promisse: Achar o User
+  // Se ok: role add into user
+  // promisse²: Retorno 200
+  // Se der ruim: return 500
+  */
+  //...
 }
 
 export async function checkPayment(req, res) {}
