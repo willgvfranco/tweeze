@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
 // import { withStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   // Badge,
+  Avatar,
   Menu,
   Button,
   List,
@@ -104,7 +106,9 @@ const HeaderUserbox = ({ logout, user }) => {
         </div> */}
 
         <div className="d-none d-xl-block pl-2">
-          <div className="font-weight-bold line-height-1">{user}</div>
+          <div className="font-weight-bold line-height-1">
+            <Avatar>{user[0]}</Avatar>
+          </div>
         </div>
         <span className="pl-1 pl-xl-3">
           <FontAwesomeIcon icon={['fas', 'angle-down']} className="opacity-5" />
@@ -130,7 +134,12 @@ const HeaderUserbox = ({ logout, user }) => {
             component="div"
             className="nav-neutral-primary text-left d-flex align-items-center flex-column px-3 pb-3">
             <ListItem button className="d-block text-left">
-              Minha conta
+              <NavLink
+                activeClassName="active"
+                className="nav-link-simple"
+                to="/minha-conta">
+                Minha conta
+              </NavLink>
             </ListItem>
             <ListItem
               button

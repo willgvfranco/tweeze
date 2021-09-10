@@ -39,7 +39,7 @@ body {
 
   &--inner {
     overflow: hidden;
-    padding: $layout-spacer;
+    padding: $layout-spacer $layout-spacer*2/3 0 $layout-spacer*2/3;
 @include media-breakpoint-down(sm) {
     padding: $layout-spacer / 3;
   }
@@ -70,13 +70,13 @@ body {
 
 // Fixed header
 
-@include media-breakpoint-up(lg) {
-  .app-header-fixed {
-    .app-content {
-      padding-top: $header-height;
-    }
-  }
-}
+// @include media-breakpoint-up(lg) {
+//   .app-header-fixed {
+//     .app-content {
+//       padding-top: $header-height;
+//     }
+//   }
+// }
 // Collapsed sidebar
 
 @include media-breakpoint-up(lg) {
