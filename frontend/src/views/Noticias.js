@@ -7,11 +7,11 @@ import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
 
 import {
-  FormControlLabel,
+  // FormControlLabel,
   Button,
-  Checkbox,
-  Card,
-  TextField,
+  // Checkbox,
+  // Card,
+  // TextField,
   Snackbar
 } from '@material-ui/core';
 import {
@@ -100,10 +100,10 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
     return new Date().setDate(new Date().getDate() - 1);
   };
   const [selectedWord, setSelectedWord] = useState('');
-  const [days, setDays] = useState('');
+  // const [days, setDays] = useState('');
   const [beginDate, setBeginDate] = useState(beginDateDefault());
   const [endDate, setEndDate] = useState(new Date());
-  const [automatic, setAutomatic] = useState(false);
+  // const [automatic, setAutomatic] = useState(false);
   const [loading, setLoading] = useState('');
   const [selectedNews, setSelectedNews] = useState([]);
   const [newsObj, setNewsObj] = useState({});
@@ -169,7 +169,7 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
     });
   };
 
-  const handleChange = (event, handler) => handler(event.target.value);
+  // const handleChange = (event, handler) => handler(event.target.value);
 
   const handleSelectedWord = (event) => {
     setSelectedWord(event.target.value);
@@ -255,6 +255,26 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
         selectedWord={words[selectedWord]}
         beginDate={beginDate}
         endDate={endDate}
+        ReportBtn={() => (
+          <PDFDownloadLink
+            document={
+              selectedNews.length !== 0 ? (
+                <PDFDocument selectedNews={selectedNews} news={newsObj} />
+              ) : (
+                <></>
+              )
+            }
+            fileName="relatorio_tweeze.pdf"
+            className="m-2 ml-auto">
+            <Button
+              variant="contained"
+              className="btn-primary"
+              disabled={selectedNews.length === 0}
+              style={{ width: '10rem', fontSize: '1rem' }}>
+              Gerar relatório
+            </Button>
+          </PDFDownloadLink>
+        )}
       />
 
       <Snackbar
@@ -266,7 +286,7 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
           {warningMessage}
         </Message>
       </Snackbar>
-
+      {/* 
       <Card
         style={{ display: 'flex', alignItems: 'center' }}
         className="rounded w-100 bg-white mt-3 p-3">
@@ -318,7 +338,7 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
             Gerar relatório
           </Button>
         </PDFDownloadLink>
-      </Card>
+      </Card> */}
     </ConditionalRender>
   );
 };

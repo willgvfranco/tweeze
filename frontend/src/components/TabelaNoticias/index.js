@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -17,9 +17,13 @@ import {
   Typography,
   Checkbox,
   TablePagination,
-  TableSortLabel
+  TableSortLabel,
+  Collapse,
+  IconButton,
+  Tooltip,
+  Box
 } from '@material-ui/core';
-import { Launch } from '@material-ui/icons';
+import { Launch, KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons';
 
 import placeholder from '../../assets/images/illustrations/pack1/wireframe.svg';
 import Loader from '../Loader';
@@ -87,8 +91,7 @@ const PlaceHolder = ({ isLoading, selectedWord }) =>
   isLoading ? (
     <div
       style={{
-        width: '30%',
-        height: '45vh',
+        height: '70vh',
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center'
@@ -96,7 +99,7 @@ const PlaceHolder = ({ isLoading, selectedWord }) =>
       <Loader isLoading={isLoading} />
     </div>
   ) : (
-    <div style={{ width: '30%', margin: '0 auto' }}>
+    <div style={{ width: '45%', margin: '1rem auto' }}>
       <div
         className="display-3 font-weight-bold"
         style={{ textAlign: 'center', fontSize: '2rem' }}>
@@ -117,7 +120,8 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox" />
+        <TableCell padding="none" />
+        <TableCell padding="none" />
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -172,9 +176,8 @@ const useToolbarStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = ({ numSelected, ReportBtn }) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
 
   return (
     <Toolbar
@@ -182,13 +185,17 @@ const EnhancedTableToolbar = (props) => {
         [classes.highlight]: numSelected > 0
       })}>
       {numSelected > 0 && (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div">
-          {numSelected} notícia(s) selecionada(s)
-        </Typography>
+        <>
+          <Typography
+            className={classes.title}
+            color="inherit"
+            variant="subtitle1"
+            component="div">
+            {numSelected} notícia(s) selecionada(s)
+          </Typography>
+
+          {ReportBtn && <ReportBtn />}
+        </>
       )}
     </Toolbar>
   );
@@ -207,7 +214,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 750
   },
   tableContainer: {
-    maxHeight: '45vh'
+    maxHeight: '70vh'
   },
   visuallyHidden: {
     border: 0,
@@ -232,13 +239,15 @@ const TabelaNoticias = ({
   selectedWord,
   beginDate,
   endDate,
-  search
+  search,
+  ReportBtn
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [page, setPage] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [open, setOpen] = useState('');
 
   useEffect(() => {
     if (news.length) {
@@ -311,9 +320,20 @@ const TabelaNoticias = ({
 
   const renderTable = news.length !== 0 && !isLoading && !loadingMore;
 
+  const handleOpenCollapse = (id) => {
+    if (open === '') {
+      setOpen(id);
+    } else {
+      setOpen('');
+    }
+  };
+
   return renderTable ? (
     <Paper className={classes.paper}>
-      <EnhancedTableToolbar numSelected={selectedNews.length} />
+      <EnhancedTableToolbar
+        numSelected={selectedNews.length}
+        ReportBtn={ReportBtn}
+      />
       <TableContainer
         className={`tweeze-scrollbar ${classes.tableContainer}`}
         style={{ overflowX: 'hidden' }}>
@@ -338,40 +358,69 @@ const TabelaNoticias = ({
                 const isItemSelected = isSelected(news._id);
 
                 return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={news._id}
-                    selected={isItemSelected}>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isItemSelected}
-                        onClick={(event) => handleClick(event, news._id)}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="rows" padding="default">
-                      {news._source.title}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{
-                        whiteSpace: 'nowrap',
-                        maxWidth: '220px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis'
-                      }}>
-                      <a href={news._source.url} target="_blank">
-                        <Launch style={{ marginRight: '10px' }} />
-                        {news._source.url}
-                      </a>
-                    </TableCell>
-                    <TableCell align="left">{news._source.source}</TableCell>
-                    <TableCell align="left">
-                      {new Date(news._source.criado).toLocaleString()}
-                    </TableCell>
-                  </TableRow>
+                  <Fragment key={news._id}>
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      // key={news._id}
+                      selected={isItemSelected}
+                      style={{ cursor: 'pointer' }}>
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isItemSelected}
+                          onClick={(event) => handleClick(event, news._id)}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip title="Descrição">
+                          <IconButton
+                            aria-label="expand row"
+                            size="small"
+                            disabled={!news._source.description}
+                            onClick={() => handleOpenCollapse(news._id)}>
+                            {open === news._id ? (
+                              <KeyboardArrowUp />
+                            ) : (
+                              <KeyboardArrowDown />
+                            )}
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell component="th" scope="rows" padding="default">
+                        {news._source.title}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          whiteSpace: 'nowrap',
+                          maxWidth: '220px',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }}>
+                        <a href={news._source.url} target="_blank">
+                          <Launch style={{ marginRight: '10px' }} />
+                          {news._source.url}
+                        </a>
+                      </TableCell>
+                      <TableCell align="left">{news._source.source}</TableCell>
+                      <TableCell align="left">
+                        {new Date(news._source.criado).toLocaleString()}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell
+                        style={{ paddingBottom: 0, paddingTop: 0 }}
+                        colSpan={6}>
+                        <Collapse in={open === news._id} timeout="auto">
+                          <Box style={{ padding: '1rem 4rem' }}>
+                            Descrição: {news._source.description}
+                          </Box>
+                        </Collapse>
+                      </TableCell>
+                    </TableRow>
+                  </Fragment>
                 );
               })}
           </TableBody>
