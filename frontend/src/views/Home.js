@@ -22,7 +22,7 @@ const Message = (props) => {
   );
 };
 
-const Home = ({ authStatus, resetStatusState }) => {
+const Home = ({ paymentStatus, resetStatusState }) => {
   const [open, setOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -34,12 +34,12 @@ const Home = ({ authStatus, resetStatusState }) => {
   }, []);
 
   useEffect(() => {
-    if (authStatus === 'paymentSuccess') {
+    if (paymentStatus === 'paymentSuccess') {
       setSuccessMessage('Pagamento enviado com sucesso!');
       setOpenSuccess(true);
       setOpen(false);
     }
-  }, [authStatus]);
+  }, [paymentStatus]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -93,8 +93,8 @@ const Home = ({ authStatus, resetStatusState }) => {
   );
 };
 
-const mapStateToProps = ({ auth }) => ({
-  authStatus: auth.status
+const mapStateToProps = ({ payment }) => ({
+  paymentStatus: payment.status
 });
 
 const mapDispatchToProps = (dispatch) =>

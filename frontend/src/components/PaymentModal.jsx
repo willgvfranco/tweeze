@@ -26,7 +26,7 @@ import {
 } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { sendPayment, resetErrorState } from '../reducers/AuthDuck';
+import { sendPayment, resetErrorState } from '../reducers/PaymentDuck';
 
 import svgImage1 from '../assets/images/illustrations/pack4/business_plan.svg';
 import svgImage2 from '../assets/images/illustrations/pack4/businesswoman.svg';
@@ -505,7 +505,7 @@ const PaymentModal = ({
   open,
   onClose,
   sendPayment,
-  authError,
+  paymentError,
   resetErrorState
 }) => {
   const classes = useStyles();
@@ -521,16 +521,16 @@ const PaymentModal = ({
   }, []);
 
   useEffect(() => {
-    if (authError === 'wrongCard') {
+    if (paymentError === 'wrongCard') {
       setWarningMessage('Cartão incorreto!');
       setOpenWarning(true);
       setLoading(false);
-    } else if (authError !== '') {
+    } else if (paymentError !== '') {
       setWarningMessage('Erro ao enviar o pagamento');
       setOpenWarning(true);
       setLoading(false);
     }
-  }, [authError]);
+  }, [paymentError]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -673,8 +673,8 @@ const PaymentModal = ({
   );
 };
 
-const mapStateToProps = ({ auth }) => ({
-  authError: auth.error
+const mapStateToProps = ({ payment }) => ({
+  paymentError: payment.error
 });
 
 const mapDispatchToProps = (dispatch) =>
