@@ -10,6 +10,7 @@ import LeftSidebar from './components/LeftSidebar';
 import MinimalLayout from './components/MinimalLayout';
 import PresentationLayout from './components/PresentationLayout';
 import RequireAuth from './components/RequireAuth';
+import RequireVip from 'components/RequireVip';
 import Loader from './components/Loader';
 
 import Error404 from './views/errors/404';
@@ -21,6 +22,7 @@ const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing/index'));
 const Blank = lazy(() => import('./views/BlankView'));
 const Faq = lazy(() => import('./views/Faq'));
+const Pagamento = lazy(() => import('./views/Pagamento'));
 const QuemSomos = lazy(() => import('./views/QuemSomos'));
 const Noticias = lazy(() => import('./views/Noticias'));
 const MinhaConta = lazy(() => import('./views/MinhaConta/index'));
@@ -139,7 +141,9 @@ const Routes = ({ loading }) => {
                         path="/home"
                         render={() => (
                           <RequireAuth>
-                            <Home />
+                            <RequireVip>
+                              <Home />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -147,7 +151,9 @@ const Routes = ({ loading }) => {
                         path="/noticias"
                         render={() => (
                           <RequireAuth>
-                            <Noticias />
+                            <RequireVip>
+                              <Noticias />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -156,7 +162,9 @@ const Routes = ({ loading }) => {
                         exact
                         render={() => (
                           <RequireAuth>
-                            <MinhaConta />
+                            <RequireVip>
+                              <MinhaConta />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -165,7 +173,9 @@ const Routes = ({ loading }) => {
                         exact
                         render={() => (
                           <RequireAuth>
-                            <Informacoes />
+                            <RequireVip>
+                              <Informacoes />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -174,7 +184,9 @@ const Routes = ({ loading }) => {
                         exact
                         render={() => (
                           <RequireAuth>
-                            <Seguranca />
+                            <RequireVip>
+                              <Seguranca />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -183,7 +195,9 @@ const Routes = ({ loading }) => {
                         exact
                         render={() => (
                           <RequireAuth>
-                            <Financeiro />
+                            <RequireVip>
+                              <Financeiro />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -191,7 +205,9 @@ const Routes = ({ loading }) => {
                         path="/grupos"
                         render={() => (
                           <RequireAuth>
-                            <Grupos />
+                            <RequireVip>
+                              <Grupos />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -199,7 +215,9 @@ const Routes = ({ loading }) => {
                         path="/blank"
                         render={() => (
                           <RequireAuth>
-                            <Blank />
+                            <RequireVip>
+                              <Blank />
+                            </RequireVip>
                           </RequireAuth>
                         )}
                       />
@@ -218,7 +236,8 @@ const Routes = ({ loading }) => {
                 '/error-500',
                 '/error-505',
                 '/quem-somos',
-                '/faq'
+                '/faq',
+                '/pagamento'
               ]}>
               <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
@@ -236,6 +255,7 @@ const Routes = ({ loading }) => {
                     <Route path="/error-505" component={Error505} />
                     <Route path="/quem-somos" component={QuemSomos} />
                     <Route path="/faq" component={Faq} />
+                    <Route path="/pagamento" component={Pagamento} />
                   </motion.div>
                 </Switch>
               </MinimalLayout>

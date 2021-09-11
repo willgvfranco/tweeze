@@ -10,8 +10,7 @@ export const Types = {
   SIGNUP: 'auth/SIGNUP',
   LOGOUT: 'auth/LOGOUT',
   ERROR: 'auth/ERROR',
-  LOADING: 'auth/LOADING',
-  STATUS: 'auth/STATUS'
+  LOADING: 'auth/LOADING'
 };
 
 export const login = (data) => async (dispatch) => {
@@ -278,20 +277,23 @@ export const resetErrorState = () => (dispatch) => {
   });
 };
 
-export const resetStatusState = () => (dispatch) => {
-  dispatch({
-    type: Types.STATUS,
-    data: ''
-  });
-};
-
 export const initialState = {
   isLogged: false,
   accessToken: null,
   id: '',
   error: '',
   status: '',
-  loading: false
+  loading: false,
+  email: '',
+  data_nascimento: null,
+  first_name: '',
+  last_name: '',
+  cpf: '',
+  telefone: '',
+  endereco: '',
+  complemento: '',
+  cep: '',
+  roles: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -337,11 +339,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: action.data,
         error: ''
-      };
-    case Types.STATUS:
-      return {
-        ...state,
-        status: action.data
       };
     case Types.ERROR:
       return {

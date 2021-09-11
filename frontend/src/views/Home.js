@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Card, Button, Snackbar } from '@material-ui/core';
+import { Card, Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 import PageTitle from '../components/PageTitle';
 import PaymentModal from '../components/PaymentModal';
 import placeholder from '../assets/images/illustrations/pack1/time.svg';
 
-import { resetStatusState } from '../reducers/AuthDuck';
+import { resetStatusState } from '../reducers/PaymentDuck';
 
 const Message = (props) => {
   return (
@@ -22,7 +22,7 @@ const Message = (props) => {
   );
 };
 
-const Home = ({ paymentStatus, resetStatusState }) => {
+const Home = ({ paymentStatus, resetStatusState, paymentRefused }) => {
   const [open, setOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -40,6 +40,14 @@ const Home = ({ paymentStatus, resetStatusState }) => {
       setOpen(false);
     }
   }, [paymentStatus]);
+
+  useEffect(() => {
+    if (!paymentRefused) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }, [paymentRefused]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -73,9 +81,6 @@ const Home = ({ paymentStatus, resetStatusState }) => {
           src={placeholder}
           style={{ width: '50%' }}
         />
-        <Button className="btn-primary m-2" onClick={() => setOpen(true)}>
-          Payment
-        </Button>
       </Card>
 
       <Snackbar
@@ -88,13 +93,14 @@ const Home = ({ paymentStatus, resetStatusState }) => {
         </Message>
       </Snackbar>
 
-      <PaymentModal open={open} onClose={() => setOpen(!open)} />
+      <PaymentModal open={open} />
     </>
   );
 };
 
 const mapStateToProps = ({ payment }) => ({
-  paymentStatus: payment.status
+  paymentStatus: payment.status,
+  paymentRefused: !!payment.refuse
 });
 
 const mapDispatchToProps = (dispatch) =>

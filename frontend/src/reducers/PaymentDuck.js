@@ -4,7 +4,8 @@ import BACKEND from '../config/env';
 
 export const Types = {
   ERROR: 'payment/ERROR',
-  STATUS: 'payment/STATUS'
+  STATUS: 'payment/STATUS',
+  REFUSE: 'payment/REFUSE'
 };
 
 export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
@@ -64,9 +65,24 @@ export const resetErrorState = () => (dispatch) => {
   });
 };
 
+export const resetStatusState = () => (dispatch) => {
+  dispatch({
+    type: Types.STATUS,
+    data: ''
+  });
+};
+
+export const refusePayment = () => (dispatch) => {
+  dispatch({
+    type: Types.REFUSE,
+    data: true
+  });
+};
+
 export const initialState = {
   error: '',
-  status: ''
+  status: '',
+  refuse: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -75,6 +91,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         status: action.data
+      };
+    case Types.REFUSE:
+      return {
+        ...state,
+        refuse: action.data
       };
     case Types.ERROR:
       return {

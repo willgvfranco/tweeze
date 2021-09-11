@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { useHistory } from 'react-router-dom';
 import MaskedInput from 'react-maskedinput';
 import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
@@ -13,7 +14,6 @@ import {
   CardContent,
   TextField,
   Button,
-  Dialog,
   Checkbox,
   FormControlLabel,
   Snackbar,
@@ -29,7 +29,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   sendPayment,
   resetErrorState,
-  refusePayment
+  resetStatusState
 } from '../reducers/PaymentDuck';
 
 import svgImage1 from '../assets/images/illustrations/pack4/business_plan.svg';
@@ -39,9 +39,16 @@ import svgImage3 from '../assets/images/illustrations/pack4/powerful.svg';
 import { GetCardType } from '../utils/validations';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.down('md')]: {
+      height: '100%'
+    }
+  },
   paperRoot: {
     width: '75vw',
-    height: '90%',
     maxWidth: 'none',
     [theme.breakpoints.down('md')]: {
       width: '95vw',
@@ -53,37 +60,8 @@ const useStyles = makeStyles((theme) => ({
       }
     }
   },
-  planHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'fixed',
-    width: '75vw',
-    zIndex: 100,
-    padding: '0 3rem',
-    [theme.breakpoints.down('md')]: {
-      width: '95vw'
-    },
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column'
-    }
-  },
-  trialBtn: {
-    fontSize: '1.2rem',
-    marginLeft: 'auto',
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: 0,
-      marginBottom: '1rem'
-    }
-  },
-  planCard: {
-    marginTop: '5rem',
-    [theme.breakpoints.down('xs')]: {
-      marginTop: '9rem'
-    }
-  },
   planWrapper: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex'
     },
     [theme.breakpoints.down('sm')]: {
@@ -92,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   planList: {
     marginBottom: '0',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center'
@@ -100,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imgWrapperClass: {
     marginBottom: '3rem',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       width: '50%',
       marginBottom: '0'
     },
@@ -110,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imgClass: {
     width: '50%',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       width: '25%'
     }
   },
@@ -119,10 +97,14 @@ const useStyles = makeStyles((theme) => ({
   },
   paymentWrapper: {
     display: 'flex',
-    padding: '2rem 2rem 5rem',
+    height: '100vh',
+    padding: '5rem 10rem 5rem',
     flexDirection: 'column',
+    [theme.breakpoints.down('md')]: {
+      padding: '3rem 3rem 5rem'
+    },
     [theme.breakpoints.down('sm')]: {
-      padding: '2rem 3rem 5rem'
+      height: '100%'
     }
   },
   paymentBtn: {
@@ -349,10 +331,16 @@ const Subscription = ({
   };
 
   return (
-    <Card className={`rounded w-100 bg-white mt-3 ${classes.paymentWrapper}`}>
+    <Card className={`rounded w-100 bg-white ${classes.paymentWrapper}`}>
       <CardHeader title={`Plano selecionado: ${selectedPlan}`} />
       <CardHeader
-        subheader={<a href="#">Voltar</a>}
+        subheader={
+          <a
+            href="#"
+            style={{ borderBottom: '1px solid black', paddingBottom: '3px' }}>
+            Voltar
+          </a>
+        }
         onClick={(e) => {
           e.preventDefault();
           goBack();
@@ -535,23 +523,26 @@ const Subscription = ({
   );
 };
 
-const PaymentModal = ({
-  open,
-  onClose,
+const Pagamento = ({
   sendPayment,
   paymentError,
   resetErrorState,
-  refusePayment
+  paymentStatus,
+  resetStatusState
 }) => {
   const classes = useStyles();
+  const history = useHistory();
   const [selectedPlan, setSelectedPlan] = useState('');
   const [openWarning, setOpenWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [openSuccess, setOpenSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     return () => {
       resetErrorState();
+      resetStatusState();
     };
   }, []);
 
@@ -567,35 +558,54 @@ const PaymentModal = ({
     }
   }, [paymentError]);
 
+  useEffect(() => {
+    if (paymentStatus === 'paymentSuccess') {
+      setSuccessMessage('Pagamento enviado com sucesso!');
+      setOpenSuccess(true);
+      setLoading(false);
+    }
+  }, [paymentStatus]);
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
     setOpenWarning(false);
+    setOpenSuccess(false);
+
+    resetErrorState();
+    resetStatusState();
+
+    if (paymentStatus === 'paymentSuccess') {
+      history.push('/login');
+    }
   };
 
   const Plans = () => (
-    <Card
-      className="modal-content tweeze-scrollbar"
-      style={{ overflowY: 'auto', height: '100%' }}>
-      <div className={`bg-light ${classes.planHeader}`}>
+    <div className={`modal-content tweeze-scrollbar ${classes.root}`}>
+      <div
+        className="bg-light d-flex"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
         <div id="planos" className="text-center my-3">
           <div className="display-4 text-black font-weight-bold">
             Planos e preços
           </div>
+          <div
+            className="display-4 text-black-50 font-weight-normal"
+            style={{ fontSize: '18px' }}>
+            Seu período de Trial expirou. Por favor, selecione seu plano para
+            continuar com a Tweeze!
+          </div>
         </div>
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.trialBtn}
-          onClick={() => refusePayment()}>
-          Continuar com Trial
-        </Button>
       </div>
-      <CardContent className={`p-3 ${classes.planCard}`}>
+      <CardContent className="p-3 m-auto">
         <div className="container-fluid">
-          <Grid container spacing={6}>
+          <Grid container spacing={6} style={{ margin: 0 }}>
             <Plan
               title="Básico"
               description="Cientistas, curiosos e profissionais interessados no mercado financeiro"
@@ -603,7 +613,7 @@ const PaymentModal = ({
               handleClick={() => setSelectedPlan('Básico - R$ 49/mês')}
               value="R$ 49/mês"
               features={[
-                'Trial de 30 dias',
+                // 'Trial de 30 dias',
                 'Acesso à 2 grupos de palavras chaves ILIMITADAS',
                 'Support',
                 'Sem Ads'
@@ -616,7 +626,7 @@ const PaymentModal = ({
               handleClick={() => setSelectedPlan('Padrão - R$ 590/mês')}
               value="R$ 590/mês"
               features={[
-                'Trial de 30 dias',
+                // 'Trial de 30 dias',
                 'Acesso à 5 grupos de palavras chaves ILIMITADAS',
                 'Relatório de Clipping com business intelligence',
                 'Sem Ads',
@@ -631,7 +641,7 @@ const PaymentModal = ({
               handleClick={() => setSelectedPlan('Ilimitado')}
               value="Sob Consulta"
               features={[
-                'Trial de 30 dias',
+                // 'Trial de 30 dias',
                 'Mídias sociais',
                 'Grupos ilimitados de palavras chaves',
                 'Automatização por e-mail',
@@ -642,15 +652,15 @@ const PaymentModal = ({
           </Grid>
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 
   const Plan = ({ title, description, img, handleClick, value, features }) => (
-    <Grid item xl={4}>
+    <Grid item lg={4}>
       <div className="divider-v divider-v-lg" />
-      <div className={classes.planWrapper}>
+      <div className={`py-3 ${classes.planWrapper}`}>
         <div
-          className={`feature-box text-center mt-1 ${classes.imgWrapperClass}`}>
+          className={`feature-box text-center mt-2 ${classes.imgWrapperClass}`}>
           <img
             src={img}
             className={`mx-auto d-block img-fluid ${classes.imgClass}`}
@@ -665,7 +675,7 @@ const PaymentModal = ({
             <span>{value}</span>
           </Button>
         </div>
-        <div className="divider my-1" />
+        <div className="divider my-4" />
         <ul
           className={`list-unstyled text-left font-weight-bold font-size-sm ${classes.planList}`}>
           {features.map((el, index) => (
@@ -682,10 +692,7 @@ const PaymentModal = ({
   );
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      classes={{ paper: classes.paperRoot }}>
+    <div className={{ paper: classes.paperRoot }}>
       {selectedPlan ? (
         <Subscription
           selectedPlan={selectedPlan}
@@ -707,15 +714,29 @@ const PaymentModal = ({
           {warningMessage}
         </Message>
       </Snackbar>
-    </Dialog>
+
+      <Snackbar
+        open={openSuccess}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleClose}
+        autoHideDuration={5000}>
+        <Message severity="success" onClose={handleClose}>
+          {successMessage}
+        </Message>
+      </Snackbar>
+    </div>
   );
 };
 
 const mapStateToProps = ({ payment }) => ({
-  paymentError: payment.error
+  paymentError: payment.error,
+  paymentStatus: payment.status
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ sendPayment, resetErrorState, refusePayment }, dispatch);
+  bindActionCreators(
+    { sendPayment, resetErrorState, resetStatusState },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentModal);
+export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);
