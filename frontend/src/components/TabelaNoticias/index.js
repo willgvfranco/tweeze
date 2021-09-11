@@ -20,7 +20,6 @@ import {
   TableSortLabel,
   Collapse,
   IconButton,
-  Tooltip,
   Box
 } from '@material-ui/core';
 import { Launch, KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons';
@@ -321,11 +320,12 @@ const TabelaNoticias = ({
   const renderTable = news.length !== 0 && !isLoading && !loadingMore;
 
   const handleOpenCollapse = (id) => {
-    if (open === '') {
-      setOpen(id);
-    } else {
+    if (open === id) {
       setOpen('');
+      return;
     }
+
+    setOpen(id);
   };
 
   return renderTable ? (
@@ -374,19 +374,17 @@ const TabelaNoticias = ({
                         />
                       </TableCell>
                       <TableCell>
-                        <Tooltip title="Descrição">
-                          <IconButton
-                            aria-label="expand row"
-                            size="small"
-                            disabled={!news._source.description}
-                            onClick={() => handleOpenCollapse(news._id)}>
-                            {open === news._id ? (
-                              <KeyboardArrowUp />
-                            ) : (
-                              <KeyboardArrowDown />
-                            )}
-                          </IconButton>
-                        </Tooltip>
+                        <IconButton
+                          aria-label="expand row"
+                          size="small"
+                          disabled={!news._source.description}
+                          onClick={() => handleOpenCollapse(news._id)}>
+                          {open === news._id ? (
+                            <KeyboardArrowUp />
+                          ) : (
+                            <KeyboardArrowDown />
+                          )}
+                        </IconButton>
                       </TableCell>
                       <TableCell component="th" scope="rows" padding="default">
                         {news._source.title}
@@ -414,8 +412,15 @@ const TabelaNoticias = ({
                         style={{ paddingBottom: 0, paddingTop: 0 }}
                         colSpan={6}>
                         <Collapse in={open === news._id} timeout="auto">
-                          <Box style={{ padding: '1rem 4rem' }}>
-                            Descrição: {news._source.description}
+                          <Box
+                            style={{
+                              padding: '1rem 4rem',
+                              textAlign: 'justify'
+                            }}>
+                            Descrição:{' '}
+                            {news._source.description.length > 600
+                              ? `${news._source.description.slice(0, 600)}...`
+                              : news._source.description}
                           </Box>
                         </Collapse>
                       </TableCell>
