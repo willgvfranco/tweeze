@@ -119,7 +119,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paymentWrapper: {
     display: 'flex',
-    padding: '2rem 2rem 5rem',
+    height: '100%',
+    padding: '5rem',
+    overflowY: 'auto',
     flexDirection: 'column',
     [theme.breakpoints.down('sm')]: {
       padding: '2rem 3rem 5rem'
@@ -349,7 +351,8 @@ const Subscription = ({
   };
 
   return (
-    <Card className={`rounded w-100 bg-white mt-3 ${classes.paymentWrapper}`}>
+    <Card
+      className={`rounded w-100 bg-white mt-3 tweeze-scrollbar ${classes.paymentWrapper}`}>
       <CardHeader title={`Plano selecionado: ${selectedPlan}`} />
       <CardHeader
         subheader={<a href="#">Voltar</a>}
