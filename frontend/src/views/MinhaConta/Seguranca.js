@@ -23,31 +23,30 @@ import {
 } from '@material-ui/icons';
 
 import PageTitle from '../../components/PageTitle';
+import Notify from '../../components/Notify';
 
-import { passwordChange, setStatus } from '../../reducers/AuthDuck';
+import { passwordChange, clearStatus } from '../../reducers/AuthDuck';
 
-const Informacoes = ({ passwordChange, token, status, setStatus }) => {
+const Informacoes = ({ passwordChange, token, status, clearStatus }) => {
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
+  const [openNotify, setOpenNotify] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   useEffect(() => {
-    if (status !== '') {
+    if (status.description.includes('passwordChange')) {
+      setOpenNotify(true);
       setLoading(false);
-    }
-    if (status === 'password') {
-      setPassword('');
-      setPasswordConfirm('');
-    }
-    return () => {
-      if (status === 'password') {
-        setStatus('');
+
+      if (status.type === 'success') {
+        setPassword('');
+        setPasswordConfirm('');
       }
-    };
+    }
   }, [status]);
 
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -64,32 +63,12 @@ const Informacoes = ({ passwordChange, token, status, setStatus }) => {
     passwordChange({ password, accessToken: token });
   };
 
-  const Warning = () => {
-    if (loading) {
-      return (
-        <CircularProgress
-          style={{
-            width: '24px',
-            height: '24px'
-          }}
-        />
-      );
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
-    if (status === 'password') {
-      return (
-        <div style={{ color: 'green', fontSize: '1rem', paddingLeft: '1rem' }}>
-          Senha alterada com sucesso!
-        </div>
-      );
-    }
-    if (status === 'passwordChange') {
-      return (
-        <div style={{ color: 'red', fontSize: '1rem', paddingLeft: '1rem' }}>
-          Erro ao enviar a solicitação.. Tente novamente mais tarde
-        </div>
-      );
-    }
-    return null;
+    setOpenNotify(false);
+    clearStatus();
   };
 
   return (
@@ -171,15 +150,30 @@ const Informacoes = ({ passwordChange, token, status, setStatus }) => {
           </Grid>
         </Grid>
 
-        <Warning />
-
         <Button
           variant="contained"
-          className="btn-primary m-2 ml-auto mt-auto"
+          className="btn-primary w-25 m-2 ml-auto mt-auto"
           onClick={changePasswordHandler}>
-          Salvar alterações
+          {loading ? (
+            <CircularProgress
+              style={{
+                width: '18px',
+                height: '18px',
+                color: 'white'
+              }}
+            />
+          ) : (
+            'Salvar alterações'
+          )}
         </Button>
       </Card>
+
+      <Notify
+        open={openNotify}
+        handleClose={handleClose}
+        msg={status.msg}
+        type={status.type || 'error'}
+      />
     </>
   );
 };
@@ -190,6 +184,6 @@ const mapStateToProps = ({ auth }) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ passwordChange, setStatus }, dispatch);
+  bindActionCreators({ passwordChange, clearStatus }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Informacoes);

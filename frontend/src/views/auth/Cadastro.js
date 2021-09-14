@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,19 +11,21 @@ import {
   Button,
   List,
   ListItem,
-  TextField
+  TextField,
+  CircularProgress
 } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 
 import SocialButtons from './SocialButtons';
+import Notify from '../../components/Notify';
 
-import { register } from '../../reducers/AuthDuck';
+import { register, clearStatus } from '../../reducers/AuthDuck';
 import { emailValidation } from '../../utils/validations';
 
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
-const PageRegister = ({ register }) => {
+const PageRegister = ({ register, clearStatus, status }) => {
   const [form, setForm] = useState({
     password: '',
     password_confirm: '',
@@ -32,14 +34,25 @@ const PageRegister = ({ register }) => {
     last_name: ''
   });
   const [hasError, setHasError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [openNotify, setOpenNotify] = useState(false);
+
+  useEffect(() => {
+    if (status.description.includes('register')) {
+      setOpenNotify(true);
+      setLoading(false);
+    }
+  }, [status]);
 
   const handleChange = (event) =>
     setForm({ ...form, [event.target.name]: event.target.value });
 
   const sendRegister = async () => {
+    setLoading(true);
     setHasError('');
     if (form.password !== form.password_confirm) {
       setHasError('password_confirm');
+      setLoading(false);
       return;
     }
     if (
@@ -50,12 +63,22 @@ const PageRegister = ({ register }) => {
       !form.password_confirm
     ) {
       setHasError('hasError');
+      setLoading(false);
       return;
     }
     if (!emailValidation(form.email)) {
+      setLoading(false);
       return;
     }
     register(form);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenNotify(false);
+    clearStatus();
   };
 
   return (
@@ -217,8 +240,18 @@ const PageRegister = ({ register }) => {
                         <div className="text-center mb-4">
                           <Button
                             onClick={() => sendRegister()}
-                            className="btn-primary text-uppercase font-weight-bold font-size-sm my-3">
-                            Criar Conta
+                            className="btn-primary text-uppercase w-50 font-weight-bold font-size-sm my-3">
+                            {loading ? (
+                              <CircularProgress
+                                style={{
+                                  width: '18px',
+                                  height: '18px',
+                                  color: 'white'
+                                }}
+                              />
+                            ) : (
+                              'Criar Conta'
+                            )}
                           </Button>
                         </div>
                       </form>
@@ -326,13 +359,24 @@ const PageRegister = ({ register }) => {
               </List>
             </div>
           </Container>
+
+          <Notify
+            open={openNotify}
+            handleClose={handleClose}
+            msg={status.msg}
+            type={status.type || 'error'}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ register }, dispatch);
+const mapStateToProps = ({ auth }) => ({
+  status: auth.status
+});
 
-export default connect(null, mapDispatchToProps)(PageRegister);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ register, clearStatus }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageRegister);

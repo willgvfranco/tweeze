@@ -6,7 +6,14 @@ import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
 
-import { TextField, Card, CardHeader, Grid, Button } from '@material-ui/core';
+import {
+  TextField,
+  Card,
+  CardHeader,
+  Grid,
+  Button,
+  CircularProgress
+} from '@material-ui/core';
 import { ArrowBack, AccountCircle } from '@material-ui/icons';
 import {
   MuiPickersUtilsProvider,
@@ -14,17 +21,19 @@ import {
 } from '@material-ui/pickers';
 
 import PageTitle from '../../components/PageTitle';
+import Notify from '../../components/Notify';
 
-import { changePersonalInfo } from '../../reducers/AuthDuck';
+import { changePersonalInfo, clearStatus } from '../../reducers/AuthDuck';
 import {
   CpfValidation,
   PhoneValidation,
   CepValidation
 } from 'utils/validations';
 
-const Informacoes = ({ changePersonalInfo, user }) => {
+const Informacoes = ({ changePersonalInfo, user, status, clearStatus }) => {
   const history = useHistory();
-
+  const [openNotify, setOpenNotify] = useState(false);
+  const [loading, setLoading] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   const [physicalForm, setPhysicalForm] = useState({
     first_name: '',
@@ -62,6 +71,13 @@ const Informacoes = ({ changePersonalInfo, user }) => {
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (status.description.includes('changePersonalInfo')) {
+      setOpenNotify(true);
+      setLoading('');
+    }
+  }, [status]);
 
   const handleDateChange = (date) => setSelectedDate(date);
 
@@ -110,11 +126,25 @@ const Informacoes = ({ changePersonalInfo, user }) => {
   };
 
   const handlePhysicalFormSend = () => {
+    setLoading('physical');
     if (selectedDate) {
       changePersonalInfo({ ...physicalForm, data_nascimento: selectedDate });
       return;
     }
     changePersonalInfo(physicalForm);
+  };
+
+  const handleLegalFormSend = () => {
+    setLoading('legal');
+    changePersonalInfo(legalForm);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenNotify(false);
+    clearStatus();
   };
 
   return (
@@ -245,9 +275,19 @@ const Informacoes = ({ changePersonalInfo, user }) => {
             </Grid>
             <Button
               variant="contained"
-              className="btn-primary m-2 ml-auto mt-auto"
+              className="btn-primary w-25 m-2 ml-auto mt-auto"
               onClick={handlePhysicalFormSend}>
-              Salvar alterações
+              {loading === 'physical' ? (
+                <CircularProgress
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    color: 'white'
+                  }}
+                />
+              ) : (
+                'Salvar alterações'
+              )}
             </Button>
           </Card>
         </Grid>
@@ -303,20 +343,37 @@ const Informacoes = ({ changePersonalInfo, user }) => {
 
             <Button
               variant="contained"
-              className="btn-primary m-2 ml-auto mt-auto"
-              onClick={() => changePersonalInfo(legalForm)}>
-              Salvar alterações
+              className="btn-primary w-25 m-2 ml-auto mt-auto"
+              onClick={handleLegalFormSend}>
+              {loading === 'legal' ? (
+                <CircularProgress
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    color: 'white'
+                  }}
+                />
+              ) : (
+                'Salvar alterações'
+              )}
             </Button>
           </Card>
         </Grid>
       </Grid>
+
+      <Notify
+        open={openNotify}
+        handleClose={handleClose}
+        msg={status.msg}
+        type={status.type || 'error'}
+      />
     </>
   );
 };
 
-const mapStateToProps = ({ auth }) => ({ user: auth });
+const mapStateToProps = ({ auth }) => ({ user: auth, status: auth.status });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changePersonalInfo }, dispatch);
+  bindActionCreators({ changePersonalInfo, clearStatus }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Informacoes);

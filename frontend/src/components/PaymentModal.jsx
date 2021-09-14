@@ -16,19 +16,19 @@ import {
   Dialog,
   Checkbox,
   FormControlLabel,
-  Snackbar,
   CircularProgress
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Notify from './Notify';
+
 import {
   sendPayment,
-  resetErrorState,
+  clearStatus,
   refusePayment
 } from '../reducers/PaymentDuck';
 
@@ -200,17 +200,6 @@ const PhoneMask = (props) => {
       mask="(11) 11111-1111"
       style={{ width: '100%' }}
       placeholderChar={'\u2000'}
-    />
-  );
-};
-
-const Message = (props) => {
-  return (
-    <Alert
-      elevation={6}
-      variant="filled"
-      {...props}
-      style={{ color: 'white', fontSize: '16px' }}
     />
   );
 };
@@ -540,42 +529,35 @@ const Subscription = ({
 
 const PaymentModal = ({
   open,
+  setOpen,
   onClose,
   sendPayment,
-  paymentError,
-  resetErrorState,
-  refusePayment
+  refusePayment,
+  status,
+  clearStatus
 }) => {
   const classes = useStyles();
   const [selectedPlan, setSelectedPlan] = useState('');
-  const [openWarning, setOpenWarning] = useState(false);
-  const [warningMessage, setWarningMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [openNotify, setOpenNotify] = useState(false);
 
   useEffect(() => {
-    return () => {
-      resetErrorState();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (paymentError === 'wrongCard') {
-      setWarningMessage('Cartão incorreto!');
-      setOpenWarning(true);
-      setLoading(false);
-    } else if (paymentError !== '') {
-      setWarningMessage('Erro ao enviar o pagamento');
-      setOpenWarning(true);
+    if (status.description.includes('sendPayment')) {
+      setOpenNotify(true);
       setLoading(false);
     }
-  }, [paymentError]);
+  }, [status]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
+    if (status.type === 'success') {
+      setOpen(false);
+    }
 
-    setOpenWarning(false);
+    setOpenNotify(false);
+    clearStatus();
   };
 
   const Plans = () => (
@@ -701,24 +683,21 @@ const PaymentModal = ({
         <Plans />
       )}
 
-      <Snackbar
-        open={openWarning}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleClose}
-        autoHideDuration={5000}>
-        <Message severity="error" onClose={handleClose}>
-          {warningMessage}
-        </Message>
-      </Snackbar>
+      <Notify
+        open={openNotify}
+        handleClose={handleClose}
+        msg={status.msg}
+        type={status.type || 'error'}
+      />
     </Dialog>
   );
 };
 
 const mapStateToProps = ({ payment }) => ({
-  paymentError: payment.error
+  status: payment.status
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ sendPayment, resetErrorState, refusePayment }, dispatch);
+  bindActionCreators({ sendPayment, clearStatus, refusePayment }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentModal);

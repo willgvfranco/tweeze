@@ -7,7 +7,8 @@ export const Types = {
   CREATE: 'word/CREATE',
   EDIT: 'word/EDIT',
   DELETE: 'word/DELETE',
-  ERROR: 'word/ERROR'
+  STATUS: 'word/STATUS',
+  CLEAR_STATUS: 'word/CLEAR_STATUS'
 };
 
 const handleWords = (words) => {
@@ -19,7 +20,14 @@ const handleWords = (words) => {
   return newWords;
 };
 
+export const clearStatus = () => (dispatch) => {
+  dispatch({
+    type: Types.CLEAR_STATUS
+  });
+};
+
 export const getAllWords = () => async (dispatch, getState) => {
+  clearStatus()(dispatch);
   const { accessToken, id } = getState().auth;
   const { firstFetch } = getState().words;
 
@@ -55,13 +63,18 @@ export const getAllWords = () => async (dispatch, getState) => {
   } catch (error) {
     console.log('getAllWords error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'getAllWords'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'getAllWords',
+        msg: 'Ocorreu um erro ao buscar os grupos!'
+      }
     });
   }
 };
 
 export const createWord = (word) => async (dispatch, getState) => {
+  clearStatus()(dispatch);
   const { accessToken, id } = getState().auth;
 
   try {
@@ -79,19 +92,32 @@ export const createWord = (word) => async (dispatch, getState) => {
     });
 
     dispatch({
+      type: Types.STATUS,
+      data: {
+        type: 'success',
+        description: 'createWord',
+        msg: 'Grupo criado com sucesso!'
+      }
+    });
+    dispatch({
       type: Types.CREATE,
       data: handleWords(result.data.grupo_palavras)
     });
   } catch (error) {
     console.log('createWord error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'createWord'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'createWord',
+        msg: 'Ocorreu um erro ao criar o grupo!'
+      }
     });
   }
 };
 
 export const editWord = (word) => async (dispatch, getState) => {
+  clearStatus()(dispatch);
   const { accessToken, id } = getState().auth;
   const { _id: wordsId, name, pos, neg } = word;
 
@@ -113,19 +139,32 @@ export const editWord = (word) => async (dispatch, getState) => {
     });
 
     dispatch({
+      type: Types.STATUS,
+      data: {
+        type: 'success',
+        description: 'editWord',
+        msg: 'Grupo editado com sucesso!'
+      }
+    });
+    dispatch({
       type: Types.EDIT,
       data: handleWords(result.data.grupo_palavras)
     });
   } catch (error) {
     console.log('editWord error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'editWord'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'editWord',
+        msg: 'Ocorreu um erro ao editar o grupo!'
+      }
     });
   }
 };
 
 export const deleteWord = (wordsId) => async (dispatch, getState) => {
+  clearStatus()(dispatch);
   const { accessToken, id } = getState().auth;
 
   try {
@@ -143,14 +182,26 @@ export const deleteWord = (wordsId) => async (dispatch, getState) => {
     });
 
     dispatch({
+      type: Types.STATUS,
+      data: {
+        type: 'success',
+        description: 'deleteWord',
+        msg: 'Grupo deletado!'
+      }
+    });
+    dispatch({
       type: Types.DELETE,
       data: handleWords(result.data.grupo_palavras)
     });
   } catch (error) {
     console.log('deleteWord error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'deleteWord'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'deleteWord',
+        msg: 'Ocorreu um erro ao deletar o grupo!'
+      }
     });
   }
 };
@@ -158,7 +209,11 @@ export const deleteWord = (wordsId) => async (dispatch, getState) => {
 const initialState = {
   words: {},
   firstFetch: false,
-  error: ''
+  status: {
+    type: '',
+    description: '',
+    msg: ''
+  }
 };
 
 export default function reducer(state = initialState, action) {
@@ -184,10 +239,19 @@ export default function reducer(state = initialState, action) {
         ...state,
         words: action.data
       };
-    case Types.ERROR:
+    case Types.STATUS:
       return {
         ...state,
-        error: action.data
+        status: { ...action.data }
+      };
+    case Types.CLEAR_STATUS:
+      return {
+        ...state,
+        status: {
+          type: '',
+          description: '',
+          msg: ''
+        }
       };
     default:
       return state;

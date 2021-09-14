@@ -4,13 +4,21 @@ import BACKEND from '../config/env';
 
 export const Types = {
   GET: 'news/GET',
-  ERROR: 'news/ERROR'
+  STATUS: 'news/STATUS',
+  CLEAR_STATUS: 'news/CLEAR_STATUS'
+};
+
+export const clearStatus = () => (dispatch) => {
+  dispatch({
+    type: Types.CLEAR_STATUS
+  });
 };
 
 export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
   dispatch,
   getState
 ) => {
+  clearStatus()(dispatch);
   const { news } = getState().news;
 
   try {
@@ -40,15 +48,23 @@ export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
   } catch (error) {
     console.log('search error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'search'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'search',
+        msg: 'Erro ao buscar as notícias! Por favor, tente novamente'
+      }
     });
   }
 };
 
 const initialState = {
   news: [],
-  error: ''
+  status: {
+    type: '',
+    description: '',
+    msg: ''
+  }
 };
 
 export default function reducer(state = initialState, action) {
@@ -58,10 +74,19 @@ export default function reducer(state = initialState, action) {
         ...state,
         news: action.data
       };
-    case Types.ERROR:
+    case Types.STATUS:
       return {
         ...state,
-        error: action.data
+        status: { ...action.data }
+      };
+    case Types.CLEAR_STATUS:
+      return {
+        ...state,
+        status: {
+          type: '',
+          description: '',
+          msg: ''
+        }
       };
     default:
       return state;

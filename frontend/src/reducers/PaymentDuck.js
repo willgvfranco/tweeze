@@ -3,12 +3,19 @@ import axios from 'axios';
 import BACKEND from '../config/env';
 
 export const Types = {
-  ERROR: 'payment/ERROR',
   STATUS: 'payment/STATUS',
+  CLEAR_STATUS: 'payment/CLEAR_STATUS',
   REFUSE: 'payment/REFUSE'
 };
 
+export const clearStatus = () => (dispatch) => {
+  dispatch({
+    type: Types.CLEAR_STATUS
+  });
+};
+
 export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
+  clearStatus()(dispatch);
   const { accessToken, email } = getState().auth;
   const phone = card.phone.replace('-', '');
   const cardCpf = card.cpf.replaceAll('.', '').replace('-', '');
@@ -38,38 +45,37 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         userEmail: email
       }
     });
+
     dispatch({
       type: Types.STATUS,
-      data: 'paymentSuccess'
+      data: {
+        type: 'success',
+        description: 'sendPayment',
+        msg: 'Pagamento enviado com sucesso!'
+      }
     });
   } catch (error) {
     console.log('sendPayment error', error);
     if (error?.response?.status === 406) {
       dispatch({
-        type: Types.ERROR,
-        data: 'wrongCard'
+        type: Types.STATUS,
+        data: {
+          type: 'error',
+          description: 'sendPayment/wrongCard',
+          msg: 'Cartão incorreto!'
+        }
       });
-    } else {
-      dispatch({
-        type: Types.ERROR,
-        data: 'sendPayment'
-      });
+      return;
     }
+    dispatch({
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'sendPayment',
+        msg: 'Erro ao enviar o pagamento'
+      }
+    });
   }
-};
-
-export const resetErrorState = () => (dispatch) => {
-  dispatch({
-    type: Types.ERROR,
-    data: ''
-  });
-};
-
-export const resetStatusState = () => (dispatch) => {
-  dispatch({
-    type: Types.STATUS,
-    data: ''
-  });
 };
 
 export const refusePayment = () => (dispatch) => {
@@ -80,8 +86,11 @@ export const refusePayment = () => (dispatch) => {
 };
 
 export const initialState = {
-  error: '',
-  status: '',
+  status: {
+    type: '',
+    description: '',
+    msg: ''
+  },
   refuse: false
 };
 
@@ -90,18 +99,21 @@ export default function reducer(state = initialState, action) {
     case Types.STATUS:
       return {
         ...state,
-        status: action.data
+        status: { ...action.data }
+      };
+    case Types.CLEAR_STATUS:
+      return {
+        ...state,
+        status: {
+          type: '',
+          description: '',
+          msg: ''
+        }
       };
     case Types.REFUSE:
       return {
         ...state,
         refuse: action.data
-      };
-    case Types.ERROR:
-      return {
-        ...state,
-        error: action.data,
-        isLogged: false
       };
     default:
       return state;

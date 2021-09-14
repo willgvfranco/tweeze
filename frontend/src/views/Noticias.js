@@ -8,28 +8,27 @@ import 'date-fns';
 
 import {
   // FormControlLabel,
-  Button,
+  Button
   // Checkbox,
   // Card,
   // TextField,
-  Snackbar
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import { Ballot } from '@material-ui/icons';
-import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
 import PageTitle from '../components/PageTitle';
+import Notify from '../components/Notify';
 import Select from '../components/Select';
 import TabelaNoticias from '../components/TabelaNoticias';
 import PDFDocument from '../components/PDFDocument';
 import ConditionalRender from '../components/ConditionalRender';
 
 import { getAllWords } from '../reducers/WordsDuck';
-import { search } from '../reducers/NewsDuck';
+import { search, clearStatus } from '../reducers/NewsDuck';
 
 const useStyles = makeStyles((theme) => ({
   headerActions: {
@@ -81,18 +80,15 @@ const handleNews = (news) => {
   return newsObj;
 };
 
-const Message = (props) => {
-  return (
-    <Alert
-      elevation={6}
-      variant="filled"
-      {...props}
-      style={{ color: 'white', fontSize: '16px' }}
-    />
-  );
-};
-
-const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
+const Noticias = ({
+  words,
+  getAllWords,
+  search,
+  news,
+  status,
+  clearStatus,
+  hasUser
+}) => {
   const beginDateDefault = () => {
     if (new Date().getDate() === 1) {
       return new Date(new Date().setDate(0));
@@ -107,8 +103,7 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
   const [loading, setLoading] = useState('');
   const [selectedNews, setSelectedNews] = useState([]);
   const [newsObj, setNewsObj] = useState({});
-  const [openWarning, setOpenWarning] = useState(false);
-  const [warningMessage, setWarningMessage] = useState('');
+  const [openNotify, setOpenNotify] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -130,14 +125,11 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
   }, [news]);
 
   useEffect(() => {
-    if (newsError === 'search') {
-      setWarningMessage('Erro ao buscar as notícias!');
-      setOpenWarning(true);
-    } else if (newsError !== '') {
-      setWarningMessage('Ocorreu algum erro!');
-      setOpenWarning(true);
+    if (status.description.includes('search')) {
+      setOpenNotify(true);
+      setLoading('');
     }
-  }, [newsError]);
+  }, [status]);
 
   const handleBeginDateChange = (date) => {
     setBeginDate(date);
@@ -186,8 +178,8 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpenWarning(false);
+    setOpenNotify(false);
+    clearStatus();
   };
 
   return (
@@ -277,68 +269,12 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
         )}
       />
 
-      <Snackbar
-        open={openWarning}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleClose}
-        autoHideDuration={5000}>
-        <Message severity="error" onClose={handleClose}>
-          {warningMessage}
-        </Message>
-      </Snackbar>
-      {/* 
-      <Card
-        style={{ display: 'flex', alignItems: 'center' }}
-        className="rounded w-100 bg-white mt-3 p-3">
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={automatic}
-              onChange={() => setAutomatic(!automatic)}
-              value="automatic"
-            />
-          }
-          label="Deseja habilitar o envio automático desse clipping?"
-        />
-
-        <TextField
-          className="m-2"
-          id="email"
-          label="Digite seu e-mail"
-          variant="outlined"
-          disabled={!automatic}
-        />
-
-        <Select
-          className="m-3"
-          style={{ width: '15rem' }}
-          id="frequency-select"
-          labelId="frequency"
-          label="Defina a frequência"
-          value={days}
-          onChange={(e) => handleChange(e, setDays)}
-          items={['7 dias', '15 dias', '30 dias']}
-          disabled={!automatic}
-        />
-
-        <PDFDownloadLink
-          document={
-            selectedNews.length !== 0 ? (
-              <PDFDocument selectedNews={selectedNews} news={newsObj} />
-            ) : (
-              <></>
-            )
-          }
-          fileName="relatorio_tweeze.pdf"
-          className="m-2 ml-auto">
-          <Button
-            variant="contained"
-            className="btn-primary"
-            disabled={selectedNews.length === 0}>
-            Gerar relatório
-          </Button>
-        </PDFDownloadLink>
-      </Card> */}
+      <Notify
+        open={openNotify}
+        handleClose={handleClose}
+        msg={status.msg}
+        type={status.type || 'error'}
+      />
     </ConditionalRender>
   );
 };
@@ -346,11 +282,11 @@ const Noticias = ({ words, getAllWords, search, news, newsError, hasUser }) => {
 const mapStateToProps = ({ words, news, auth }) => ({
   words: words.words,
   news: news.news,
-  newsError: news.error,
+  status: news.status,
   hasUser: auth.id !== ''
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ getAllWords, search }, dispatch);
+  bindActionCreators({ getAllWords, search, clearStatus }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Noticias);

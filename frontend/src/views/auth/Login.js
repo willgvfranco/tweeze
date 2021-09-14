@@ -15,44 +15,28 @@ import {
   List,
   ListItem,
   TextField,
-  CircularProgress,
-  Snackbar
+  CircularProgress
 } from '@material-ui/core';
 import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
-import { Alert } from '@material-ui/lab';
 
 import SocialButtons from './SocialButtons';
 
-import ConditionalRender from 'components/ConditionalRender';
+import ConditionalRender from '../../components/ConditionalRender';
+import Notify from '../../components/Notify';
 
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
 
-import {
-  login,
-  loginWithToken,
-  resetErrorState
-} from '../../reducers/AuthDuck';
+import { login, loginWithToken, clearStatus } from '../../reducers/AuthDuck';
 import { emailValidation } from '../../utils/validations';
-
-const Message = (props) => {
-  return (
-    <Alert
-      elevation={6}
-      variant="filled"
-      {...props}
-      style={{ color: 'white', fontSize: '16px' }}
-    />
-  );
-};
 
 const LoginForm = ({
   login,
   loginWithToken,
   isLogged,
   token,
-  loginError,
-  resetErrorState
+  status,
+  clearStatus
 }) => {
   const [form, setForm] = useState({
     password: '',
@@ -60,15 +44,8 @@ const LoginForm = ({
   });
   const [checked, setChecked] = useState(true);
   const [loading, setLoading] = useState('');
-  const [openWarning, setOpenWarning] = useState(false);
-  const [warningMessage, setWarningMessage] = useState('');
+  const [openNotify, setOpenNotify] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    return () => {
-      resetErrorState();
-    };
-  }, []);
 
   useEffect(() => {
     if (isLogged) {
@@ -80,20 +57,12 @@ const LoginForm = ({
     }
   }, [isLogged]);
 
-  const handleError = (msg) => {
-    setLoading('');
-    setWarningMessage(msg);
-    setOpenWarning(true);
-  };
-
   useEffect(() => {
-    if (loginError === 'loginWithToken' || loginError === 'login') {
-      handleError('Erro ao fazer login! Por favor, tente novamente');
+    if (status.description.includes('login')) {
+      setOpenNotify(true);
+      setLoading('');
     }
-    if (loginError === 'unauthorized') {
-      handleError('Email e/ou senha incorretos!');
-    }
-  }, [loginError]);
+  }, [status]);
 
   const handleChange = (event) =>
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -113,8 +82,8 @@ const LoginForm = ({
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpenWarning(false);
+    setOpenNotify(false);
+    clearStatus();
   };
 
   return (
@@ -362,15 +331,12 @@ const LoginForm = ({
             </Container>
           </div>
         </div>
-        <Snackbar
-          open={openWarning}
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          onClose={handleClose}
-          autoHideDuration={5000}>
-          <Message severity="error" onClose={handleClose}>
-            {warningMessage}
-          </Message>
-        </Snackbar>
+        <Notify
+          open={openNotify}
+          handleClose={handleClose}
+          msg={status.msg}
+          type={status.type || 'error'}
+        />
       </ConditionalRender>
     </div>
   );
@@ -379,10 +345,10 @@ const LoginForm = ({
 const mapStateToProps = ({ auth }) => ({
   isLogged: auth.isLogged,
   token: auth.accessToken,
-  loginError: auth.error
+  status: auth.status
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ login, loginWithToken, resetErrorState }, dispatch);
+  bindActionCreators({ login, loginWithToken, clearStatus }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

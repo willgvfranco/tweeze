@@ -6,19 +6,21 @@ export const Types = {
   LOGIN: 'auth/LOGIN',
   LOGIN_TOKEN: 'auth/LOGIN_TOKEN',
   LOGIN_SOCIAL: 'auth/LOGIN_SOCIAL',
-  PASSWORD: 'auth/PASSWORD',
   SIGNUP: 'auth/SIGNUP',
   LOGOUT: 'auth/LOGOUT',
-  ERROR: 'auth/ERROR',
+  STATUS: 'auth/STATUS',
+  CLEAR_STATUS: 'auth/CLEAR_STATUS',
   LOADING: 'auth/LOADING'
 };
 
-export const login = (data) => async (dispatch) => {
+export const clearStatus = () => (dispatch) => {
   dispatch({
-    type: Types.ERROR,
-    data: ''
+    type: Types.CLEAR_STATUS
   });
+};
 
+export const login = (data) => async (dispatch) => {
+  clearStatus()(dispatch);
   try {
     const result = await axios({
       method: 'post',
@@ -39,20 +41,29 @@ export const login = (data) => async (dispatch) => {
 
     if (error?.response?.status === 401) {
       dispatch({
-        type: Types.ERROR,
-        data: 'unauthorized'
+        type: Types.STATUS,
+        data: {
+          type: 'error',
+          description: 'login/unauthorized',
+          msg: 'Email e/ou senha incorretos!'
+        }
       });
       return;
     }
 
     dispatch({
-      type: Types.ERROR,
-      data: 'login'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'login',
+        msg: 'Erro ao fazer login! Por favor, tente novamente'
+      }
     });
   }
 };
 
 export const loginWithToken = (accessToken) => async (dispatch) => {
+  clearStatus()(dispatch);
   setLoading(true, dispatch);
   try {
     const result = await axios({
@@ -79,14 +90,19 @@ export const loginWithToken = (accessToken) => async (dispatch) => {
       localStorage.clear('accessToken');
     }
     dispatch({
-      type: Types.ERROR,
-      data: 'loginWithToken'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'loginWithToken',
+        msg: 'Erro ao fazer login! Por favor, tente novamente'
+      }
     });
     setLoading(false, dispatch);
   }
 };
 
 export const loginWithSocialMedia = (user) => async (dispatch) => {
+  clearStatus()(dispatch);
   try {
     const result = await axios({
       method: 'post',
@@ -110,13 +126,18 @@ export const loginWithSocialMedia = (user) => async (dispatch) => {
   } catch (error) {
     console.log('loginWithSocialMedia error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'loginWithSocialMedia'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'loginWithSocialMedia',
+        msg: 'Erro ao fazer login! Por favor, tente novamente'
+      }
     });
   }
 };
 
 export const register = (data) => async (dispatch) => {
+  clearStatus()(dispatch);
   try {
     const result = await axios({
       method: 'post',
@@ -129,14 +150,27 @@ export const register = (data) => async (dispatch) => {
     localStorage.setItem('accessToken', JSON.stringify(accessToken));
 
     dispatch({
+      type: Types.STATUS,
+      data: {
+        type: 'success',
+        description: 'register',
+        msg: 'Conta criada com sucesso!'
+      }
+    });
+
+    dispatch({
       type: Types.SIGNUP,
       data: result.data
     });
   } catch (error) {
     console.log('login error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'login'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'register',
+        msg: 'Erro ao fazer cadastro! Por favor, tente novamente'
+      }
     });
   }
 };
@@ -150,10 +184,7 @@ export const logout = () => (dispatch) => {
 };
 
 export const passwordEmailSend = (email) => async (dispatch) => {
-  dispatch({
-    type: Types.PASSWORD,
-    data: ''
-  });
+  clearStatus()(dispatch);
   try {
     const result = await axios({
       method: 'post',
@@ -165,21 +196,34 @@ export const passwordEmailSend = (email) => async (dispatch) => {
 
     if (result.status === 200) {
       dispatch({
-        type: Types.PASSWORD,
-        data: 'ok'
+        type: Types.STATUS,
+        data: {
+          type: 'success',
+          description: 'passwordEmailSend',
+          msg: 'E-mail enviado!'
+        }
       });
     }
   } catch (error) {
     console.log('passwordEmailSend error', error);
     if (error?.response?.status === 400) {
       dispatch({
-        type: Types.PASSWORD,
-        data: 'email'
+        type: Types.STATUS,
+        data: {
+          type: 'error',
+          description: 'passwordEmailSend/email',
+          msg: 'E-mail não cadastrado!'
+        }
       });
+      return;
     }
     dispatch({
-      type: Types.ERROR,
-      data: 'passwordEmailSend'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'passwordEmailSend',
+        msg: 'E-mail ao enviar e-mail! Por favor, tente novamente'
+      }
     });
   }
 };
@@ -187,10 +231,7 @@ export const passwordEmailSend = (email) => async (dispatch) => {
 export const passwordChange = ({ password, accessToken }) => async (
   dispatch
 ) => {
-  dispatch({
-    type: Types.PASSWORD,
-    data: ''
-  });
+  clearStatus()(dispatch);
   try {
     const result = await axios({
       method: 'post',
@@ -206,30 +247,36 @@ export const passwordChange = ({ password, accessToken }) => async (
 
     if (result.status === 200) {
       dispatch({
-        type: Types.PASSWORD,
-        data: 'password'
+        type: Types.STATUS,
+        data: {
+          type: 'success',
+          description: 'passwordChange',
+          msg: 'Senha alterada com sucesso!'
+        }
       });
     }
   } catch (error) {
     console.log('passwordChange error', error);
     if (error?.response?.status === 401) {
       dispatch({
-        type: Types.PASSWORD,
-        data: 'passwordError'
+        type: Types.STATUS,
+        data: {
+          type: 'error',
+          description: 'passwordChange/token',
+          msg: 'Token de autorização inválido'
+        }
       });
+      return;
     }
     dispatch({
-      type: Types.ERROR,
-      data: 'passwordChange'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'passwordChange',
+        msg: 'Erro ao enviar a solicitação.. Tente novamente mais tarde'
+      }
     });
   }
-};
-
-export const setStatus = (status) => (dispatch) => {
-  dispatch({
-    type: Types.PASSWORD,
-    data: status
-  });
 };
 
 const setLoading = (status, dispatch) => {
@@ -240,6 +287,7 @@ const setLoading = (status, dispatch) => {
 };
 
 export const changePersonalInfo = (info) => async (dispatch, getState) => {
+  clearStatus()(dispatch);
   const { accessToken } = getState().auth;
 
   try {
@@ -258,31 +306,35 @@ export const changePersonalInfo = (info) => async (dispatch, getState) => {
     localStorage.setItem('accessToken', JSON.stringify(newToken));
 
     dispatch({
+      type: Types.STATUS,
+      data: {
+        type: 'success',
+        description: 'changePersonalInfo',
+        msg: 'Alteração feita com sucesso!'
+      }
+    });
+
+    dispatch({
       type: Types.LOGIN,
       data: result.data
     });
   } catch (error) {
     console.log('changePersonalInfo error', error);
     dispatch({
-      type: Types.ERROR,
-      data: 'changePersonalInfo'
+      type: Types.STATUS,
+      data: {
+        type: 'error',
+        description: 'changePersonalInfo',
+        msg: 'Erro ao alterar as informações! Por favor, tente novamente'
+      }
     });
   }
-};
-
-export const resetErrorState = () => (dispatch) => {
-  dispatch({
-    type: Types.ERROR,
-    data: ''
-  });
 };
 
 export const initialState = {
   isLogged: false,
   accessToken: null,
   id: '',
-  error: '',
-  status: '',
   loading: false,
   email: '',
   data_nascimento: null,
@@ -293,7 +345,12 @@ export const initialState = {
   endereco: '',
   complemento: '',
   cep: '',
-  roles: []
+  roles: [],
+  status: {
+    type: '',
+    description: '',
+    msg: ''
+  }
 };
 
 export default function reducer(state = initialState, action) {
@@ -334,22 +391,24 @@ export default function reducer(state = initialState, action) {
         id: {},
         error: ''
       };
-    case Types.PASSWORD:
-      return {
-        ...state,
-        status: action.data,
-        error: ''
-      };
-    case Types.ERROR:
-      return {
-        ...state,
-        error: action.data,
-        isLogged: false
-      };
     case Types.LOADING:
       return {
         ...state,
         loading: action.data
+      };
+    case Types.STATUS:
+      return {
+        ...state,
+        status: { ...action.data }
+      };
+    case Types.CLEAR_STATUS:
+      return {
+        ...state,
+        status: {
+          type: '',
+          description: '',
+          msg: ''
+        }
       };
     default:
       return state;

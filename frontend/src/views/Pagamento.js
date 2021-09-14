@@ -16,21 +16,17 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Snackbar,
   CircularProgress
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 
-import {
-  sendPayment,
-  resetErrorState,
-  resetStatusState
-} from '../reducers/PaymentDuck';
+import Notify from '../components/Notify';
+
+import { sendPayment, clearStatus } from '../reducers/PaymentDuck';
 
 import svgImage1 from '../assets/images/illustrations/pack4/business_plan.svg';
 import svgImage2 from '../assets/images/illustrations/pack4/businesswoman.svg';
@@ -180,17 +176,6 @@ const PhoneMask = (props) => {
       mask="(11) 11111-1111"
       style={{ width: '100%' }}
       placeholderChar={'\u2000'}
-    />
-  );
-};
-
-const Message = (props) => {
-  return (
-    <Alert
-      elevation={6}
-      variant="filled"
-      {...props}
-      style={{ color: 'white', fontSize: '16px' }}
     />
   );
 };
@@ -523,63 +508,30 @@ const Subscription = ({
   );
 };
 
-const Pagamento = ({
-  sendPayment,
-  paymentError,
-  resetErrorState,
-  paymentStatus,
-  resetStatusState
-}) => {
+const Pagamento = ({ sendPayment, status, clearStatus }) => {
   const classes = useStyles();
   const history = useHistory();
   const [selectedPlan, setSelectedPlan] = useState('');
-  const [openWarning, setOpenWarning] = useState(false);
-  const [warningMessage, setWarningMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [openSuccess, setOpenSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [openNotify, setOpenNotify] = useState(false);
 
   useEffect(() => {
-    return () => {
-      resetErrorState();
-      resetStatusState();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (paymentError === 'wrongCard') {
-      setWarningMessage('Cartão incorreto!');
-      setOpenWarning(true);
-      setLoading(false);
-    } else if (paymentError !== '') {
-      setWarningMessage('Erro ao enviar o pagamento');
-      setOpenWarning(true);
+    if (status.description.includes('sendPayment')) {
+      setOpenNotify(true);
       setLoading(false);
     }
-  }, [paymentError]);
-
-  useEffect(() => {
-    if (paymentStatus === 'paymentSuccess') {
-      setSuccessMessage('Pagamento enviado com sucesso!');
-      setOpenSuccess(true);
-      setLoading(false);
-    }
-  }, [paymentStatus]);
+  }, [status]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpenWarning(false);
-    setOpenSuccess(false);
-
-    resetErrorState();
-    resetStatusState();
-
-    if (paymentStatus === 'paymentSuccess') {
-      history.push('/login');
+    if (status.type === 'success') {
+      history.push('/home');
     }
+
+    setOpenNotify(false);
+    clearStatus();
   };
 
   const Plans = () => (
@@ -705,38 +657,21 @@ const Pagamento = ({
         <Plans />
       )}
 
-      <Snackbar
-        open={openWarning}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleClose}
-        autoHideDuration={5000}>
-        <Message severity="error" onClose={handleClose}>
-          {warningMessage}
-        </Message>
-      </Snackbar>
-
-      <Snackbar
-        open={openSuccess}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleClose}
-        autoHideDuration={5000}>
-        <Message severity="success" onClose={handleClose}>
-          {successMessage}
-        </Message>
-      </Snackbar>
+      <Notify
+        open={openNotify}
+        handleClose={handleClose}
+        msg={status.msg}
+        type={status.type || 'error'}
+      />
     </div>
   );
 };
 
 const mapStateToProps = ({ payment }) => ({
-  paymentError: payment.error,
-  paymentStatus: payment.status
+  status: payment.status
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    { sendPayment, resetErrorState, resetStatusState },
-    dispatch
-  );
+  bindActionCreators({ sendPayment, clearStatus }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);

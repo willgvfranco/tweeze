@@ -15,58 +15,43 @@ import {
 } from '@material-ui/core';
 import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
 
+import Notify from '../../components/Notify';
+
 import particles3 from '../../assets/images/hero-bg/particles-3.svg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
-import { passwordEmailSend, passwordChange } from '../../reducers/AuthDuck';
+import {
+  passwordEmailSend,
+  passwordChange,
+  clearStatus
+} from '../../reducers/AuthDuck';
 import { emailValidation } from '../../utils/validations';
 
 const PageRecover = ({
   passwordEmailSend,
   passwordChange,
   status,
-  authError
+  clearStatus
 }) => {
   const [email, setEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [hasError, setHasError] = useState('');
+  const [openNotify, setOpenNotify] = useState(false);
 
   useEffect(() => {
-    if (status !== '') {
+    if (
+      status.description.includes('passwordEmailSend') ||
+      status.description.includes('passwordChange')
+    ) {
+      setOpenNotify(true);
       setLoading(false);
     }
-    if (authError) {
-      setLoading(false);
-    }
-  }, [status, authError]);
+  }, [status]);
 
   const params = new URLSearchParams(window.location.search);
   const auth = params.get('auth');
-
-  const helperTextHandler = () => {
-    if (status === 'ok') {
-      return 'E-mail enviado!';
-    }
-    if (status === 'email') {
-      return 'E-mail não cadastrado!';
-    }
-    if (status === 'passwordError') {
-      return 'Token de autorização inválido';
-    }
-    if (status === 'password') {
-      return 'Senha alterada com sucesso!';
-    }
-    if (authError === 'passwordChange') {
-      return 'Erro ao enviar a solicitação.. Tente novamente mais tarde';
-    }
-  };
-
-  const passwordStatus = () => {
-    if (authError || status === 'passwordError') return true;
-    if (status === 'password') return false;
-  };
 
   const sendEmailHandler = () => {
     setHasError('');
@@ -88,6 +73,14 @@ const PageRecover = ({
     passwordChange({ password, accessToken: auth });
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenNotify(false);
+    clearStatus();
+  };
+
   const handleInputRender = () => {
     if (!auth) {
       return (
@@ -98,12 +91,6 @@ const PageRecover = ({
           label="Email"
           onChange={(e) => setEmail(e.target.value)}
           error={hasError === 'email'}
-          helperText={helperTextHandler()}
-          FormHelperTextProps={
-            status === 'email'
-              ? { style: { color: 'red' } }
-              : { style: { color: 'green' } }
-          }
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -142,12 +129,6 @@ const PageRecover = ({
           type="password"
           name="password_confirm"
           label="Confirmar senha"
-          helperText={helperTextHandler()}
-          FormHelperTextProps={
-            passwordStatus()
-              ? { style: { color: 'red' } }
-              : { style: { color: 'green' } }
-          }
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -337,6 +318,13 @@ const PageRecover = ({
               </div>
             </div>
           </Container>
+
+          <Notify
+            open={openNotify}
+            handleClose={handleClose}
+            msg={status.msg}
+            type={status.type || 'error'}
+          />
         </div>
       </div>
     </div>
@@ -344,11 +332,13 @@ const PageRecover = ({
 };
 
 const mapStateToProps = ({ auth }) => ({
-  status: auth.status,
-  authError: auth.error
+  status: auth.status
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ passwordEmailSend, passwordChange }, dispatch);
+  bindActionCreators(
+    { passwordEmailSend, passwordChange, clearStatus },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageRecover);

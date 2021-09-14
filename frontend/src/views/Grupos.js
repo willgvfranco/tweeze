@@ -16,12 +16,11 @@ import {
   Dialog,
   Chip,
   TextField,
-  Tooltip,
-  Snackbar
+  Tooltip
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 
 import PageTitle from '../components/PageTitle';
+import Notify from '../components/Notify';
 import Loader from '../components/Loader';
 import notFound from '../assets/images/illustrations/pack4/500.svg';
 
@@ -29,7 +28,8 @@ import {
   getAllWords,
   createWord,
   editWord,
-  deleteWord
+  deleteWord,
+  clearStatus
 } from '../reducers/WordsDuck';
 
 const POS = 'positive';
@@ -148,17 +148,6 @@ const useStyles = makeStyles((theme) => ({
     width: '30%'
   }
 }));
-
-const Message = (props) => {
-  return (
-    <Alert
-      elevation={6}
-      variant="filled"
-      {...props}
-      style={{ color: 'white', fontSize: '16px' }}
-    />
-  );
-};
 
 const handleNegSplit = (string) => {
   let splittedStrings = string.split('NOT');
@@ -470,26 +459,19 @@ const Grupos = ({
   words,
   user,
   getAllWords,
-  wordsError,
+  status,
+  clearStatus,
   firstFetch,
   createWord,
   editWord,
   deleteWord
 }) => {
+  const classes = useStyles();
   const [createDialog, setCreateDialog] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(undefined);
-  const [openWarning, setOpenWarning] = useState(false);
-  const [warningMessage, setWarningMessage] = useState('');
-  const classes = useStyles();
-
-  const messages = {
-    getAllWords: 'Ocorreu um erro ao buscar os grupos!',
-    createWord: 'Ocorreu um erro ao criar o grupo!',
-    editWord: 'Ocorreu um erro ao criar o grupo!',
-    deleteWord: 'Ocorreu um erro ao deletar o grupo!'
-  };
+  const [openNotify, setOpenNotify] = useState(false);
 
   useEffect(() => {
     if (!firstFetch) {
@@ -498,15 +480,15 @@ const Grupos = ({
   }, [words, user]);
 
   useEffect(() => {
-    if (wordsError !== '') {
-      setWarningMessage(
-        messages[wordsError]
-          ? messages[wordsError]
-          : 'Ocorreu um erro desconhecido'
-      );
-      setOpenWarning(true);
+    if (
+      status.description.includes('getAllWords') ||
+      status.description.includes('editWord') ||
+      status.description.includes('deleteWord') ||
+      status.description.includes('createWord')
+    ) {
+      setOpenNotify(true);
     }
-  }, [wordsError]);
+  }, [status]);
 
   const isLoading = Object.keys(words).length === 0;
   const emptyWords = firstFetch && Object.keys(words).length === 0;
@@ -525,8 +507,8 @@ const Grupos = ({
     if (reason === 'clickaway') {
       return;
     }
-
-    setOpenWarning(false);
+    setOpenNotify(false);
+    clearStatus();
   };
 
   const WordsList = () =>
@@ -576,7 +558,9 @@ const Grupos = ({
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           <FallBack
             isLoading={isLoading}
-            hasError={wordsError === 'getAllWords'}
+            hasError={
+              status.type === 'error' && status.description === 'getAllWords'
+            }
             emptyWords={emptyWords}
           />
           <WordsList />
@@ -606,29 +590,26 @@ const Grupos = ({
         onAction={deleteWord}
       />
 
-      <Snackbar
-        open={openWarning}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleClose}
-        autoHideDuration={5000}>
-        <Message severity="error" onClose={handleClose}>
-          {warningMessage}
-        </Message>
-      </Snackbar>
+      <Notify
+        open={openNotify}
+        handleClose={handleClose}
+        msg={status.msg}
+        type={status.type || 'error'}
+      />
     </>
   );
 };
 
 const mapStateToProps = ({ words, auth }) => ({
   words: words.words,
-  wordsError: words.error,
+  status: words.status,
   firstFetch: words.firstFetch,
   user: auth.id
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
-    { getAllWords, createWord, editWord, deleteWord },
+    { getAllWords, createWord, editWord, deleteWord, clearStatus },
     dispatch
   );
 
