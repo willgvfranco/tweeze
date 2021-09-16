@@ -63,8 +63,8 @@ const Step1 = () => (
   </Container>
 );
 
-const ContactForm = () => (
-  <Card className="card-box">
+const ContactForm = (props) => (
+  <Card style={props.style} className={props.className}>
     <div className="r">
       <div className=""></div>
     </div>

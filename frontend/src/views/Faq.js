@@ -1,13 +1,10 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Container
-} from '@material-ui/core';
-
+import { Container } from '@material-ui/core';
 
 import ControlledExpansionPanels from '../../src/views/Landing/components/acordeaocontrolado';
-import {MenuBar} from '../../src/views/Landing/components/Header';
+import { MenuBar } from '../../src/views/Landing/components/Header';
 import ContactForm from '../../src/views/Landing/components/ContactForm';
 
 import Bannerfaq from './Landing/components/Bannerfaq';
@@ -24,17 +21,25 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 60px'
   },
   root: {
-    width: '100%',
+    width: '100%'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     flexBasis: '33.33%',
-    flexShrink: 0,
+    flexShrink: 0
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
+  wrapper: {
+    width: '85%',
+    margin: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      margin: '0'
+    }
+  }
 }));
 
 export default function Faq() {
@@ -42,21 +47,21 @@ export default function Faq() {
 
   return (
     <>
-    <div className="hero-wrapper">
-    <Container className={classes.menuBar}>
-    <MenuBar />
-    </Container> 
-    <Bannerfaq />
-    
-    <div>
-    <ControlledExpansionPanels 
-    style={{padding: "50px", margin: "8px"}}
-    />
-    </div>
-      <ContactForm />
-      <Footer />
-    </div>
+      <div className="hero-wrapper">
+        <Container className={classes.menuBar}>
+          <MenuBar hideMenus />
+        </Container>
+        <Bannerfaq />
 
+        <div>
+          <ControlledExpansionPanels
+            className={classes.wrapper}
+            style={{ padding: '50px 0' }}
+          />
+        </div>
+        <ContactForm className={classes.wrapper} />
+        <Footer />
+      </div>
     </>
   );
 }

@@ -2,11 +2,33 @@ import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, Container, List, ListItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
 import WarningPopover from './WarningPopover';
 
+const useStyles = makeStyles((theme) => ({
+  footerFeatures: {
+    margin: '1.5rem 0',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      margin: '0.5rem 0'
+    },
+    [theme.breakpoints.down('xs')]: {
+      margin: '0'
+    }
+  },
+  textFeature: {
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center'
+    }
+  }
+}));
+
 const Footer = () => {
+  const classes = useStyles();
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
 
@@ -22,24 +44,25 @@ const Footer = () => {
   return (
     <>
       <div className="bg-second font-size-sm py-5">
-        <div className="py-3">
+        <div className="py-3 d-flex">
           <a
             href="#home"
             title="Tweeze"
-            className="d-70 d-block mx-auto tamanholog ">
+            className="d-block mx-auto"
+            style={{ width: '240px' }}>
             <img alt="Tweeze" className="img-fluid p-2" src={LogoBranca} />
           </a>
         </div>
-        <Container className="pt-5">
-          <Grid container spacing={6} className="pb-3">
-            <Grid item md={6} xl={3}>
-              <div className="my-4 my-xl-0">
+        <Container className="pt-3">
+          <Grid container spacing={3} className="pb-3">
+            <Grid item xs={12} sm={6} md={3}>
+              <div className={`my-xl-0 ${classes.footerFeatures}`}>
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
                   Serviços
                 </h6>
                 <List
                   component="div"
-                  className="nav-transparent-alt flex-column">
+                  className={`nav-transparent-alt flex-column ${classes.footerFeatures}`}>
                   <ListItem
                     component="a"
                     button
@@ -64,14 +87,14 @@ const Footer = () => {
                 </List>
               </div>
             </Grid>
-            <Grid item md={6} xl={3}>
-              <div className="my-4 my-xl-0">
+            <Grid item xs={12} sm={6} md={3}>
+              <div className={`my-xl-0 ${classes.footerFeatures}`}>
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
                   Suporte
                 </h6>
                 <List
                   component="div"
-                  className="nav-transparent-alt flex-column">
+                  className={`nav-transparent-alt flex-column ${classes.footerFeatures}`}>
                   <ListItem
                     component="a"
                     button
@@ -96,14 +119,14 @@ const Footer = () => {
                 </List>
               </div>
             </Grid>
-            <Grid item md={6} xl={3}>
-              <div className="my-4 my-xl-0">
+            <Grid item xs={12} sm={6} md={3}>
+              <div className={`my-xl-0 ${classes.footerFeatures}`}>
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
                   Plataforma
                 </h6>
                 <List
                   component="div"
-                  className="nav-transparent-alt flex-column">
+                  className={`nav-transparent-alt flex-column ${classes.footerFeatures}`}>
                   <ListItem
                     component="a"
                     button
@@ -146,18 +169,18 @@ const Footer = () => {
                 </List>
               </div>
             </Grid>
-            <Grid item md={6} xl={3}>
-              <div className="my-4 my-xl-0">
+            <Grid item xs={12} sm={6} md={3}>
+              <div className={`my-xl-0 ${classes.footerFeatures}`}>
                 <h6 className="text-white font-weight-bold mb-3 text-uppercase">
                   Mídias Sociais
                 </h6>
-                <p className="text-white-50">
+                <p className={`text-white-50 ${classes.textFeature}`}>
                   Fique por dentro das nossas atualizações!
                 </p>
                 <List
                   component="div"
                   className="nav-transparent-alt d-flex justify-content-start">
-                  <ListItem
+                  {/* <ListItem
                     button
                     className="px-0 mr-3 text-white-50"
                     href="#/"
@@ -177,7 +200,7 @@ const Footer = () => {
                       icon={['fab', 'twitter']}
                       className="font-size-lg"
                     />
-                  </ListItem>
+                  </ListItem> */}
                   <ListItem
                     button
                     className="px-0 mr-3 text-white-50"
@@ -217,14 +240,14 @@ const Footer = () => {
                 className="text-white-50"
                 href="#/"
                 onClick={(e) => e.preventDefault()}>
-                Privacy Policy
+                Políticas de Privacidade
               </ListItem>
               <ListItem
                 button
                 className="text-white-50"
                 href="#/"
                 onClick={(e) => e.preventDefault()}>
-                Terms of Service
+                Termos de Serviço
               </ListItem>
             </List>
             <List
@@ -234,7 +257,7 @@ const Footer = () => {
                 component="a"
                 button
                 href="/login"
-                className="px-0 py-1 text-white-50">
+                className="text-white-50">
                 Minha Conta
               </ListItem>
             </List>

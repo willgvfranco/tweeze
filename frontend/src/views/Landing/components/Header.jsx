@@ -34,7 +34,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const MenuBar = () => {
+const LinkItem = ({ title, link }) => (
+  <li>
+    <a href={link} className="font-weight-bold rounded-lg text-white px-3">
+      {title}
+    </a>
+  </li>
+);
+
+export const MenuBar = ({ hideMenus }) => {
   const [collapse, setCollapse] = useState(false);
   const toggle = () => setCollapse(!collapse);
 
@@ -43,51 +51,28 @@ export const MenuBar = () => {
       <div
         className="header-nav-wrapper header-nav-wrapper-lg navbar-dark"
         style={{ minHeight: '50px' }}>
-        <div>
+        <a href="/">
           <img
             className="tamanhoLogoInicial"
             src={LogoSimbolo}
             alt="Tweeze Logo"
           />
-        </div>
+        </a>
         <div className="header-nav-menu d-none d-lg-block">
-          <ul className="d-flex nav nav-neutral-first justify-content-center">
-            <li>
-              <a
-                href="#home"
-                className="font-weight-bold rounded-lg text-white px-3">
-                Home
-              </a>
-
-              <span className="opacity-5"></span>
-            </li>
-            <li>
-              <a
-                href="#servicos"
-                className="font-weight-bold rounded-lg text-white px-3">
-                Serviços
-              </a>
-
-              <span className="opacity-5"></span>
-            </li>
-            <li>
-              <a
-                href="#planos"
-                className="font-weight-bold rounded-lg text-white px-3">
-                Planos
-              </a>
-
-              <span className="opacity-5"></span>
-            </li>
-            <li>
-              <a
-                href="#contato"
-                className="font-weight-bold rounded-lg text-white px-3">
-                Contato
-              </a>
-
-              <span className="opacity-5"></span>
-            </li>
+          <ul
+            className="d-flex nav nav-neutral-first justify-content-center"
+            style={{
+              width: hideMenus && 'fit-content',
+              marginLeft: hideMenus && '20px'
+            }}>
+            <LinkItem title="Home" link="#home" />
+            {hideMenus ? null : (
+              <>
+                <LinkItem title="Serviços" link="#servicos" />
+                <LinkItem title="Planos" link="#planos" />
+                <LinkItem title="Contato" link="#contato" />
+              </>
+            )}
           </ul>
         </div>
         <div className="header-nav-actions flex-grow-0 flex-lg-grow-1 ajusteiconeheader">
@@ -127,21 +112,25 @@ export const MenuBar = () => {
                     className="px-4 d-flex align-items-center">
                     <a href="#home">Home</a>
                   </ListItem>
-                  <ListItem
-                    onClick={toggle}
-                    className="px-4 d-flex align-items-center">
-                    <a href="#servicos">Serviços</a>
-                  </ListItem>
-                  <ListItem
-                    onClick={toggle}
-                    className="px-4 d-flex align-items-center">
-                    <a href="#planos">Planos</a>
-                  </ListItem>
-                  <ListItem
-                    onClick={toggle}
-                    className="px-4 d-flex align-items-center">
-                    <a href="#contato">Contato</a>
-                  </ListItem>
+                  {hideMenus ? null : (
+                    <>
+                      <ListItem
+                        onClick={toggle}
+                        className="px-4 d-flex align-items-center">
+                        <a href="#servicos">Serviços</a>
+                      </ListItem>
+                      <ListItem
+                        onClick={toggle}
+                        className="px-4 d-flex align-items-center">
+                        <a href="#planos">Planos</a>
+                      </ListItem>
+                      <ListItem
+                        onClick={toggle}
+                        className="px-4 d-flex align-items-center">
+                        <a href="#contato">Contato</a>
+                      </ListItem>
+                    </>
+                  )}
                   <ListItem
                     component={NavLink}
                     to="/login"
@@ -167,136 +156,131 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-    <>
-      <div className="hero-wrapper bg-composed-wrapper bg-second">
-        <Container className={classes.menuBar}>
-          <MenuBar />
-        </Container>
-        <div className="hero-wrapper--content" style={{ marginTop: '30px' }}>
-          <div className="bg-composed-wrapper--bg bg-sunrise-blue opacity-6" />
-          <div
-            className="bg-composed-wrapper--image opacity-9"
-            style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
-          />
-          <div id="home" className="bg-composed-wrapper--content">
-            <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
-              <img
-                className="ajustelogoinicial espaçamentoInicial"
-                src={LogoBranca}
-                alt=""
-              />
-              <Grid item md={11} lg={10} xl={8} className="mx-auto">
-                <div>
-                  <p className="font-size-xxl py-3">
-                    Transformando dados em inteligência
-                  </p>
-                  <h3 className="font-size-xl">
-                    Plataforma de clipping com inteligência artificial (I.A.)
-                    para captação, análise, monitoramento e distribuição de
-                    informações úteis a respeito de marcas e temas de interesse.
-                    Diariamente são tratadas aproximadamente 50 mil notícias do
-                    Brasil e do mundo.
-                  </h3>
-                </div>
-                <div className="py-4 mb-4">
-                  <Button
-                    component={NavLink}
-                    to="/DashboardCommerce"
-                    size="large"
-                    className="btn-pill shadow-second-sm btn-danger">
+    <div className="hero-wrapper bg-composed-wrapper bg-second">
+      <Container className={classes.menuBar}>
+        <MenuBar />
+      </Container>
+      <div className="hero-wrapper--content" style={{ marginTop: '30px' }}>
+        <div className="bg-composed-wrapper--bg bg-sunrise-blue opacity-6" />
+        <div
+          className="bg-composed-wrapper--image opacity-9"
+          style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
+        />
+        <div id="home" className="bg-composed-wrapper--content">
+          <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
+            <img
+              className="ajustelogoinicial espaçamentoInicial"
+              src={LogoBranca}
+              alt=""
+            />
+            <Grid item md={11} lg={10} xl={8} className="mx-auto">
+              <div>
+                <p className="font-size-xxl py-3">
+                  Transformando dados em inteligência
+                </p>
+                <h3 className="font-size-xl">
+                  Plataforma de clipping com inteligência artificial (I.A.) para
+                  captação, análise, monitoramento e distribuição de informações
+                  úteis a respeito de marcas e temas de interesse. Diariamente
+                  são tratadas aproximadamente 50 mil notícias do Brasil e do
+                  mundo.
+                </h3>
+              </div>
+              <div className="py-4 mb-4">
+                <Button
+                  href="#contato"
+                  size="large"
+                  className="btn-pill shadow-second-sm btn-danger"
+                  startIcon={
                     <span className="btn-wrapper--icon">
                       <FontAwesomeIcon icon={['fas', 'arrow-right']} />
                     </span>
-                    <span className="btn-wrapper--label">
-                      Solicite uma DEMO!
-                    </span>
-                  </Button>
-                  <Button
-                    href="#servicos"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    size="large"
-                    className="bg-white-10 text-white shadow-second-sm btn-pill ml-3">
-                    <span> Planos e Serviços</span>
-                  </Button>
-                </div>
-              </Grid>
-              <Grid item lg={10} className="mx-auto">
-                <div className="p-4 p-xl-5 hover-scale-rounded bg-second rounded-lg modal-content">
-                  <Grid container spacing={0}>
-                    <Grid item xs={6} md={3} className="p-3">
-                      <div className="divider-v bg-white-10 divider-v-md d-none d-lg-block" />
+                  }>
+                  Solicite uma DEMO!
+                </Button>
+                <Button
+                  href="#planos"
+                  size="large"
+                  className="bg-white-10 text-white shadow-second-sm btn-pill ml-3">
+                  Planos e Serviços
+                </Button>
+              </div>
+            </Grid>
+            <Grid item lg={10} className="mx-auto">
+              <div className="p-4 p-xl-5 hover-scale-rounded bg-second rounded-lg modal-content">
+                <Grid container spacing={0}>
+                  <Grid item xs={6} md={3} className="p-3">
+                    <div className="divider-v bg-white-10 divider-v-md d-none d-lg-block" />
 
-                      <div className="text-center">
-                        <div>
-                          <TrendingUpTwoToneIcon className="d-30 text-danger" />
-                        </div>
-                        <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">2.102.767+</b>
-                          <span className="text-white-50 font-size-lg d-block">
-                            Notícias
-                          </span>
-                        </div>
+                    <div className="text-center">
+                      <div>
+                        <TrendingUpTwoToneIcon className="d-30 text-danger" />
                       </div>
-                    </Grid>
-                    <Grid item xs={6} md={3} className="p-3">
-                      <div className="divider-v bg-white-10 divider-v-md d-none d-lg-block" />
-
-                      <div className="text-center">
-                        <div>
-                          <ListAltTwoToneIcon className="d-30 text-warning" />
-                        </div>
-                        <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">1300+</b>
-                          <span className="text-white-50 font-size-lg d-block">
-                            Fontes
-                          </span>
-                        </div>
+                      <div className="mt-3 line-height-sm">
+                        <b className="font-size-xxl pb-2">2.102.767+</b>
+                        <span className="text-white-50 font-size-lg d-block">
+                          Notícias
+                        </span>
                       </div>
-                    </Grid>
-                    <Grid item xs={6} md={3} className="p-3">
-                      <div className="divider-v bg-white-10 divider-v-md d-none d-lg-block" />
-                      <div className="text-center">
-                        <div>
-                          <EmojiEventsTwoToneIcon className="d-30 text-info" />
-                        </div>
-                        <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">800.000+</b>
-                          <span className="text-white-50 font-size-lg d-block">
-                            Tweetes
-                          </span>
-                        </div>
-                      </div>
-                    </Grid>
-                    <Grid item xs={6} md={3} className="p-3">
-                      <div className="text-center">
-                        <div>
-                          <TuneTwoToneIcon className="d-30 text-success" />
-                        </div>
-                        <div className="mt-3 line-height-sm">
-                          <b className="font-size-xxl pb-2">I.A.</b>
-                          <span className="text-white-50 font-size-lg d-block">
-                            Ready
-                          </span>
-                        </div>
-                      </div>
-                    </Grid>
+                    </div>
                   </Grid>
-                </div>
-              </Grid>
-            </Container>
-            <div className="shadow-container-blocks-5 z-below">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                  fill="var(--light)"
-                  fillOpacity="1"
-                  d="M0,32L120,58.7C240,85,480,139,720,138.7C960,139,1200,85,1320,58.7L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
-              </svg>
-            </div>
+                  <Grid item xs={6} md={3} className="p-3">
+                    <div className="divider-v bg-white-10 divider-v-md d-none d-lg-block" />
+
+                    <div className="text-center">
+                      <div>
+                        <ListAltTwoToneIcon className="d-30 text-warning" />
+                      </div>
+                      <div className="mt-3 line-height-sm">
+                        <b className="font-size-xxl pb-2">1300+</b>
+                        <span className="text-white-50 font-size-lg d-block">
+                          Fontes
+                        </span>
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6} md={3} className="p-3">
+                    <div className="divider-v bg-white-10 divider-v-md d-none d-lg-block" />
+                    <div className="text-center">
+                      <div>
+                        <EmojiEventsTwoToneIcon className="d-30 text-info" />
+                      </div>
+                      <div className="mt-3 line-height-sm">
+                        <b className="font-size-xxl pb-2">800.000+</b>
+                        <span className="text-white-50 font-size-lg d-block">
+                          Tweetes
+                        </span>
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid item xs={6} md={3} className="p-3">
+                    <div className="text-center">
+                      <div>
+                        <TuneTwoToneIcon className="d-30 text-success" />
+                      </div>
+                      <div className="mt-3 line-height-sm">
+                        <b className="font-size-xxl pb-2">I.A.</b>
+                        <span className="text-white-50 font-size-lg d-block">
+                          Ready
+                        </span>
+                      </div>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+          </Container>
+          <div className="shadow-container-blocks-5 z-below">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill="var(--light)"
+                fillOpacity="1"
+                d="M0,32L120,58.7C240,85,480,139,720,138.7C960,139,1200,85,1320,58.7L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+            </svg>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

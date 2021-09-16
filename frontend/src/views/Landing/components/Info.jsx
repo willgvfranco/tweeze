@@ -147,7 +147,7 @@ const Info = () => {
             <Button
               style={{ fontSize: '1.4rem', borderRadius: '8px' }}
               className="btn-warning py-2 px-4">
-              Acesse agora! É grátis!!
+              Teste agora! É grátis!!
             </Button>
           </NavLink>
         </Container>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, Container, Card, Button } from '@material-ui/core';
 
@@ -24,12 +26,14 @@ const Trial = () => {
                 Experimente o Trial por 14 dias de graça no plano Marcas! Sem
                 Compromisso!
               </p>
-              <Button className="btn-warning text-uppercase font-weight-bold px-4 font-size-sm">
-                <span className="btn-wrapper--label">Comece agora</span>
-                <span className="btn-wrapper--icon">
-                  <FontAwesomeIcon icon={['fas', 'arrow-right']} />
-                </span>
-              </Button>
+              <NavLink className="nav-link-simple" to="/cadastro">
+                <Button className="btn-warning text-uppercase font-weight-bold px-4 font-size-sm">
+                  <span className="btn-wrapper--label">Comece agora</span>
+                  <span className="btn-wrapper--icon">
+                    <FontAwesomeIcon icon={['fas', 'arrow-right']} />
+                  </span>
+                </Button>
+              </NavLink>
             </div>
           </Grid>
         </Grid>
