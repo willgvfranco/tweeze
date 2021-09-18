@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
 import 'date-fns';
 
-import {
-  // FormControlLabel,
-  Button
-  // Checkbox,
-  // Card,
-  // TextField,
-} from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
@@ -20,15 +12,14 @@ import {
 import { Ballot } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
-import PageTitle from '../components/PageTitle';
-import Notify from '../components/Notify';
-import Select from '../components/Select';
-import TabelaNoticias from '../components/TabelaNoticias';
-import PDFDocument from '../components/PDFDocument';
-import ConditionalRender from '../components/ConditionalRender';
+import TabelaNoticias from './components/TabelaNoticias';
+import PageTitle from '../../components/PageTitle';
+import Notify from '../../components/Notify';
+import Select from '../../components/Select';
+import ConditionalRender from '../../components/ConditionalRender';
 
-import { getAllWords } from '../reducers/WordsDuck';
-import { search, clearStatus } from '../reducers/NewsDuck';
+import { getAllWords } from '../../reducers/WordsDuck';
+import { search, clearStatus } from '../../reducers/NewsDuck';
 
 const useStyles = makeStyles((theme) => ({
   headerActions: {
@@ -71,15 +62,6 @@ const useStyles = makeStyles((theme) => ({
 
 const QUANTITY = 100;
 
-const handleNews = (news) => {
-  const newsObj = {};
-  for (const key in Object(news)) {
-    newsObj[news[key]._id] = news[key];
-  }
-
-  return newsObj;
-};
-
 const Noticias = ({
   words,
   getAllWords,
@@ -101,8 +83,6 @@ const Noticias = ({
   const [endDate, setEndDate] = useState(new Date());
   // const [automatic, setAutomatic] = useState(false);
   const [loading, setLoading] = useState('');
-  const [selectedNews, setSelectedNews] = useState([]);
-  const [newsObj, setNewsObj] = useState({});
   const [openNotify, setOpenNotify] = useState(false);
   const classes = useStyles();
 
@@ -120,8 +100,6 @@ const Noticias = ({
     if (loading === 'news') {
       setLoading('');
     }
-
-    setNewsObj(handleNews(news));
   }, [news]);
 
   useEffect(() => {
@@ -242,31 +220,9 @@ const Noticias = ({
 
       <TabelaNoticias
         isLoading={loading === 'news'}
-        selectedNews={selectedNews}
-        setSelectedNews={setSelectedNews}
         selectedWord={words[selectedWord]}
         beginDate={beginDate}
         endDate={endDate}
-        ReportBtn={() => (
-          <PDFDownloadLink
-            document={
-              selectedNews.length !== 0 ? (
-                <PDFDocument selectedNews={selectedNews} news={newsObj} />
-              ) : (
-                <></>
-              )
-            }
-            fileName="relatorio_tweeze.pdf"
-            className="m-2 ml-auto">
-            <Button
-              variant="contained"
-              className="btn-primary"
-              disabled={selectedNews.length === 0}
-              style={{ width: '10rem', fontSize: '1rem' }}>
-              Gerar relatório
-            </Button>
-          </PDFDownloadLink>
-        )}
       />
 
       <Notify

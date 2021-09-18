@@ -1,35 +1,46 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, memo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 
-import { makeStyles, lighten } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   TableBody,
   Table,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
-  Toolbar,
   Paper,
-  Typography,
   Checkbox,
   TablePagination,
-  TableSortLabel,
   Collapse,
   IconButton,
   Box
 } from '@material-ui/core';
 import { Launch, KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons';
 
-import placeholder from '../../assets/images/illustrations/pack1/wireframe.svg';
-import Loader from '../Loader';
+import placeholder from '../../../assets/images/illustrations/pack1/wireframe.svg';
+import Loader from '../../../components/Loader';
+import EnhancedTableHead from './TableHead';
+import EnhancedTableToolbar from './TableToolbar';
 
-import { search } from '../../reducers/NewsDuck';
+import { search } from '../../../reducers/NewsDuck';
 
-function descendingComparator(a, b, orderBy) {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2)
+  },
+  table: {
+    minWidth: 750
+  },
+  tableContainer: {
+    maxHeight: '70vh'
+  }
+}));
+
+const ROWS_PER_PAGE = 100;
+
+const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -37,15 +48,15 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
-}
+};
 
-function getComparator(order, orderBy) {
+const getComparator = (order, orderBy) => {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+};
 
-function stableSort(array, comparator) {
+const stableSort = (array, comparator) => {
   const stabilizedThis = array.map((el) => [el]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -53,38 +64,7 @@ function stableSort(array, comparator) {
     return a[1] - b[1];
   });
   return stabilizedThis.map((el) => el[0]);
-}
-
-const headCells = [
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Título',
-    width: '45%'
-  },
-  {
-    id: 'url',
-    numeric: false,
-    disablePadding: false,
-    label: 'URL',
-    width: '20%'
-  },
-  {
-    id: 'source',
-    numeric: false,
-    disablePadding: false,
-    label: 'Fonte',
-    width: '15%'
-  },
-  {
-    id: 'criado',
-    numeric: false,
-    disablePadding: false,
-    label: 'Data',
-    width: '15%'
-  }
-];
+};
 
 const PlaceHolder = ({ isLoading, selectedWord }) =>
   isLoading ? (
@@ -98,154 +78,34 @@ const PlaceHolder = ({ isLoading, selectedWord }) =>
       <Loader isLoading={isLoading} />
     </div>
   ) : (
-    <div style={{ width: '45%', margin: '1rem auto' }}>
-      <div
-        className="display-3 font-weight-bold"
-        style={{ textAlign: 'center', fontSize: '2rem' }}>
-        {selectedWord?._id
-          ? 'Nenhuma notícia encontrada..'
-          : 'Selecione um grupo de notícias'}
+    <>
+      <div style={{ width: '35%', margin: '4rem auto' }}>
+        <div
+          className="display-3 font-weight-bold"
+          style={{ textAlign: 'center', fontSize: '2rem' }}>
+          {selectedWord?._id
+            ? 'Nenhuma notícia encontrada..'
+            : 'Selecione um grupo de notícias'}
+        </div>
+        <img alt="..." className="w-100 img-fluid" src={placeholder} />
       </div>
-      <img alt="..." className="w-100 img-fluid" src={placeholder} />
-    </div>
+    </>
   );
-
-function EnhancedTableHead(props) {
-  const { classes, order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="none" />
-        <TableCell padding="none" />
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-            style={headCell?.width && { width: headCell?.width }}>
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}>
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
-};
-
-const useToolbarStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1)
-  },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
-        },
-  title: {
-    flex: '1 1 100%'
-  }
-}));
-
-const EnhancedTableToolbar = ({ numSelected, ReportBtn }) => {
-  const classes = useToolbarStyles();
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}>
-      {numSelected > 0 && (
-        <>
-          <Typography
-            className={classes.title}
-            color="inherit"
-            variant="subtitle1"
-            component="div">
-            {numSelected} notícia(s) selecionada(s)
-          </Typography>
-
-          {ReportBtn && <ReportBtn />}
-        </>
-      )}
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired
-};
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  },
-  table: {
-    minWidth: 750
-  },
-  tableContainer: {
-    maxHeight: '70vh'
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1
-  }
-}));
-
-const ROWS_PER_PAGE = 100;
 
 const TabelaNoticias = ({
   news,
   isLoading,
-  selectedNews,
-  setSelectedNews,
   selectedWord,
   beginDate,
   endDate,
-  search,
-  ReportBtn
+  search
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [page, setPage] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [selectedNews, setSelectedNews] = useState([]);
   const [open, setOpen] = useState('');
 
   useEffect(() => {
@@ -270,6 +130,15 @@ const TabelaNoticias = ({
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = news.map((n) => n._id);
+      setSelectedNews(newSelecteds);
+      return;
+    }
+    setSelectedNews([]);
   };
 
   const handleClick = (event, id) => {
@@ -331,8 +200,9 @@ const TabelaNoticias = ({
   return renderTable ? (
     <Paper className={classes.paper}>
       <EnhancedTableToolbar
+        news={news}
         numSelected={selectedNews.length}
-        ReportBtn={ReportBtn}
+        selectedNews={selectedNews}
       />
       <TableContainer
         className={`tweeze-scrollbar ${classes.tableContainer}`}
@@ -344,10 +214,10 @@ const TabelaNoticias = ({
           size="small"
           aria-label="enhanced table">
           <EnhancedTableHead
-            classes={classes}
             numSelected={selectedNews.length}
             order={order}
             orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={news.length}
           />
@@ -451,7 +321,6 @@ const TabelaNoticias = ({
     </Paper>
   ) : (
     <Paper className={classes.paper}>
-      <EnhancedTableToolbar numSelected={selectedNews.length} />
       <TableContainer className={`tweeze-scrollbar ${classes.tableContainer}`}>
         <PlaceHolder
           isLoading={isLoading || loadingMore}
@@ -467,4 +336,7 @@ const mapStateToProps = ({ news }) => ({ news: news.news });
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ search }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabelaNoticias);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(memo(TabelaNoticias));

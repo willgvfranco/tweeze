@@ -9,8 +9,8 @@ import {
   Link
 } from '@react-pdf/renderer';
 
-import LogoTwz from '../assets/images/logo/logo_twz_azul.png';
-import LogoTweeze from '../assets/images/logo/logo_tweeze_azul.png';
+import LogoTwz from '../../../assets/images/logo/logo_twz_azul.png';
+import LogoTweeze from '../../../assets/images/logo/logo_tweeze_azul.png';
 
 const styles = StyleSheet.create({
   page: { backgroundColor: 'white', fontSize: '12px', padding: '20px' },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   newsDate: { marginBottom: '5px' }
 });
 
-const PDFDocument = ({ selectedNews = [], news = {} }) => (
+const PDFDocument = ({ selectedNews, news }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.header}>
@@ -54,7 +54,7 @@ const PDFDocument = ({ selectedNews = [], news = {} }) => (
         <View style={styles.subheader}>
           <Text style={styles.headerText}>Relatório de Notícias</Text>
           <Text style={styles.quantity}>
-            {selectedNews.length} notícia(s) selecionada(s)
+            {selectedNews?.length} notícia(s) selecionada(s)
           </Text>
         </View>
       </View>

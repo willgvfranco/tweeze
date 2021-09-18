@@ -24,7 +24,7 @@ const Blank = lazy(() => import('./views/BlankView'));
 const Faq = lazy(() => import('./views/Faq'));
 const Pagamento = lazy(() => import('./views/Pagamento'));
 const QuemSomos = lazy(() => import('./views/QuemSomos'));
-const Noticias = lazy(() => import('./views/Noticias'));
+const Noticias = lazy(() => import('./views/Notícias/index'));
 const MinhaConta = lazy(() => import('./views/MinhaConta/index'));
 const Informacoes = lazy(() => import('./views/MinhaConta/Informacoes'));
 const Seguranca = lazy(() => import('./views/MinhaConta/Seguranca'));
