@@ -10,7 +10,7 @@ import LeftSidebar from './components/LeftSidebar';
 import MinimalLayout from './components/MinimalLayout';
 import PresentationLayout from './components/PresentationLayout';
 import RequireAuth from './components/RequireAuth';
-import RequireVip from 'components/RequireVip';
+import RequireVip from './components/RequireVip';
 import Loader from './components/Loader';
 
 import Error404 from './views/errors/404';

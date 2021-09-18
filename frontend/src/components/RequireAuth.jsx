@@ -5,13 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { loginWithToken } from '../reducers/AuthDuck';
 
-const RequireAuth = ({
-  isLogged,
-  children,
-  token,
-  loginWithToken,
-  authError
-}) => {
+const RequireAuth = ({ isLogged, children, token, loginWithToken, status }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -24,7 +18,10 @@ const RequireAuth = ({
       return;
     }
 
-    if (!isLogged || authError === 'loginWithToken') {
+    if (
+      !isLogged ||
+      (status.description.includes('loginWithToken') && status.type === 'error')
+    ) {
       history.push('/login');
     }
   };
@@ -35,7 +32,7 @@ const RequireAuth = ({
 const mapStateToProps = ({ auth }) => ({
   isLogged: auth.isLogged,
   token: auth.accessToken,
-  authError: auth.error
+  status: auth.status
 });
 
 const mapDispatchToProps = (dispatch) =>

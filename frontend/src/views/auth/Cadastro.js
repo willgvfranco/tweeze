@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { useHistory } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -25,7 +26,8 @@ import { emailValidation } from '../../utils/validations';
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 
-const PageRegister = ({ register, clearStatus, status }) => {
+const PageRegister = ({ register, clearStatus, status, isLogged }) => {
+  const history = useHistory();
   const [form, setForm] = useState({
     password: '',
     password_confirm: '',
@@ -43,6 +45,12 @@ const PageRegister = ({ register, clearStatus, status }) => {
       setLoading(false);
     }
   }, [status]);
+
+  useEffect(() => {
+    if (isLogged) {
+      history.push('/home');
+    }
+  }, [isLogged]);
 
   const handleChange = (event) =>
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -373,7 +381,8 @@ const PageRegister = ({ register, clearStatus, status }) => {
 };
 
 const mapStateToProps = ({ auth }) => ({
-  status: auth.status
+  status: auth.status,
+  isLogged: auth.isLogged
 });
 
 const mapDispatchToProps = (dispatch) =>

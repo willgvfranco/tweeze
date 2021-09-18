@@ -3,13 +3,19 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SocialButton from './SocialButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { loginWithSocialMedia } from '../../reducers/AuthDuck';
+import { loginWithSocialMedia, setStatus } from '../../reducers/AuthDuck';
 
-const SocialButtons = ({ loginWithSocialMedia }) => {
+const SocialButtons = ({ loginWithSocialMedia, setStatus }) => {
   const handleSocialLogin = (user) => loginWithSocialMedia(user);
 
   const handleSocialLoginFailure = (err) => {
     console.error(err);
+    setStatus({
+      type: 'error',
+      description: 'register/socialRegister',
+      msg:
+        'Erro ao fazer cadastro por mídia social! Por favor, tente novamente mais tarde'
+    });
   };
 
   return (
@@ -43,6 +49,6 @@ const SocialButtons = ({ loginWithSocialMedia }) => {
 };
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ loginWithSocialMedia }, dispatch);
+  bindActionCreators({ loginWithSocialMedia, setStatus }, dispatch);
 
 export default connect(null, mapDispatchToProps)(SocialButtons);

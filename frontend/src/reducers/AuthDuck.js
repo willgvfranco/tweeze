@@ -13,9 +13,23 @@ export const Types = {
   LOADING: 'auth/LOADING'
 };
 
+const setLoading = (status, dispatch) => {
+  dispatch({
+    type: Types.LOADING,
+    data: status
+  });
+};
+
 export const clearStatus = () => (dispatch) => {
   dispatch({
     type: Types.CLEAR_STATUS
+  });
+};
+
+export const setStatus = ({ type, description, msg }) => (dispatch) => {
+  dispatch({
+    type: Types.STATUS,
+    data: { type, description, msg }
   });
 };
 
@@ -277,13 +291,6 @@ export const passwordChange = ({ password, accessToken }) => async (
       }
     });
   }
-};
-
-const setLoading = (status, dispatch) => {
-  dispatch({
-    type: Types.LOADING,
-    data: status
-  });
 };
 
 export const changePersonalInfo = (info) => async (dispatch, getState) => {
