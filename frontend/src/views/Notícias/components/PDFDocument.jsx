@@ -209,14 +209,14 @@ const PDFDocument = ({
         <Text style={styles.newsHeader}>Listagem das matérias principais</Text>
         {selectedNews?.map((el) => (
           <View key={el} wrap={false} style={{ margin: '20px 20px 0 20px' }}>
-            <Text style={styles.newsTitle}>{news[el]._source.title}</Text>
+            <Text style={styles.newsTitle}>{news[el]?._source.title}</Text>
             <View style={styles.newsContent}>
               <Text style={styles.newsDescription}>
-                {news[el]._source.description
-                  ? news[el]._source.description.trim()
+                {news[el]?._source.description
+                  ? news[el]?._source.description.trim()
                   : null}
               </Text>
-              <Text style={styles.newsSource}>{news[el]._source.source}</Text>
+              <Text style={styles.newsSource}>{news[el]?._source.source}</Text>
             </View>
           </View>
         ))}
