@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { usePDF } from '@react-pdf/renderer';
+import { connect } from 'react-redux';
 
 import {
   Toolbar,
@@ -42,12 +43,27 @@ const handleNews = (news) => {
   return newsObj;
 };
 
-const EnhancedTableToolbar = ({ news, selectedNews, numSelected }) => {
+const EnhancedTableToolbar = ({
+  news,
+  selectedNews,
+  numSelected,
+  beginDate,
+  endDate,
+  firstName,
+  lastName
+}) => {
   const classes = useToolbarStyles();
   const [newsObj, setNewsObj] = useState({});
   const [download, setDownload] = useState(false);
   const [instance, updateInstance] = usePDF({
-    document: PDFDocument({ selectedNews: selectedNews, news: newsObj })
+    document: PDFDocument({
+      selectedNews: selectedNews,
+      news: newsObj,
+      beginDate: beginDate,
+      endDate: endDate,
+      firstName: firstName,
+      lastName: lastName
+    })
   });
 
   useEffect(() => {
@@ -81,7 +97,7 @@ const EnhancedTableToolbar = ({ news, selectedNews, numSelected }) => {
       className="btn-primary"
       onClick={handleDownload}
       disabled={selectedNews.length === 0}
-      style={{ width: '10rem', fontSize: '1rem' }}>
+      style={{ width: '10rem', fontSize: '1rem', minWidth: 'fit-content' }}>
       {instance.loading ? (
         <CircularProgress
           style={{
@@ -91,7 +107,7 @@ const EnhancedTableToolbar = ({ news, selectedNews, numSelected }) => {
           }}
         />
       ) : (
-        'Gerar relatório'
+        'Gerar Relatório'
       )}
     </Button>
   );
@@ -124,4 +140,9 @@ EnhancedTableToolbar.propTypes = {
   news: PropTypes.array.isRequired
 };
 
-export default EnhancedTableToolbar;
+const mapStateToProps = ({ auth }) => ({
+  firstName: auth.first_name,
+  lastName: auth.last_name
+});
+
+export default connect(mapStateToProps)(EnhancedTableToolbar);

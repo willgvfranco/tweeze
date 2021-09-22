@@ -6,85 +6,232 @@ import {
   View,
   Text,
   Image,
-  Link
+  Font
 } from '@react-pdf/renderer';
 
 import LogoTwz from '../../../assets/images/logo/logo_twz_azul.png';
-import LogoTweeze from '../../../assets/images/logo/logo_tweeze_azul.png';
+import LogoTwzFooter from '../../../assets/images/logo/logo_tweeze_branco.png';
+import NunitoBold from '../../../assets/fonts/NunitoSans-Bold.ttf';
+import NunitoExtraBold from '../../../assets/fonts/NunitoSans-ExtraBold.ttf';
+import NunitoRegular from '../../../assets/fonts/NunitoSans-Regular.ttf';
+import NunitoLightItalic from '../../../assets/fonts/NunitoSans-LightItalic.ttf';
 
-const styles = StyleSheet.create({
-  page: { backgroundColor: 'white', fontSize: '12px', padding: '20px' },
-  logo: { width: '200px' },
-  footerLogo: {
-    position: 'absolute',
-    bottom: '10px',
-    right: '10px',
-    width: '50px'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  subheader: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  quantity: {
-    marginTop: '10px',
-    fontSize: '10px'
-  },
-  headerText: { fontSize: '28px', marginRight: '100px' },
-  content: { padding: '20px' },
-  newsWrapper: { display: 'flex', flexDirection: 'column', padding: '20px' },
-  newsContent: {},
-  newsTitle: { fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' },
-  newsSource: { fontSize: '16px', fontWeight: 'bold', marginBottom: '5px' },
-  newsDescription: { marginBottom: '10px' },
-  newsUrl: { fontStyle: 'italic', textDecoration: 'underline' },
-  newsDate: { marginBottom: '5px' }
+Font.register({
+  family: 'NunitoSansRegular',
+  format: 'truetype',
+  src: NunitoRegular
 });
 
-const PDFDocument = ({ selectedNews, news }) => (
+Font.register({
+  family: 'NunitoSansBold',
+  format: 'truetype',
+  src: NunitoBold
+});
+
+Font.register({
+  family: 'NunitoSansExtraBold',
+  format: 'truetype',
+  src: NunitoExtraBold
+});
+
+Font.register({
+  family: 'NunitoSansLightItalic',
+  format: 'truetype',
+  src: NunitoLightItalic
+});
+
+Font.registerHyphenationCallback((word) => {
+  const middle = Math.floor(word.length / 1);
+  const parts =
+    word.length === 1 ? [word] : [word.substr(0, middle), word.substr(middle)];
+
+  return parts;
+});
+
+const month = {
+  0: 'Janeiro',
+  1: 'Fevereiro',
+  2: 'Março',
+  3: 'Abril',
+  4: 'Maio',
+  5: 'Junho',
+  6: 'Julho',
+  7: 'Agosto',
+  8: 'Setembro',
+  9: 'Outubro',
+  10: 'Novembro',
+  11: 'Dezembro'
+};
+
+const formatedDate = (date) => {
+  const dateObj = new Date(date);
+  return `${dateObj.getDate()} de ${
+    month[dateObj.getMonth()]
+  } de ${dateObj.getFullYear()}`;
+};
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: 'white',
+    fontSize: '12px'
+  },
+  firstPage: {
+    backgroundColor: '#09407e',
+    color: 'white',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logoWrapper: {
+    position: 'absolute',
+    right: '-250px',
+    bottom: '-270px',
+    padding: '250px',
+    borderRadius: '100%',
+    backgroundColor: 'white'
+  },
+  logo: {
+    position: 'absolute',
+    right: '250px',
+    bottom: '275px',
+    width: '200px'
+  },
+  headerText: { fontSize: '52px', fontFamily: 'NunitoSansExtraBold' },
+  subheader: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: '60px',
+    marginRight: '130px',
+    marginTop: '-60px',
+    fontFamily: 'NunitoSansExtraBold',
+    fontWeight: 900
+  },
+  author: {
+    fontSize: '24px',
+    marginTop: '40px',
+    fontFamily: 'NunitoSansRegular'
+  },
+  subheaderTexts: {
+    fontSize: '18px',
+    marginTop: '15px',
+    fontFamily: 'NunitoSansRegular'
+  },
+  newsWrapper: { display: 'flex', flexDirection: 'column', padding: '40px' },
+  newsHeader: {
+    fontSize: '34px',
+    fontFamily: 'NunitoSansExtraBold',
+    color: '#09407e',
+    width: '60%'
+  },
+  newsContent: {},
+  newsTitle: {
+    fontSize: '18px',
+    fontFamily: 'NunitoSansBold',
+    marginBottom: '10px'
+  },
+  newsSource: {
+    fontSize: '12px',
+    color: '#09407e',
+    fontFamily: 'NunitoSansLightItalic',
+    marginBottom: '5px'
+  },
+  newsDescription: { marginBottom: '7px', fontFamily: 'NunitoSansRegular' },
+  lastPage: {
+    backgroundColor: '#09407e',
+    color: 'white',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: '0 60px'
+  },
+  lastPageHeader: {
+    fontSize: '56px',
+    fontFamily: 'NunitoSansExtraBold',
+    fontWeight: 900,
+    marginTop: '-250px'
+  },
+  lastPageSubheader: {
+    fontFamily: 'NunitoSansBold',
+    fontSize: '20px',
+    marginTop: '30px'
+  },
+  lastPageLogo: {
+    width: '220px',
+    position: 'absolute',
+    bottom: '80px',
+    left: '200px'
+  },
+  lastPageFooter: {
+    fontFamily: 'NunitoSansRegular',
+    fontSize: '14px',
+    position: 'absolute',
+    bottom: '50px',
+    left: '180px'
+  }
+});
+
+const PDFDocument = ({
+  selectedNews,
+  news,
+  beginDate,
+  endDate,
+  firstName,
+  lastName
+}) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <View style={styles.header}>
-        <Image src={LogoTwz} style={styles.logo}></Image>
+      <View style={styles.firstPage}>
+        <View style={styles.logoWrapper}>
+          <Image src={LogoTwz} style={styles.logo}></Image>
+        </View>
         <View style={styles.subheader}>
-          <Text style={styles.headerText}>Relatório de Notícias</Text>
-          <Text style={styles.quantity}>
+          <Text style={styles.headerText}>
+            Relatório de Clipping Personalizado
+          </Text>
+          <Text style={styles.author}>
+            {firstName} {lastName}
+          </Text>
+          <Text style={styles.subheaderTexts}>
+            Período selecionado: {formatedDate(beginDate)} até{' '}
+            {formatedDate(endDate)}
+          </Text>
+          <Text style={styles.subheaderTexts}>
             {selectedNews?.length} notícia(s) selecionada(s)
           </Text>
         </View>
       </View>
+
       <View style={styles.newsWrapper}>
+        <Text style={styles.newsHeader}>Listagem das matérias principais</Text>
         {selectedNews?.map((el) => (
-          <View key={el} style={styles.content}>
-            <Text style={styles.newsTitle}>
-              Título da notícia: {news[el]._source.title}
-            </Text>
-            <Text style={styles.newsSource}>
-              Fonte: {news[el]._source.source}
-            </Text>
-            <Text style={styles.newsDate}>
-              {new Date(news[el]._source.criado).toGMTString()}
-            </Text>
+          <View key={el} wrap={false} style={{ margin: '20px 20px 0 20px' }}>
+            <Text style={styles.newsTitle}>{news[el]._source.title}</Text>
             <View style={styles.newsContent}>
               <Text style={styles.newsDescription}>
                 {news[el]._source.description
-                  ? `Descrição: ${news[el]._source.description.trim()}`
+                  ? news[el]._source.description.trim()
                   : null}
               </Text>
-
-              <Link src={news[el]._source.url} style={styles.newsUrl}>
-                {news[el]._source.url}
-              </Link>
+              <Text style={styles.newsSource}>{news[el]._source.source}</Text>
             </View>
           </View>
         ))}
       </View>
-      <Image src={LogoTweeze} style={styles.footerLogo} fixed></Image>
+
+      <View style={styles.lastPage} break>
+        <Text style={styles.lastPageHeader}>Essas foram as suas métricas.</Text>
+        <Text style={styles.lastPageSubheader}>
+          Você aparece, a gente pinça. Simples assim.
+        </Text>
+        <Image src={LogoTwzFooter} style={styles.lastPageLogo}></Image>
+        <Text style={styles.lastPageFooter}>
+          @2021. Termos legais e legendas aqui
+        </Text>
+      </View>
     </Page>
   </Document>
 );

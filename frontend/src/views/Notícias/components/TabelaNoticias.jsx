@@ -203,6 +203,8 @@ const TabelaNoticias = ({
         news={news}
         numSelected={selectedNews.length}
         selectedNews={selectedNews}
+        beginDate={beginDate}
+        endDate={endDate}
       />
       <TableContainer
         className={`tweeze-scrollbar ${classes.tableContainer}`}

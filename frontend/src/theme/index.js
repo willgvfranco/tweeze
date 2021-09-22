@@ -106,7 +106,19 @@ const MuiTheme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: ['Heebo', 'sans-serif'].join(','),
+    fontFamily: [
+      'NunitoSans',
+      'NunitoSansBlack',
+      'NunitoSansBlackItalic',
+      'NunitoSansBold',
+      'NunitoSansBoldItalic',
+      'NunitoSansExtraBold',
+      'NunitoSansExtraBoldItalic',
+      'NunitoSansLight',
+      'NunitoSansLightItalic',
+      'NunitoSansSemiBold',
+      'NunitoSansSemiBoldItalic'
+    ].join(','),
     htmlFontSize: 16,
     fontSize: 14
   },
