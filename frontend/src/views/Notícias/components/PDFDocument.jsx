@@ -71,8 +71,12 @@ const formatedDate = (date) => {
 };
 
 const styles = StyleSheet.create({
-  page: {
+  cover: {
     backgroundColor: 'white',
+    fontSize: '12px'
+  },
+  page: {
+    padding: '40px',
     fontSize: '12px'
   },
   firstPage: {
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     marginTop: '15px',
     fontFamily: 'NunitoSansRegular'
   },
-  newsWrapper: { display: 'flex', flexDirection: 'column', padding: '40px' },
+  newsWrapper: { display: 'flex', flexDirection: 'column' },
   newsHeader: {
     fontSize: '34px',
     fontFamily: 'NunitoSansExtraBold',
@@ -183,7 +187,7 @@ const PDFDocument = ({
   lastName
 }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="A4" style={styles.cover}>
       <View style={styles.firstPage}>
         <View style={styles.logoWrapper}>
           <Image src={LogoTwz} style={styles.logo}></Image>
@@ -204,16 +208,18 @@ const PDFDocument = ({
           </Text>
         </View>
       </View>
+    </Page>
 
+    <Page size="A4" style={styles.page}>
       <View style={styles.newsWrapper}>
         <Text style={styles.newsHeader}>Listagem das matérias principais</Text>
         {selectedNews?.map((el) => (
-          <View key={el} wrap={false} style={{ margin: '20px 20px 0 20px' }}>
+          <View key={el} style={{ margin: '20px 20px 0 20px' }}>
             <Text style={styles.newsTitle}>{news[el]?._source.title}</Text>
             <View style={styles.newsContent}>
-              <Text style={styles.newsDescription}>
+              <Text widows={6} orphans={6} style={styles.newsDescription}>
                 {news[el]?._source.description
-                  ? news[el]?._source.description.trim()
+                  ? news[el]?._source.description
                   : null}
               </Text>
               <Text style={styles.newsSource}>{news[el]?._source.source}</Text>
@@ -221,8 +227,10 @@ const PDFDocument = ({
           </View>
         ))}
       </View>
+    </Page>
 
-      <View style={styles.lastPage} break>
+    <Page size="A4" style={styles.cover}>
+      <View style={styles.lastPage}>
         <Text style={styles.lastPageHeader}>Essas foram as suas métricas.</Text>
         <Text style={styles.lastPageSubheader}>
           Você aparece, a gente pinça. Simples assim.

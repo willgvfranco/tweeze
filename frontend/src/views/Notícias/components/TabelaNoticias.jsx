@@ -98,7 +98,8 @@ const TabelaNoticias = ({
   selectedWord,
   beginDate,
   endDate,
-  search
+  search,
+  totalNews
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -163,6 +164,11 @@ const TabelaNoticias = ({
 
   const handleChangePage = (event, newPage) => {
     if (!renderTable) return;
+
+    if (news.length === totalNews) {
+      setPage(newPage);
+      return;
+    }
 
     if (newPage > page && news.length < (newPage + 1) * ROWS_PER_PAGE) {
       setLoadingMore(true);
@@ -305,7 +311,7 @@ const TabelaNoticias = ({
       </TableContainer>
       <TablePagination
         component="div"
-        count={-1}
+        count={totalNews}
         rowsPerPage={
           (page + 1) * ROWS_PER_PAGE - news.length <= ROWS_PER_PAGE
             ? ROWS_PER_PAGE
@@ -313,8 +319,8 @@ const TabelaNoticias = ({
         }
         page={page}
         onChangePage={handleChangePage}
-        labelDisplayedRows={({ from, count }) =>
-          `${from}-${news.length} de ${count !== -1 ? count : news.length}`
+        labelDisplayedRows={({ from }) =>
+          `${from}-${news.length} de ${totalNews}`
         }
         nextIconButtonText="Buscar mais"
         backIconButtonText="Voltar"
@@ -333,7 +339,10 @@ const TabelaNoticias = ({
   );
 };
 
-const mapStateToProps = ({ news }) => ({ news: news.news });
+const mapStateToProps = ({ news }) => ({
+  news: news.news,
+  totalNews: news.total_news
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ search }, dispatch);

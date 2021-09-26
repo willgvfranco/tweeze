@@ -34,16 +34,25 @@ export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
       }
     });
 
+    const total = result.data.hits?.total.value;
+    const resultNews = result.data.hits.hits;
+
     if (from !== 0) {
       dispatch({
         type: Types.GET,
-        data: news.concat(result.data.hits.hits)
+        data: {
+          news: news.concat(resultNews),
+          total
+        }
       });
       return;
     }
     dispatch({
       type: Types.GET,
-      data: result.data.hits.hits
+      data: {
+        news: resultNews,
+        total
+      }
     });
   } catch (error) {
     console.log('search error', error);
@@ -60,6 +69,7 @@ export const search = ({ word, beginDate, endDate, qnt, from = 0 }) => async (
 
 const initialState = {
   news: [],
+  total_news: 0,
   status: {
     type: '',
     description: '',
@@ -72,7 +82,8 @@ export default function reducer(state = initialState, action) {
     case Types.GET:
       return {
         ...state,
-        news: action.data
+        news: action.data.news,
+        total_news: action.data.total
       };
     case Types.STATUS:
       return {
