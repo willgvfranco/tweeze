@@ -22,7 +22,7 @@ import {
 import PageTitle from '../components/PageTitle';
 import Notify from '../components/Notify';
 import Loader from '../components/Loader';
-import notFound from '../assets/images/illustrations/pack4/500.svg';
+import notFound from '../assets/images/illustrations/500.svg';
 
 import {
   getAllWords,

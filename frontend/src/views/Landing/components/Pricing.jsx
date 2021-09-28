@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { Grid, Container, Card, CardContent, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import svgImage1 from '../../../assets/images/illustrations/pack4/business_plan.svg';
-import svgImage13 from '../../../assets/images/illustrations/pack4/businesswoman.svg';
-import svgImage14 from '../../../assets/images/illustrations/pack4/powerful.svg';
+import svgImage1 from '../../../assets/images/illustrations/business_plan.svg';
+import svgImage13 from '../../../assets/images/illustrations/businesswoman.svg';
+import svgImage14 from '../../../assets/images/illustrations/powerful.svg';
 
 const useStyles = makeStyles((theme) => ({
   planImg: {

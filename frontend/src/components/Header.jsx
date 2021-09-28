@@ -6,9 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { setSidebarToggleMobile } from '../reducers/ThemeOptions';
 
-// import HeaderDots from './HeaderDots';
-// import HeaderUserbox from './HeaderUserbox';
-
 const useStyles = makeStyles((theme) => ({
   header: {
     [theme.breakpoints.up('lg')]: {
@@ -21,12 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
-  const {
-    // headerShadow,
-    // headerBgTransparent,
-    sidebarToggleMobile,
-    setSidebarToggleMobile
-  } = props;
+  const { sidebarToggleMobile, setSidebarToggleMobile } = props;
 
   const classes = useStyles();
 
@@ -56,33 +48,6 @@ const Header = (props) => {
       </button>
     </div>
   );
-
-  // return (
-  //   <>
-  //     <div
-  //       className={clsx('app-header', classes.header, {
-  //         'app-header--shadow': headerShadow,
-  //         'app-header--opacity-bg': headerBgTransparent
-  //       })}>
-  //       <div className="app-header--pane">
-  //         <button
-  //           className={clsx(
-  //             'navbar-toggler hamburger hamburger--elastic toggle-mobile-sidebar-btn',
-  //             { 'is-active': sidebarToggleMobile }
-  //           )}
-  //           onClick={toggleSidebarMobile}>
-  //           <span className="hamburger-box">
-  //             <span className="hamburger-inner" />
-  //           </span>
-  //         </button>
-  //       </div>
-  //       <div className="app-header--pane">
-  //         <HeaderDots />
-  //         <HeaderUserbox />
-  //       </div>
-  //     </div>
-  //   </>
-  // );
 };
 
 const mapStateToProps = (state) => ({

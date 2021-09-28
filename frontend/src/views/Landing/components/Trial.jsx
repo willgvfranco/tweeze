@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, Container, Card, Button } from '@material-ui/core';
 
-import illustration2 from '../../../assets/images/illustrations/pack3/question.svg';
+import illustration2 from '../../../assets/images/illustrations/question.svg';
 
 const Trial = () => {
   return (

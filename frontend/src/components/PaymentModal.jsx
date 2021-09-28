@@ -32,9 +32,9 @@ import {
   refusePayment
 } from '../reducers/PaymentDuck';
 
-import svgImage1 from '../assets/images/illustrations/pack4/business_plan.svg';
-import svgImage2 from '../assets/images/illustrations/pack4/businesswoman.svg';
-import svgImage3 from '../assets/images/illustrations/pack4/powerful.svg';
+import svgImage1 from '../assets/images/illustrations/business_plan.svg';
+import svgImage2 from '../assets/images/illustrations/businesswoman.svg';
+import svgImage3 from '../assets/images/illustrations/powerful.svg';
 
 import { GetCardType } from '../utils/validations';
 
