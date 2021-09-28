@@ -187,17 +187,21 @@ const Header = () => {
                 </h3>
               </div>
               <div className="py-4 mb-4">
-                <Button
-                  href="#contato"
-                  size="large"
-                  className="btn-pill shadow-second-sm btn-danger"
-                  startIcon={
-                    <span className="btn-wrapper--icon">
-                      <FontAwesomeIcon icon={['fas', 'arrow-right']} />
-                    </span>
-                  }>
-                  Solicite uma DEMO!
-                </Button>
+                <NavLink className="nav-link-simple" to="/cadastro">
+                  <Button
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    size="large"
+                    className="btn-pill shadow-second-sm btn-danger"
+                    startIcon={
+                      <span className="btn-wrapper--icon">
+                        <FontAwesomeIcon icon={['fas', 'arrow-right']} />
+                      </span>
+                    }>
+                    Solicite uma DEMO!
+                  </Button>
+                </NavLink>
+
                 <Button
                   href="#planos"
                   size="large"
