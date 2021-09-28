@@ -18,7 +18,7 @@ import {
 } from '@material-ui/core';
 import { Launch, KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons';
 
-import placeholder from '../../../assets/images/illustrations/pack1/wireframe.svg';
+import placeholder from '../../../assets/images/illustrations/wireframe.svg';
 import Loader from '../../../components/Loader';
 import EnhancedTableHead from './TableHead';
 import EnhancedTableToolbar from './TableToolbar';

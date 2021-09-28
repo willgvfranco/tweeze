@@ -5,7 +5,7 @@ import { Card } from '@material-ui/core';
 
 import PageTitle from '../components/PageTitle';
 import PaymentModal from '../components/PaymentModal';
-import placeholder from '../assets/images/illustrations/pack1/time.svg';
+import placeholder from '../assets/images/illustrations/time.svg';
 
 const Home = ({ paymentRefused }) => {
   const [open, setOpen] = useState(false);

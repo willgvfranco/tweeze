@@ -6,6 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
 import WarningPopover from './WarningPopover';
+import TextField from '@material-ui/core/TextField';
+import { withThemeCreator } from '@material-ui/styles';
+
 
 const useStyles = makeStyles((theme) => ({
   footerFeatures: {
@@ -24,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       textAlign: 'center'
     }
-  }
+  },
+
 }));
 
 const Footer = () => {
@@ -177,6 +181,16 @@ const Footer = () => {
                 <p className={`text-white-50 ${classes.textFeature}`}>
                   Fique por dentro das nossas atualizações!
                 </p>
+                <ListItem>
+                  <TextField 
+                    className="inputemail"
+                    variant="outlined"
+                    color="secondary"
+                    type="email"
+                    label="Ganhe descontos e saiba sobre tecnologia"
+                    placeholder="insira seu melhor email"
+                  />
+                </ListItem>
                 <List
                   component="div"
                   className="nav-transparent-alt d-flex justify-content-start">
@@ -223,6 +237,7 @@ const Footer = () => {
                     </ListItem>
                   </a>
                 </List>
+                
               </div>
             </Grid>
           </Grid>

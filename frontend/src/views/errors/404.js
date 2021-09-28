@@ -9,7 +9,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import illustration1 from '../../assets/images/illustrations/pack4/404.svg';
+import illustration1 from '../../assets/images/illustrations/404.svg';
 import SearchTwoToneIcon from '@material-ui/icons/SearchTwoTone';
 
 export default function LivePreviewExample() {

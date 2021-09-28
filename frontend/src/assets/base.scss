@@ -59,11 +59,6 @@ html {
 }
 // END CADASTRO.JS
 
-//espaçamento na pagina de noticias entre table e search bar
-.espaçamento-do-cris {
-  margin-bottom: 2em;
-}
-
 .logo-tweeze-css {
   width: 9em;
 
@@ -88,30 +83,10 @@ html {
   height: 100%;
 }
 
-.buttonvideo {
-  margin-top: 4rem;
-}
 @media (max-width: 600px) {
   .videoWrapper {
     width: 100%;
   }
-}
-
-#chartsGauges4B {
-  background-color: #847ed6;
-}
-
-#landingchart {
-  background-color: #847ed6;
-}
-
-.breakword {
-  word-wrap: break-word;
-}
-
-.centerlarge {
-  justify-self: center;
-  margin-top: 3rem;
 }
 
 .margintop {

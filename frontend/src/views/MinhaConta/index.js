@@ -8,9 +8,9 @@ import { Settings } from '@material-ui/icons';
 
 import PageTitle from '../../components/PageTitle';
 
-import AccountImg from '../../assets/images/illustrations/pack1/analysis.svg';
-import FinancialImg from '../../assets/images/illustrations/pack1/businessman.svg';
-import SecurityImg from '../../assets/images/illustrations/pack1/authentication.svg';
+import AccountImg from '../../assets/images/illustrations/analysis.svg';
+import FinancialImg from '../../assets/images/illustrations/businessman.svg';
+import SecurityImg from '../../assets/images/illustrations/authentication.svg';
 
 const useStyles = makeStyles((theme) => ({
   card: {

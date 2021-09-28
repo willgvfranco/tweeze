@@ -5,7 +5,7 @@ import { Grid, Button } from '@material-ui/core';
 
 import hero6 from '../../assets/images/hero-bg/hero-4.jpg';
 
-import illustration2 from '../../assets/images/illustrations/pack4/500.svg';
+import illustration2 from '../../assets/images/illustrations/500.svg';
 
 export default function LivePreviewExample() {
   return (
