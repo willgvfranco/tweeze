@@ -188,7 +188,7 @@ const Header = () => {
               </div>
               <div className="py-4 mb-4">
                 <Button
-                  href="#contato"
+                  link=""
                   size="large"
                   className="btn-pill shadow-second-sm btn-danger"
                   startIcon={
@@ -196,7 +196,7 @@ const Header = () => {
                       <FontAwesomeIcon icon={['fas', 'arrow-right']} />
                     </span>
                   }>
-                  Solicite uma DEMO!
+                  Teste Agora!
                 </Button>
                 <Button
                   href="#planos"

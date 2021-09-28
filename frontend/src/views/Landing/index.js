@@ -9,17 +9,18 @@ import Feedback from './components/Feedback';
 import Trial from './components/Trial';
 import ContactForm from './components/ContactForm';
 
-const Landing = () => (
-  <>
-    <Header />
-    <Features />
-    <Info />
-    <Pricing />
-    <Feedback />
-    <Trial />
-    <ContactForm />
-    <Footer />
-  </>
-);
 
-export default Landing;
+export default function Overview() {
+  return (
+    <>
+      <Header />
+      <Features />
+      <Info />
+      <Pricing />
+      <Feedback />
+      <Trial />
+      <ContactForm />
+      <Footer />
+    </>
+  );
+}
