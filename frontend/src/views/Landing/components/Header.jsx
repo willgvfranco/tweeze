@@ -187,8 +187,11 @@ const Header = () => {
                 </h3>
               </div>
               <div className="py-4 mb-4">
-                <Button
-                  link=""
+
+            <NavLink className="nav-link-simple" to="/cadastro">
+              <Button
+                  rel="noopener noreferrer"
+                  target="_blank"
                   size="large"
                   className="btn-pill shadow-second-sm btn-danger"
                   startIcon={
@@ -198,6 +201,8 @@ const Header = () => {
                   }>
                   Teste Agora!
                 </Button>
+            </NavLink>         
+
                 <Button
                   href="#planos"
                   size="large"
