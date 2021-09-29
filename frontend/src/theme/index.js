@@ -1,7 +1,7 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import shadows from './shadows';
 
-const MuiTheme = createMuiTheme({
+const MuiTheme = createTheme({
   palette: {
     primary: {
       main: '#09407e'
