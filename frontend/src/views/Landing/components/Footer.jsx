@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Grid, Container, List, ListItem } from '@material-ui/core';
+import { Grid, Container, List, ListItem, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
@@ -177,6 +177,13 @@ const Footer = () => {
                 <p className={`text-white-50 ${classes.textFeature}`}>
                   Fique por dentro das nossas atualizações!
                 </p>
+                <TextField
+                  className="inputemail text-white-50"
+                  variant="outlined"
+                  type="email"
+                  label="Ganhe descontos e saiba sobre tecnologia"
+                  placeholder="insira seu melhor email"
+                />
                 <List
                   component="div"
                   className="nav-transparent-alt d-flex justify-content-start">

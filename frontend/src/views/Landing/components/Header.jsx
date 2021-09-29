@@ -198,7 +198,7 @@ const Header = () => {
                         <FontAwesomeIcon icon={['fas', 'arrow-right']} />
                       </span>
                     }>
-                    Solicite uma DEMO!
+                    Teste Agora!
                   </Button>
                 </NavLink>
 
@@ -221,7 +221,7 @@ const Header = () => {
                         <TrendingUpTwoToneIcon className="d-30 text-danger" />
                       </div>
                       <div className="mt-3 line-height-sm">
-                        <b className="font-size-xxl pb-2">2.102.767+</b>
+                        <b className="font-size-xxl pb-2">3.403.911+</b>
                         <span className="text-white-50 font-size-lg d-block">
                           Notícias
                         </span>
