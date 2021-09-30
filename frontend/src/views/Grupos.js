@@ -82,7 +82,21 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'row'
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column'
+    }
+  },
+  titleIcon: {
+    [theme.breakpoints.down('md')]: {
+      position: 'absolute',
+      right: '50px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      position: 'initial',
+      right: 'unset'
     }
   },
   select: { padding: '11.5px 14px' },
@@ -534,6 +548,7 @@ const Grupos = ({
         titleHeading="Meus Termos e Grupos"
         titleDescription="Administrar seus grupos e termos"
         titleClass={classes.title}
+        wrapperClass={classes.titleIcon}
         icon={<DevicesOther />}>
         <Tooltip
           title="Criar novo grupo"

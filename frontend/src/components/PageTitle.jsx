@@ -1,7 +1,17 @@
 import React from 'react';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
+
 import HomeWorkTwoToneIcon from '@material-ui/icons/HomeWorkTwoTone';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
+  }
+}));
 
 const PageTitle = (props) => {
   const {
@@ -19,6 +29,8 @@ const PageTitle = (props) => {
     titleClass
   } = props;
 
+  const classes = useStyles();
+
   return (
     <>
       <div
@@ -34,7 +46,7 @@ const PageTitle = (props) => {
         <div>
           <div className="app-page-title--first">
             {pageTitleIconBox && (
-              <div className="app-page-title--iconbox d-70">
+              <div className={`app-page-title--iconbox d-70 ${classes.icon}`}>
                 <div className="d-70 d-flex align-items-center justify-content-center display-1">
                   {icon ? (
                     icon
