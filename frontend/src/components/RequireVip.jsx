@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 const RequireVip = ({ isVip, children }) => {
   useEffect(() => {
     console.log('isVip', isVip);
+    // se não é VIP e acabou o Trial, jogar usuário para /pagamento
   }, [isVip]);
 
   return <>{children}</>;

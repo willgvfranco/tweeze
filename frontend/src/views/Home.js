@@ -7,16 +7,16 @@ import PageTitle from '../components/PageTitle';
 import PaymentModal from '../components/PaymentModal';
 import placeholder from '../assets/images/illustrations/time.svg';
 
-const Home = ({ paymentRefused }) => {
+const Home = ({ paymentRefused, isVip }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!paymentRefused) {
+    if (!paymentRefused && !isVip) {
       setOpen(true);
     } else {
       setOpen(false);
     }
-  }, [paymentRefused]);
+  }, [paymentRefused, isVip]);
 
   return (
     <>
@@ -49,8 +49,9 @@ const Home = ({ paymentRefused }) => {
   );
 };
 
-const mapStateToProps = ({ payment }) => ({
-  paymentRefused: !!payment.refuse
+const mapStateToProps = ({ payment, auth }) => ({
+  paymentRefused: !!payment.refuse,
+  isVip: auth.roles.includes('VIP')
 });
 
 export default connect(mapStateToProps)(Home);

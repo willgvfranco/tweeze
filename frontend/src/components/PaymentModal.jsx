@@ -332,17 +332,18 @@ const Subscription = ({
     if (checked) {
       sendPayment({
         card: { ...creditCard },
-        user: { ...userInfo }
+        user: { ...userInfo },
+        plan: selectedPlan.id
       });
     } else {
-      sendPayment({ card: { ...creditCard } });
+      sendPayment({ card: { ...creditCard }, plan: selectedPlan.id });
     }
   };
 
   return (
     <Card
       className={`rounded w-100 bg-white mt-3 tweeze-scrollbar ${classes.paymentWrapper}`}>
-      <CardHeader title={`Plano selecionado: ${selectedPlan}`} />
+      <CardHeader title={`Plano selecionado: ${selectedPlan.title}`} />
       <CardHeader
         subheader={<a href="#">Voltar</a>}
         onClick={(e) => {
@@ -537,7 +538,7 @@ const PaymentModal = ({
   clearStatus
 }) => {
   const classes = useStyles();
-  const [selectedPlan, setSelectedPlan] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState({ title: '', id: '' });
   const [loading, setLoading] = useState(false);
   const [openNotify, setOpenNotify] = useState(false);
 
@@ -585,7 +586,12 @@ const PaymentModal = ({
               title="Básico"
               description="Cientistas, curiosos e profissionais interessados no mercado financeiro"
               img={svgImage1}
-              handleClick={() => setSelectedPlan('Básico - R$ 49/mês')}
+              handleClick={() =>
+                setSelectedPlan({
+                  title: 'Básico - R$ 49/mês',
+                  id: 'basico'
+                })
+              }
               value="R$ 49/mês"
               features={[
                 'Trial de 30 dias',
@@ -598,7 +604,12 @@ const PaymentModal = ({
               title="Padrão"
               description="Produto destinado a pequenas e médias empresas"
               img={svgImage2}
-              handleClick={() => setSelectedPlan('Padrão - R$ 590/mês')}
+              handleClick={() =>
+                setSelectedPlan({
+                  title: 'Padrão - R$ 590/mês',
+                  id: 'padrao'
+                })
+              }
               value="R$ 590/mês"
               features={[
                 'Trial de 30 dias',
@@ -613,7 +624,12 @@ const PaymentModal = ({
               title="Ilimitado"
               description="Destinado a assessoria de imprensa, agências e marcas"
               img={svgImage3}
-              handleClick={() => setSelectedPlan('Ilimitado')}
+              handleClick={() =>
+                setSelectedPlan({
+                  title: 'Ilimitado',
+                  id: 'ilimitado'
+                })
+              }
               value="Sob Consulta"
               features={[
                 'Trial de 30 dias',
@@ -671,10 +687,10 @@ const PaymentModal = ({
       open={open}
       onClose={onClose}
       classes={{ paper: classes.paperRoot }}>
-      {selectedPlan ? (
+      {selectedPlan?.id ? (
         <Subscription
           selectedPlan={selectedPlan}
-          goBack={() => setSelectedPlan('')}
+          goBack={() => setSelectedPlan({ title: '', id: '' })}
           sendPayment={sendPayment}
           loading={loading}
           setLoading={setLoading}

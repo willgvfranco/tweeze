@@ -14,7 +14,10 @@ export const clearStatus = () => (dispatch) => {
   });
 };
 
-export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
+export const sendPayment = ({ card, user, plan }) => async (
+  dispatch,
+  getState
+) => {
   clearStatus()(dispatch);
   const { accessToken, email } = getState().auth;
   const phone = card.phone.replace('-', '');
@@ -30,6 +33,7 @@ export const sendPayment = ({ card, user }) => async (dispatch, getState) => {
         Authorization: accessToken
       },
       data: {
+        plan,
         cardName: card.name,
         cardCpf,
         cardNumber: card.number,

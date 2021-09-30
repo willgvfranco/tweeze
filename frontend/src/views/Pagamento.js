@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import MaskedInput from 'react-maskedinput';
 import DateFnsUtils from '@date-io/date-fns';
 import ptLocale from 'date-fns/locale/pt-BR';
@@ -31,6 +31,7 @@ import { sendPayment, clearStatus } from '../reducers/PaymentDuck';
 import svgImage1 from '../assets/images/illustrations/business_plan.svg';
 import svgImage2 from '../assets/images/illustrations/businesswoman.svg';
 import svgImage3 from '../assets/images/illustrations/powerful.svg';
+import LogoTweeze from '../assets/images/logo/logo_tweeze_azul.png';
 
 import { GetCardType } from '../utils/validations';
 
@@ -41,6 +42,30 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     [theme.breakpoints.down('md')]: {
       height: '100%'
+    }
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column'
+    }
+  },
+  headerLogo: {
+    width: '170px',
+    marginLeft: '60px',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '0',
+      position: 'absolute',
+      left: '20px',
+      top: '20px',
+      width: '120px'
+    }
+  },
+  headerText: {
+    margin: '1rem auto',
+    [theme.breakpoints.down('md')]: {
+      marginTop: '3rem'
     }
   },
   paperRoot: {
@@ -308,16 +333,17 @@ const Subscription = ({
     if (checked) {
       sendPayment({
         card: { ...creditCard },
-        user: { ...userInfo }
+        user: { ...userInfo },
+        plan: selectedPlan.id
       });
     } else {
-      sendPayment({ card: { ...creditCard } });
+      sendPayment({ card: { ...creditCard }, plan: selectedPlan.id });
     }
   };
 
   return (
     <Card className={`rounded w-100 bg-white ${classes.paymentWrapper}`}>
-      <CardHeader title={`Plano selecionado: ${selectedPlan}`} />
+      <CardHeader title={`Plano selecionado: ${selectedPlan.title}`} />
       <CardHeader
         subheader={
           <a
@@ -511,7 +537,7 @@ const Subscription = ({
 const Pagamento = ({ sendPayment, status, clearStatus }) => {
   const classes = useStyles();
   const history = useHistory();
-  const [selectedPlan, setSelectedPlan] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState({ title: '', id: '' });
   const [loading, setLoading] = useState(false);
   const [openNotify, setOpenNotify] = useState(false);
 
@@ -536,14 +562,11 @@ const Pagamento = ({ sendPayment, status, clearStatus }) => {
 
   const Plans = () => (
     <div className={`modal-content tweeze-scrollbar ${classes.root}`}>
-      <div
-        className="bg-light d-flex"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-        <div id="planos" className="text-center my-3">
+      <div className={`bg-light d-flex ${classes.header}`}>
+        <NavLink className="nav-link-simple" to="/">
+          <img src={LogoTweeze} alt="" className={classes.headerLogo} />
+        </NavLink>
+        <div id="planos" className={`text-center ${classes.headerText}`}>
           <div className="display-4 text-black font-weight-bold">
             Planos e preços
           </div>
@@ -562,7 +585,12 @@ const Pagamento = ({ sendPayment, status, clearStatus }) => {
               title="Básico"
               description="Cientistas, curiosos e profissionais interessados no mercado financeiro"
               img={svgImage1}
-              handleClick={() => setSelectedPlan('Básico - R$ 49/mês')}
+              handleClick={() =>
+                setSelectedPlan({
+                  title: 'Básico - R$ 49/mês',
+                  id: 'basico'
+                })
+              }
               value="R$ 49/mês"
               features={[
                 // 'Trial de 30 dias',
@@ -575,7 +603,12 @@ const Pagamento = ({ sendPayment, status, clearStatus }) => {
               title="Padrão"
               description="Produto destinado a pequenas e médias empresas"
               img={svgImage2}
-              handleClick={() => setSelectedPlan('Padrão - R$ 590/mês')}
+              handleClick={() =>
+                setSelectedPlan({
+                  title: 'Padrão - R$ 590/mês',
+                  id: 'padrao'
+                })
+              }
               value="R$ 590/mês"
               features={[
                 // 'Trial de 30 dias',
@@ -590,7 +623,12 @@ const Pagamento = ({ sendPayment, status, clearStatus }) => {
               title="Ilimitado"
               description="Destinado a assessoria de imprensa, agências e marcas"
               img={svgImage3}
-              handleClick={() => setSelectedPlan('Ilimitado')}
+              handleClick={() =>
+                setSelectedPlan({
+                  title: 'Ilimitado',
+                  id: 'ilimitado'
+                })
+              }
               value="Sob Consulta"
               features={[
                 // 'Trial de 30 dias',
@@ -645,10 +683,10 @@ const Pagamento = ({ sendPayment, status, clearStatus }) => {
 
   return (
     <div className={{ paper: classes.paperRoot }}>
-      {selectedPlan ? (
+      {selectedPlan?.id ? (
         <Subscription
           selectedPlan={selectedPlan}
-          goBack={() => setSelectedPlan('')}
+          goBack={() => setSelectedPlan({ title: '', id: '' })}
           sendPayment={sendPayment}
           loading={loading}
           setLoading={setLoading}
