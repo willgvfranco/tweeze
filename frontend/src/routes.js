@@ -30,6 +30,7 @@ const Informacoes = lazy(() => import('./views/MinhaConta/Informacoes'));
 const Seguranca = lazy(() => import('./views/MinhaConta/Seguranca'));
 const Financeiro = lazy(() => import('./views/MinhaConta/Financeiro'));
 const Grupos = lazy(() => import('./views/Grupos'));
+const FormularioDedicado = lazy(() => import('./views/FormularioDedicado'));
 
 const Login = lazy(() => import('./views/auth/Login'));
 const RecuperarSenha = lazy(() => import('./views/auth/RecuperarSenha'));
@@ -237,7 +238,8 @@ const Routes = ({ loading }) => {
                 '/error-505',
                 '/quem-somos',
                 '/faq',
-                '/pagamento'
+                '/pagamento',
+                '/formulario'
               ]}>
               <MinimalLayout>
                 <Switch location={location} key={location.pathname}>
@@ -256,6 +258,7 @@ const Routes = ({ loading }) => {
                     <Route path="/quem-somos" component={QuemSomos} />
                     <Route path="/faq" component={Faq} />
                     <Route path="/pagamento" component={Pagamento} />
+                    <Route path="/formulario" component={FormularioDedicado} />
                   </motion.div>
                 </Switch>
               </MinimalLayout>

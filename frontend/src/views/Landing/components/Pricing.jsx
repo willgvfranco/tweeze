@@ -179,7 +179,7 @@ const Pricing = () => {
                       <p className="text-black-50 mb-4">
                         Destinado a assessoria de imprensa, agências e marcas
                       </p>
-                      <NavLink className="nav-link-simple" to="/cadastro">
+                      <NavLink className="nav-link-simple" to="/formulario">
                         <Button
                           variant="text"
                           className="btn-outline-first"

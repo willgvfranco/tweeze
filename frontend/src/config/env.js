@@ -15,6 +15,7 @@ const BACKEND = {
   addWord: `${ROOT_URL}/api/words/add`,
   updateWord: `${ROOT_URL}/api/words/update`,
   deleteWord: `${ROOT_URL}/api/words/delete`,
-  search: `${ROOT_URL}/api/search`
+  search: `${ROOT_URL}/api/search`,
+  mail: `${ROOT_URL}/api/mail/send`
 };
 export default BACKEND;
