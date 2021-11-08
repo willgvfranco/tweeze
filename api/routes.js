@@ -1,5 +1,5 @@
 import { elkSearch } from "./controllers/elk.controller";
-import { sendMail } from "./controllers/mail.controller";
+import { sendMail, welcomeMessage, cancelSubscription } from "./controllers/mail.controller";
 import {
   allAccess,
   userBoard,
@@ -79,6 +79,8 @@ export default function (app) {
 
   // EMAIL
   app.post("/api/mail/send", sendMail);
+  app.get("/api/mail/welcome", welcomeMessage);
+  app.get("/api/mail/cancel", cancelSubscription);
 
   // PAYMENT
   app.get("/api/session", createSession);
