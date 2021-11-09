@@ -78,10 +78,8 @@ const Noticias = ({
     return new Date().setDate(new Date().getDate() - 1);
   };
   const [selectedWord, setSelectedWord] = useState('');
-  // const [days, setDays] = useState('');
   const [beginDate, setBeginDate] = useState(beginDateDefault());
   const [endDate, setEndDate] = useState(new Date());
-  // const [automatic, setAutomatic] = useState(false);
   const [loading, setLoading] = useState('');
   const [openNotify, setOpenNotify] = useState(false);
   const classes = useStyles();
@@ -138,8 +136,6 @@ const Noticias = ({
       qnt: QUANTITY
     });
   };
-
-  // const handleChange = (event, handler) => handler(event.target.value);
 
   const handleSelectedWord = (event) => {
     setSelectedWord(event.target.value);
