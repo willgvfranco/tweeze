@@ -76,10 +76,8 @@ const Info = () => {
                       Monitoramento
                     </h3>
                     <p className="text-black-50 mb-3">
-                      O monitoramento das informações é 24 horas por dia, 7 dias
-                      por semana e 365 dias do ano. O monitoramento se extende
-                      de veículos de imprensa à mídias sociais. Dentre em breve
-                      mais novidades!
+                      Milhares de fontes são monitoradas 24 horas por dia, 7
+                      dias por semana, 365 dias ao ano.
                     </p>
                   </div>
                 </Grid>
@@ -90,9 +88,8 @@ const Info = () => {
                       Captação
                     </h3>
                     <p className="text-black-50 mb-3">
-                      Captamos dezenas de milhares de notícias diariamente.
-                      Nossa plataforma é capaz de coletar notícias nos idiomas
-                      portugues, ingles e francês.
+                      Cerca de 50 mil notícias são coletadas diariamente, em
+                      tempo real, nos idiomas português (br), inglês e francês.
                     </p>
                   </div>
                 </Grid>
@@ -110,10 +107,9 @@ const Info = () => {
                       Estruturação
                     </h3>
                     <p className="text-black-50 mb-3">
-                      O monitoramento das informações é 24 horas por dia, 7 dias
-                      por semana e 365 dias do ano. O monitoramento se extende
-                      de veículos de imprensa nacionais e internacionais. Dentre
-                      em breve mais novidades!
+                      Economize tempo na criação de relatórios: com poucos
+                      cliques, seu clipping estará estruturado e pronto para
+                      envio.
                     </p>
                   </div>
                 </Grid>
@@ -131,10 +127,8 @@ const Info = () => {
                       Distribuição
                     </h3>
                     <p className="text-black-50 mb-3">
-                      Nossos clientes são nosssa prioridade! Somos uma empresa
-                      que presa por clientes satisfeitos e tecnologia de ponta.
-                      Construímos a mais rápida plataforma e distribuimos dados
-                      em tempo real.
+                      Automatize o envio de seus clippings e compartilhe os
+                      relatórios com sua equipe.
                     </p>
                   </div>
                 </Grid>
