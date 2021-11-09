@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useHistory } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
   Container,
   Card,
   Button,
-  List,
-  ListItem,
   TextField,
   CircularProgress
 } from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+import {
+  ArrowBack,
+  Favorite,
+  Whatshot,
+  EmojiObjects
+} from '@material-ui/icons';
 
 import SocialButtons from './SocialButtons';
 import Notify from '../../components/Notify';
@@ -25,6 +27,8 @@ import { emailValidation } from '../../utils/validations';
 
 import hero3 from '../../assets/images/hero-bg/hero-5.jpg';
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
+import PoliticaPrivacidade from '../../assets/pdf/Minuta_politica_de_privacidade.pdf';
+import TermosServico from '../../assets/pdf/Minuta_termos_de_Servico.pdf';
 
 const PageRegister = ({ register, clearStatus, status, isLogged }) => {
   const history = useHistory();
@@ -99,7 +103,7 @@ const PageRegister = ({ register, clearStatus, status, isLogged }) => {
           />
           <div className="bg-composed-wrapper--bg bg-second opacity-7" />
           <div className="bg-composed-wrapper--bg bg-premium-dark opacity-5" />
-          <div className="bg-composed-wrapper--content p-3 p-md-5">
+          <div className="bg-composed-wrapper--content">
             <Container>
               <Card className="rounded-sm modal-content p-3 bg-white-10">
                 <Card className="rounded-sm shadow-none font-size-sm p-3 p-sm-0">
@@ -121,7 +125,7 @@ const PageRegister = ({ register, clearStatus, status, isLogged }) => {
                         <span style={{ fontSize: '1rem' }}>voltar</span>
                       </NavLink>
                       <div className="divider-v divider-v-lg d-none d-lg-block" />
-                      <div className="text-center mt-5">
+                      <div className="text-center">
                         <img
                           className="logo-tweeze-css"
                           src={logoTweeze}
@@ -139,7 +143,7 @@ const PageRegister = ({ register, clearStatus, status, isLogged }) => {
                       </div>
                       <form
                         onSubmit={(e) => e.preventDefault()}
-                        className="px-5 py-4">
+                        className="px-5 py-1">
                         <div className="mb-3">
                           <label className="font-weight-bold mb-2">
                             Email*
@@ -242,8 +246,20 @@ const PageRegister = ({ register, clearStatus, status, isLogged }) => {
                         </Grid>
                         <div className="my-4">
                           Clicando no botão <strong>Criar Conta</strong> você
-                          concorda com os termos de serviço e a política de
-                          privacidade.
+                          concorda com os{' '}
+                          <a
+                            href={TermosServico}
+                            target="_blank"
+                            style={{ textDecoration: 'underline' }}>
+                            termos de serviço
+                          </a>{' '}
+                          e a{' '}
+                          <a
+                            href={PoliticaPrivacidade}
+                            target="_blank"
+                            style={{ textDecoration: 'underline' }}>
+                            política de privacidade.
+                          </a>
                         </div>
                         <div className="text-center mb-4">
                           <Button
@@ -270,111 +286,111 @@ const PageRegister = ({ register, clearStatus, status, isLogged }) => {
                       className="d-flex align-items-center justify-content-center flex-column">
                       <div className="p-3">
                         <div className="p-4">
-                          <div className="d-block d-xl-flex">
-                            <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
-                              <FontAwesomeIcon
-                                icon={['far', 'heart']}
-                                className="font-size-xl text-first"
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column'
+                            }}>
+                            <div
+                              className="mt-0 mt-xl-1"
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginBottom: '1rem'
+                              }}>
+                              <Favorite
+                                className="text-first"
+                                style={{ marginRight: '10px' }}
                               />
-                            </div>
-                            <div className="pl-0 pl-xl-3">
-                              <div className="text-black font-weight-bold font-size-lg mb-1">
+                              <div className="text-black font-weight-bold font-size-lg">
                                 Tweeze
                               </div>
-                              <p className="mb-0 text-black-50">
-                                As mais modernas tecnologias para captura,
-                                análise e distribuição de informações.
-                              </p>
                             </div>
+                            <p className="mb-0 text-black-50">
+                              As mais modernas tecnologias para captura, análise
+                              e distribuição de informações.
+                            </p>
                           </div>
                         </div>
+
                         <div className="p-4">
-                          <div className="d-block d-xl-flex">
-                            <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
-                              <FontAwesomeIcon
-                                icon={['far', 'lightbulb']}
-                                className="font-size-xl text-first"
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column'
+                            }}>
+                            <div
+                              className="mt-0 mt-xl-1"
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginBottom: '1rem'
+                              }}>
+                              <EmojiObjects
+                                className="text-first"
+                                style={{ marginRight: '10px' }}
                               />
-                            </div>
-                            <div className="pl-0 pl-xl-3">
-                              <div className="text-black font-weight-bold font-size-lg mb-1">
+                              <div className="text-black font-weight-bold font-size-lg">
                                 Compromisso!
                               </div>
-                              <p className="mb-0 text-black-50">
-                                Nosso compromisso é deixar nossos clientes o
-                                mais informado possível. Somente nos ultimos 4
-                                meses foram captadas aproximadamente 2 milhões
-                                de notícias do Brasil e do mundo.
-                              </p>
                             </div>
+                            <p className="mb-0 text-black-50">
+                              Nosso compromisso é deixar nossos clientes o mais
+                              informado possível. Somente nos ultimos 4 meses
+                              foram captadas aproximadamente 2 milhões de
+                              notícias do Brasil e do mundo.
+                            </p>
                           </div>
                         </div>
+
                         <div className="p-4">
-                          <div className="d-block d-xl-flex">
-                            <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
-                              <FontAwesomeIcon
-                                icon={['far', 'user']}
-                                className="font-size-xl text-first"
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column'
+                            }}>
+                            <div
+                              className="mt-0 mt-xl-1"
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginBottom: '1rem'
+                              }}>
+                              <Whatshot
+                                className="text-first"
+                                style={{ marginRight: '10px' }}
                               />
-                            </div>
-                            <div className="pl-0 pl-xl-3">
-                              <div className="text-black font-weight-bold font-size-lg mb-1">
-                                Jul.IA
+                              <div className="text-black font-weight-bold font-size-lg">
+                                Novidades
                               </div>
-                              <p className="mb-0 text-black-50">
-                                Jul.IA é inteligência artificial desenvolvida
-                                com foco no processamento de linguagem natural.
-                                Do Brasil para o mundo, antenada, conectada e
-                                extremamente rápida. Jul.IA está presente em
-                                todo o nosso sistema, gerenciamento marcas e
-                                auxiliando na identificação de potenciais
-                                crises.
-                              </p>
                             </div>
+                            <p className="mb-0 text-black-50">
+                              Estamos continuamente trabalhando para levar aos
+                              nossos clientes informações úteis sobre a marca e
+                              temas de interesse. Em nossas próximas
+                              atualizações, ampliaremos o serviço para mídias
+                              sociais. Fique por dentro!
+                            </p>
                           </div>
                         </div>
                       </div>
                     </Grid>
                   </Grid>
+
+                  <div className="text-center d-block mb-3">
+                    Copyright &copy; 2021 - Tweeze
+                  </div>
                 </Card>
               </Card>
             </Container>
           </div>
         </div>
-        <div className="hero-footer w-100 pb-4">
-          <Container>
-            <div className="py-3 d-block d-lg-flex font-size-xs justify-content-between">
-              <div className="text-center d-block mb-3 mb-md-0 text-white">
-                Copyright &copy; 2021 - Tweeze
-              </div>
-              <List
-                component="div"
-                className="nav-transparent text-nowrap d-flex justify-content-center">
-                <ListItem
-                  button
-                  className="text-white-50"
-                  href="#/"
-                  onClick={(e) => e.preventDefault()}>
-                  Política de privacidade
-                </ListItem>
-                <ListItem
-                  button
-                  className="text-white-50"
-                  href="#/"
-                  onClick={(e) => e.preventDefault()}>
-                  Termos de Serviço
-                </ListItem>
-              </List>
-            </div>
-          </Container>
-
-          <Notify
-            open={openNotify}
-            handleClose={handleClose}
-            msg={status.msg}
-            type={status.type || 'error'}
-          />
-        </div>
+        <Notify
+          open={openNotify}
+          handleClose={handleClose}
+          msg={status.msg}
+          type={status.type || 'error'}
+        />
       </div>
     </div>
   );

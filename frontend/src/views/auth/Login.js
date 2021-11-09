@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Grid,
   Container,
@@ -17,7 +16,14 @@ import {
   TextField,
   CircularProgress
 } from '@material-ui/core';
-import { ArrowBack, MailOutlineTwoTone, LockTwoTone } from '@material-ui/icons';
+import {
+  ArrowBack,
+  MailOutlineTwoTone,
+  LockTwoTone,
+  Favorite,
+  Whatshot,
+  EmojiObjects
+} from '@material-ui/icons';
 
 import SocialButtons from './SocialButtons';
 
@@ -26,6 +32,8 @@ import Notify from '../../components/Notify';
 
 import logoTweeze from '../../assets/images/logo/logo_twz_azul.png';
 import hero6 from '../../assets/images/hero-bg/hero-1.jpg';
+import PoliticaPrivacidade from '../../assets/pdf/Minuta_politica_de_privacidade.pdf';
+import TermosServico from '../../assets/pdf/Minuta_termos_de_Servico.pdf';
 
 import { login, loginWithToken, clearStatus } from '../../reducers/AuthDuck';
 import { emailValidation } from '../../utils/validations';
@@ -130,7 +138,7 @@ const LoginForm = ({
                           </p>
                         </div>
                         <div className="py-4">
-                          <div className="text-center mb-3 cadastro-button-loginmidiassociais">
+                          <div className="text-center cadastro-button-loginmidiassociais">
                             <SocialButtons></SocialButtons>
                           </div>
                           <div className="text-center text-black-50 py-2 mb-4">
@@ -231,68 +239,91 @@ const LoginForm = ({
                         className="d-flex align-items-center justify-content-center flex-column bg-secondary">
                         <div className="p-3">
                           <div className="p-4">
-                            <div className="d-block d-xl-flex">
-                              <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
-                                <FontAwesomeIcon
-                                  icon={['far', 'heart']}
-                                  className="font-size-xl text-first"
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                              }}>
+                              <div
+                                className="mt-0 mt-xl-1"
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  marginBottom: '1rem'
+                                }}>
+                                <Favorite
+                                  className="text-first"
+                                  style={{ marginRight: '10px' }}
                                 />
-                              </div>
-
-                              <div className="pl-0 pl-xl-3">
-                                <div className="text-black font-weight-bold font-size-lg mb-1">
+                                <div className="text-black font-weight-bold font-size-lg">
                                   Tweeze
                                 </div>
-                                <p className="mb-0 text-black-50">
-                                  As mais modernas tecnologias para captura,
-                                  análise e distribuição de informações.
-                                </p>
                               </div>
+                              <p className="mb-0 text-black-50">
+                                As mais modernas tecnologias para captura,
+                                análise e distribuição de informações.
+                              </p>
                             </div>
                           </div>
+
                           <div className="p-4">
-                            <div className="d-block d-xl-flex">
-                              <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
-                                <FontAwesomeIcon
-                                  icon={['far', 'lightbulb']}
-                                  className="font-size-xl text-first"
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                              }}>
+                              <div
+                                className="mt-0 mt-xl-1"
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  marginBottom: '1rem'
+                                }}>
+                                <EmojiObjects
+                                  className="text-first"
+                                  style={{ marginRight: '10px' }}
                                 />
-                              </div>
-                              <div className="pl-0 pl-xl-3">
-                                <div className="text-black font-weight-bold font-size-lg mb-1">
+                                <div className="text-black font-weight-bold font-size-lg">
                                   Compromisso!
                                 </div>
-                                <p className="mb-0 text-black-50">
-                                  Nosso compromisso é deixar nossos clientes o
-                                  mais informado possível. Somente nos ultimos 4
-                                  meses foram captadas aproximadamente 2 milhões
-                                  de notícias do Brasil e do mundo.
-                                </p>
                               </div>
+                              <p className="mb-0 text-black-50">
+                                Nosso compromisso é deixar nossos clientes o
+                                mais informado possível. Somente nos ultimos 4
+                                meses foram captadas aproximadamente 2 milhões
+                                de notícias do Brasil e do mundo.
+                              </p>
                             </div>
                           </div>
+
                           <div className="p-4">
-                            <div className="d-block d-xl-flex">
-                              <div className="mt-0 mt-xl-1 mb-md-2 mb-lg-0">
-                                <FontAwesomeIcon
-                                  icon={['far', 'user']}
-                                  className="font-size-xl text-first"
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                              }}>
+                              <div
+                                className="mt-0 mt-xl-1"
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  marginBottom: '1rem'
+                                }}>
+                                <Whatshot
+                                  className="text-first"
+                                  style={{ marginRight: '10px' }}
                                 />
-                              </div>
-                              <div className="pl-0 pl-xl-3">
-                                <div className="text-black font-weight-bold font-size-lg mb-1">
-                                  Jul.IA
+                                <div className="text-black font-weight-bold font-size-lg">
+                                  Novidades
                                 </div>
-                                <p className="mb-0 text-black-50">
-                                  Jul.IA é inteligência artificial desenvolvida
-                                  com foco no processamento de linguagem
-                                  natural. Do Brasil para o mundo, antenada,
-                                  conectada e extremamente rápida. Jul.IA está
-                                  presente em todo o nosso sistema,
-                                  gerenciamento marcas e auxiliando na
-                                  identificação de potenciais crises.
-                                </p>
                               </div>
+                              <p className="mb-0 text-black-50">
+                                Estamos continuamente trabalhando para levar aos
+                                nossos clientes informações úteis sobre a marca
+                                e temas de interesse. Em nossas próximas
+                                atualizações, ampliaremos o serviço para mídias
+                                sociais. Fique por dentro!
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -312,20 +343,16 @@ const LoginForm = ({
                 <List
                   component="div"
                   className="nav-transparent text-nowrap d-flex justify-content-center">
-                  <ListItem
-                    button
-                    className="text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    Política de privacidade
-                  </ListItem>
-                  <ListItem
-                    button
-                    className="text-white-50"
-                    href="#/"
-                    onClick={(e) => e.preventDefault()}>
-                    Termos de serviço
-                  </ListItem>
+                  <a href={PoliticaPrivacidade} target="_blank">
+                    <ListItem button className="text-white-50">
+                      Política de privacidade
+                    </ListItem>
+                  </a>
+                  <a href={TermosServico} target="_blank">
+                    <ListItem button className="text-white-50">
+                      Termos de serviço
+                    </ListItem>
+                  </a>
                 </List>
               </div>
             </Container>
