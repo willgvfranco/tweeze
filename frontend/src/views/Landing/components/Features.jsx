@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 import {
   Email,
-  Twitter,
   Devices,
   Visibility,
   Message,
-  Search
+  Search,
+  AttachMoney
 } from '@material-ui/icons';
 import { Card, Grid, Container, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,7 +43,9 @@ const FeatureIcon = ({ className, Icon }) => (
 );
 
 const FeatureCard = ({ children }) => (
-  <Card className="card-box-hover-rise card-box-hover rounded-lg text-center p-3 p-xl-4 d-block">
+  <Card
+    className="card-box-hover-rise card-box-hover rounded-lg text-center p-3 p-xl-4 d-block"
+    style={{ height: '100%' }}>
     {children}
   </Card>
 );
@@ -82,11 +84,11 @@ const Features = () => {
               <FeatureCard>
                 <FeatureIcon className={classes.featureIcon} Icon={Search} />
                 <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                  Clipping jornalístico
+                  Clipping
                 </h5>
                 <p className="mb-4 text-black-50">
                   Nossa plataforma em questões de poucos segundos realiza o
-                  serviço de clipping jornalístico
+                  serviço de clipping
                 </p>
               </FeatureCard>
             </Grid>
@@ -116,13 +118,15 @@ const Features = () => {
             </Grid>
             <Grid item md={6} xl={4}>
               <FeatureCard>
-                <FeatureIcon className={classes.featureIcon} Icon={Twitter} />
+                <FeatureIcon
+                  className={classes.featureIcon}
+                  Icon={AttachMoney}
+                />
                 <h5 className="font-weight-bold font-size-lg text-second mb-2">
-                  Twitter
+                  Custo benefício
                 </h5>
                 <p className="mb-4 text-black-50">
-                  Integrados completamente com o Twitter analisamos milhões de
-                  informações relevantes para você
+                  A Tweeze oferece o melhor custo benefício do mercado
                 </p>
               </FeatureCard>
             </Grid>
@@ -134,7 +138,7 @@ const Features = () => {
                 </h5>
                 <p className="mb-4 text-black-50">
                   Acesse de qualquer lugar e em qualquer dispositivo, seja
-                  computador, tablet ou Smartphone
+                  computador, tablet ou smartphone
                 </p>
               </FeatureCard>
             </Grid>

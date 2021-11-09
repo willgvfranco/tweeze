@@ -63,41 +63,6 @@ const Info = () => {
           <Grid container spacing={4} className="">
             <Grid item className="">
               <Grid container spacing={4} className="text-center">
-                <Grid className="" item xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <div className="feature-box">
-                    <h3 className="font-size-xl font-weight-bold my-3 text-primary">
-                      Captação
-                    </h3>
-                    <p className="text-black-50 mb-3">
-                      Captamos dezenas de milhares de notícias diariamente.
-                      Nossa plataforma é capaz de coletar notícias nos idiomas
-                      portugues, ingles e francês. Além disso, integração com o
-                      Twiiter, onde as notícias sempre chegam primeiro.
-                    </p>
-                  </div>
-                </Grid>
-
-                <Grid
-                  className="text-center"
-                  item
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  lg={6}
-                  xl={6}>
-                  <div className="feature-box">
-                    <h3 className="font-size-xl font-weight-bold my-3 text-primary">
-                      Análise
-                    </h3>
-                    <p className="text-black-50 mb-3">
-                      O monitoramento das informações é 24 horas por dia, 7 dias
-                      por semana e 365 dias do ano. O monitoramento se extende
-                      de veículos de imprensa à mídias sociais. Dentre em breve
-                      mais novidades!
-                    </p>
-                  </div>
-                </Grid>
-
                 <Grid
                   className="text-center"
                   item
@@ -115,6 +80,40 @@ const Info = () => {
                       por semana e 365 dias do ano. O monitoramento se extende
                       de veículos de imprensa à mídias sociais. Dentre em breve
                       mais novidades!
+                    </p>
+                  </div>
+                </Grid>
+
+                <Grid className="" item xs={12} sm={12} md={12} lg={6} xl={6}>
+                  <div className="feature-box">
+                    <h3 className="font-size-xl font-weight-bold my-3 text-primary">
+                      Captação
+                    </h3>
+                    <p className="text-black-50 mb-3">
+                      Captamos dezenas de milhares de notícias diariamente.
+                      Nossa plataforma é capaz de coletar notícias nos idiomas
+                      portugues, ingles e francês.
+                    </p>
+                  </div>
+                </Grid>
+
+                <Grid
+                  className="text-center"
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}>
+                  <div className="feature-box">
+                    <h3 className="font-size-xl font-weight-bold my-3 text-primary">
+                      Estruturação
+                    </h3>
+                    <p className="text-black-50 mb-3">
+                      O monitoramento das informações é 24 horas por dia, 7 dias
+                      por semana e 365 dias do ano. O monitoramento se extende
+                      de veículos de imprensa nacionais e internacionais. Dentre
+                      em breve mais novidades!
                     </p>
                   </div>
                 </Grid>

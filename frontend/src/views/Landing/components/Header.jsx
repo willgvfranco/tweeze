@@ -173,17 +173,14 @@ const Header = () => {
               src={LogoBranca}
               alt=""
             />
-            <Grid item md={11} lg={10} xl={8} className="mx-auto">
+            <Grid item xs={12} className="mx-auto">
               <div>
                 <p className="font-size-xxl py-3">
-                  Transformando dados em inteligência
+                  transformando dados em inteligência
                 </p>
-                <h3 className="font-size-xl">
-                  Plataforma de clipping com inteligência artificial (I.A.) para
-                  captação, análise, monitoramento e distribuição de informações
-                  úteis a respeito de marcas e temas de interesse. Diariamente
-                  são tratadas aproximadamente 50 mil notícias do Brasil e do
-                  mundo.
+                <h3 className="font-size-xl my-5">
+                  Monitoramento, captação, estruturação e distribuição
+                  automatizadas do seu clipping.
                 </h3>
               </div>
               <div className="py-4 mb-4">
@@ -221,9 +218,9 @@ const Header = () => {
                         <TrendingUpTwoToneIcon className="d-30 text-danger" />
                       </div>
                       <div className="mt-3 line-height-sm">
-                        <b className="font-size-xxl pb-2">3.403.911+</b>
+                        <b className="font-size-xxl pb-2">3.803.911+</b>
                         <span className="text-white-50 font-size-lg d-block">
-                          Notícias
+                          Notícias captadas
                         </span>
                       </div>
                     </div>
@@ -236,7 +233,7 @@ const Header = () => {
                         <ListAltTwoToneIcon className="d-30 text-warning" />
                       </div>
                       <div className="mt-3 line-height-sm">
-                        <b className="font-size-xxl pb-2">1300+</b>
+                        <b className="font-size-xxl pb-2">1600+</b>
                         <span className="text-white-50 font-size-lg d-block">
                           Fontes
                         </span>
@@ -250,9 +247,9 @@ const Header = () => {
                         <EmojiEventsTwoToneIcon className="d-30 text-info" />
                       </div>
                       <div className="mt-3 line-height-sm">
-                        <b className="font-size-xxl pb-2">800.000+</b>
+                        <b className="font-size-xxl pb-2">50.000</b>
                         <span className="text-white-50 font-size-lg d-block">
-                          Tweetes
+                          Notícias por dia
                         </span>
                       </div>
                     </div>

@@ -23,8 +23,7 @@ const Trial = () => {
                 Está em dúvida?
               </h4>
               <p className="text-warning mb-4 font-size-lg line-height-2">
-                Experimente o Trial por 14 dias de graça no plano Marcas! Sem
-                Compromisso!
+                Experimente o Trial por 14 dias de graça! Sem compromisso!
               </p>
               <NavLink className="nav-link-simple" to="/cadastro">
                 <Button className="btn-warning text-uppercase font-weight-bold px-4 font-size-sm">

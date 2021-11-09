@@ -4,11 +4,9 @@ import { Card, Container, Button, TextField } from '@material-ui/core';
 const Step1 = () => (
   <Container id="contato">
     <div className="p-4">
-      <h5 className="font-size-xl mb-1 font-weight-bold">
-        Dúvidas ainda sobre clipping?
-      </h5>
+      <h5 className="font-size-xl mb-1 font-weight-bold">Dúvidas?</h5>
       <p className="text-black-50 mb-4">
-        Gostaria de entender mais sobre nossos serviços?
+        Para entender mais sobre nossos serviços:
       </p>
       <form id="form_contato" onSubmit={(e) => e.preventDefault()}>
         <div>

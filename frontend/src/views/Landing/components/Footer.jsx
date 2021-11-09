@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Grid, Container, List, ListItem, TextField } from '@material-ui/core';
+import { Grid, Container, List, ListItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
@@ -177,13 +177,6 @@ const Footer = () => {
                 <p className={`text-white-50 ${classes.textFeature}`}>
                   Fique por dentro das nossas atualizações!
                 </p>
-                <TextField
-                  className="inputemail text-white-50"
-                  variant="outlined"
-                  type="email"
-                  label="Ganhe descontos e saiba sobre tecnologia"
-                  placeholder="insira seu melhor email"
-                />
                 <List
                   component="div"
                   className="nav-transparent-alt d-flex justify-content-start">
@@ -208,7 +201,7 @@ const Footer = () => {
                       className="font-size-lg"
                     />
                   </ListItem> */}
-                  <ListItem
+                  {/* <ListItem
                     button
                     className="px-0 mr-3 text-white-50"
                     href="#/"
@@ -217,8 +210,10 @@ const Footer = () => {
                       icon={['fab', 'google']}
                       className="font-size-lg"
                     />
-                  </ListItem>
-                  <a href="https://www.instagram.com/tweezebrasil/">
+                  </ListItem> */}
+                  <a
+                    href="https://www.instagram.com/tweezebrasil/"
+                    target="_blank">
                     <ListItem
                       button
                       className="px-0 mr-3 text-white-50"
@@ -239,24 +234,6 @@ const Footer = () => {
             <div className="text-center d-block mb-3 mb-md-0 text-white">
               Copyright &copy; 2021 - Tweeze
             </div>
-            <List
-              component="div"
-              className="nav-transparent text-nowrap d-flex justify-content-center">
-              <ListItem
-                button
-                className="text-white-50"
-                href="#/"
-                onClick={(e) => e.preventDefault()}>
-                Políticas de Privacidade
-              </ListItem>
-              <ListItem
-                button
-                className="text-white-50"
-                href="#/"
-                onClick={(e) => e.preventDefault()}>
-                Termos de Serviço
-              </ListItem>
-            </List>
             <List
               component="div"
               className="nav-transparent text-nowrap d-flex justify-content-center">
