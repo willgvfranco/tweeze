@@ -32,18 +32,6 @@ const SocialButtons = ({ loginWithSocialMedia, setStatus }) => {
         </span>
         <span className="btn-wrapper--label">Login com Google</span>
       </SocialButton>
-      <SocialButton
-        provider="facebook"
-        appId="361023348884041"
-        onLoginSuccess={handleSocialLogin}
-        onLoginFailure={handleSocialLoginFailure}
-        className="m-2 btn-pill px-4 font-weight-bold btn-facebook"
-        size="small">
-        <span className="btn-wrapper--icon">
-          <FontAwesomeIcon icon={['fab', 'facebook']} />
-        </span>
-        <span className="btn-wrapper--label">Login com Facebook</span>
-      </SocialButton>
     </>
   );
 };
