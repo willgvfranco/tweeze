@@ -264,7 +264,7 @@ const TabelaNoticias = ({
                           )}
                         </IconButton>
                       </TableCell>
-                      <TableCell component="th" scope="rows" padding="default">
+                      <TableCell component="th" scope="rows" padding="normal">
                         {news._source.title}
                       </TableCell>
                       <TableCell
@@ -318,7 +318,7 @@ const TabelaNoticias = ({
             : news.length
         }
         page={page}
-        onChangePage={handleChangePage}
+        onPageChange={handleChangePage}
         labelDisplayedRows={({ from }) =>
           `${from}-${news.length} de ${totalNews}`
         }
