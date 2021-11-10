@@ -4,6 +4,7 @@ import WordsReducer from './WordsDuck';
 import NewsReducer from './NewsDuck';
 import PaymentReducer from './PaymentDuck';
 import ContactDuck from './ContactDuck';
+import ReportsDuck from './ReportsDuck';
 
 export default {
   ThemeOptions,
@@ -11,5 +12,6 @@ export default {
   words: WordsReducer,
   news: NewsReducer,
   payment: PaymentReducer,
-  contact: ContactDuck
+  contact: ContactDuck,
+  reports: ReportsDuck
 };
