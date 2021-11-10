@@ -159,7 +159,7 @@ const Noticias = ({
   return (
     <ConditionalRender conditional={loading === 'words'}>
       <PageTitle
-        titleHeading="Relatórios"
+        titleHeading="Notícias"
         titleDescription="Consulta de clippings e geração de relatórios"
         wrapperClass={classes.headerActions}
         icon={<Ballot />}>
