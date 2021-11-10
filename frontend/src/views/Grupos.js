@@ -344,7 +344,9 @@ const ActionDialog = ({
         paper: `modal-content rounded-lg w-100 p-3 ${classes.editDialog}`
       }}
       aria-labelledby="simple-dialog-title">
-      <div className="p-3 font-size-xl font-weight-bold">Editar Grupo</div>
+      <div className="p-3 font-size-xl font-weight-bold">
+        {editing ? 'Editar' : 'Criar'} Grupo
+      </div>
       <TextField
         className="m-2 mb-4 w-80"
         label="Nome do grupo"
