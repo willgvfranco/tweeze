@@ -57,7 +57,7 @@ const LoginForm = ({
 
   useEffect(() => {
     if (isLogged) {
-      history.push('/home');
+      history.push('/noticias');
     }
     if (token !== null && !isLogged) {
       setLoading('token');

@@ -15,8 +15,8 @@ import {
   BallotTwoTone,
   SettingsTwoTone,
   DevicesOtherTwoTone,
-  Home,
-  ExitToApp
+  ExitToApp,
+  Assignment
 } from '@material-ui/icons';
 
 import { setSidebarToggleMobile } from '../reducers/ThemeOptions';
@@ -58,21 +58,6 @@ const SidebarMenu = ({ user, setSidebarToggleMobile, logout }) => {
                 activeClassName="active"
                 onClick={toggleSidebarMobile}
                 className="nav-link-simple"
-                to="/home">
-                <span className="sidebar-icon">
-                  <Home />
-                </span>
-                Home
-                <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
-                  <ChevronRightTwoTone />
-                </span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                activeClassName="active"
-                onClick={toggleSidebarMobile}
-                className="nav-link-simple"
                 to="/noticias">
                 <span className="sidebar-icon">
                   <BallotTwoTone />
@@ -93,6 +78,21 @@ const SidebarMenu = ({ user, setSidebarToggleMobile, logout }) => {
                   <DevicesOtherTwoTone />
                 </span>
                 Grupos
+                <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
+                  <ChevronRightTwoTone />
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                activeClassName="active"
+                onClick={toggleSidebarMobile}
+                className="nav-link-simple"
+                to="/relatorios">
+                <span className="sidebar-icon">
+                  <Assignment />
+                </span>
+                Relatórios
                 <span className="sidebar-icon-indicator sidebar-icon-indicator-right">
                   <ChevronRightTwoTone />
                 </span>

@@ -553,7 +553,7 @@ const Pagamento = ({ sendPayment, status, clearStatus }) => {
       return;
     }
     if (status.type === 'success') {
-      history.push('/home');
+      history.push('/noticias');
     }
 
     setOpenNotify(false);

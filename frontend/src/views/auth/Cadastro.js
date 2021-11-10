@@ -52,7 +52,7 @@ const PageRegister = ({ register, clearStatus, status, isLogged }) => {
 
   useEffect(() => {
     if (isLogged) {
-      history.push('/home');
+      history.push('/noticias');
     }
   }, [isLogged]);
 

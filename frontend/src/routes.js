@@ -18,7 +18,6 @@ import Error500 from './views/errors/500';
 import Error505 from './views/errors/505';
 import { connect } from 'react-redux';
 
-const Home = lazy(() => import('./views/Home'));
 const Landing = lazy(() => import('./views/Landing/index'));
 const Blank = lazy(() => import('./views/BlankView'));
 const Faq = lazy(() => import('./views/Faq'));
@@ -30,6 +29,7 @@ const Informacoes = lazy(() => import('./views/MinhaConta/Informacoes'));
 const Seguranca = lazy(() => import('./views/MinhaConta/Seguranca'));
 const Financeiro = lazy(() => import('./views/MinhaConta/Financeiro'));
 const Grupos = lazy(() => import('./views/Grupos'));
+const Relatorios = lazy(() => import('./views/Relatorios'));
 const FormularioDedicado = lazy(() => import('./views/FormularioDedicado'));
 
 const Login = lazy(() => import('./views/auth/Login'));
@@ -120,14 +120,14 @@ const Routes = ({ loading }) => {
 
             <Route
               path={[
-                '/home',
                 '/blank',
                 '/noticias',
                 '/minha-conta',
                 '/minha-conta/informacoes',
                 '/minha-conta/seguranca',
                 '/minha-conta/financeiro',
-                '/grupos'
+                '/grupos',
+                '/relatorios'
               ]}>
               <Conditional condition={loading}>
                 <LeftSidebar>
@@ -138,16 +138,6 @@ const Routes = ({ loading }) => {
                       exit="out"
                       variants={pageVariants}
                       transition={pageTransition}>
-                      <Route
-                        path="/home"
-                        render={() => (
-                          <RequireAuth>
-                            <RequireVip>
-                              <Home />
-                            </RequireVip>
-                          </RequireAuth>
-                        )}
-                      />
                       <Route
                         path="/noticias"
                         render={() => (
@@ -208,6 +198,16 @@ const Routes = ({ loading }) => {
                           <RequireAuth>
                             <RequireVip>
                               <Grupos />
+                            </RequireVip>
+                          </RequireAuth>
+                        )}
+                      />
+                      <Route
+                        path="/relatorios"
+                        render={() => (
+                          <RequireAuth>
+                            <RequireVip>
+                              <Relatorios />
                             </RequireVip>
                           </RequireAuth>
                         )}

@@ -33,7 +33,7 @@ const SidebarHeader = (props) => {
     <>
       <div className="app-sidebar--header">
         <div className="app-sidebar-logo">
-          <NavLink to="/home" title="Tweeze" className="app-sidebar-logo">
+          <NavLink to="/noticias" title="Tweeze" className="app-sidebar-logo">
             <div style={{ width: '3.5rem', marginRight: '0.5rem' }}>
               <img alt="Tweeze" src={TweezeLogo} style={{ width: '100%' }} />
             </div>
