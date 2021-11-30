@@ -18,9 +18,12 @@ import {
 } from '@material-ui/core';
 
 import bannerInicial from '../../../assets/images/Tweeze_banner.png';
+import bannerInicialPequeno from '../../../assets/images/Tweeze_banner_small.png';
 
 import LogoBranca from '../../../assets/images/logo/logo_tweeze_branco.png';
 import LogoSimbolo from '../../../assets/images/logo/logo_twz_branco.png';
+
+const innerWidth = window.innerWidth;
 
 const useStyles = makeStyles((theme) => ({
   menuBar: {
@@ -164,7 +167,11 @@ const Header = () => {
         <div className="bg-composed-wrapper--bg bg-sunrise-blue opacity-6" />
         <div
           className="bg-composed-wrapper--image opacity-9"
-          style={{ backgroundImage: 'url(' + bannerInicial + ')' }}
+          style={{
+            backgroundImage: `url(${
+              innerWidth > 768 ? bannerInicial : bannerInicialPequeno
+            })`
+          }}
         />
         <div id="home" className="bg-composed-wrapper--content">
           <Container className="z-over shadow-container-content-5 text-white text-center pt-5">
