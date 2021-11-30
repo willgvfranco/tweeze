@@ -1,9 +1,12 @@
 "use strict";
 const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
+const PDFDocument = require("pdfkit");
 const { promisify } = require("util");
 const path = require("path");
 const fs = require("fs");
+
+const {selectedNewsId, newsObj} = require("../assets/data/mockNews");
 
 const readFile = promisify(fs.readFile);
 
@@ -192,5 +195,152 @@ export async function cancelSubscription(req, res) {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
+  res.sendStatus(200);
+}
+
+const month = {
+  0: "Janeiro",
+  1: "Fevereiro",
+  2: "Março",
+  3: "Abril",
+  4: "Maio",
+  5: "Junho",
+  6: "Julho",
+  7: "Agosto",
+  8: "Setembro",
+  9: "Outubro",
+  10: "Novembro",
+  11: "Dezembro",
+};
+
+const formatedDate = (date) => {
+  const dateObj = new Date(date);
+  return `${dateObj.getDate()} de ${
+    month[dateObj.getMonth()]
+  } de ${dateObj.getFullYear()}`;
+};
+
+export async function testEmailWithPdf(req, res) {
+  const doc = new PDFDocument({ size: "A4" });
+  const docPath = path.join(__dirname, "../pdf/file.pdf");
+  const logoPath = path.join(__dirname, "../assets/images/logo_twz_azul.png");
+  const footerLogoPath = path.join(
+    __dirname,
+    "../assets/images/logo_tweeze_branco.png"
+  );
+  const fontRegularPath = path.join(
+    __dirname,
+    "../assets/fonts/NunitoSans-Regular.ttf"
+  );
+  const fontExtraBoldPath = path.join(
+    __dirname,
+    "../assets/fonts/NunitoSans-ExtraBold.ttf"
+  );
+  const fontBoldPath = path.join(
+    __dirname,
+    "../assets/fonts/NunitoSans-Bold.ttf"
+  );
+  const fontLightItalicPath = path.join(
+    __dirname,
+    "../assets/fonts/NunitoSans-LightItalic.ttf"
+  );
+
+  // A receber do req.body
+  const username = "Renan Oliveira";
+  const beginDate = 1637714221659;
+  const endDate = 1637714221659;
+
+  doc.pipe(fs.createWriteStream(docPath));
+
+  // CAPA RELATÓRIO
+  const leftMargin = 60;
+  doc.rect(0, 0, 700, 900).fill("#09407e");
+  doc.circle(550, 830, 200, 200).fill("#fff");
+  doc.image(logoPath, 400, 690, { width: 200 });
+
+  doc
+    .font(fontBoldPath)
+    .fontSize(52)
+    .text("Relatório de Clipping personalizado", leftMargin, 220)
+    .strokeColor("#fff");
+  doc
+    .font(fontRegularPath)
+    .fontSize(24)
+    .text(username, leftMargin, 470)
+    .strokeColor("#fff");
+  doc
+    .fontSize(18)
+    .text(
+      `Período selecionado: ${formatedDate(beginDate)} até ${formatedDate(
+        endDate
+      )}`,
+      leftMargin,
+      520
+    )
+    .strokeColor("#fff");
+  doc
+    .fontSize(18)
+    .text(
+      `${selectedNewsId?.length} notícia(s) selecionada(s)`,
+      leftMargin,
+      590
+    )
+    .strokeColor("#fff");
+
+  // NOTÍCIAS
+  doc.addPage();
+  doc
+    .font(fontExtraBoldPath)
+    .fillColor("#09407e")
+    .fontSize(34)
+    .text("Listagem das matérias principais", 30, 50, { width: 350 })
+    .moveDown();
+
+  selectedNewsId.forEach((news) => {
+    doc
+      .font(fontBoldPath)
+      .fillColor("#000")
+      .fontSize(18)
+      .text(newsObj[news]?._source.title, 45)
+      .moveDown()
+      .font(fontRegularPath)
+      .fontSize(14)
+      .text(
+        newsObj[news]?._source.description
+          ? newsObj[news]?._source.description
+          : null,
+        45
+      )
+      .moveDown()
+      .font(fontLightItalicPath)
+      .fillColor("#09407e")
+      .fontSize(12)
+      .text(newsObj[news]?._source.source, 45)
+      .moveDown()
+      .moveDown();
+  });
+
+  // FINAL / FOOTER
+  doc.addPage();
+  doc.rect(0, 0, 700, 900).fill("#09407e");
+  doc
+    .fillColor("#fff")
+    .font(fontExtraBoldPath)
+    .fontSize(56)
+    .text("Essas foram as suas métricas.", leftMargin, 220)
+    .strokeColor("#fff");
+  doc
+    .font(fontBoldPath)
+    .fontSize(20)
+    .text("Você aparece, a gente pinça. Simples assim", leftMargin, 420)
+    .strokeColor("#fff");
+  doc.image(footerLogoPath, 200, 700, { width: 220 });
+  doc
+    .font(fontRegularPath)
+    .fontSize(14)
+    .text("@2021. Termos legais e legendas aqui", 190, 750)
+    .strokeColor("#fff");
+
+  doc.end();
   res.sendStatus(200);
 }
